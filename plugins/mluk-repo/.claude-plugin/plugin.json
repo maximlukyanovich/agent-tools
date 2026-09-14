@@ -1,0 +1,8 @@
+{
+  "name": "mluk-repo",
+  "description": "Repository workflow driven by a project profile: commit, create-pr, promote, review, sync, start, task, update-docs. GitHub with gh; no tracker.",
+  "author": {
+    "name": "Maxim Lukyanovich",
+    "email": "maximlukyanovich94@gmail.com"
+  }
+}

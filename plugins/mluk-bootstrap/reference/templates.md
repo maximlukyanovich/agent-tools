@@ -1,0 +1,116 @@
+# Templates
+
+Skeletons only. Every example inside a skill or command is written for **this**
+project's domain — carrying someone else's examples over is an anti-pattern.
+
+## AGENTS.md
+
+Seven sections, in this order. Anything a linter already enforces is marked
+`[lint]` and not explained twice. Anything the library already states (commit
+format, PR shape, git safety, the kickoff method) is a one-line pointer to the
+plugin skill, not a restatement.
+
+```markdown
+# Agent instructions
+
+## 1. Project        what it is, which surfaces, sibling repositories, current phase
+## 2. Commands       install, dev (who runs it), the one gate command, tests, build
+## 3. Architecture   layers table: path, responsibility, what it may import
+## 4. Conventions    languages, branches, commits (preset name → skill), styling, copy
+## 5. Sources of truth   priority order, design source, what to do on conflict
+## 6. Working agreements  the rules that are not machine-checkable
+## 7. Agent tooling   enabled plugins, local overrides, project skills, checks, hooks
+```
+
+Rules that keep it cheap: no rule appears twice; anything expressible as lint
+configuration is a one-line reference, not a paragraph; the absence of a layer
+is recorded deliberately, with its reason.
+
+## CLAUDE.md
+
+```markdown
+@AGENTS.md
+
+# CLAUDE.md
+
+Project rules live in AGENTS.md, imported above. This file holds only what is
+specific to Claude Code and written nowhere else — deleting it must not lose a
+single project rule.
+```
+
+## SKILL.md
+
+```markdown
+---
+name: <name>
+description: <what it covers, and when it applies — the sentence that decides loading>
+---
+
+# <name>
+
+## When it applies
+## How to do it
+## How not to do it
+## How it is verified
+```
+
+The `description` is the whole loading mechanism. Vague means either never
+loaded or always loaded.
+
+## A local command (override)
+
+Written only when the procedure differs from the library command of the same
+job. The first paragraph names the library command it overrides and the reason.
+
+```markdown
+---
+description: <one line, shown in slash-command completion>
+argument-hint: '[<arg>]'
+---
+
+# /<name>
+
+Overrides `/mluk-repo:<name>` because <the procedural difference>.
+
+## Steps
+## Hard rules      what this command must never do
+```
+
+Read-only unless stated otherwise. No implicit push, merge or PR creation;
+permission applies to the current turn only.
+
+## .claude/COMMANDS.md
+
+```markdown
+# Commands
+
+Index of what is available here. Library commands come from `mluk-repo` and
+read `.claude/project-profile.md`; local commands override a library one only
+when the procedure differs.
+
+| Command | Source | Mutating | Note |
+| --- | --- | --- | --- |
+| `/mluk-repo:start` | library | no | onboarding + checks from the profile |
+| `/mluk-repo:task` | library | no | kickoff; flavours from the profile |
+| … | | | |
+| `/<local>` | local | … | overrides `/mluk-repo:<name>`: <reason> |
+```
+
+## .mcp.json.example
+
+Servers with `${VAR}` placeholders, committed. A generator script substitutes
+values from `.env` and fails loudly on a missing one — a partially substituted
+config is worse than none.
+
+## Hook contract
+
+A `PostToolUse` hook receives the tool call, exits **0 and silent** when the
+file is outside its area, and prints an actionable message otherwise. Every hook
+has a test. A hook that fires on ordinary edits gets ignored and then removed.
+
+## docs/local/README.md
+
+The only committed file in the personal space. It states what lives there —
+plans, handoffs, excerpts, a copy journal, task notes — and one rule for the
+agent: this material is context, never a source of truth, and is never quoted
+into committed content.

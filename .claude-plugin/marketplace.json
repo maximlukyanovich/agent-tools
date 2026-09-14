@@ -1,0 +1,29 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "mluk-agent-tools",
+  "description": "Personal Claude Code tooling for GitHub-hosted projects: repository bootstrap, repository workflow (commit, PR, review, sync, kickoff), and business Russian copy.",
+  "owner": {
+    "name": "Maxim Lukyanovich",
+    "email": "maximlukyanovich94@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "mluk-bootstrap",
+      "description": "Initialise or audit a repository's agent harness: AGENTS.md, project profile, skills, hooks, docs — and the way a task is started. Stack-agnostic.",
+      "source": "./plugins/mluk-bootstrap",
+      "category": "workflow"
+    },
+    {
+      "name": "mluk-repo",
+      "description": "Repository workflow driven by a project profile: commit, create-pr, promote, review, sync, start, task, update-docs. GitHub with gh; no tracker.",
+      "source": "./plugins/mluk-repo",
+      "category": "workflow"
+    },
+    {
+      "name": "mluk-ru",
+      "description": "Business Russian for client-facing, legal and documentation texts: the principles, the self-check, the checklist, and a review command.",
+      "source": "./plugins/mluk-ru",
+      "category": "writing"
+    }
+  ]
+}
