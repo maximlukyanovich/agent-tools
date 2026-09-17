@@ -152,3 +152,11 @@ The method comes out of real work. After a decision the owner makes in a
 project — a convention, a rule, a way of asking — the agent proposes the
 matching change here in the same session, and the owner decides. Candidates
 that are not ready accumulate under `docs/local/` in the working repositories.
+
+Planned next (iteration 2): `mluk-common` (testing and verification, no
+invention, decomposition, docs discipline), `mluk-fe` (React/Next: design
+fidelity, i18n with the locale-parity and translation-key hooks now living in
+`quest-bot-web/.claude/hooks/`, SEO metadata, perf and motion) and `mluk-be`
+(Django: conventions, testing, Celery pitfalls, API contracts). Until then the
+project-level hooks and skills in the working repositories are the reference
+implementations.

@@ -53,6 +53,12 @@ pushed.
 
 - A dirty tree before a switch, sync or promote is shown, and the owner is
   offered a commit or a stash. Nothing is stashed or discarded on their behalf.
+- Splitting a mixed tree into several commits happens in the index, never by
+  editing the owner's files back and forth: a file shared by two tasks is staged
+  from a snapshot (`git hash-object -w` + `git update-index --cacheinfo`, see
+  `/mluk-repo:commit` step 5). A pre-commit hook that rewrites staged files
+  (lint-staged) restores the unstaged part on its own — check `git status`
+  after the commit, before the next group.
 - Conflicts during a merge stop the command; the owner resolves them, or the
   agent resolves them only with the owner's decision per hunk.
 
