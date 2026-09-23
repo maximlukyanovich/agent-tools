@@ -61,7 +61,7 @@ Language follows the conversation; pass a language code to override.
 
 | Plugin | Kind | What it does |
 | --- | --- | --- |
-| `mluk-bootstrap` | generator + audit | Initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model and the `kickoff` method — how a task is started. |
+| `mluk-bootstrap` | generator + audit | Initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model, the `kickoff` method — how a task is started — and `design-port` — how a design kit is ported. |
 | `mluk-repo` | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `sync`, `start`, `task`, `update-docs`. Reads `.claude/project-profile.md`. |
 | `mluk-ru` | library | Business Russian: the principles of client-facing and legal copy, the self-check, the checklist, and `review` for a text. |
 

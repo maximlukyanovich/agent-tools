@@ -31,6 +31,9 @@ procedure differs from the library's.
 - `skills/kickoff` — how a task is started: plan mode, exploration, the
   questionnaire rules, the decisions table, slices, approval, and the habit of
   proposing a library change after an owner's decision.
+- `skills/design-port` — how a design kit is ported: the source read at write
+  time, kit classes worn by a matching third-party primitive, the stretched-link
+  card, real data over demo data, and what to do when the kit itself is wrong.
 
 ## Reference
 
