@@ -47,14 +47,23 @@ and never copies the second from a demo.
    fallback or the wrap the kit never needed. Mark every such addition in the
    stylesheet as web-only, next to the rule it protects.
 
-5. **When the kit is wrong, say so — do not reproduce it silently.** A
+5. **Tell devices apart by how they are used, not by how wide they are.**
+   Whatever depends on an input method — keyboard-shortcut hints, hover-only
+   reveals, drag handles — is gated by the input media features (`hover`,
+   `pointer`, `any-hover`, `any-pointer`), not by the viewport width: a narrow
+   window can have a keyboard and a mouse, a wide tablet may have neither.
+   Width decides layout; input decides affordances. Something that merely
+   doubles as a shortcut but carries meaning of its own (a numbered list, an
+   ordinal) is content and stays on every device.
+
+6. **When the kit is wrong, say so — do not reproduce it silently.** A
    specificity slip, a measurement taken from the wrong ancestor, a token that
    exists in the kit's tokens file but not in the project: fix the effect in the
    port with a comment naming the kit's flaw, tell the owner, and propose the fix
    for the kit in the same session. A visible deviation from the design still
    needs the owner's explicit agreement — one place, one decision, no precedent.
 
-6. **Verify against the design, not against the code compiling.** Open the
+7. **Verify against the design, not against the code compiling.** Open the
    page, measure what the kit specifies (sizes, offsets, colours, states, both
    themes, the narrow viewport, reduced motion) and compare numbers, then look at
    the screenshot. A dev server may not pick up a newly created stylesheet added
@@ -70,6 +79,8 @@ and never copies the second from a demo.
 - Shipping the demo's assumptions (short copy, images everywhere) as layout
   facts.
 - Treating an agreed deviation in one spot as licence to deviate elsewhere.
+- Hiding keyboard or hover affordances below a breakpoint and calling it
+  "mobile".
 
 ## How it is verified
 
