@@ -62,6 +62,12 @@ and never copies the second from a demo.
    port with a comment naming the kit's flaw, tell the owner, and propose the fix
    for the kit in the same session. A visible deviation from the design still
    needs the owner's explicit agreement — one place, one decision, no precedent.
+   When the session can write to the design source, offer to apply the agreed
+   fix or deviation there yourself instead of only describing it — the owner
+   starts the sync and approves the exact list of files first. Mechanical
+   changes (a fix, a decided deviation, folding an accepted proposal into the
+   canon, a decisions note) go this way; new visual design stays with the
+   designer.
 
 7. **Verify against the design, not against the code compiling.** Open the
    page, measure what the kit specifies (sizes, offsets, colours, states, both
