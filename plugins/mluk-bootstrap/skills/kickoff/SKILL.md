@@ -52,6 +52,10 @@ rename does not need this.
    execution order with the files each touches, assumptions the owner can
    overturn, open questions, and verification (how the result is proven — tests,
    a browser check, a curl).
+   The plan is written in the language of the chat — the owner reads it in the
+   approval dialog. Identifiers, paths and class names stay as they are;
+   committed text (commits, PR bodies, code comments) keeps the repository's
+   language.
 
 6. **Ask for approval** through the plan-approval mechanism, not with a
    question in chat. The owner may return the plan with comments: apply them,
@@ -71,6 +75,8 @@ rename does not need this.
 
 - Asking one question per turn, or asking what `git log` already answers.
 - Presenting three architectures without a recommendation.
+- Writing the plan in the commit language when the chat is in another one — the
+  owner approves what they read.
 - Marking the recommendation nowhere, so the owner has to guess which option
   is safe.
 - Writing code "to show the idea" before the plan is approved.
