@@ -1,6 +1,6 @@
 ---
 name: kickoff
-description: How a piece of work is started and planned — plan mode, exploration, the questionnaire rules (a marked recommendation first, at most four questions a round, a closing "anything to add" only when new input is plausible), the decisions table, slices, approval before code, separate commits on an explicit go-ahead, and proposing a library change after an owner's decision. Use when starting any task that needs a plan, when about to ask the owner questions, and after the owner makes a decision worth keeping. Not for trivial edits.
+description: How a piece of work is started and planned — plan mode, exploration, the questionnaire rules (a marked recommendation first, at most four questions a round, a closing "anything to add" always in the first round, later only when new input is plausible), the decisions table, slices, approval before code, separate commits on an explicit go-ahead, and proposing a library change after an owner's decision. Use when starting any task that needs a plan, when about to ask the owner questions, and after the owner makes a decision worth keeping. Not for trivial edits.
 ---
 
 # kickoff
@@ -35,11 +35,13 @@ rename does not need this.
      questions is not.
    - **Multi-select where choices are not exclusive** (which providers, which
      plugins, which slices).
-   - **A closing "anything to add?" question is not asked every round.** Ask it
-     when new input before the work starts is plausible — a design the owner may
-     have, constraints only they know, material they want to attach. Its
-     options: "no, all covered" and "yes, I will describe it in chat" — the
-     latter lets the owner write freely and attach images in the next message.
+   - **A closing "anything to add?" question ends the first round, always.** The
+     owner often holds a requirement the code cannot show, and without the question
+     they have to interrupt the work to add it. In later rounds ask it only when
+     new input before the work starts is plausible — a design the owner may have,
+     constraints only they know, material they want to attach. Its options: "no,
+     all covered" and "yes, I will describe it in chat" — the latter lets the owner
+     write freely and attach images in the next message. It counts toward the four.
    - **Read the answers literally.** An answer may change direction, add a
      constraint or decline; follow what it says, not what was expected.
 
