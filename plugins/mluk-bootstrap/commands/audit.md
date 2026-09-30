@@ -40,18 +40,24 @@ The harness exists; the job is to find the gaps, not to rewrite it.
 6. **Dead artefacts.** Commands and skills nobody uses, hooks with steady false
    positives, links to files that no longer exist.
 
-7. **Gaps.** Layers from the model that are absent. Absence is allowed — but it
+7. **Where the gate runs.** Is a git hook running the whole validate command —
+   minutes per push, soon bypassed? The library's `commit` and `create-pr` run
+   it. Does lint-staged run the formatter after the linter's fixes? The wrong
+   order leaves linter edits unformatted while the hook passes, and the gate
+   fails a commit later.
+
+8. **Gaps.** Layers from the model that are absent. Absence is allowed — but it
    must be deliberate and written down, with the conditions that would fill it.
 
-8. **Secret hygiene.** Are the generated MCP config and the environment file
+9. **Secret hygiene.** Are the generated MCP config and the environment file
    ignored? Did a token leak into a committed file, into history, or into
    `settings.json` permission entries?
 
-9. **Cross-agent availability.** Do the rules live in `AGENTS.md` rather than
+10. **Cross-agent availability.** Do the rules live in `AGENTS.md` rather than
    only in a vendor file? Are the skill symlinks present and unbroken, and
    pointing the right way?
 
-10. **Library candidates.** Rules in this project's `AGENTS.md` or skills that
+11. **Library candidates.** Rules in this project's `AGENTS.md` or skills that
     name no concrete path or id and would hold in any project — list them as
     proposals for the library, one line each. This is the mechanism by which the
     library grows.

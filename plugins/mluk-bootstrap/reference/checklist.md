@@ -19,6 +19,10 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       `settings.json`.
 - [ ] Deterministic layer: linter, formatter, types, tests, git hooks, and one
       validate command that runs them — the same one the profile names.
+- [ ] Git hooks stay fast: no hook runs the whole validate command — minutes
+      per push get bypassed. `commit` and `create-pr` run it instead. lint-staged
+      runs the linter's fixes first and the formatter last, or the linter's
+      edits land unformatted while the hook reports success.
 - [ ] MCP: the example in git, the generated file and `.env` ignored,
       generation works.
 - [ ] `docs/README.md` and `docs/local/README.md` exist; `docs/local/` is fully
