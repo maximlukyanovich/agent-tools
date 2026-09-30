@@ -30,8 +30,11 @@ stops after printing the PR URL.
      profile's `remote account` and `gh`'s active account must own the
      repository (`github-accounts` skill); otherwise stop and say so. An
      `upstream` remote is out of scope — a PR must target `origin`.
-   - Run the profile's `validate`. Red → stop and show; a pre-push hook would
-     reject it anyway.
+   - The gate: `git rev-parse HEAD^{tree}` equals `$(git rev-parse
+     --git-dir)/validated-tree` → `commit` already ran the full `validate` on
+     exactly this tree; say so and skip. Otherwise run the profile's
+     `validate` — red → stop and show; green → record the tree the same way.
+     Only a full run is recorded, never a targeted one.
    - Behaviour, domain or scope changed and the docs did not → offer
      `/mluk-repo:update-docs` before pushing.
 

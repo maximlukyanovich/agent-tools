@@ -88,7 +88,10 @@ diff says otherwise, pick the topic from the diff and say so in one line.
    More groups → repeat for the next one.
 
 8. **Wrap up**: `git log --oneline -<N>` with the new commits on top, and a
-   one-line reminder that nothing was pushed.
+   one-line reminder that nothing was pushed. If step 4 ran the **full**
+   `validate` (not a targeted row) and the tree is now clean, record the tree
+   it passed on: `git rev-parse HEAD^{tree} > "$(git rev-parse
+   --git-dir)/validated-tree"`. `create-pr` then skips a second identical run.
 
 ## When to stop and ask
 
