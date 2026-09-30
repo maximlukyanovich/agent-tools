@@ -69,6 +69,10 @@ stops after printing the PR URL.
    Print the URL. **No `merge` → stop here.**
 
 6. **With `merge`.**
+   - Read the review ledger for this branch (profile `ledger`, see
+     `/mluk-repo:review`). No pass on the current head, or `major`+ findings
+     still `open` → print that and merge only on an explicit yes. Merging
+     without a review stays possible; it should not be accidental.
    - `gh pr checks <n>`. Pending → offer `gh pr checks <n> --watch` or coming
      back later; no sleep loops. Red → stop, print the failing checks, suggest
      `gh run view <run-id> --log-failed`; no retry, no bypass. No CI configured

@@ -1,6 +1,6 @@
 ---
-description: Review the current branch against the base branch, or a specific PR, and return findings sorted by severity with a file:line anchor each. Read-only; edits only with the fix argument.
-argument-hint: '[<PR#>] [<severity>+] [full] [fix]'
+description: Review the current branch against the base branch, or a specific PR, and return findings sorted by severity with a file:line anchor each. Keeps a pass ledger so a repeat run reviews only what changed. Read-only apart from the ledger; edits only with the fix argument.
+argument-hint: '[<PR#>] [<sha>..<sha>] [<severity>+] [full] [fix]'
 ---
 
 # /mluk-repo:review
@@ -9,86 +9,146 @@ Review a pull request or the work on the current branch (committed and
 uncommitted) against the profile's `base branch`, through the library rubric
 plus the project lenses in `## Review`.
 
-**Read-only by default**: no commits, no edits, no `gh` mutations. Edits only
-with `fix`; posting to a PR only on an explicit yes at the end.
+**Read-only by default**: no commits, no code edits, no `gh` mutations. The one
+file it writes is its own ledger (below). Code edits only with `fix`; posting to
+a PR only on an explicit yes at the end.
+
+**Run it in a fresh session**, not the one that wrote the code. The authoring
+session remembers its own reasons and tends to confirm them. Everything a review
+needs from the past is in the ledger, not in the conversation.
 
 ## Arguments
 
 Positional, optional, any order — recognised by shape: a bare number is a PR;
-`blocker+` / `major+` / `minor+` narrows what is written out in full; `full`
-forces a complete pass instead of a delta over a target already reviewed in
-this session; `fix` applies the narrow list of deterministic fixes after the
-report, confirmed.
+`<sha>..<sha>` is an explicit commit range; `blocker+` / `major+` / `minor+`
+narrows what is written out in full; `full` ignores the ledger's delta and
+reviews the whole target; `fix` applies the narrow list of deterministic fixes
+after the report, confirmed.
+
+## The ledger
+
+One file per target at the profile's `ledger` (default `docs/local/reviews/`,
+which must be gitignored). Named by the first of: the task key in the branch
+name, the PR number (`pr-<n>`), the branch slug. A PR that appears later is
+added to `Aliases:`; the file is not renamed.
+
+```
+# Review ledger — <key>
+Aliases: PR #12, feat/<slug>
+Trajectory: P1 a1b2c3d 0/2/5/5 changes · P2 e4f5a6b 0/0/1/2 ready
+## Open
+- R3 minor bug src/api/client.ts:114 — error body lost when it is not JSON
+## Pass 2 — <date> — head e4f5a6b · base a1b2c3d · delta — ready to merge
+- R9 minor fix-critique src/api/client.ts:83 — helper duplicated in connect.ts — open
+```
+
+Finding ids `R<n>` never change between passes. Status is one of `open`,
+`fixed`, `deferred (<reason>)`, `false-positive (<mechanism>)`, `disputed`.
+Only `Trajectory` and `Open` are read by default; pass sections are appended,
+never rewritten.
 
 ## Scope control
 
 - A diff under ~25 files and ~2000 lines is reviewed inline. Past either,
   delegate to subagents **cut by file group**, each with its slice of the diff
-  and the whole rubric; cap at 4–6. A subagent returns findings
-  (`severity | tag | file:line | what | one-line fix | anchor`), never diff.
+  and the whole rubric but **not the ledger**; cap at 4–6. A subagent returns
+  findings (`severity | tag | file:line | what | one-line fix | anchor`), never
+  diff.
 - Synthesis stays in the main thread: deduplicate, catch cross-slice problems
   (a field changed here, its test asserting the old shape there), normalise
   severities.
 - Never read a file in full speculatively; open one only when a finding needs
   its context.
-- A third pass over the same target → ask what new condition makes it useful
-  before running.
 
 ## Steps
 
 1. **Parse arguments; read the profile** (`base branch`, `validate`,
-   `## Review`, `## Docs` for the contract log and techdebt file).
+   `## Review` with `ledger`, `## Docs` for the contract log and techdebt file).
 
-2. **Get the diff.** PR: `gh pr view <n> --json title,body,state,isDraft,
+2. **Find the ledger and set the target.**
+   - The ledger's last head equals `HEAD` and no `full` → there is nothing new:
+     print the recorded verdict and the open findings, and stop.
+   - The last head is an ancestor of `HEAD` → the target is the delta
+     `<last head>..HEAD`.
+   - No ledger, or `full` → the whole target as below. An explicit range
+     overrides both.
+
+3. **Get the diff.** PR: `gh pr view <n> --json title,body,state,isDraft,
    headRefName,baseRefName` and `gh pr diff <n>`. Branch: `git fetch origin
    <base> --quiet`, `git diff origin/<base>...HEAD --stat`, `git status
    --porcelain`, `git diff`, `git ls-files --others --exclude-standard` —
    untracked files are the easiest thing to miss. `HEAD` on the base branch
-   and no PR → nothing to review.
+   and no PR → nothing to review. Run the profile's `validate` once.
 
-3. **Frame the scope** in one line from the branch name, PR text and commit
+4. **Frame the scope** in one line from the branch name, PR text and commit
    subjects: a whole task or a slice? What a slice leaves out is not a missing
-   feature — at most "expected in a follow-up".
+   feature — at most "expected in a follow-up". If this session edited files in
+   the diff, say so in the header and recommend a fresh session.
 
-4. **Run the rubric.** General lenses: `bug` (unhandled branches, `None`
-   assumptions, boundary cases, a missing transaction), `perf` (N+1, a per-row
-   query, a full scan on a hot path, a client-only fetch on an SEO surface),
-   `dup` (a rule written inline next to the shared implementation), `test`
-   (a behaviour change with no test, a test passing by coincidence),
-   `convention` (commit format, placement, style drift), `docs` (behaviour or
-   contract changed, document did not; a compromise as a `TODO` instead of a
-   techdebt entry), `security` (a secret in the diff, a token logged, an auth
-   shortcut widened, an object lookup not scoped to the requesting user,
-   user content interpolated without bound), `contract` (a field renamed or
-   retyped without a note in the contract log), `language` (a user-facing
-   string in the wrong language). Project lenses from `## Review` are applied
-   with the same weight as these.
+5. **Run the rubric, blind.** Do not open the ledger's findings yet — reading a
+   previous verdict first anchors this one. General lenses: `bug` (unhandled
+   branches, `None` assumptions, boundary cases, a missing transaction; for
+   async code and stateful hooks, walk the lifecycle transitions — A→B mid-event,
+   A→none→A — and a peer that misbehaves, such as a 200 that closes at once),
+   `perf` (N+1, a per-row query, a full scan on a hot path, a client-only fetch
+   on an SEO surface), `dup` (a rule written inline next to the shared
+   implementation), `test` (a behaviour change with no test is its own `major`,
+   unless it is genuinely untestable and the diff says why; a test passing by
+   coincidence), `convention` (placement, style drift), `docs` (behaviour or
+   contract changed, document did not; a type's doc comment contradicted by the
+   code; a compromise as a `TODO` instead of a techdebt entry), `security` (a
+   secret in the diff, a token logged, an auth shortcut widened, an object
+   lookup not scoped to the requesting user, user content interpolated without
+   bound), `contract` (a field renamed or retyped without a note in the contract
+   log), `language` (a user-facing string in the wrong language). Project
+   lenses from `## Review` carry the same weight. A finding names **every** place
+   with the same mechanism, not only the first one found.
 
-5. **Assemble the report**: a one-line header (target, range, uncommitted
-   included?, focus), the severity table (blocker / major / minor / nit), the
-   verdict derived mechanically (`blocked` / `changes requested` / `ready to
-   merge`), findings grouped by severity — each with tag, `file:line`, what is
-   wrong, the anchor, a one-line fix — then "what is good" if there is anything
-   honest to say, then open questions for the owner.
+6. **Try to refute each `blocker` / `major`** in the code before keeping it — a
+   guard elsewhere, a caller that never passes the bad input. What survives is
+   reported; what does not is dropped or demoted with the reason.
 
-6. **Post to the PR** only for a PR target, only after printing, only on an
-   explicit yes: `gh pr comment <n> --body-file <tmp outside the repo>`.
+7. **Reconcile with the ledger.** Now read it, and tag every finding:
+   `new` (code after the last reviewed head), `missed` (older code, never raised
+   — keeps its honest severity, marked "missed in pass N"), `escalated` (a
+   deferred finding raised higher — only with a named new cause, otherwise it
+   keeps its old severity), `fix-critique` (targets a fix a previous pass asked
+   for). A recorded false positive is not raised again without a new mechanism.
 
-7. **`fix`** — confirmed, and limited to: unused imports and variables this
-   diff introduced; a user-facing string in the wrong language where the
-   surrounding code is unambiguous; a broken relative link with an unambiguous
-   target; trailing whitespace in files the diff touches. Never: migrations,
-   model or serializer shapes, permission logic, validators, test expectations,
-   anything named in the profile's blast-radius list, structural refactoring.
-   After fixing, run `validate` and close with one line.
+8. **Assemble the report**: a one-line header (target, range, pass number,
+   uncommitted included?, focus), the trajectory line, the severity table
+   (blocker / major / minor / nit), the verdict derived mechanically (`blocked`
+   / `changes requested` / `ready to merge`), findings grouped by severity —
+   each with tag, class, `file:line`, what is wrong, the anchor, a one-line fix
+   — then "what is good" if there is anything honest to say, then open
+   questions for the owner. **Stop and ask** what a further pass should add
+   when this is pass 3+ with no new commits, when findings grew while the delta
+   is small, or when `escalated` plus `fix-critique` are over half the findings.
+
+9. **Append the pass to the ledger** — without asking; it is gitignored and
+   holds only the review's own memory. Update statuses the owner stated.
+
+10. **Post to the PR** only for a PR target, only after printing, only on an
+    explicit yes: `gh pr comment <n> --body-file <tmp outside the repo>`.
+
+11. **`fix`** — confirmed, and limited to: unused imports and variables this
+    diff introduced; a user-facing string in the wrong language where the
+    surrounding code is unambiguous; a broken relative link with an unambiguous
+    target; trailing whitespace in files the diff touches. Never: migrations,
+    model or serializer shapes, permission logic, validators, test expectations,
+    anything named in the profile's blast-radius list, structural refactoring.
+    After fixing, run `validate` and close with one line.
 
 ## Hard rules
 
-- Nothing is written during analysis.
+- Nothing but the ledger is written during analysis.
 - `blocker` / `major` need `file:line` **and** a reproducible scenario, a named
   mechanism, or a quoted rule. Vague findings are `nit`. Zero blockers is a
   legitimate result — do not inflate.
-- What the validate command catches is one finding ("the suite is red"), not
-  a scattering.
+- Verdicts are stable: the same commits get the same verdict. A change is
+  explained by its class — new commits, a missed finding, a stated escalation
+  cause, a withdrawn finding with its mechanism.
+- What `validate`, the linter or a git hook catches is one finding ("the gate is
+  red"), not a scattering, and not repeated as judgement.
 - Requirements are not invented; a suspected gap is "possible gap — check
   against the task".

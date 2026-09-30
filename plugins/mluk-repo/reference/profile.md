@@ -58,3 +58,7 @@ Project lenses added to the library rubric, one per line with the anchor that
 makes a finding `major`: a security path (an auth shortcut that must not
 widen), a data-loss path (an operation that re-creates rows with new ids), a
 contract clients rely on, a language rule for user-facing strings.
+
+| Key | Default | Read by |
+| --- | --- | --- |
+| `ledger` | `docs/local/reviews/` — must be gitignored; one file per reviewed target | `review`, `create-pr` |
