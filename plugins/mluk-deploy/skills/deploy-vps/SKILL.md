@@ -67,18 +67,29 @@ it will be billed.
   GitHub keeps only the latest pending run anyway.
 - **The production workflow starts as `workflow_dispatch` only**, until production exists.
 - **The server pulls a private repository with its own read-only deploy key**, through an SSH host
-  alias in `~/.ssh/config`.
+  alias in `~/.ssh/config`. Pin github.com's host key after checking its published fingerprint.
+- **The Actions key gets a forced command** in `authorized_keys`
+  (`restrict,command="cd … && git pull … && deploy/server/deploy.sh"`): the workflow sends nothing
+  meaningful, and a key leaked from GitHub can only trigger a deploy.
 
 ## Fresh host (Ubuntu LTS)
+
+**Caddy runs from its official Docker image** (`caddy:2.x`, its own compose project, host networking,
+configs from `/etc/caddy`, certificates in a volume). Its apt repository has been signed with an
+expired subkey since 2024, and a stale source then breaks every `apt update`.
 
 A bootstrap script, run once as root, safe to rerun:
 - updates and `unattended-upgrades`;
 - Docker from Docker's repository, with capped logs;
-- Caddy from Caddy's repository, with `import /etc/caddy/sites/*.caddy`;
+- `/etc/caddy` with `import /etc/caddy/sites/*.caddy` (Caddy itself comes from the image);
 - a `deploy` user with root's keys, the docker group and sudo;
 - `/srv/<project>`;
 - UFW (22/80/443);
 - a weekly `docker image/builder prune`.
+
+The script removes known-broken apt sources **before** its first `apt-get update`, logs to a file, and
+prints the failing line on an error. Test it end to end in a clean container of the same release —
+including a rerun from a half-done state — before handing it to the owner.
 
 Then, as separate steps:
 
@@ -112,6 +123,10 @@ Then, as separate steps:
   `ALLOWED_HOSTS`.
 - **Absolute media URLs.** `build_absolute_uri` keeps an absolute `MEDIA_URL` as is. Use it so images
   point at the host that serves them, not at the proxying web origin.
+- **Object storage tokens filtered by client IP** must list the server's IPv6 range too: Linux prefers
+  IPv6 when the endpoint has it, and the request then fails as if the key were wrong.
+- **Hosts that are not the site still need noindex**: the API host (`X-Robots-Tag` + its own
+  `robots.txt` in the proxy) and a public media bucket (a `robots.txt` object).
 - **Config values that live outside the database** (e.g. django-constance on Redis) do not travel
   with a `pg_dump`. Export them separately when seeding an environment.
 - **`POSTGRES_PASSWORD` only initialises a new volume.** Changing it later needs `ALTER USER`.

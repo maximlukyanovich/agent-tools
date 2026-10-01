@@ -7,11 +7,18 @@ description: How a Next.js front of a personal project is deployed on Vercel —
 
 ## Projects and branches
 
-- **One Vercel project per long-lived environment** (`<project>-staging`, `<project>-production`),
-  each with its own Production Branch (`staging`, `main`) and its own env vars and domain. Pull
-  requests get preview deployments inside the project they target.
-- **The production project is created when production is set up**, not earlier. The apex domain is
-  not attached to anything before that.
+- **One Vercel project for staging and production** (the Hobby way; Custom Environments are Pro):
+  - **Production Branch = `main`**, set right after import — Vercel picks the repository's default
+    branch (often `develop`) otherwise;
+  - **staging is a Preview deployment of the `staging` branch**, with its own domain assigned to that
+    Git branch (`staging.example.com` → Git Branch `staging`);
+  - pull requests get previews in the same project and use the Preview env vars too.
+- **The project needs a first deploy before a branch domain resolves.** A branch created before the
+  project has no deployment until something is pushed or "Create Deployment" is run with its name.
+- **Remove the automatic `<project>.vercel.app` production domain** when the project has its own
+  domains. Per-deployment URLs stay; they are covered by the app's own gate and noindex header.
+- **Production is gated and noindex until launch**: Production env gets only the gate and
+  `ALLOW_INDEXING=false`, so a push to `main` cannot expose anything.
 - **Function region `fra1`** in `vercel.json` (`{"regions": ["fra1"]}`) when the backend and the
   users are in Europe. The default is `iad1`: every server-side call would cross the Atlantic, and
   personal data would leave the EU.
@@ -36,11 +43,16 @@ description: How a Next.js front of a personal project is deployed on Vercel —
 
 ## Gating a staging site
 
-The Hobby plan cannot password-protect a production URL. A staging project's own production domain is
-public, so staging is gated in the app:
-- basic auth in the proxy/middleware, driven by env vars and off when they are absent;
-- the same check in route handlers that the middleware matcher skips (`/api/*`). Otherwise the API
-  proxy stays open behind the password page.
+The Hobby plan cannot password-protect a custom domain, so staging is gated in the app:
+- **basic auth in the proxy/middleware** (Next 16 `proxy.ts`, Node runtime): a list of users as JSON in
+  one env var (`{"user":"password",…}`), so each person is added or removed on their own. It is off
+  when the variable is absent;
+- **the gate covers `/api/*` too** (include it in the matcher and skip only i18n for it). Otherwise the
+  API proxy stays open behind the password page;
+- **Vercel Authentication (Deployment Protection) off**: with it on, branch domains ask for a Vercel
+  login of the team, and testers outside the team cannot get in;
+- **an `X-Robots-Tag: noindex, nofollow` header** from `next.config` `headers()` while indexing is off,
+  on top of robots.txt and the page metadata.
 
 ## Plan limits
 
