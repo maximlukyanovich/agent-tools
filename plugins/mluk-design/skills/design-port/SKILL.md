@@ -73,8 +73,17 @@ and never copies the second from a demo.
    page, measure what the kit specifies (sizes, offsets, colours, states, both
    themes, the narrow viewport, reduced motion) and compare numbers, then look at
    the screenshot. A dev server may not pick up a newly created stylesheet added
-   through an import — when the styles are demonstrably absent from the served
-   bundle, ask the owner to restart it before debugging the CSS.
+   through an import, or an edit to the global stylesheet — when the served rule
+   demonstrably differs from the file, ask the owner to restart it before
+   debugging the CSS.
+
+8. **Compose kit classes from whole strings.** A modifier glued to its base in a
+   template literal with a leading space (`` `base${on ? ' base--mod' : ''}` ``)
+   does not survive `prettier-plugin-tailwindcss`: it trims the space on every
+   format, the two classes fuse into one unknown name, and a fix made by hand
+   comes undone at the next format. Pick from complete strings
+   (`on ? 'base base--mod' : 'base'`) or join through the project's `cn()` /
+   `clsx`.
 
 ## How not to do it
 
@@ -87,6 +96,8 @@ and never copies the second from a demo.
 - Treating an agreed deviation in one spot as licence to deviate elsewhere.
 - Hiding keyboard or hover affordances below a breakpoint and calling it
   "mobile".
+- Building a class list in a template literal that relies on a space inside
+  the literal.
 
 ## How it is verified
 
