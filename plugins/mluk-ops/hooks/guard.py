@@ -116,6 +116,9 @@ def is_read_segment(segment: str) -> bool:
         return sub in READ_SUBCOMMANDS[cmd]
     if cmd == 'crontab':
         return args == ['-l']
+    if cmd == 'sshd':
+        # -T prints the effective configuration, -t only checks it; nothing is changed.
+        return bool(args) and all(a in ('-T', '-t') for a in args)
     if cmd == 'dpkg':
         return bool(args) and args[0] in ('-l', '-s', '-L')
     if cmd == 'sed':

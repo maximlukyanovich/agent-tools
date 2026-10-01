@@ -92,8 +92,11 @@ with the warning in the prompt. The marker is never added on the strength of an 
 3. **Anything that can lock the owner out goes last and gets a second path.** This covers SSH
    configuration, the firewall, sudo and users. Before such a step, a second session is open or the
    provider console is at hand. After it, a new login is tested before the old session is closed.
-4. **Secrets stay on the server.** `.env` files are edited in place, never printed in full into the
-   chat. A value the agent needs to show is masked.
+4. **Secrets never reach the chat.** `.env` files are edited in place. A secret file is inspected
+   only by its structure — key names and value lengths — never by printing lines through a "masking"
+   pattern: a pattern that misses one renamed key prints the value. Tools that echo their own code
+   (a browser automation `run_code`, a script runner) must not receive a secret inline either; read it
+   inside a process whose output you control.
 
 ## 7. Access lifetime
 
