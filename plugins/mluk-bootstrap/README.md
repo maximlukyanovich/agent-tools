@@ -28,12 +28,9 @@ procedure differs from the library's.
 - `skills/layers` — the five layers a rule can live on, what each costs, and
   the anti-patterns that make a harness expensive. Loaded whenever a rule needs
   a home.
-- `skills/kickoff` — how a task is started: plan mode, exploration, the
-  questionnaire rules, the decisions table, slices, approval, and the habit of
-  proposing a library change after an owner's decision.
-- `skills/design-port` — how a design kit is ported: the source read at write
-  time, kit classes worn by a matching third-party primitive, the stretched-link
-  card, real data over demo data, and what to do when the kit itself is wrong.
+
+The kickoff method (how a task is started) lives in `mluk-repo`, next to
+`/mluk-repo:task` that runs it; porting a design kit lives in `mluk-design`.
 
 ## Reference
 

@@ -28,7 +28,7 @@ The order is fixed. Steps are not reordered or skipped.
 
 2. **Ask what the code cannot answer.** One or two batches, never one question
    per turn, every question with a default marked as the recommendation. The
-   questionnaire rules are in the `kickoff` skill; the list is in
+   questionnaire rules are in the `kickoff` skill of `mluk-repo`; the list is in
    `${CLAUDE_PLUGIN_ROOT}/reference/questions.md` — ten questions, and the
    most valuable is "what has already gone wrong here", because without it the
    hook set comes out speculative. Wait for the answers.
@@ -44,8 +44,10 @@ The order is fixed. Steps are not reordered or skipped.
    belongs on: the `layers` skill.
 
    Order: `AGENTS.md` first — everything else references it — then `CLAUDE.md`,
-   the profile, `settings.json` (enable `mluk-repo@mluk-agent-tools`; `mluk-ru`
-   is user-scoped and needs nothing here), skills, hooks, MCP, docs.
+   the profile, `settings.json` (enable `mluk-repo@mluk-agent-tools`, plus
+   `mluk-design` where there is a design kit, `mluk-deploy` where the project
+   deploys, `mluk-ops` where the agent works on a server; `mluk-ru` is
+   user-scoped and needs nothing here), skills, hooks, MCP, docs.
 
    **Local commands are the exception, not the rule.** `commit`, `create-pr`,
    `promote`, `review`, `sync`, `start`, `task`, `update-docs` exist in

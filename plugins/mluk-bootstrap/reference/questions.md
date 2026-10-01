@@ -3,7 +3,7 @@
 Rules: ask in batches through the questionnaire tool, never one per turn; every
 question carries a default marked as the recommendation; never ask what the
 inventory already answered. **If an answer changes no file, the question is
-redundant.** The questionnaire rules themselves are in the `kickoff` skill.
+redundant.** The questionnaire rules themselves are in the `kickoff` skill of `mluk-repo`.
 
 **Q1. The repository's role and current phase.** What the product is, in a
 paragraph; who the repository's clients are; whether there are sibling

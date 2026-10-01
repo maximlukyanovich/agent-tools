@@ -1,6 +1,6 @@
 {
   "name": "mluk-bootstrap",
-  "description": "Initialise or audit a repository's agent harness: AGENTS.md, project profile, skills, hooks, docs — and the way a task is started. Stack-agnostic.",
+  "description": "Initialise or audit a repository's agent harness: AGENTS.md, project profile, skills, hooks, docs, and the layer model behind them. Stack-agnostic.",
   "author": {
     "name": "Maxim Lukyanovich",
     "email": "maximlukyanovich94@gmail.com"

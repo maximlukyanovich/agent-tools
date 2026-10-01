@@ -37,6 +37,9 @@ asks and offers to write the answer into the profile.
   the key, `gh` is global and is not switched.
 - `git-safety` — what is never run, what needs a go-ahead in the current turn,
   when `--amend` is acceptable.
+- `kickoff` — how a task is started: plan mode, exploration, the questionnaire
+  rules, the decisions table, slices, approval, and proposing a library change
+  after an owner's decision. `/mluk-repo:task` runs it.
 
 ## Local overrides
 

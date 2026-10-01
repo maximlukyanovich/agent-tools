@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "mluk-agent-tools",
-  "description": "Personal Claude Code tooling for GitHub-hosted projects: repository bootstrap, repository workflow (commit, PR, review, sync, kickoff), and business Russian copy.",
+  "description": "Personal Claude Code tooling for GitHub-hosted projects: repository bootstrap, repository workflow (commit, PR, review, sync, kickoff), design-kit porting, deployment, safe server access, and business Russian copy.",
   "owner": {
     "name": "Maxim Lukyanovich",
     "email": "maximlukyanovich94@gmail.com"
@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "mluk-bootstrap",
-      "description": "Initialise or audit a repository's agent harness: AGENTS.md, project profile, skills, hooks, docs — and the way a task is started. Stack-agnostic.",
+      "description": "Initialise or audit a repository's agent harness: AGENTS.md, project profile, skills, hooks, docs, and the layer model behind them. Stack-agnostic.",
       "source": "./plugins/mluk-bootstrap",
       "category": "workflow"
     },
@@ -24,6 +24,24 @@
       "description": "Business Russian for client-facing, legal and documentation texts: the principles, the self-check, the checklist, and a review command.",
       "source": "./plugins/mluk-ru",
       "category": "writing"
+    },
+    {
+      "name": "mluk-ops",
+      "description": "Safe agent access to project servers: srv with an audit log, a guard hook (reads pass, changes ask, irreversible commands go to the owner) and the server-ops protocol.",
+      "source": "./plugins/mluk-ops",
+      "category": "workflow"
+    },
+    {
+      "name": "mluk-deploy",
+      "description": "How personal projects are deployed: a Compose stack on a VPS behind Caddy with GitHub Actions, a Next.js front on Vercel, and moving DNS to Cloudflare without breaking mail. Skills only.",
+      "source": "./plugins/mluk-deploy",
+      "category": "workflow"
+    },
+    {
+      "name": "mluk-design",
+      "description": "Working against a design kit: porting it into the codebase and handling a kit that is itself wrong. Enable where a kit exists.",
+      "source": "./plugins/mluk-design",
+      "category": "workflow"
     }
   ]
 }

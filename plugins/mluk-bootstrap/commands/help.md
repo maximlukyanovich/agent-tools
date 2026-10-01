@@ -1,5 +1,5 @@
 ---
-description: What mluk-bootstrap can do — commands, the layer model it applies, what it creates, and the kickoff method it carries.
+description: What mluk-bootstrap can do — commands, the layer model it applies, what it creates, and where the working method lives.
 argument-hint: '[<language code>]'
 ---
 
@@ -23,9 +23,10 @@ Language: the conversation's, unless `$1` gives a code.
    documents, skills, commands; the cheapest layer that can catch the rule — and
    point at `${CLAUDE_PLUGIN_ROOT}/skills/layers/SKILL.md` for the rest.
 
-4. **State the kickoff method in a few lines** — plan mode, exploration,
+4. **Mention where the working method lives**: the kickoff method (plan mode,
    questions with a marked recommendation, a decisions table, slices, approval
-   before code — and point at `${CLAUDE_PLUGIN_ROOT}/skills/kickoff/SKILL.md`.
+   before code) is the `kickoff` skill of `mluk-repo`; porting a design kit is
+   `mluk-design`; deployment and server access are `mluk-deploy` and `mluk-ops`.
 
 5. **Say what `/mluk-bootstrap:setup` creates**: `AGENTS.md`, `CLAUDE.md`, the
    project profile, `settings.json` with the library plugins, skills, hooks,
