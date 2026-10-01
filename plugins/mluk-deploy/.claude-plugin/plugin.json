@@ -1,0 +1,8 @@
+{
+  "name": "mluk-deploy",
+  "description": "How personal projects are deployed: a Docker Compose stack on a VPS behind Caddy with GitHub Actions, a Next.js front on Vercel, and moving a domain's DNS to Cloudflare without breaking mail. Knowledge only — no hooks.",
+  "author": {
+    "name": "Maxim Lukyanovich",
+    "email": "maximlukyanovich94@gmail.com"
+  }
+}
