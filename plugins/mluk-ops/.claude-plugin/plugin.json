@@ -1,0 +1,8 @@
+{
+  "name": "mluk-ops",
+  "description": "Safe agent access to project servers: every command through srv with an audit log, a PreToolUse guard that lets reads pass, asks for reversible changes and hands irreversible ones to the owner, and the server-ops protocol.",
+  "author": {
+    "name": "Maxim Lukyanovich",
+    "email": "maximlukyanovich94@gmail.com"
+  }
+}

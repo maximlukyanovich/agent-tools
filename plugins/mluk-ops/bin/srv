@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+"""srv — the one way an agent reaches a configured server. Every call is appended to the audit log.
+
+    srv <server> '<remote command>'          run it over SSH (one quoted argument)
+    srv <server> --get <remote> <local>      copy a file from the server
+    srv <server> --put <local> <remote>      copy a file to the server
+    srv --list                               configured servers
+
+Servers come from ~/.config/mluk-ops/servers.json (see the plugin README). The agent's own key is
+used with IdentitiesOnly, so the owner's keys in ssh-agent are never offered. The guard hook
+(hooks/guard.py) decides whether a call may run; srv only executes and records it.
+"""
+from __future__ import annotations
+
+import datetime as dt
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'lib'))
+import ops_config  # noqa: E402
+
+
+def usage(code: int = 2) -> None:
+    print(__doc__.strip().split('\n\n')[1], file=sys.stderr)
+    sys.exit(code)
+
+
+def ssh_options(server: dict) -> list[str]:
+    opts = ['-o', 'IdentitiesOnly=yes', '-o', 'BatchMode=yes', '-o', 'StrictHostKeyChecking=accept-new',
+            '-o', 'ConnectTimeout=10']
+    if server.get('key'):
+        opts += ['-i', str(Path(server['key']).expanduser())]
+    return opts
+
+
+def audit(config: dict, record: dict) -> None:
+    path = ops_config.audit_log_path(config)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, 'a', encoding='utf-8') as fh:
+        fh.write(json.dumps(record, ensure_ascii=False) + '\n')
+
+
+def main(argv: list[str]) -> int:
+    config = ops_config.load()
+    if not argv or argv[0] in ('-h', '--help'):
+        usage(0 if argv else 2)
+    if argv[0] == '--list':
+        for name, server in config['servers'].items():
+            print(f"{name}\t{server.get('user', 'root')}@{server['host']}\t{server.get('note', '')}")
+        return 0
+
+    name, rest = argv[0], argv[1:]
+    server = config['servers'].get(name)
+    if server is None:
+        print(f'srv: unknown server {name!r} (configured: {", ".join(config["servers"]) or "none"} — '
+              f'{ops_config.CONFIG_PATH})', file=sys.stderr)
+        return 2
+    if not rest:
+        usage()
+
+    target = f"{server.get('user', 'root')}@{server['host']}"
+    port = str(server.get('port', 22))
+    if rest[0] in ('--get', '--put'):
+        if len(rest) != 3:
+            usage()
+        src, dst = rest[1], rest[2]
+        pair = [f'{target}:{src}', dst] if rest[0] == '--get' else [src, f'{target}:{dst}']
+        cmd = ['scp', '-P', port, *ssh_options(server), *pair]
+        shown = f'{rest[0]} {src} {dst}'
+    else:
+        remote = ' '.join(rest)
+        cmd = ['ssh', '-p', port, *ssh_options(server), target, remote]
+        shown = remote
+
+    started = dt.datetime.now(dt.timezone.utc)
+    code = subprocess.call(cmd)
+    audit(config, {
+        'ts': started.isoformat(timespec='seconds'),
+        'server': name,
+        'command': shown,
+        'exit': code,
+        'seconds': round((dt.datetime.now(dt.timezone.utc) - started).total_seconds(), 1),
+        'owner_approved': os.environ.get('SRV_OWNER_APPROVED') == '1',
+        'cwd': os.getcwd(),
+    })
+    return code
+
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv[1:]))
