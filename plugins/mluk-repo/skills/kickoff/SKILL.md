@@ -66,6 +66,10 @@ rename does not need this.
 7. **After approval**: code in slices, validate after each, verify in the real
    environment, and commit each slice separately — only on an explicit
    go-ahead, never pushed without its own.
+   When the work is a queue of small tasks, each one ends at the base branch:
+   its PR is merged there after green CI on the owner's go-ahead. Promotion up
+   the branch chain (to staging, to production) happens in batches, only when
+   the owner asks for it — not once per task.
 
 8. **After an owner's decision worth keeping** — a convention, a rule for how to
    ask, a preset — propose the matching change in the personal library
