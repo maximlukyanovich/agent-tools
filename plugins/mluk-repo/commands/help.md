@@ -27,7 +27,7 @@ Language: the conversation's, unless `$1` gives a code.
    `${CLAUDE_PLUGIN_ROOT}/reference/profile.md` for keys and defaults.
 
 4. **Name the skills** — `commit-conventions`, `pr-conventions`,
-   `github-accounts`, `git-safety` — one line each.
+   `github-accounts`, `git-safety`, `yandex-browser` — one line each.
 
 5. **Say what is present here** — is there a profile, which sections it has,
    which local overrides exist in `.claude/commands/`. One line each.

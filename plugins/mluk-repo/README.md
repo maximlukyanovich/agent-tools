@@ -40,6 +40,9 @@ asks and offers to write the answer into the profile.
 - `kickoff` — how a task is started: plan mode, exploration, the questionnaire
   rules, the decisions table, slices, approval, and proposing a library change
   after an owner's decision. `/mluk-repo:task` runs it.
+- `yandex-browser` — reproducing Yandex-Browser-only bugs under Playwright
+  without installing the browser, and its known quirk: a swipe that starts on
+  an overlay's shadow goes to the wrong scroller.
 
 ## Local overrides
 
