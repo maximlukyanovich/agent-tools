@@ -51,7 +51,9 @@ rename does not need this.
 
 5. **Write the plan**: context (why this change, what prompted it), the
    decisions table, the recommended architecture (one, not a survey), slices in
-   execution order with the files each touches, assumptions the owner can
+   execution order with the files each touches (for a shared function,
+   hook or component the plan changes: its call sites and how each keeps its
+   behaviour), assumptions the owner can
    overturn, open questions, and verification (how the result is proven — tests,
    a browser check, a curl).
    The plan is written in the language of the chat — the owner reads it in the
@@ -65,7 +67,20 @@ rename does not need this.
 
 7. **After approval**: code in slices, validate after each, verify in the real
    environment, and commit each slice separately — only on an explicit
-   go-ahead, never pushed without its own.
+   go-ahead, never pushed without its own. Inside each slice:
+   - **A behaviour change ships with its test in the same commit** — new or
+     changed logic, a hook's lifecycle, an event handler, a timer: the commit
+     carries the test that would fail without it. When it genuinely cannot be
+     tested, the commit body says why. A test promised for "the next commit"
+     is the gap reviews keep finding.
+   - **Shared code changes only when the change is right for every consumer.**
+     Walk the call sites first; a need that only one caller has stays with that
+     caller.
+   - **Extending shared code is backward-compatible.** A new parameter is
+     optional and its default keeps the old behaviour; existing calls keep
+     their meaning. When compatibility cannot hold, every caller is migrated
+     in the same change — never a shared signature that half the callers
+     misread.
    When the work is a queue of small tasks, each one ends at the base branch:
    its PR is merged there after green CI on the owner's go-ahead. Promotion up
    the branch chain (to staging, to production) happens in batches, only when

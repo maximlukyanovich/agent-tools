@@ -70,6 +70,13 @@ instead of omitting the line. Russian UI terms are quoted with guillemets.
 
 ## Rules for both presets
 
+- **The header fits the limit, counted before committing.** Where commitlint
+  runs, its `header-max-length` is the limit (`config-conventional` and
+  `commitlint-config-gitmoji` both set 100); without one, aim under 100 anyway. The `:gitmoji:` shortcode counts as
+  text — `:building_construction: ` alone takes 24 characters. Count the first
+  line (`head -1 msg | wc -m`) instead of finding out from a rejected hook. A
+  header that lists several changes is the usual offender: name the main one,
+  the body carries the rest.
 - **Every commit has a body.** A one-line subject with no body is a
   regression the owner has flagged. The body groups what changed by area and
   says why.

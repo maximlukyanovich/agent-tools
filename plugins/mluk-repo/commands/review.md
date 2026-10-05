@@ -93,9 +93,12 @@ never rewritten.
    A→none→A — and a peer that misbehaves, such as a 200 that closes at once),
    `perf` (N+1, a per-row query, a full scan on a hot path, a client-only fetch
    on an SEO surface), `dup` (a rule written inline next to the shared
-   implementation), `test` (a behaviour change with no test is its own `major`,
-   unless it is genuinely untestable and the diff says why; a test passing by
-   coincidence), `convention` (placement, style drift), `docs` (behaviour or
+   implementation), `test` (a behaviour change with no test in the same commit is its own
+   `major`, unless it is genuinely untestable and the commit says why; a test
+   passing by coincidence), `shared` (a change to a shared function, hook or
+   component that alters behaviour for an existing caller — walk every call
+   site; an extension that is not backward-compatible and did not migrate its
+   callers is `major`), `convention` (placement, style drift), `docs` (behaviour or
    contract changed, document did not; a type's doc comment contradicted by the
    code; a compromise as a `TODO` instead of a techdebt entry), `security` (a
    secret in the diff, a token logged, an auth shortcut widened, an object
