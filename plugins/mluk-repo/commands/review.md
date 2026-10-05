@@ -130,7 +130,10 @@ never rewritten.
    / `changes requested` / `ready to merge`), findings grouped by severity —
    each with tag, class, `file:line`, what is wrong, the anchor, a one-line fix
    — then "what is good" if there is anything honest to say, then open
-   questions for the owner. **Stop and ask** what a further pass should add
+   questions for the owner. When a finding's class has come up before — in
+   earlier passes of this ledger, in other ledgers, or in several places of
+   this diff — add one line proposing the rule in the project's repository that
+   would prevent it during the work (kickoff step 8). **Stop and ask** what a further pass should add
    when this is pass 3+ with no new commits, when findings grew while the delta
    is small, or when `escalated` plus `fix-critique` are over half the findings.
 
