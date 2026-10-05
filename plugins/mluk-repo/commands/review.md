@@ -63,7 +63,8 @@ never rewritten.
 ## Steps
 
 1. **Parse arguments; read the profile** (`base branch`, `validate`,
-   `## Review` with `ledger`, `## Docs` for the contract log and techdebt file).
+   `## Review` with `ledger`, `design source` and `consumers`, `## Docs` for
+   the contract log and techdebt file).
 
 2. **Find the ledger and set the target.**
    - The ledger's last head equals `HEAD` and no `full` → there is nothing new:
@@ -102,11 +103,19 @@ never rewritten.
    bound), `contract` (a field renamed or retyped without a note in the contract
    log), `language` (a user-facing string in the wrong language). Project
    lenses from `## Review` carry the same weight. A finding names **every** place
-   with the same mechanism, not only the first one found.
+   with the same mechanism, not only the first one found. UI in the diff is
+   checked against the profile's `design source` (read only). A contract change
+   — a field, an endpoint, a payload's shape or timing — is followed into each
+   `consumers` repository's call sites; a consumer that now misreads it is a
+   finding here.
 
 6. **Try to refute each `blocker` / `major`** in the code before keeping it — a
    guard elsewhere, a caller that never passes the bad input. What survives is
-   reported; what does not is dropped or demoted with the reason.
+   reported; what does not is dropped or demoted with the reason. Every claim
+   about a library's behaviour — in a finding or under "what is good" — is
+   checked in its source or by a probe outside the repository, not assumed; a
+   comment or test name that promises a behaviour needs a case that would fail
+   without it.
 
 7. **Reconcile with the ledger.** Now read it, and tag every finding:
    `new` (code after the last reviewed head), `missed` (older code, never raised

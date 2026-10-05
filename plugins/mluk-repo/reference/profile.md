@@ -62,3 +62,5 @@ contract clients rely on, a language rule for user-facing strings.
 | Key | Default | Read by |
 | --- | --- | --- |
 | `ledger` | `docs/local/reviews/` — must be gitignored; one file per reviewed target | `review`, `create-pr` |
+| `design source` | none — where the visual design lives (a design-system project, a kit path); read, never written | `review` |
+| `consumers` | none — sibling repositories that consume this one's contract | `review` |
