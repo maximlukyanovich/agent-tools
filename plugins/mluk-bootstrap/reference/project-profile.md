@@ -7,7 +7,8 @@ It is **sectioned**, and each plugin owns its sections. `mluk-bootstrap` writes
 the whole file; a library plugin installed on its own creates or appends only
 its own section and never rewrites someone else's. Exact keys and defaults for
 `## Repository`, `## Docs`, `## Task`, `## Checks` and `## Review` are in
-`mluk-repo`'s `reference/profile.md`; `## Copy` is read by `mluk-ru`.
+`mluk-repo`'s `reference/profile.md`; `## Frontend` is read by `mluk-fe`
+(keys in its `reference/profile.md`); `## Copy` is read by `mluk-ru`.
 
 ```markdown
 # Project profile
@@ -44,6 +45,11 @@ durable links, with priority order and what to do on conflict.
 
 ## Languages
 Committed text, user-facing strings, conversation.
+
+## Frontend
+For `mluk-fe`: where the translation catalogs live and in which shape
+(`messages/<locale>.json`, flat or nested), the locales, the Next.js app root
+(`src/app`), and which hooks are switched off here and why.
 
 ## Copy
 For `mluk-ru`: canonical documents whose wording is the reference, the

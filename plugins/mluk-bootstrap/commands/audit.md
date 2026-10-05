@@ -12,7 +12,11 @@ The harness exists; the job is to find the gaps, not to rewrite it.
 
 1. **Document against code.** Do the commands named in `AGENTS.md` exist —
    locally or in an enabled plugin? Does the described architecture match the
-   tree? Are the enforcement mechanisms it names actually wired up? **Prose
+   tree? Are the enforcement mechanisms it names actually wired up? A
+   linter plugin in the dev-dependencies (`eslint-plugin-boundaries`, an
+   import-order or a11y plugin) that the linter config never loads is a rule
+   the project believes it has — check each against the config, and the prose
+   that cites it against what the rule actually forbids. **Prose
    that contradicts the code is stale prose, and it is worse than no prose** —
    it looks like a source of truth without being one.
 
