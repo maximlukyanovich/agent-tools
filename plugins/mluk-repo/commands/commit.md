@@ -89,8 +89,9 @@ diff says otherwise, pick the topic from the diff and say so in one line.
 
 8. **Wrap up**: `git log --oneline -<N>` with the new commits on top, and a
    one-line reminder that nothing was pushed. When the commits close a task or
-   a round of review fixes, add the review to run next, in a fresh session:
-   `/mluk-repo:review` (the ledger narrows it to the new commits). If step 4
+   a round of review fixes, add the review to run next, in a fresh session, as
+   its own code block ready to copy: `/mluk-repo:review` (the ledger narrows it
+   to the new commits). If step 4
    ran the **full** `validate` (not a targeted row) and the tree is now clean,
    record the tree it passed on: `git rev-parse HEAD^{tree} > "$(git rev-parse
    --git-dir)/validated-tree"`. `create-pr` then skips a second identical run.
