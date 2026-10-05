@@ -51,14 +51,29 @@ docs/local/*
 !docs/local/README.md
 ```
 
-`settings.json` enables the library:
+`settings.json` declares where the library comes from and enables it:
 
 ```json
 {
+  "extraKnownMarketplaces": {
+    "mluk-agent-tools": {
+      "source": { "source": "github", "repo": "maximlukyanovich/agent-tools" },
+      "autoUpdate": true
+    }
+  },
   "enabledPlugins": { "mluk-repo@mluk-agent-tools": true },
   "attribution": { "commit": "", "pr": "" }
 }
 ```
+
+Without `extraKnownMarketplaces` the plugins resolve only on a machine whose
+user settings already know the marketplace — a collaborator who clones the
+repository gets "enabled but not installed" with nowhere to install from. With
+it, trusting the folder makes the marketplace known; each enabled plugin is then
+installed once (`claude plugin install <name>@mluk-agent-tools --scope project`).
+GitHub is the one source for everyone, the author included: a library change
+reaches a project once pushed to the library's `main`. The repository is
+private, so a collaborator needs read access.
 
 ## Two traps that cost a rewrite
 

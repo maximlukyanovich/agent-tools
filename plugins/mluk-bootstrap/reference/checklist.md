@@ -7,9 +7,10 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
 - [ ] `CLAUDE.md` imports it and duplicates not a single line of it.
 - [ ] `.claude/project-profile.md` exists with every section an enabled plugin
       reads; no section copies what a command answers.
-- [ ] `.claude/settings.json` enables `mluk-repo@mluk-agent-tools` (and
-      `mluk-design` / `mluk-deploy` / `mluk-ops` where they apply) and sets
-      empty attribution.
+- [ ] `.claude/settings.json` declares `mluk-agent-tools` in
+      `extraKnownMarketplaces` (GitHub source), enables
+      `mluk-repo@mluk-agent-tools` (and `mluk-design` / `mluk-fe` /
+      `mluk-deploy` / `mluk-ops` where they apply) and sets empty attribution.
 - [ ] Skills: real directories under `.claude/skills/`, working symlinks in
       `.agents/skills/`, each with a precise `description`, none restating a
       library skill.

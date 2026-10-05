@@ -59,7 +59,9 @@ The harness exists; the job is to find the gaps, not to rewrite it.
 
 10. **Cross-agent availability.** Do the rules live in `AGENTS.md` rather than
    only in a vendor file? Are the skill symlinks present and unbroken, and
-   pointing the right way?
+   pointing the right way? Is every marketplace named in `enabledPlugins`
+   declared in the project's own `extraKnownMarketplaces`? One known only to
+   the author's user settings works on the author's machine and nowhere else.
 
 11. **Library candidates.** Rules in this project's `AGENTS.md` or skills that
     name no concrete path or id and would hold in any project — list them as

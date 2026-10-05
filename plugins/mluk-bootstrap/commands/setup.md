@@ -44,10 +44,12 @@ The order is fixed. Steps are not reordered or skipped.
    belongs on: the `layers` skill.
 
    Order: `AGENTS.md` first — everything else references it — then `CLAUDE.md`,
-   the profile, `settings.json` (enable `mluk-repo@mluk-agent-tools`, plus
-   `mluk-design` where there is a design kit, `mluk-deploy` where the project
-   deploys, `mluk-ops` where the agent works on a server; `mluk-ru` is
-   user-scoped and needs nothing here), skills, hooks, MCP, docs.
+   the profile, `settings.json` (declare the `mluk-agent-tools` marketplace in
+   `extraKnownMarketplaces` and enable `mluk-repo@mluk-agent-tools`, plus
+   `mluk-design` where there is a design kit, `mluk-fe` in a web front,
+   `mluk-deploy` where the project deploys, `mluk-ops` where the agent works on
+   a server; `mluk-ru` is user-scoped and needs nothing here), skills, hooks,
+   MCP, docs. Plugins are installed with `--scope project`.
 
    **Local commands are the exception, not the rule.** `commit`, `create-pr`,
    `promote`, `review`, `sync`, `start`, `task`, `update-docs` exist in
