@@ -1,0 +1,8 @@
+{
+  "name": "mluk-fe",
+  "description": "Frontend conventions for React / Next.js projects: UI rules every screen follows, component discipline, and PostToolUse hooks for locale parity, translation keys (next-intl) and localised metadata titles. Paths come from the profile's ## Frontend.",
+  "author": {
+    "name": "Maxim Lukyanovich",
+    "email": "maximlukyanovich94@gmail.com"
+  }
+}

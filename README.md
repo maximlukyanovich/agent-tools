@@ -64,6 +64,7 @@ Language follows the conversation; pass a language code to override.
 | `mluk-bootstrap` | generator + audit | Initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model. |
 | `mluk-repo` | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `sync`, `start`, `task`, `update-docs`, and the `kickoff` method — how a task is started. Reads `.claude/project-profile.md`. |
 | `mluk-design` | library | `design-port` — how a design kit is ported. Enabled where a kit exists. |
+| `mluk-fe` | library + hooks | Frontend conventions for React / Next.js: `web-ui-conventions`, `component-discipline`, and PostToolUse hooks for locale parity, translation keys and metadata titles. Reads the profile's `## Frontend`. Enabled in a web front. |
 | `mluk-deploy` | library | How projects are deployed: `deploy-vps`, `deploy-vercel`, `domain-dns`. Skills only. |
 | `mluk-ops` | library + hook | Safe agent access to servers: `srv` with an audit log, a guard hook, the `server-ops` protocol. Enabled only where the agent works on a server. |
 | `mluk-ru` | library | Business Russian: the principles of client-facing and legal copy, the self-check, the checklist, and `review` for a text. |
@@ -132,6 +133,7 @@ command it ships and every document quoting them.
 | `mluk-bootstrap` | `:setup`, `:audit`, `:help` |
 | `mluk-repo` | `:commit`, `:create-pr`, `:promote`, `:review`, `:sync`, `:start`, `:task`, `:update-docs`, `:help` |
 | `mluk-ru` | `:review`, `:help` |
+| `mluk-fe` | `:help` |
 
 ## Layout
 
@@ -156,10 +158,8 @@ project — a convention, a rule, a way of asking — the agent proposes the
 matching change here in the same session, and the owner decides. Candidates
 that are not ready accumulate under `docs/local/` in the working repositories.
 
-Planned next (iteration 2): `mluk-common` (testing and verification, no
-invention, decomposition, docs discipline), `mluk-fe` (React/Next: design
-fidelity, i18n with the locale-parity and translation-key hooks now living in
-`quest-bot-web/.claude/hooks/`, SEO metadata, perf and motion) and `mluk-be`
-(Django: conventions, testing, Celery pitfalls, API contracts). Until then the
-project-level hooks and skills in the working repositories are the reference
-implementations.
+Planned next: `mluk-common` (testing and verification, no invention,
+decomposition, docs discipline), more of `mluk-fe` (SEO metadata on every
+route, perf) and `mluk-be` (Django: conventions, testing, Celery pitfalls, API
+contracts). Until then the project-level skills in the working repositories are
+the reference implementations.

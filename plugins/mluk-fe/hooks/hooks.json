@@ -1,0 +1,32 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/locale-parity.mjs"],
+            "timeout": 30,
+            "statusMessage": "Checking locale parity"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/i18n-keys.mjs"],
+            "timeout": 30,
+            "statusMessage": "Checking i18n keys"
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/metadata-title.mjs"],
+            "timeout": 30,
+            "statusMessage": "Checking page metadata title"
+          }
+        ]
+      }
+    ]
+  }
+}

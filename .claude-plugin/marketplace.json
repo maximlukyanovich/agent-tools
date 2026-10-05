@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "mluk-agent-tools",
-  "description": "Personal Claude Code tooling for GitHub-hosted projects: repository bootstrap, repository workflow (commit, PR, review, sync, kickoff), design-kit porting, deployment, safe server access, and business Russian copy.",
+  "description": "Personal Claude Code tooling for GitHub-hosted projects: repository bootstrap, repository workflow (commit, PR, review, sync, kickoff), design-kit porting, frontend conventions, deployment, safe server access, and business Russian copy.",
   "owner": {
     "name": "Maxim Lukyanovich",
     "email": "maximlukyanovich94@gmail.com"
@@ -41,6 +41,12 @@
       "name": "mluk-design",
       "description": "Working against a design kit: porting it into the codebase and handling a kit that is itself wrong. Enable where a kit exists.",
       "source": "./plugins/mluk-design",
+      "category": "workflow"
+    },
+    {
+      "name": "mluk-fe",
+      "description": "Frontend conventions for React / Next.js: UI rules for every screen, component discipline, and hooks for locale parity, translation keys and localised metadata titles. Enable in a web front.",
+      "source": "./plugins/mluk-fe",
       "category": "workflow"
     }
   ]
