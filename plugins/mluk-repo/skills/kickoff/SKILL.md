@@ -1,6 +1,6 @@
 ---
 name: kickoff
-description: How a piece of work is started and planned — plan mode, exploration, the questionnaire rules (a marked recommendation first, at most four questions a round, a closing "anything to add" always in the first round, later only when new input is plausible), the decisions table, slices, approval before code, separate commits on an explicit go-ahead, and proposing a library change after an owner's decision or a problem that recurs. Use when starting any task that needs a plan, when about to ask the owner questions, after the owner makes a decision worth keeping, and when the same kind of mistake shows up again. Not for trivial edits.
+description: How a piece of work is started and planned — plan mode, exploration, the questionnaire rules (a marked recommendation first, at most four questions a round, a closing "anything to add" always in the first round, later only when new input is plausible), the decisions table, slices, approval before code, separate commits on an explicit go-ahead, and proposing a project rule when a problem recurs. Use when starting any task that needs a plan, when about to ask the owner questions, and when the same kind of mistake shows up again. Not for trivial edits.
 ---
 
 # kickoff
@@ -71,16 +71,10 @@ rename does not need this.
    the branch chain (to staging, to production) happens in batches, only when
    the owner asks for it — not once per task.
 
-8. **After an owner's decision worth keeping** — a convention, a rule for how to
-   ask, a preset — propose the matching change in the personal library
-   (`mluk-agent-tools`) in the same session, in one line: what changes, in which
-   plugin. The owner decides; the change is made in the library's own
-   repository, never from the project.
-
-   A **problem that recurs** — the same class of mistake met again by a review,
-   a check, a hook or the owner (a test missing for new behaviour, a gate
-   failing the same way) — gets a one-line proposal of the rule that would have
-   prevented it while working, in the project's repository: AGENTS.md, a
+8. **A problem that recurs** — the same class of mistake met again by a
+   review, a check, a hook or the owner (a test missing for new behaviour, a
+   gate failing the same way) — gets a one-line proposal of the rule that would
+   have prevented it while working, in the project's repository: AGENTS.md, a
    project skill, a lint rule, a hook. A deterministic check beats a prose
    rule; one sighting is not yet a pattern.
 
@@ -96,8 +90,6 @@ rename does not need this.
 - Treating one approval as permission for the whole chain of commits and
   pushes.
 - Recording decisions only in chat, so the next session re-asks them.
-- Keeping a rule the owner just stated in the project's notes instead of
-  proposing it for the library.
 
 ## How it is verified
 

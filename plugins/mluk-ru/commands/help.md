@@ -27,9 +27,9 @@ Language: the conversation's, unless `$1` gives a code.
    pairs, the copy journal path — and whether this project's profile has it
    (check that file, not `AGENTS.md`).
 
-4. **Say how the set grows**: every owner complaint about wording becomes a
-   principle in the skill (a library change, proposed in the session) plus an
-   entry in the project's copy journal.
+4. **Say how the set grows**: every owner complaint about wording becomes an
+   entry in the project's copy journal; a principle common to projects is
+   moved into the skill by the library's owner.
 
 ## Hard rules
 
