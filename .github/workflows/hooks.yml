@@ -1,0 +1,24 @@
+# The plugins' hooks are code that runs on every Write/Edit or Bash call in the projects that enable
+# them; their tests run here on every push and pull request, since no project's CI covers them.
+name: Hook tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  hooks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: mluk-fe hooks
+        run: node --test 'plugins/mluk-fe/hooks/*.test.mjs'
+      - name: mluk-ops guard
+        run: python3 plugins/mluk-ops/hooks/test_guard.py

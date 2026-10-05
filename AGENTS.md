@@ -53,7 +53,7 @@ holds only the rules for working on the repository itself.
 
 ## 3. Checks before a commit
 
-No automated gate. Before committing, the author checks by hand:
+The only automated gate is the `Hook tests` workflow. Before committing, the author checks by hand:
 
 - every `commands/*.md` has frontmatter with `description` and `argument-hint`;
 - every `skills/*/SKILL.md` has `name` and `description`;
@@ -61,6 +61,9 @@ No automated gate. Before committing, the author checks by hand:
   exists, or a `${CLAUDE_PLUGIN_ROOT}` path;
 - `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
   name matches its catalogue entry;
+- a changed hook passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
+  `python3 plugins/mluk-ops/hooks/test_guard.py`; the `Hook tests` workflow runs the same on
+  every push;
 - the changed command or skill was run once, in a real repository, after
   `claude plugin update` (or via `--plugin-dir`), and did what its text says.
 

@@ -13,4 +13,4 @@ Frontend conventions for React / Next.js projects. Enable it in a web front; the
 
 Paths come from the profile's `## Frontend` section — keys and defaults in [`reference/profile.md`](reference/profile.md). Porting a design kit is `mluk-design`.
 
-The hooks' tests: `node --test plugins/mluk-fe/hooks` (run after every edit).
+The hooks' tests: `node --test 'plugins/mluk-fe/hooks/*.test.mjs'` from the repository root (run after every edit; a bare directory argument fails on Node 24). CI runs them on every push — `.github/workflows/hooks.yml`.
