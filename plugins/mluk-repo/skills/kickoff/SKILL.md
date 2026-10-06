@@ -76,6 +76,11 @@ rename does not need this.
    - **Shared code changes only when the change is right for every consumer.**
      Walk the call sites first; a need that only one caller has stays with that
      caller.
+   - **A changed statement changes everywhere.** Before committing an edit to
+     a rule, a fact or a name in prose, `git grep` its key terms across the
+     committed documents and the harness and fix every copy in the same
+     commit — better still, keep one source and point at it. A copy left
+     behind is the finding a review keeps returning to.
    - **Extending shared code is backward-compatible.** A new parameter is
      optional and its default keeps the old behaviour; existing calls keep
      their meaning. When compatibility cannot hold, every caller is migrated
