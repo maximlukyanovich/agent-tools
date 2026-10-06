@@ -52,6 +52,13 @@ diff says otherwise, pick the topic from the diff and say so in one line.
    described in the project's docs changed but the document did not → say so
    and offer `/mluk-repo:update-docs` first.
 
+   **A changed fact is searched for before the commit.** When the diff changes
+   something the repository states in words — a level, a command, a default,
+   a port, a file's role — grep the old wording across the committed documents,
+   the harness, code comments and env examples. Every copy is fixed in the same
+   commit, or named to the owner as left on purpose (the `kickoff` rule on
+   changed statements, applied at the moment it can still be caught).
+
    **A file that belongs to two groups** (a catalog, a changelog, a config with
    hunks from both tasks) is not a reason to merge the groups or to stash. Stage
    the earlier group's version of that file from a snapshot without touching the
