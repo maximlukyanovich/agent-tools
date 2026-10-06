@@ -109,7 +109,8 @@ never rewritten.
    with the same mechanism, not only the first one found. UI in the diff is
    checked against the profile's `design source` (read only). A contract change
    — a field, an endpoint, a payload's shape or timing — is followed into each
-   `consumers` repository's call sites; a consumer that now misreads it is a
+   `consumers` repository's call sites (its clone from the local profile's
+   `## Siblings`); a consumer that now misreads it is a
    finding here.
 
 6. **Try to refute each `blocker` / `major`** in the code before keeping it — a

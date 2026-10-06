@@ -37,7 +37,8 @@ same commit as the code, through `/mluk-repo:commit`.
 4. **Pick the targets** from the profile's `map`. Rules that bind:
    - A behaviour or contract change that reaches a client is a **product-doc**
      change and a **contract-log** entry, named with the repository when the
-     product docs live in a sibling.
+     product docs live in a sibling. A sibling is named by slug in the profile;
+     its clone on this machine comes from the local profile's `## Siblings`.
    - A compromise goes to the techdebt file with reason and priority, not into
      a `TODO` comment.
    - Reuse an existing document; never leave an empty stub.

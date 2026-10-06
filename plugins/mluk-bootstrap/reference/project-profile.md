@@ -14,8 +14,9 @@ its own section and never rewrites someone else's. Exact keys and defaults for
 # Project profile
 
 Read by every library plugin before it acts. This file outranks the defaults
-those plugins ship; only what the developer says in the current session
-outranks it.
+those plugins ship; a key in the gitignored `project-profile.local.md` outranks
+it for one clone, and what the developer says in the current session outranks
+both.
 
 ## Repository
 Platform and CLI (GitHub, gh). Remote account alias. Base branch. Branch chain.
@@ -57,7 +58,18 @@ glossary of fixed terms, language pairs that must move together, where the
 copy journal lives (`docs/local/copy-journal.md` by default).
 ```
 
-Two rules that keep it useful:
+Three rules that keep it useful:
+
+**True in every clone.** The file is read by whoever clones the repository —
+a collaborator, a fork's owner, the canonical repository's owner — so it
+describes the project as its canonical repository has it: that repository's
+base branch and chain, sibling repositories by `owner/repo` slug, never by
+`../path`. Remote names (`origin`, `upstream`) mean different repositories in
+different clones and are not used to identify one. What holds only in one
+clone — a fork's trunk and its upstream, a local port, `## Siblings` with the
+paths of local checkouts — goes to `.claude/project-profile.local.md`,
+gitignored, same headings, overriding single keys. The mechanics are in
+`mluk-repo`'s `reference/profile.md`.
 
 **Only decisions.** Anything a command answers in one call — the list of
 branches, the installed packages — is fetched, not copied. A copy becomes a

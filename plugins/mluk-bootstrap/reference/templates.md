@@ -85,8 +85,9 @@ permission applies to the current turn only.
 # Commands
 
 Index of what is available here. Library commands come from `mluk-repo` and
-read `.claude/project-profile.md`; local commands override a library one only
-when the procedure differs.
+read `.claude/project-profile.md` (plus the gitignored
+`project-profile.local.md` of this clone); local commands override a library
+one only when the procedure differs.
 
 | Command | Source | Mutating | Note |
 | --- | --- | --- | --- |

@@ -1,6 +1,6 @@
 # The profile section mluk-fe reads
 
-`.claude/project-profile.md`, section `## Frontend`. Lines are `- key: value`; backticks and a trailing ` — comment` are ignored, so a value can carry its reason. A missing key takes the default; a missing section means all defaults.
+`.claude/project-profile.md`, section `## Frontend`. Lines are `- key: value`; backticks and a trailing ` — comment` are ignored, so a value can carry its reason. A missing key takes the default; a missing section means all defaults. The hooks read only this committed file, never the clone's `project-profile.local.md`: what they check must hold in every clone.
 
 | Key | Default | Read by |
 | --- | --- | --- |

@@ -18,8 +18,9 @@ documents are never translated.
 
 1. **Read the sources**, selectively: `AGENTS.md` (sections 1, 2, 4, 5, 6),
    `.claude/COMMANDS.md`, `.claude/project-profile.md` (`## Repository`,
-   `## Checks`, `## Docs`), `docs/README.md` if present. No profile → say so
-   and offer `/mluk-bootstrap:setup`; continue with what `AGENTS.md` gives.
+   `## Checks`, `## Docs`) and this clone's `project-profile.local.md` if
+   present, `docs/README.md` if present. No profile → say so and offer
+   `/mluk-bootstrap:setup`; continue with what `AGENTS.md` gives.
 
 2. **Run the checks** from `## Checks` in one Bash call where possible, plus
    the git baseline:
@@ -41,7 +42,8 @@ documents are never translated.
    verbatim: product and phase (from `AGENTS.md` §1), stack and layout (§2–3),
    things that bite (§6), documents (`## Docs`: where technical and product
    docs live, where the contract log and roadmap are, that `docs/local/` is
-   personal), git (`## Repository`: remote, chain, commit preset), commands
+   personal), git (`## Repository`: remote, chain, commit preset — a key
+   the local file overrides is marked `(local)`), commands
    (from `.claude/COMMANDS.md` — library and local, one line each, mutating
    ones marked), skills (project ones by name; library ones by plugin).
 

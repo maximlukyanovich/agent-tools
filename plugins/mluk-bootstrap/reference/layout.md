@@ -7,6 +7,7 @@ CLAUDE.md                     thin layer: @AGENTS.md plus Claude specifics. In g
   README.md                   map of the directory: what is where, who runs it
   COMMANDS.md                 the command index — library commands and local overrides. Here, not in commands/
   project-profile.md          what the library plugins read: repository, docs, task, checks, review, sources, copy
+  project-profile.local.md    this clone's overrides: a fork's trunk, local paths of siblings. Gitignored
   settings.json               shared settings: enabledPlugins, attribution, allowed MCP, hooks. In git
   settings.local.json         personal permissions. Gitignored
   commands/                   local overrides only. Command files only — no README here
@@ -50,6 +51,10 @@ Matching `.gitignore`:
 docs/local/*
 !docs/local/README.md
 ```
+
+`.claude/*` with a whitelist keeps `project-profile.local.md` out without a line
+of its own. A repository whose `.gitignore` lists exclusions one by one instead
+adds `.claude/project-profile.local.md` explicitly.
 
 `settings.json` declares where the library comes from and enables it:
 

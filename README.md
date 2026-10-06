@@ -113,9 +113,11 @@ Every command and skill here reads the project profile before it acts and treats
 it as authoritative. Strongest first:
 
 1. What the developer says in the current session.
-2. The project profile — `.claude/project-profile.md`.
-3. The project's own `AGENTS.md` and skills.
-4. The defaults in this repository.
+2. This clone's overrides — `.claude/project-profile.local.md`, gitignored: a
+   fork's trunk, the paths of sibling checkouts. Single keys, same headings.
+3. The project profile — `.claude/project-profile.md`.
+4. The project's own `AGENTS.md` and skills.
+5. The defaults in this repository.
 
 A plugin never dictates a branch name or a commit format: it ships a default,
 reads the profile, and asks when the profile is silent.
