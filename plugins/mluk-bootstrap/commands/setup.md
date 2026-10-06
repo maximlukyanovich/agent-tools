@@ -77,5 +77,3 @@ The order is fixed. Steps are not reordered or skipped.
   in another file — including the library's skills. If it does, link to it.
 - **A missing layer is a decision, not an oversight** — recorded in `AGENTS.md`
   with its reason and the conditions that would add it later.
-- **Personal projects only.** A repository under the work tree gets the work
-  library's bootstrap, not this one.

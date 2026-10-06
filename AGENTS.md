@@ -27,12 +27,11 @@ holds only the rules for working on the repository itself.
 - **The method lives here; project specifics live in the project profile.** A
   rule that names a concrete path, id or design system does not belong in a
   plugin. A rule that survives a change of project does not belong in a project.
-- **Personal and work stay apart.** Nothing about Jira, GitLab, worklog or a
-  company standard belongs here; the work library is `secl-agent-tools`.
+- **No workspace specifics.** The plugins work in any clone of any project:
+  nothing here names the author's machine, paths, sibling repositories, other
+  tool libraries or personal habits of working with this one.
 - **One fact, one place.** The skill is the source; README links to it and does
   not restate it.
-- **A rule earned on a live project lands here in the same session**, proposed
-  by the agent and accepted by the owner — not in that project's notes.
 
 ## 2. Conventions
 

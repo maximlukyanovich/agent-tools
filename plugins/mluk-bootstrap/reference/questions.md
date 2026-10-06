@@ -62,6 +62,5 @@ are tokens and where they live.
 handoffs, a copy journal — and where should it live. Default `docs/local/`,
 fully gitignored except its own README.
 
-There is no question about a tracker or time tracking: personal projects have
-neither. A task brief comes inline, from a `docs/local/` note, or from a GitHub
+There is no question about a tracker or time tracking. A task brief comes inline, from a `docs/local/` note, or from a GitHub
 issue when one exists.

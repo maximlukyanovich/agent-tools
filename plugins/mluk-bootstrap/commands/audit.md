@@ -76,15 +76,16 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    and false on the next. The fix is a slug in committed text and the clone's
    specifics in the gitignored `project-profile.local.md`.
 
-12. **Library candidates.** Rules in this project's `AGENTS.md` or skills that
-    name no concrete path or id and would hold in any project — list them as
-    proposals for the library, one line each. This is the mechanism by which the
-    library grows.
+12. **Rules that are not project-specific.** Rules in this project's
+    `AGENTS.md` or skills that name no concrete path or id and would hold in any
+    project — list them, one line each. Where they go is the owner's decision.
 
 ## Report
 
-A table: finding → layer → severity → proposed action. Library candidates as a
-separate short list. Apply changes after confirmation, one group at a time,
+A table: finding → layer → severity → proposed action. Rules that are not
+project-specific as a separate short list. Questions to the owner follow the
+questionnaire rules of `mluk-repo`'s `kickoff` skill, a closing "anything to
+add?" included. Apply changes after confirmation, one group at a time,
 never all at once.
 
 ## Hard rules
@@ -94,5 +95,5 @@ never all at once.
   deviation is a finding only if it is undocumented.
 - **Deleting an artefact is proposed, never done silently** — a command that
   looks unused may be someone's weekly ritual.
-- **Never edit the library from here.** A library candidate is reported; the
-  change to `agent-tools` is a separate, explicit step in that repository.
+- **Only the project's files are edited.** An installed plugin is never
+  edited from here.

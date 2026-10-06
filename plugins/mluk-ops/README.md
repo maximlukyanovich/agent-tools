@@ -38,10 +38,10 @@ The hook's checks: `python3 hooks/test_guard.py` (run after every edit).
    {
      "audit_log": "~/.local/state/mluk-ops/audit.log",
      "servers": {
-       "mytale": {
+       "myapp": {
          "host": "203.0.113.7",
          "user": "deploy",
-         "key": "~/.ssh/mytale_agent",
+         "key": "~/.ssh/myapp_agent",
          "aliases": ["api.example.com", "api-staging.example.com"],
          "note": "staging + production"
        }

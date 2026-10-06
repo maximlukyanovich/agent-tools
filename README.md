@@ -9,39 +9,30 @@ run, how Russian client copy is phrased — these are the same in every project;
 only the branch chain, the validate command and the domain differ, and those
 stay in the project.
 
-This is the **personal** twin of the work library (`secl-agent-tools`). The two
-never mix: work projects have Jira, GitLab and time tracking; personal projects
-have GitHub with `gh`, no tracker and no timesheets. A rule earned at work goes
-to the work library, a rule earned here goes here.
-
 ## Installing
 
-On this machine the marketplace is registered from the working checkout — no
-push needed, but an installed plugin is a **copy** in
-`~/.claude/plugins/cache/`, so an edit reaches sessions only after a refresh:
+The marketplace is this GitHub repository. An installed plugin is a **copy**
+in `~/.claude/plugins/cache/`, so a change reaches a session once it is pushed
+to `main` and the copy is refreshed:
 
 ```bash
-claude plugin marketplace add /home/maximlukyanovich/private/tools/agent-tools
+claude plugin marketplace add maximlukyanovich/agent-tools
 claude plugin install mluk-bootstrap@mluk-agent-tools --scope user
-claude plugin update  mluk-bootstrap@mluk-agent-tools     # after every edit, then restart the session
+claude plugin marketplace update mluk-agent-tools
+claude plugin update  mluk-bootstrap@mluk-agent-tools     # then restart the session
 ```
 
-To run a plugin straight from the checkout while writing it, without
-installing: `claude --plugin-dir /home/maximlukyanovich/private/tools/agent-tools/plugins`.
+To run a plugin straight from a checkout while writing it, without installing:
+`claude --plugin-dir <checkout>/plugins`.
 
-On another machine, from the private repository (SSH, personal account):
-
-```bash
-/plugin marketplace add git@github.com:maximlukyanovich/agent-tools.git
-/plugin marketplace update mluk-agent-tools
-```
-
-Plugins are enabled separately. `mluk-bootstrap` and `mluk-ru` are enabled at
-user scope (`~/.claude/settings.json`); `mluk-repo` is enabled per personal
-project in its `.claude/settings.json`, because its commands are not the way
-work repositories are run:
+A project declares the marketplace and enables what it uses in its own
+`.claude/settings.json`, so every clone gets the same tools — see
+`plugins/mluk-bootstrap/reference/layout.md`:
 
 ```json
+"extraKnownMarketplaces": {
+  "mluk-agent-tools": { "source": { "source": "github", "repo": "maximlukyanovich/agent-tools" } }
+},
 "enabledPlugins": { "mluk-repo@mluk-agent-tools": true }
 ```
 
@@ -150,18 +141,12 @@ plugins/<name>/
 ```
 
 `commands/` is the older of the two plugin formats; Claude Code now prefers
-skills with `disable-model-invocation`. The layout mirrors the work library on
-purpose and migrates in one move when both do.
+skills with `disable-model-invocation`; the layout migrates in one move when
+it does.
 
 ## How this grows
-
-The method comes out of real work. After a decision the owner makes in a
-project — a convention, a rule, a way of asking — the agent proposes the
-matching change here in the same session, and the owner decides. Candidates
-that are not ready accumulate under `docs/local/` in the working repositories.
 
 Planned next: `mluk-common` (testing and verification, no invention,
 decomposition, docs discipline), more of `mluk-fe` (SEO metadata on every
 route, perf) and `mluk-be` (Django: conventions, testing, Celery pitfalls, API
-contracts). Until then the project-level skills in the working repositories are
-the reference implementations.
+contracts).

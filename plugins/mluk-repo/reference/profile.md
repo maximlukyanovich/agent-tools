@@ -24,7 +24,7 @@ the profile; a fact about this machine or this fork → the local file.
 
 **Sibling repositories are named by slug, never by a filesystem path.** A
 committed profile or document writes `owner/repo` plus the path inside it
-(`maximlukyanovich/quest-bot-web` → `docs/product/`); `../web` is true only on
+(`acme/web` → `docs/product/`); `../web` is true only on
 the author's disk. Where the clone lives on this machine is the local file's
 `## Siblings` — one line per slug, `owner/repo: <path>`. A command that needs a
 sibling's file and finds no line for it asks once for the path and offers to
