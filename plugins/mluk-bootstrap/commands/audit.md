@@ -62,8 +62,21 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    pointing the right way? Is every marketplace named in `enabledPlugins`
    declared in the project's own `extraKnownMarketplaces`? One known only to
    the author's user settings works on the author's machine and nowhere else.
+   A declared marketplace in a private repository is still out of reach for a
+   collaborator without read access: compare the project's collaborators
+   (`gh api repos/<project>/collaborators --jq '.[].login'`) with the
+   marketplace's, and report each one missing. Until they have it, deleting a
+   local command that copies the library leaves them with no command at all.
 
-11. **Library candidates.** Rules in this project's `AGENTS.md` or skills that
+11. **True in every clone.** Read the committed harness as a collaborator's
+   clone sees it, not the author's. Remote names used to identify a repository
+   (`origin is <owner>/…`, "never touch upstream" where upstream is someone's
+   own repository), a fork's trunk written as the project's base branch,
+   filesystem paths to sibling checkouts (`../web`) — each is true on one disk
+   and false on the next. The fix is a slug in committed text and the clone's
+   specifics in the gitignored `project-profile.local.md`.
+
+12. **Library candidates.** Rules in this project's `AGENTS.md` or skills that
     name no concrete path or id and would hold in any project — list them as
     proposals for the library, one line each. This is the mechanism by which the
     library grows.

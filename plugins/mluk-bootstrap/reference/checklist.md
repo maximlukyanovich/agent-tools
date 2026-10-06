@@ -30,6 +30,10 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
 - [ ] `docs/README.md` and `docs/local/README.md` exist; `docs/local/` is fully
       ignored except its README.
 - [ ] No harness file contains a secret, an absolute path, or a person's name.
+- [ ] Committed text holds in every clone: sibling repositories by slug, not
+      `../path`; no remote name standing for a repository; a fork's trunk and
+      local paths only in the gitignored `project-profile.local.md`.
+- [ ] Every collaborator of the project can read the marketplace repository.
 - [ ] `/mluk-repo:start` runs and prints a green table — or rows with concrete
       actions.
 
