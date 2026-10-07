@@ -10,9 +10,10 @@ holds only the rules for working on the repository itself.
 - **Nothing is pushed without an explicit instruction on the current turn.**
   Permission does not carry over. Commits are fine once the owner has said what
   to commit; pushing needs its own "+".
-- **`main` is the only branch.** This is a one-person library: commits land on
-  `main` directly, a branch is used only when a change is experimental enough to
-  want a diff first. No force push.
+- **Changes go through a branch and a pull request into `main`.** The library
+  is public and other people install it, so `main` is what they get; a pull
+  request leaves a diff to read before it lands. A trivial fix — a typo, a
+  broken link — may land on `main` directly. No force push.
 - **Plugin files are addressed through `${CLAUDE_PLUGIN_ROOT}`** inside plugin
   texts, never found by searching the filesystem. An installed plugin is a
   copy under `~/.claude/plugins/cache/`, even when the marketplace is
