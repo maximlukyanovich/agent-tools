@@ -41,9 +41,9 @@ hold in every clone.
 | `platform` | `github` with `gh` | all |
 | `remote account` | `personal` (`git@github.com:`); `work` means `git@github-work:` | `create-pr`, `promote`, `start` |
 | `base branch` | `develop` | all |
-| `chain` | `feature/* → develop → main` | `promote`, `create-pr` |
+| `chain` | `feature/* → develop → main` | `promote`, `create-pr`, `next` |
 | `protected` | `develop`, `main` (and `staging` if in the chain) — never pushed directly | `commit`, `create-pr`, `promote` |
-| `upstream` | none; if named, never pushed to, never targeted by a PR | `promote`, `create-pr` |
+| `upstream` | none; if named, never pushed to, never targeted by a PR | `promote`, `create-pr`, `next` |
 | `validate` | asked (e.g. `pnpm validate`, `make test`) | `commit`, `create-pr`, `sync`, `review` |
 | `targeted checks` | none — table of "changed only X → run Y or nothing" | `commit` |
 | `commit preset` | `gitmoji-conventional` | `commit` |
@@ -60,8 +60,8 @@ hold in every clone.
 | `technical` | `AGENTS.md`, `CLAUDE.md`, `docs/README.md` | `update-docs`, `start` |
 | `product` | none — path, or `owner/repo` + path for a sibling, with its language | `update-docs`, `review`, `task` |
 | `contract log` | none — where front↔back contract gaps are recorded; a sibling by slug | `update-docs`, `review` |
-| `roadmap` | none — a sibling by slug when it lives there | `update-docs` |
-| `techdebt` | none — where compromises are recorded instead of `TODO` comments | `update-docs`, `review` |
+| `roadmap` | none — a sibling by slug when it lives there | `update-docs`, `next` |
+| `techdebt` | none — where compromises are recorded instead of `TODO` comments | `update-docs`, `review`, `next` |
 | `map` | table: change category → target document | `update-docs` |
 
 ## Task
@@ -69,7 +69,7 @@ hold in every clone.
 | Key | Default | Read by |
 | --- | --- | --- |
 | `flavours` | none — `name → skill(s) to load` (e.g. `ui → task-ui`, `api → task-api`, `authoring → django-conventions`) | `task` |
-| `brief sources` | inline, `docs/local/` note, GitHub issue | `task` |
+| `brief sources` | inline, `docs/local/` note, GitHub issue | `task`, `next` |
 | `branch prefix` | `feat|fix|refactor|chore|docs|perf/<kebab-slug>` off the base branch | `task` |
 | `blast radius` | none — operations that must be named in every plan (e.g. anything that orphans live sessions) | `task` |
 

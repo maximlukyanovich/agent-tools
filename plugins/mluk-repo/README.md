@@ -8,6 +8,7 @@ procedure lives here, the project supplies `.claude/project-profile.md`.
 | Command | Mutating | What it does |
 | --- | --- | --- |
 | `/mluk-repo:start` | no | Onboarding: overview from the project's own documents plus a live check of what the profile lists. |
+| `/mluk-repo:next` | roadmap patch after confirmation | What to take next: one recommendation from the roadmap, local notes, open issues and PRs and the branch chain; what waits and on whom; housekeeping. Ends with the `task` line. |
 | `/mluk-repo:task` | no | Kickoff: brief → branch decision → flavour → exploration → questions → plan. No code. |
 | `/mluk-repo:review` | ledger only (`fix` opt-in) | Review the branch against the base, or a PR, findings by severity; a pass ledger makes a repeat run review only what changed. Run it in a fresh session. |
 | `/mluk-repo:sync` | yes | Merge the base branch into the current one, run the profile's post-merge checks, report what landed. |
@@ -22,7 +23,7 @@ exists for walking more than one boundary.
 
 ## Profile
 
-Every command reads `## Repository` first; `start`, `task`, `review`,
+Every command reads `## Repository` first; `start`, `next`, `task`, `review`,
 `update-docs` also read `## Checks`, `## Task`, `## Review`, `## Docs`. Keys
 and defaults: `reference/profile.md`. When the profile is silent the command
 asks and offers to write the answer into the profile.

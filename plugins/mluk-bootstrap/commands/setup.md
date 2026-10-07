@@ -52,7 +52,7 @@ The order is fixed. Steps are not reordered or skipped.
    MCP, docs. Plugins are installed with `--scope project`.
 
    **Local commands are the exception, not the rule.** `commit`, `create-pr`,
-   `promote`, `review`, `sync`, `start`, `task`, `update-docs` exist in
+   `promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs` exist in
    `mluk-repo` and read the profile. Write a local `.claude/commands/<name>.md`
    only when the answer to a question showed that the *procedure* differs —
    and say in the plan which library command it overrides and why.
