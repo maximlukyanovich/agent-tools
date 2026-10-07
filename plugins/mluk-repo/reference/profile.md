@@ -113,7 +113,8 @@ source from here when the task has UI.
 
 ## The command index
 
-`.claude/COMMANDS.md` — not a profile section, a sibling file: the library
-commands the project uses and every local override with its reason, one row
-each. `start` prints it; its template is in `mluk-bootstrap`'s
+`.claude/COMMANDS.md` — not a profile section, a sibling file: the project's
+own commands and every override of a library command with its reason, one row
+each. It does not copy the library's commands — each plugin's `help` lists
+them. `start` prints it; its template is in `mluk-bootstrap`'s
 `reference/templates.md`.

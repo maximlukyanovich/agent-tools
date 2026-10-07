@@ -44,7 +44,9 @@ documents are never translated.
    docs live, where the contract log and roadmap are, that `docs/local/` is
    personal), git (`## Repository`: remote, chain, commit preset — a key
    the local file overrides is marked `(local)`), commands
-   (from `.claude/COMMANDS.md` — library and local, one line each, mutating
+   (the library ones from the enabled plugins as this session lists them —
+   `enabledPlugins` in `.claude/settings.json` says which; the project's own
+   and its overrides from `.claude/COMMANDS.md`; one line each, mutating
    ones marked), skills (project ones by name; library ones by plugin).
 
 4. **Print the status table** — one row per check: check, `✓` / `✗` / `⚠`,
@@ -57,6 +59,6 @@ documents are never translated.
 ## Hard rules
 
 - Read-only; nothing started, stopped, installed or written.
-- The command list comes from `.claude/COMMANDS.md` and the enabled plugins,
-  not from memory.
+- The command list comes from the enabled plugins and `.claude/COMMANDS.md`,
+  not from memory; library commands are never read from a copy in the project.
 - Missing profile sections are reported as rows to fill, not guessed.

@@ -5,7 +5,7 @@ AGENTS.md                     canonical project rules. In git. Any agent reads i
 CLAUDE.md                     thin layer: @AGENTS.md plus Claude specifics. In git
 .claude/
   README.md                   map of the directory: what is where, who runs it
-  COMMANDS.md                 the command index — library commands and local overrides. Here, not in commands/
+  COMMANDS.md                 the index of the project's own commands and its overrides of library ones. Here, not in commands/
   project-profile.md          what the library plugins read: repository, docs, task, checks, review, sources, copy
   project-profile.local.md    this clone's overrides: a fork's trunk, local paths of siblings. Gitignored
   settings.json               shared settings: enabledPlugins, attribution, allowed MCP, hooks. In git
@@ -86,8 +86,10 @@ private, so a collaborator needs read access.
 Code registers **every** `.md` inside `commands/` as a slash command — including
 `README.md`. It lands in the command list, is paid for in every session, and
 looks like a command it is not. `.claude/` itself is not scanned, so the index
-moves one floor up. `COMMANDS.md` lists the library commands the project uses
-as they are, and the local overrides with the reason for each.
+moves one floor up. `COMMANDS.md` lists the project's own commands and every
+override of a library command with its reason. It does not copy the library's
+commands: each plugin's `help` lists them from their frontmatter, and a copy
+goes stale with the next library release.
 
 The limitation applies **only** to `commands/`. `skills/` is scanned for
 subdirectories containing `SKILL.md`, and `hooks/` is not scanned at all — so
