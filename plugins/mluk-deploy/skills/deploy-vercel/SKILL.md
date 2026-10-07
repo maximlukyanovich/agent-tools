@@ -1,6 +1,6 @@
 ---
 name: deploy-vercel
-description: How a Next.js front of a personal project is deployed on Vercel — one project per long-lived environment, production branch and previews, function region, the clean install pnpm 11 can fail, env vars per environment, custom domains with Cloudflare as DNS only, gating a staging site, and the Hobby-plan limits. Use when creating or changing a Vercel project, its env vars or domains.
+description: How a Next.js front is deployed on Vercel — one project per long-lived environment, production branch and previews, function region, the clean install pnpm 11 can fail, env vars per environment, custom domains with Cloudflare as DNS only, gating a staging site, and the Hobby-plan limits. Use when creating or changing a Vercel project, its env vars or domains.
 ---
 
 # deploy-vercel
