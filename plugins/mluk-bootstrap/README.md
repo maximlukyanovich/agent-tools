@@ -19,7 +19,7 @@ the library plugins enabled, domain skills, hooks where a repeated pain
 justifies one, and the `docs/**` skeleton with a gitignored `docs/local/`.
 
 It does **not** create `commit`, `create-pr`, `promote`, `review`, `sync`,
-`start`, `task` or `update-docs` commands — those come from `mluk-repo` and are
+`start`, `next`, `task` or `update-docs` commands — those come from `mluk-repo` and are
 driven by the profile. A local command is written only when the project's
 procedure differs from the library's.
 

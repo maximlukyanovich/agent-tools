@@ -15,7 +15,7 @@
     },
     {
       "name": "mluk-repo",
-      "description": "Repository workflow driven by a project profile: commit, create-pr, promote, review, sync, start, task, update-docs. GitHub with gh; no tracker.",
+      "description": "Repository workflow driven by a project profile: commit, create-pr, promote, review, sync, start, next, task, update-docs. GitHub with gh; no tracker.",
       "source": "./plugins/mluk-repo",
       "category": "workflow"
     },

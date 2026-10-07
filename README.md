@@ -97,10 +97,10 @@ Language follows the conversation; pass a language code to override.
 | Plugin | Kind | What it does |
 | --- | --- | --- |
 | `mluk-bootstrap` | generator + audit | Initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model. |
-| `mluk-repo` | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `sync`, `start`, `task`, `update-docs`, and the `kickoff` method — how a task is started. Reads `.claude/project-profile.md`. |
+| `mluk-repo` | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs`, and the `kickoff` method — how a task is started. Reads `.claude/project-profile.md`. |
 | `mluk-design` | library | `design-port` — how a design kit is ported. Enabled where a kit exists. |
 | `mluk-fe` | library + hooks | Frontend conventions for React / Next.js: `web-ui-conventions`, `component-discipline`, and PostToolUse hooks for locale parity, translation keys and metadata titles. Reads the profile's `## Frontend`. Enabled in a web front. |
-| `mluk-deploy` | library | How projects are deployed: `deploy-vps`, `deploy-vercel`, `domain-dns`. Skills only. |
+| `mluk-deploy` | library | How projects are deployed: `deploy-vps`, `deploy-vercel`, `domain-dns`. Skills and a `help` command. |
 | `mluk-ops` | library + hook | Safe agent access to servers: `srv` with an audit log, a guard hook, the `server-ops` protocol. Enabled only where the agent works on a server. |
 | `mluk-ru` | library | Business Russian: the principles of client-facing and legal copy, the self-check, the checklist, and `review` for a text. |
 
@@ -168,9 +168,12 @@ command it ships and every document quoting them.
 | Plugin | Commands |
 | --- | --- |
 | `mluk-bootstrap` | `:setup`, `:audit`, `:help` |
-| `mluk-repo` | `:commit`, `:create-pr`, `:promote`, `:review`, `:sync`, `:start`, `:task`, `:update-docs`, `:help` |
+| `mluk-repo` | `:commit`, `:create-pr`, `:promote`, `:review`, `:sync`, `:start`, `:next`, `:task`, `:update-docs`, `:help` |
 | `mluk-ru` | `:review`, `:help` |
 | `mluk-fe` | `:help` |
+| `mluk-design` | `:help` |
+| `mluk-deploy` | `:help` |
+| `mluk-ops` | `:help` |
 
 ## Layout
 

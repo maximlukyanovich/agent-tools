@@ -26,7 +26,7 @@ The harness exists; the job is to find the gaps, not to rewrite it.
 
 3. **Local commands that copy the library.** For every `.claude/commands/*.md`
    whose name matches a `mluk-repo` command (`commit`, `create-pr`, `promote`,
-   `review`, `sync`, `start`, `task`, `update-docs`): does its procedure differ,
+   `review`, `sync`, `start`, `next`, `task`, `update-docs`): does its procedure differ,
    or only its parameters? Parameters → propose moving them into the profile
    and deleting the local file. A genuine procedural difference → keep, and
    check it is documented as an override in `.claude/COMMANDS.md`.

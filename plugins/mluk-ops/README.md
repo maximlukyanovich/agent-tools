@@ -12,6 +12,7 @@ The protocol is the skill [`server-ops`](skills/server-ops/SKILL.md); this file 
 | `bin/srv` | the one way in: runs a command over SSH with the agent's own key and logs it |
 | `hooks/guard.py` | PreToolUse on Bash: reads pass, changes ask, irreversible commands are denied and handed to the owner; plain ssh/scp/rsync to a configured host is denied |
 | `skills/server-ops` | the protocol: classes, preview, owner-run irreversible commands, backups and their cleanup |
+| `commands/help` | `/mluk-ops:help` — the parts, the classes, and the servers configured on this machine; never connects |
 
 The hook's checks: `python3 hooks/test_guard.py` (run after every edit).
 
