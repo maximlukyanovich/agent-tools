@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "mluk-agent-tools",
-  "description": "Personal Claude Code tooling for GitHub-hosted projects: repository bootstrap, repository workflow (commit, PR, review, sync, kickoff), design-kit porting, frontend conventions, deployment, safe server access, and business Russian copy.",
+  "description": "Claude Code plugins for GitHub-hosted projects: repository bootstrap, repository workflow (commit, PR, review, sync, kickoff), design-kit porting, frontend conventions, deployment, safe server access, and business Russian copy.",
   "owner": {
     "name": "Maxim Lukyanovich",
     "email": "maximlukyanovich94@gmail.com"
@@ -33,7 +33,7 @@
     },
     {
       "name": "mluk-deploy",
-      "description": "How personal projects are deployed: a Compose stack on a VPS behind Caddy with GitHub Actions, a Next.js front on Vercel, and moving DNS to Cloudflare without breaking mail. Skills only.",
+      "description": "How a project is deployed: a Compose stack on a VPS behind Caddy with GitHub Actions, a Next.js front on Vercel, and moving DNS to Cloudflare without breaking mail. Skills only.",
       "source": "./plugins/mluk-deploy",
       "category": "workflow"
     },

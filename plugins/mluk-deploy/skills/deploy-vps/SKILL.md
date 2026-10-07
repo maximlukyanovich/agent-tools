@@ -5,7 +5,7 @@ description: The deployment scheme for a backend on a single VPS — Docker Comp
 
 # deploy-vps
 
-The scheme that personal projects use for a backend (Django/DRF + Celery + Postgres + Redis was the
+The scheme for a backend (Django/DRF + Celery + Postgres + Redis was the
 first; nothing below depends on Django). The project keeps the concrete files:
 - `Dockerfile`, `docker-compose.server.yml`, `deploy/server/{bootstrap,deploy,rollback}.sh`;
 - the Caddy site files;

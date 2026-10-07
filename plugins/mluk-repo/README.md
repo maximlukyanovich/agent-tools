@@ -1,6 +1,6 @@
 # mluk-repo
 
-The repository workflow for personal GitHub projects, as a library: the
+The repository workflow for GitHub projects, as a library: the
 procedure lives here, the project supplies `.claude/project-profile.md`.
 
 ## Commands
