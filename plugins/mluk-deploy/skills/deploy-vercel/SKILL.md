@@ -1,6 +1,6 @@
 ---
 name: deploy-vercel
-description: How a Next.js front of a personal project is deployed on Vercel — one project per long-lived environment, production branch and previews, function region, env vars per environment, custom domains with Cloudflare as DNS only, gating a staging site, and the Hobby-plan limits. Use when creating or changing a Vercel project, its env vars or domains.
+description: How a Next.js front of a personal project is deployed on Vercel — one project per long-lived environment, production branch and previews, function region, the clean install pnpm 11 can fail, env vars per environment, custom domains with Cloudflare as DNS only, gating a staging site, and the Hobby-plan limits. Use when creating or changing a Vercel project, its env vars or domains.
 ---
 
 # deploy-vercel
@@ -22,6 +22,16 @@ description: How a Next.js front of a personal project is deployed on Vercel —
 - **Function region `fra1`** in `vercel.json` (`{"regions": ["fra1"]}`) when the backend and the
   users are in Europe. The default is `iad1`: every server-side call would cross the Atlantic, and
   personal data would leave the EU.
+
+## Install
+
+- **Every deploy installs from scratch.** Under pnpm 11 a dependency's build script — direct or
+  transitive — that is missing from `allowBuilds` in `pnpm-workspace.yaml` fails that install with
+  `ERR_PNPM_IGNORED_BUILDS`. A warm local `node_modules` never shows it, so the deploy is the first
+  place it surfaces.
+- **After adding a dependency, prove it in a fresh clone** with `pnpm install --frozen-lockfile`.
+  Each `allowBuilds` entry carries its reason; `false` fits a package that ships its binary as a
+  per-platform package (`esbuild`), `true` one whose script really builds something.
 
 ## Env vars
 

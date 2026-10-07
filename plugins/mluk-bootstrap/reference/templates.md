@@ -26,6 +26,14 @@ Rules that keep it cheap: no rule appears twice; anything expressible as lint
 configuration is a one-line reference, not a paragraph; the absence of a layer
 is recorded deliberately, with its reason.
 
+With pnpm 11, §2 says next to how a dependency is added that one with a build
+script — direct or transitive — needs an `allowBuilds` entry in
+`pnpm-workspace.yaml`. A missing entry fails the install with
+`ERR_PNPM_IGNORED_BUILDS`, but only a clean one: a warm `node_modules` hides
+it, and the first to see it is the deploy. The file's header gives each entry
+its reason and says to prove a new dependency with
+`pnpm install --frozen-lockfile` in a fresh clone.
+
 ## CLAUDE.md
 
 ```markdown
