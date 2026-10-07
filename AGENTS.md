@@ -50,9 +50,9 @@ holds only the rules for working on the repository itself.
   when the agent loads it; a command's decides what completion shows. Both are
   written narrowly and both are paid for in every session.
 
-## 3. Checks before a commit
+## 3. Checks before a pull request
 
-The only automated gate is the `Hook tests` workflow. Before committing, the author checks by hand:
+The only automated gate is the `Hook tests` workflow. Before opening a pull request, its author checks by hand:
 
 - every `commands/*.md` has frontmatter with `description` and `argument-hint`;
 - every `skills/*/SKILL.md` has `name` and `description`;

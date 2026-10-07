@@ -1,6 +1,6 @@
 ---
 name: business-russian
-description: How Russian texts for people are phrased in my projects — client-facing UI copy, legal documents (offer, agreement, terms, refund policy, FAQ), product documentation, messages to partners. The two mistakes the agent repeats, the principles with ✗/✓ examples, the legal addendum, the checklists, and how the set is kept alive. Use whenever writing, editing, translating or reviewing a Russian text that a user, partner or reader will see. Not for code comments or commit messages.
+description: How Russian texts for people are phrased — client-facing UI copy, legal documents (offer, agreement, terms, refund policy, FAQ), product documentation, messages to partners. The two mistakes the agent repeats, the principles with ✗/✓ examples, the legal addendum, the checklists, and how the set is kept alive. Use whenever writing, editing, translating or reviewing a Russian text that a user, partner or reader will see. Not for code comments or commit messages.
 ---
 
 # Деловой русский

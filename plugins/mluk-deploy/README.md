@@ -1,6 +1,6 @@
 # mluk-deploy
 
-How personal projects are deployed. Knowledge only: skills, no hooks, no commands. Enable it in any
+How a project is deployed. Knowledge only: skills, no hooks, no commands. Enable it in any
 project that deploys; working on a live server additionally needs `mluk-ops`.
 
 | Skill | For |

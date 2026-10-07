@@ -1,7 +1,13 @@
 # agent-tools
 
-Personal Claude Code tooling for my own projects. One repository: it is both the
-marketplace (`mluk-agent-tools`) and the home of the plugins.
+Claude Code plugins for working on a software project with an agent: setting up
+a repository's agent harness, the everyday git workflow, frontend conventions,
+deployment, safe server access and business Russian copy. One author's toolkit,
+grown on real projects and open to anyone — the rules are opinionated, and each
+project tunes them through its own profile.
+
+One repository: it is both the marketplace (`mluk-agent-tools`) and the home of
+the plugins.
 
 Why it exists: the method must not live as copies in every repository. How a
 task is started, how a commit and a pull request are written, how a review is
@@ -9,31 +15,69 @@ run, how Russian client copy is phrased — these are the same in every project;
 only the branch chain, the validate command and the domain differ, and those
 stay in the project.
 
-## Installing
+## Does it fit your project
 
-The marketplace is this GitHub repository. An installed plugin is a **copy**
-in `~/.claude/plugins/cache/`, so a change reaches a session once it is pushed
-to `main` and the copy is refreshed:
+Built for, and used on:
+
+- **GitHub with `gh`, no issue tracker.** The workflow commands open pull
+  requests with `gh`; a task starts from a description in chat, not from a
+  ticket.
+- **A React / Next.js front** — App Router, Tailwind, next-intl — deployed on
+  Vercel.
+- **A backend in Docker Compose on a VPS** behind Caddy, deployed by GitHub
+  Actions. The first one was Django + Celery + Postgres + Redis; the scheme
+  does not depend on Django.
+- **A site built against a design kit**, and **client-facing copy in Russian**.
+
+Each plugin is enabled separately, so a project takes only what fits.
+`mluk-bootstrap` and `mluk-repo` are stack-agnostic. A different forge (GitLab,
+Bitbucket) or a tracker-driven process is not covered by `mluk-repo`; the rest
+still applies.
+
+## Requirements
+
+- Claude Code.
+- `git`, and `gh` signed in — for `mluk-repo`.
+- Node — for the `mluk-fe` hooks; CI tests them on Node 24.
+- Python 3 and `ssh` — for `mluk-ops`; CI tests its guard on Python 3.12.
+
+## Quick start
 
 ```bash
 claude plugin marketplace add maximlukyanovich/agent-tools
 claude plugin install mluk-bootstrap@mluk-agent-tools --scope user
-claude plugin marketplace update mluk-agent-tools
-claude plugin update  mluk-bootstrap@mluk-agent-tools     # then restart the session
 ```
 
-To run a plugin straight from a checkout while writing it, without installing:
-`claude --plugin-dir <checkout>/plugins`.
-
-A project declares the marketplace and enables what it uses in its own
-`.claude/settings.json`, so every clone gets the same tools — see
-`plugins/mluk-bootstrap/reference/layout.md`:
+Then, in your repository, run `/mluk-bootstrap:setup`. It looks at the code,
+asks only what the code cannot answer, shows a plan and, once you approve it,
+writes the harness — `AGENTS.md`, the project profile, and a
+`.claude/settings.json` that enables the plugins the project needs, so every
+clone gets the same tools:
 
 ```json
 "extraKnownMarketplaces": {
   "mluk-agent-tools": { "source": { "source": "github", "repo": "maximlukyanovich/agent-tools" } }
 },
 "enabledPlugins": { "mluk-repo@mluk-agent-tools": true }
+```
+
+Which plugins to enable:
+
+| Project | Plugins |
+| --- | --- |
+| any repository | `mluk-bootstrap`, `mluk-repo` |
+| a React / Next.js front | + `mluk-fe` |
+| built against a design kit | + `mluk-design` |
+| deployed on Vercel or a VPS | + `mluk-deploy` |
+| the agent works on a live server | + `mluk-ops` |
+| Russian texts for people | + `mluk-ru` |
+
+An installed plugin is a copy in `~/.claude/plugins/cache/`. To pick up a new
+version:
+
+```bash
+claude plugin marketplace update mluk-agent-tools
+claude plugin update mluk-repo@mluk-agent-tools     # each installed plugin, then restart the session
 ```
 
 ## Where to start
@@ -76,7 +120,7 @@ validate command, commit preset, glossary) are data.
 | --- | --- | --- |
 | Appears in the project | `AGENTS.md`, domain skills, hooks, the profile | profile lines only |
 | Commands come from | the project | the plugin |
-| Updating the method | not updated; it is project code now | edit here, `claude plugin update` |
+| Updating the method | not updated; it is project code now | `claude plugin update` |
 
 **Library base, local override.** `/mluk-repo:commit` is the default in every
 project. A project that genuinely needs a different procedure — not different
@@ -144,9 +188,21 @@ plugins/<name>/
 skills with `disable-model-invocation`; the layout migrates in one move when
 it does.
 
-## How this grows
+## Contributing
 
-Planned next: `mluk-common` (testing and verification, no invention,
-decomposition, docs discipline), more of `mluk-fe` (SEO metadata on every
-route, perf) and `mluk-be` (Django: conventions, testing, Celery pitfalls, API
-contracts).
+Issues and pull requests are welcome — a rule that misfired in your project, a
+trap worth naming, a fix.
+
+- Plugin texts, commits and pull requests are in English (the business-Russian
+  skill is the one exception: its subject is Russian).
+- A rule that names your project's paths, ids or design system belongs in your
+  project's profile, not here.
+- Before opening a pull request, run the checks in
+  [`AGENTS.md`](AGENTS.md) §3, and run the changed command or skill once in a
+  real repository — say in the pull request where and how. To try a plugin
+  straight from a checkout, without installing: `claude --plugin-dir
+  <checkout>/plugins`.
+
+## License
+
+[MIT](LICENSE).

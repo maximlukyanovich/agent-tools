@@ -1,7 +1,7 @@
 # mluk-ru
 
-Business Russian: how client-facing, legal and documentation texts are phrased
-in my projects. The rules were earned on live copy — an offer, a partner
+Business Russian: how client-facing, legal and documentation texts are
+phrased. The rules were earned on live copy — an offer, a partner
 agreement, refund terms, UI strings — and are written down so the same
 complaint is not made twice.
 
