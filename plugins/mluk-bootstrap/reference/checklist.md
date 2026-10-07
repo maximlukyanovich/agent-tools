@@ -16,7 +16,8 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       library skill.
 - [ ] Local commands: only overrides whose procedure differs from the library,
       each naming what it overrides and why; the index is in
-      `.claude/COMMANDS.md`; nothing inside `commands/` is not a command.
+      `.claude/COMMANDS.md` and does not copy the library's commands;
+      nothing inside `commands/` is not a command.
 - [ ] Hooks: each silent outside its area, each with a test, all wired into
       `settings.json`.
 - [ ] Deterministic layer: linter, formatter, types, tests, git hooks, and one

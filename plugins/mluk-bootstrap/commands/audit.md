@@ -29,7 +29,9 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    `review`, `sync`, `start`, `next`, `task`, `update-docs`): does its procedure differ,
    or only its parameters? Parameters → propose moving them into the profile
    and deleting the local file. A genuine procedural difference → keep, and
-   check it is documented as an override in `.claude/COMMANDS.md`.
+   check it is documented as an override in `.claude/COMMANDS.md`. An index
+   that lists library commands is a copy going stale — propose replacing the
+   rows with a pointer to the plugins' `help`.
 
 4. **The profile.** Does `.claude/project-profile.md` exist and carry the
    sections the enabled plugins read (`${CLAUDE_PLUGIN_ROOT}/reference/

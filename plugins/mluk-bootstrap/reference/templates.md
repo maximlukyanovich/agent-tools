@@ -92,17 +92,23 @@ permission applies to the current turn only.
 ```markdown
 # Commands
 
-Index of what is available here. Library commands come from `mluk-repo` and
-read `.claude/project-profile.md` (plus the gitignored
-`project-profile.local.md` of this clone); local commands override a library
-one only when the procedure differs.
+The library plugins enabled in [`settings.json`](settings.json) bring their own
+commands; each plugin's `help` lists them (`/mluk-repo:help` first). They read
+[`project-profile.md`](project-profile.md) plus this clone's gitignored
+`project-profile.local.md`. This file lists only what the library does not
+know: the project's own commands and its overrides.
 
-| Command | Source | Mutating | Note |
-| --- | --- | --- | --- |
-| `/mluk-repo:start` | library | no | onboarding + checks from the profile |
-| `/mluk-repo:task` | library | no | kickoff; flavours from the profile |
-| … | | | |
-| `/<local>` | local | … | overrides `/mluk-repo:<name>`: <reason> |
+## Local
+
+| Command | Mutating | What it does |
+| --- | --- | --- |
+| [`/<local>`](commands/<local>.md) | … | … |
+
+## Overrides
+
+None. A local command overrides a library one only when the procedure differs
+— a parameter goes to the profile. Each override is a row here:
+`/<local>` overrides `/mluk-repo:<name>` because <reason>.
 ```
 
 ## .mcp.json.example
