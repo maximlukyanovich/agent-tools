@@ -25,6 +25,9 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       per push get bypassed. `commit` and `create-pr` run it instead. lint-staged
       runs the linter's fixes first and the formatter last, or the linter's
       edits land unformatted while the hook reports success.
+- [ ] A fresh clone installs: with pnpm 11, `allowBuilds` lists every
+      dependency build script with its reason, `AGENTS.md` §2 says a new one
+      needs an entry, and `pnpm install --frozen-lockfile` passes.
 - [ ] MCP: the example in git, the generated file and `.env` ignored,
       generation works.
 - [ ] `docs/README.md` and `docs/local/README.md` exist; `docs/local/` is fully

@@ -80,6 +80,11 @@ The harness exists; the job is to find the gaps, not to rewrite it.
     `AGENTS.md` or skills that name no concrete path or id and would hold in any
     project — list them, one line each. Where they go is the owner's decision.
 
+13. **A fresh clone installs.** Does `pnpm install --frozen-lockfile` pass in a
+    fresh clone — not in the author's tree, where a warm `node_modules` hides a
+    build script missing from `allowBuilds`? Under pnpm 11 that gap fails the
+    deploy's install and nothing earlier.
+
 ## Report
 
 A table: finding → layer → severity → proposed action. Rules that are not
