@@ -1,6 +1,6 @@
 ---
 name: component-discipline
-description: How a React component is written so that it stays small and exact — when to extract and when not to, text metrics (size + line-height + tracking), promoting repeated literals to semantic tokens and registering them with tailwind-merge, the shadcn CVA variant convention, the view / hook split, section-shaped skeletons with aria-busy, and not inventing assets the design left out. Use when writing, refactoring or reviewing a component. Porting a kit's look is mluk-design:design-port; screen-level rules are web-ui-conventions.
+description: How a React component is written so that it stays small and exact — when to extract and when not to, text metrics (size + line-height + tracking), promoting repeated literals to semantic tokens and registering them with tailwind-merge, the shadcn CVA variant convention, the view / hook split, section-shaped skeletons with aria-busy, not inventing assets the design left out, and fake timers in component tests. Use when writing, refactoring or reviewing a component. Porting a kit's look is mluk-design:design-port; screen-level rules are web-ui-conventions.
 ---
 
 # Component discipline
@@ -30,6 +30,8 @@ What keeps a component small and exact. The kit's look is ported by `mluk-design
 
 9. **A state from another DOM layer is checked in the rendered HTML.** A headless library's `data-*` attribute and a CSS pseudo-class are not interchangeable; a guessed selector is a rule that silently never applies.
 
+10. **A component test drives its timers.** A component that waits on a timer before it is usable — a reveal, a stagger, a debounce, a delayed hint — is tested on fake timers (`vi.useFakeTimers()` in `beforeEach`, real ones back in `afterEach`), and the test moves time itself with `act(() => vi.runOnlyPendingTimers())` before it acts. `waitFor` on a real timer races its own timeout: the test passes alone and fails one run in a few under a loaded suite. Check that the test still fails when the timer never fires.
+
 ## How not to do it
 
 - A `components/Helpers.tsx` with six single-use wrappers.
@@ -39,6 +41,7 @@ What keeps a component small and exact. The kit's look is ported by `mluk-design
 - A 300-line component with two queries, a form and the markup in one function.
 - A "Loading…" paragraph where the loaded page is a grid of cards.
 - A `lucide` icon "close enough" to the custom SVG in the design.
+- A component test that clicks after `await waitFor(…)` on a real reveal timer — green locally, red once in four runs in CI.
 
 ## How it is verified
 

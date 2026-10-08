@@ -86,6 +86,10 @@ rename does not need this.
      their meaning. When compatibility cannot hold, every caller is migrated
      in the same change — never a shared signature that half the callers
      misread.
+   - **A fix for a review finding is checked on every path through what it
+     changed**, not only on the finding's scenario: each kind a shared view
+     serves, each consumer of a changed contract. A fix that breaks a
+     neighbour costs a whole review pass more than the check does.
    When the work is a queue of small tasks, each one ends at the base branch:
    its PR is merged there after green CI on the owner's go-ahead. Promotion up
    the branch chain (to staging, to production) happens in batches, only when
