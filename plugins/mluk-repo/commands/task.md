@@ -1,6 +1,6 @@
 ---
 description: Kick off a task — parse the brief, decide about a branch with confirmation, load the flavour's skills from the profile, explore, ask by the kickoff method, and return a plan. No production code until the plan is approved.
-argument-hint: '[<flavour>] <task description>'
+argument-hint: '[worktree] [<flavour>] <task description>'
 ---
 
 # /mluk-repo:task
@@ -22,6 +22,11 @@ skill). Not given → infer from the brief and name the choice in the plan; a
 task spanning several loads all of them. A name not in the table → show the
 table and ask.
 
+A leading **`worktree`** puts the branch in a separate working tree beside
+the repository instead of switching this one — for when the main tree is busy
+with other work. Without it the command still offers one when step 2 finds
+the tree busy; on a free tree a worktree only adds setup.
+
 No arguments → take the brief from a `docs/local/` note or a GitHub issue the
 owner names, or ask. There is no tracker.
 
@@ -30,11 +35,28 @@ owner names, or ask. There is no tracker.
 1. **Parse.** Goal, acceptance criteria, what is explicitly out of scope, the
    flavour.
 
-2. **Branch decision.** `git status -sb`. On the base branch → propose
-   `<branch prefix>/<kebab-slug>` and create it **only on confirmation**. On a
-   feature branch → ask: fork a fresh branch off here, stay and append, or
-   abort. A dirty tree before any switch → show the diff, offer
-   `/mluk-repo:commit` or a stash; never discard.
+2. **Branch decision.** A live `git status -sb` — not the status captured
+   when the session started, which can be hours old. On the base branch →
+   propose `<branch prefix>/<kebab-slug>` and create it **only on
+   confirmation**. On a feature branch → ask: fork a fresh branch off here,
+   stay and append, open a worktree, or abort. A dirty tree before any switch
+   → show the diff, offer `/mluk-repo:commit`, a stash or a worktree; never
+   discard.
+
+   **A worktree** — asked for, or accepted when offered — is confirmed with
+   its folder, `../<repo>-<slug>`, beside the repository so the main tree's
+   linters, tests and type-check never pick it up:
+   - `git worktree add -b <branch> ../<repo>-<slug> <base branch>`;
+   - link in what git ignores but the work reads — local notes, env files,
+     tool configs; list the candidates from the main tree's ignored files and
+     confirm them, since a folder that is tracked for one file (a README) is
+     linked entry by entry, not as a whole;
+   - install dependencies in the new tree with the project's package manager;
+   - a second dev server or workshop needs a free port.
+
+   A worktree is temporary: once its branch is merged, `/mluk-repo:create-pr`
+   offers to remove it; a folder deleted by hand leaves a stale entry that
+   `git worktree prune` clears.
 
 3. **Gather context selectively** — `AGENTS.md`, the profile, the documents
    the flavour's skill names, the product docs and contract log from `## Docs`
