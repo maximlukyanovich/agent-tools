@@ -128,11 +128,24 @@ never rewritten.
    keeps its old severity), `fix-critique` (targets a fix a previous pass asked
    for). A recorded false positive is not raised again without a new mechanism.
 
-8. **Assemble the report**: a one-line header (target, range, pass number,
-   uncommitted included?, focus), the trajectory line, the severity table
-   (blocker / major / minor / nit), the verdict derived mechanically (`blocked`
-   / `changes requested` / `ready to merge`), findings grouped by severity —
-   each with tag, class, `file:line`, what is wrong, the anchor, a one-line fix
+8. **Assemble the report.** It always opens with the same block, on every
+   pass, zeros included — the owner compares passes by it (labels in the
+   chat's language):
+
+   ```
+   **Review `<target>`, pass <N>.** <range>, <commits>, <files / lines>; uncommitted: <yes / no>; focus: <…>
+   Trajectory: P1 <head> <b/m/m/n> <verdict> → P2 <head> <b/m/m/n> <verdict>
+
+   | blocker | major | minor | nit |
+   |---|---|---|---|
+   | <n> | <n> | <n> | <n> |
+
+   **Verdict: <blocked / changes requested / ready to merge>.**
+   ```
+
+   The verdict is derived mechanically from the table. Then the findings,
+   grouped by severity — each with tag, class, `file:line`, what is wrong, the
+   anchor, a one-line fix
    — then "what is good" if there is anything honest to say, then open
    questions for the owner. When a finding's class has come up before — in
    earlier passes of this ledger, in other ledgers, or in several places of
