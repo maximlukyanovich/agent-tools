@@ -137,7 +137,9 @@ never rewritten.
    questions for the owner. When a finding's class has come up before — in
    earlier passes of this ledger, in other ledgers, or in several places of
    this diff — add one line proposing the rule in the project's repository that
-   would prevent it during the work (kickoff step 8). **Stop and ask** what a further pass should add
+   would prevent it during the work (kickoff step 8). Propose a check first — a
+   lint rule, a test, a hook — and a line in AGENTS.md or a skill only when the
+   rule cannot be checked. **Stop and ask** what a further pass should add
    when this is pass 3+ with no new commits, when findings grew while the delta
    is small, or when `escalated` plus `fix-critique` are over half the findings.
 
