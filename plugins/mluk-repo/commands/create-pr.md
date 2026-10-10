@@ -87,9 +87,16 @@ stops after printing the PR URL.
    - `git fetch origin <target> --quiet && git checkout <target> && git pull
      --ff-only origin <target>`. A failed fast-forward is a desync for a human.
    - Offer to delete the local feature branch with `git branch -d` (safe form
-     only); on "keep", return to it. A branch checked out in a worktree
-     (`git worktree list`) goes with its tree: `git worktree remove <folder>`
-     first, then the branch.
+     only); on "keep", return to it.
+   - **The branch lives in a worktree** (`git worktree list` shows it in
+     another folder): the target is checked out in the main tree, and git
+     refuses to check it out a second time — so neither `git checkout <target>`
+     nor `--delete-branch` (which checks it out too) works from the worktree.
+     Merge without `--delete-branch`, then, from the main tree and each on
+     confirmation: pull the target there (`--ff-only`), `git worktree remove
+     <folder>`, `git branch -d <branch>`, and, when the profile deletes
+     branches, `git push origin --delete <branch>`. Offer this cleanup by
+     default — a merged worktree left behind is clutter nobody asked for.
 
 7. **Wrap up**: PR URL and status (`opened` / `merged` / `pending CI`), and the
    `git-safety` reminder line.

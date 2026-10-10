@@ -10,7 +10,7 @@ procedure lives here, the project supplies `.claude/project-profile.md`.
 | `/mluk-repo:start` | no | Onboarding: overview from the project's own documents plus a live check of what the profile lists. |
 | `/mluk-repo:next` | roadmap patch after confirmation | What to take next: one recommendation from the roadmap, local notes, open issues and PRs and the branch chain; what waits and on whom; housekeeping. Ends with the `task` line. |
 | `/mluk-repo:task` | no | Kickoff: brief → branch decision (or a worktree) → flavour → exploration → questions → plan. No code. |
-| `/mluk-repo:review` | ledger only (`fix` opt-in) | Review the branch against the base, or a PR, findings by severity; a pass ledger makes a repeat run review only what changed. Run it in a fresh session. |
+| `/mluk-repo:review` | ledger only (`fix` opt-in) | Review the branch against the base — the current one, a named branch or worktree — or a PR, findings by severity; a pass ledger makes a repeat run review only what changed. Run it in a fresh session. |
 | `/mluk-repo:sync` | yes | Merge the base branch into the current one, run the profile's post-merge checks, report what landed. |
 | `/mluk-repo:update-docs` | after confirmation | Measure drift since the last docs update, classify, propose patches by the profile's doc map. |
 | `/mluk-repo:commit` | yes | Stage explicitly, validate, draft by the preset, commit. Never pushes. |

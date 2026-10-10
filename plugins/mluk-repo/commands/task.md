@@ -50,9 +50,18 @@ owner names, or ask. There is no tracker.
    - link in what git ignores but the work reads — local notes, env files,
      tool configs; list the candidates from the main tree's ignored files and
      confirm them, since a folder that is tracked for one file (a README) is
-     linked entry by entry, not as a whole;
+     linked entry by entry, not as a whole. A linked folder is a symlink, and
+     an ignore rule ending in `/` matches directories only, so the link shows
+     as untracked — add its path to `.git/info/exclude` (shared by every
+     worktree, never committed) rather than risk committing it;
    - install dependencies in the new tree with the project's package manager;
-   - a second dev server or workshop needs a free port.
+   - a second dev server or workshop needs a free port;
+   - commands act on the session's working directory, so a command run in
+     the main tree sees the main tree's branch. The working session moves into
+     the worktree (`EnterWorktree` with the folder's path) or addresses it
+     explicitly (`git -C <folder>`, paths inside it); a review offered for a
+     fresh session names the branch — `/mluk-repo:review <branch>` — since
+     that session starts in the main tree.
 
    A worktree is temporary: once its branch is merged, `/mluk-repo:create-pr`
    offers to remove it; a folder deleted by hand leaves a stale entry that
