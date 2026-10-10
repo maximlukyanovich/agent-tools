@@ -1,13 +1,14 @@
 ---
-description: Review the current branch against the base branch, or a specific PR, and return findings sorted by severity with a file:line anchor each. Keeps a pass ledger so a repeat run reviews only what changed. Read-only apart from the ledger; edits only with the fix argument.
-argument-hint: '[<PR#>] [<sha>..<sha>] [<severity>+] [full] [fix]'
+description: Review the current branch — or a named branch or worktree, or a specific PR — against the base branch, and return findings sorted by severity with a file:line anchor each. Keeps a pass ledger so a repeat run reviews only what changed. Read-only apart from the ledger; edits only with the fix argument.
+argument-hint: '[<PR#> | <branch> | <worktree-path>] [<sha>..<sha>] [<severity>+] [full] [fix]'
 ---
 
 # /mluk-repo:review
 
-Review a pull request or the work on the current branch (committed and
-uncommitted) against the profile's `base branch`, through the library rubric
-plus the project lenses in `## Review`.
+Review a pull request or the work on a branch (committed and uncommitted) —
+the current one, or one named, typically living in a worktree — against the
+profile's `base branch`, through the library rubric plus the project lenses in
+`## Review`.
 
 **Read-only by default**: no commits, no code edits, no `gh` mutations. The one
 file it writes is its own ledger (below). Code edits only with `fix`; posting to
@@ -15,7 +16,8 @@ a PR only on an explicit yes at the end.
 
 **Run it in a fresh session**, not the one that wrote the code. The authoring
 session remembers its own reasons and tends to confirm them. Everything a review
-needs from the past is in the ledger, not in the conversation.
+needs from the past is in the ledger, not in the conversation. The fresh
+session may sit in the main tree: a branch in a worktree is reached by name.
 
 ## Arguments
 
@@ -23,7 +25,24 @@ Positional, optional, any order — recognised by shape: a bare number is a PR;
 `<sha>..<sha>` is an explicit commit range; `blocker+` / `major+` / `minor+`
 narrows what is written out in full; `full` ignores the ledger's delta and
 reviews the whole target; `fix` applies the narrow list of deterministic fixes
-after the report, confirmed.
+after the report, confirmed. A path is a worktree folder; any other word that
+names a local branch (`git rev-parse --verify refs/heads/<word>`) is that
+branch.
+
+## The tree under review
+
+A named branch, or a worktree folder, is reviewed **where it is checked out**:
+`git worktree list --porcelain` gives its folder, and from then on every git
+command is `git -C <folder> …`, every file is read from that folder, and
+`validate` runs there. The ledger stays the repository's — at the profile's
+`ledger` path in the main tree. A named branch checked out nowhere is reviewed
+from git alone (`git diff origin/<base>...<branch>`, files via
+`git show <branch>:<path>`), and the header says that `validate` did not run.
+
+No argument and the current branch is the base: look for the work instead of
+stopping — the worktrees whose branch is ahead of the base
+(`git rev-list --count origin/<base>..<branch>`). Exactly one → review it and
+name it in the header; several → ask which; none → nothing to review.
 
 ## The ledger
 
@@ -66,7 +85,8 @@ never rewritten.
    `## Review` with `ledger`, `design source` and `consumers`, `## Docs` for
    the contract log and techdebt file).
 
-2. **Find the ledger and set the target.**
+2. **Find the ledger and set the target.** `HEAD` below is the head of the
+   tree under review.
    - The ledger's last head equals `HEAD` and no `full` → there is nothing new:
      print the recorded verdict and the open findings, and stop.
    - The last head is an ancestor of `HEAD` → the target is the delta
@@ -78,8 +98,9 @@ never rewritten.
    headRefName,baseRefName` and `gh pr diff <n>`. Branch: `git fetch origin
    <base> --quiet`, `git diff origin/<base>...HEAD --stat`, `git status
    --porcelain`, `git diff`, `git ls-files --others --exclude-standard` —
-   untracked files are the easiest thing to miss. `HEAD` on the base branch
-   and no PR → nothing to review. Run the profile's `validate` once.
+   untracked files are the easiest thing to miss — all in the tree under
+   review. `HEAD` on the base branch, no PR and no worktree ahead of it →
+   nothing to review. Run the profile's `validate` once, in that tree.
 
 4. **Frame the scope** in one line from the branch name, PR text and commit
    subjects: a whole task or a slice? What a slice leaves out is not a missing
