@@ -124,8 +124,11 @@ never rewritten.
    code; a compromise as a `TODO` instead of a techdebt entry), `security` (a
    secret in the diff, a token logged, an auth shortcut widened, an object
    lookup not scoped to the requesting user, user content interpolated without
-   bound), `contract` (a field renamed or retyped without a note in the contract
-   log), `language` (a user-facing string in the wrong language). Project
+   bound, a surface that changes data — a button, a list action, an endpoint —
+   still usable by an account that may only read its page: each new one is
+   walked as the least-privileged account that can open it), `contract` (a
+   field renamed or retyped without a note in the contract log), `language` (a
+   user-facing string in the wrong language). Project
    lenses from `## Review` carry the same weight. A finding names **every** place
    with the same mechanism, not only the first one found. UI in the diff is
    checked against the profile's `design source` (read only). A contract change
