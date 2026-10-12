@@ -70,9 +70,11 @@ rename does not need this.
    go-ahead, never pushed without its own. Inside each slice:
    - **A behaviour change ships with its test in the same commit** — new or
      changed logic, a hook's lifecycle, an event handler, a timer: the commit
-     carries the test that would fail without it. When it genuinely cannot be
-     tested, the commit body says why. A test promised for "the next commit"
-     is the gap reviews keep finding.
+     carries the test that would fail without it — shown red against the code
+     it replaces (the base version), not only against a rule broken by hand:
+     a test that also passes on the old code proves nothing. When it genuinely
+     cannot be tested, the commit body says why. A test promised for "the next
+     commit" is the gap reviews keep finding.
    - **Shared code changes only when the change is right for every consumer.**
      Walk the call sites first; a need that only one caller has stays with that
      caller.
