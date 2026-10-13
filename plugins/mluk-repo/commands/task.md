@@ -59,9 +59,10 @@ owner names, or ask. There is no tracker.
    - commands act on the session's working directory, so a command run in
      the main tree sees the main tree's branch. The working session moves into
      the worktree (`EnterWorktree` with the folder's path) or addresses it
-     explicitly (`git -C <folder>`, paths inside it); a review offered for a
-     fresh session names the branch — `/mluk-repo:review <branch>` — since
-     that session starts in the main tree.
+     explicitly (`git -C <folder>`, paths inside it); a command offered for
+     a fresh session names the branch — `/mluk-repo:review <branch>`, and
+     `commit` and `promote` the same way — since that session starts in the
+     main tree.
 
    A worktree is temporary: once its branch is merged, `/mluk-repo:create-pr`
    offers to remove it; a folder deleted by hand leaves a stale entry that

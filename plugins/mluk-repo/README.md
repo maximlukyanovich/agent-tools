@@ -28,6 +28,9 @@ Every command reads `## Repository` first; `start`, `next`, `task`, `review`,
 and defaults: `reference/profile.md`. When the profile is silent the command
 asks and offers to write the answer into the profile.
 
+`commit`, `review` and `promote` also act on a branch in a
+worktree, named by folder or branch: `reference/commands.md`.
+
 ## Skills
 
 - `commit-conventions` — the two presets: `gitmoji-conventional` (default) and

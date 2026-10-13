@@ -1,6 +1,6 @@
 ---
 description: Advance the current work along the profile's branch chain up to the target, one pull request per boundary — sync, PR, CI, merge — confirming at every boundary. Never touches upstream.
-argument-hint: '[<target-branch>]'
+argument-hint: '[<worktree | branch>] [<target-branch>]'
 ---
 
 # /mluk-repo:promote
@@ -15,9 +15,12 @@ source when the target moved. A single hop to the next branch is the same as
 
 ## Steps
 
-1. **Resolve the target.** Given → must be a branch in the chain, else stop
-   with the chain printed. Not given → the next branch after the current one.
-   Print `current → target`.
+1. **Resolve the source and the target.** A branch of the chain after its
+   first element is the target; a folder, or a branch outside the chain, is
+   the source, resolved by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md` —
+   every step then runs in its tree. No source → the current branch; no
+   target → the next branch after the source; anything else → stop with the
+   chain printed. Print `source → target`.
 
 2. **Pre-flight** as in `create-pr`: clean tree, correct remote alias and `gh`
    account, `upstream` out of scope, `validate` green when the first source is

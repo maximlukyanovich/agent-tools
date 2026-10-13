@@ -1,6 +1,6 @@
 ---
 description: Build a commit for the current changes — stage explicitly, run the profile's validate command, draft the message by the commit preset, commit. Never pushes.
-argument-hint: '[topic or short hint]'
+argument-hint: '[<worktree | branch>] [topic or short hint]'
 ---
 
 # /mluk-repo:commit
@@ -11,8 +11,10 @@ parameters from the profile's `## Repository`: `validate`, `targeted checks`,
 
 **Writes to git.** Never pushes — that is `/mluk-repo:create-pr` or `:promote`.
 
-The argument is an optional hint about the topic. Advice, not an order: if the
-diff says otherwise, pick the topic from the diff and say so in one line.
+A leading folder or local branch commits the work in that worktree, by
+`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`; every step below runs in its
+tree. The rest is an optional hint about the topic. Advice, not an order: if
+the diff says otherwise, pick the topic from the diff and say so in one line.
 
 ## Steps
 
@@ -101,8 +103,9 @@ diff says otherwise, pick the topic from the diff and say so in one line.
    to the new commits), with the branch name after it when the commits live in
    a worktree. If step 4
    ran the **full** `validate` (not a targeted row) and the tree is now clean,
-   record the tree it passed on: `git rev-parse HEAD^{tree} > "$(git rev-parse
-   --git-dir)/validated-tree"`. `create-pr` then skips a second identical run.
+   record the tree it passed on: `git -C <tree> rev-parse HEAD^{tree} >
+   "$(git -C <tree> rev-parse --git-dir)/validated-tree"`. `create-pr` then
+   skips a second identical run.
 
 ## When to stop and ask
 

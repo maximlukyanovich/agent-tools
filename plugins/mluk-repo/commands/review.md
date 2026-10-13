@@ -25,24 +25,14 @@ Positional, optional, any order — recognised by shape: a bare number is a PR;
 `<sha>..<sha>` is an explicit commit range; `blocker+` / `major+` / `minor+`
 narrows what is written out in full; `full` ignores the ledger's delta and
 reviews the whole target; `fix` applies the narrow list of deterministic fixes
-after the report, confirmed. A path is a worktree folder; any other word that
-names a local branch (`git rev-parse --verify refs/heads/<word>`) is that
-branch.
+after the report, confirmed. A folder or a local branch is the work to
+review (below).
 
 ## The tree under review
 
-A named branch, or a worktree folder, is reviewed **where it is checked out**:
-`git worktree list --porcelain` gives its folder, and from then on every git
-command is `git -C <folder> …`, every file is read from that folder, and
-`validate` runs there. The ledger stays the repository's — at the profile's
-`ledger` path in the main tree. A named branch checked out nowhere is reviewed
-from git alone (`git diff origin/<base>...<branch>`, files via
-`git show <branch>:<path>`), and the header says that `validate` did not run.
-
-No argument and the current branch is the base: look for the work instead of
-stopping — the worktrees whose branch is ahead of the base
-(`git rev-list --count origin/<base>..<branch>`). Exactly one → review it and
-name it in the header; several → ask which; none → nothing to review.
+`${CLAUDE_PLUGIN_ROOT}/reference/commands.md` says which tree is reviewed,
+where `validate` runs, and what happens with no argument on the base branch
+or with a branch checked out nowhere. Read it before step 1.
 
 ## The ledger
 
