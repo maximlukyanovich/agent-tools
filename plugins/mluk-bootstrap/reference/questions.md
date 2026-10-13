@@ -6,6 +6,16 @@ inventory already answered. **If an answer changes no file, the question is
 redundant.** The questionnaire rules themselves are in the `mluk-repo:kickoff`
 skill, loaded before the first question.
 
+**Rounds.** Four questions a round, the closing one included
+(`mluk-repo:kickoff`). Q9 and Q10 are not asked, so eleven come down to nine:
+
+1. Q1, Q2, Q3, and Q8 as the closing question;
+2. Q4, Q5, Q6, Q7 — without UI there is no Q4, Q11 takes its place and there
+   is no third round;
+3. Q11 alone — the plugin set follows from the answers to Q4 and Q7.
+
+A question the inventory answered fully drops out; the rest keep their order.
+
 **Q1. The repository's role and current phase.** What the product is, in a
 paragraph; who the repository's clients are; whether there are sibling
 repositories (backend, legacy, design bundle); whether there is a phase in which
@@ -42,7 +52,9 @@ type(scope): Subject`, body one bullet per point. Alternative `topic-prose` —
 there is machine enforcement (commitlint, husky) or only agreement, and whether
 `commit` should stage with confirmation or treat the invocation as
 authorisation. Both presets are described in the `mluk-repo:commit-conventions`
-skill.
+skill. *Always asked, even when the history follows one format: it shows a
+habit, not whether that is a rule, and says nothing about how `commit` stages.
+The format it follows becomes the recommended option.*
 
 **Q7. Languages.** Three independent answers: the language of code,
 identifiers, commits and PRs — English; the language of committed
@@ -53,15 +65,19 @@ place a fresh session gets it wrong.
 **Q8. What has already gone wrong.** Which mistakes the agent or the developer
 made repeatedly here. Each answer is a candidate for a hook (if
 machine-checkable) or a skill (if it needs understanding). Without this question
-the hook set comes out speculative.
+the hook set comes out speculative. *Asked as round 1's closing question — "What
+has already gone wrong here, or anything else to add?" — with the options
+"nothing yet, all covered" and "yes, I will describe it in chat".*
 
 **Q9. External access.** Which MCP servers and CLIs exist or are needed: library
 docs (Context7), design (DesignSync, Figma), browser (Playwright). Whether there
-are tokens and where they live.
+are tokens and where they live. *Not asked: the plan states the set derived
+from the inventory, Q3 and Q4 as an assumption the owner can overturn.*
 
 **Q10. Local notes.** Does the developer keep local material — plans, excerpts,
 handoffs, a copy journal — and where should it live. Default `docs/local/`,
-fully gitignored except its own README.
+fully gitignored except its own README. *Not asked: the plan states
+`docs/local/` as an assumption the owner can overturn.*
 
 **Q11. Plugins, and where they are recorded.** The set follows from the
 inventory and the answers — confirm it as a multi-select, do not ask from

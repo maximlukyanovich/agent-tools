@@ -22,4 +22,4 @@ Example:
 - hooks off: none
 ```
 
-A project that does not use next-intl switches `i18n-keys` off; one without the App Router switches `metadata-title` off. Write the reason after the dash — the next reader sees a decision, not an omission.
+A project that does not use next-intl switches `i18n-keys` off; one without the App Router switches `metadata-title` off, and so does one with a single locale and its strings right in the code, where a literal title is the right one — `- hooks off: i18n-keys, metadata-title — one locale, strings in code`. Write the reason after the dash — the next reader sees a decision, not an omission.
