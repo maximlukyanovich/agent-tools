@@ -32,6 +32,11 @@ asks and offers to write the answer into the profile.
 `commit`, `review`, `promote` and `handoff` also act on a branch in a
 worktree, named by folder or branch: `reference/commands.md`.
 
+## Agents
+
+- `review-group` — reviews one file group of a large diff for `review`;
+  read-only, on Sonnet, returns finding lines only.
+
 ## Skills
 
 - `commit-conventions` — the two presets: `gitmoji-conventional` (default) and

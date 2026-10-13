@@ -183,6 +183,7 @@ plugins/<name>/
   .claude-plugin/plugin.json      manifest
   commands/*.md                   procedures a human invokes
   skills/<name>/SKILL.md          knowledge the agent loads by itself
+  agents/*.md                     subagents a command delegates to
   reference/*.md                  read one file at a time, on instruction
   README.md                       for people, links to the skill
 ```
