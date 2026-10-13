@@ -34,7 +34,7 @@ The kickoff method (how a task is started) lives in `mluk-repo`, next to
 
 ## Reference
 
-Read one at a time, not as a whole: `questions.md` (the ten asked in phase 1),
+Read one at a time, not as a whole: `questions.md` (the eleven asked in phase 1),
 `layout.md` (target file tree, gitignore, and the two traps that cost a rewrite),
 `templates.md` (skeletons), `project-profile.md` (the sectioned file the library
 plugins read), `checklist.md` (the final check).

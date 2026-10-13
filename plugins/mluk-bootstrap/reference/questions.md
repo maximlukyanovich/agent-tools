@@ -63,5 +63,15 @@ are tokens and where they live.
 handoffs, a copy journal — and where should it live. Default `docs/local/`,
 fully gitignored except its own README.
 
+**Q11. Plugins, and where they are recorded.** The set follows from the
+inventory and the answers — confirm it as a multi-select, do not ask from
+scratch: `mluk-bootstrap` and `mluk-repo` always (already installed),
+`mluk-fe` in a web front, `mluk-design` where there is a design kit,
+`mluk-deploy` where the project deploys, `mluk-ops` where the agent works on a
+server, `mluk-ru` where the project has Russian texts for people. The file:
+`.claude/settings.json` by default, committed, so every clone gets the set;
+`.claude/settings.local.json` when the project's rules keep AI settings out of
+git.
+
 There is no question about a tracker or time tracking. A task brief comes inline, from a `docs/local/` note, or from a GitHub
 issue when one exists.

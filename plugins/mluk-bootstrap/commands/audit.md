@@ -95,6 +95,11 @@ project-specific as a separate short list. Before asking the owner, load the
 to add?" included. Apply changes after confirmation, one group at a time,
 never all at once.
 
+End with the next step in a code block. Changes applied → the project's commit
+command (`/mluk-repo:commit` or its local override), to run in this session —
+it runs `/mluk-repo:handoff` after. Nothing applied → the first proposed
+change, as a prompt that applies it.
+
 ## Hard rules
 
 - **Read-only by default.** Findings first, edits after approval.
