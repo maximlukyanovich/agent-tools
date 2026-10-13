@@ -72,4 +72,6 @@ semantically, not the diff line by line.
 
 `Co-Authored-By`, agent attribution, person names, links to chat or personal
 notes, a tracker id that does not exist. A GitHub issue is referenced only
-when one exists (`Closes #42`).
+when one exists (`Closes #42`). Where a name would go, the title and the body
+name the source by role or reference: `upstream develop`, a commit
+(`d571244`), "the owner's decision of 2026-10-11", "a review finding".

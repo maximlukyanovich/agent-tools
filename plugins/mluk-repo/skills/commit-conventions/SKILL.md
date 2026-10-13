@@ -102,7 +102,9 @@ instead of omitting the line. Russian UI terms are quoted with guillemets.
   attribution. The harness default is suppressed with
   `attribution: { commit: "", pr: "" }` in `.claude/settings.json`; adding an
   equivalent by hand is the same violation.
-- Person names.
+- Person names. Where one would go, name the source by role or reference:
+  `upstream develop`, a commit (`d571244`), "the owner's decision of
+  2026-10-11", "a review finding".
 - Links to chat, DMs or personal notes that are not in the repository.
 - A language other than English.
 - A subject that restates the diff (`update models.py`) instead of the change.
