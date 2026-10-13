@@ -1,6 +1,6 @@
 ---
 name: kickoff
-description: How a piece of work is started and planned — plan mode, exploration, the questionnaire rules (a marked recommendation first, at most four questions a round, a closing "anything to add" always in the first round, later only when new input is plausible), the decisions table, slices, approval before code, separate commits on an explicit go-ahead, and proposing a project rule when a problem recurs. Use when starting any task that needs a plan, when about to ask the owner questions, and when the same kind of mistake shows up again. Not for trivial edits.
+description: How a piece of work is started and planned — plan mode, the questionnaire rules, the decisions table, slices, a state table for a state change, approval before code, commits on a go-ahead, a project rule when a problem recurs. Use when starting any task that needs a plan, before asking the owner questions, and when the same mistake shows up again. Not for trivial edits.
 ---
 
 # kickoff
