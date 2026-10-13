@@ -13,8 +13,9 @@ and the branch instead of retelling them. This command prints that prompt.
 **Read-only**, apart from a local note when a block runs long.
 
 `commit` (when its commits close a task or a round of fixes), `review`,
-`create-pr` and `promote` call it at their end; the owner may call it at any
-time. It is never called before a commit.
+`create-pr` and `promote` run it themselves at their end, through the Skill
+tool, without asking; the owner may call it at any time. It is never called
+before a commit.
 
 ## Arguments
 
@@ -42,7 +43,7 @@ A folder or a local branch — the work to hand off, by
    | State | Blocks |
    | --- | --- |
    | Uncommitted changes | none — ask in this session whether to commit first |
-   | Merged into the base | `/mluk-repo:next`; under it one line with the ledger's open findings (ids, ledger path) — they go to the next task or to techdebt |
+   | Merged into the base | `/mluk-repo:next`; below the block, as plain text, one line with the ledger's open findings (ids, ledger path) — they go to the next task or to techdebt |
    | Commits after the ledger's last head, or no ledger | `/mluk-repo:review <branch> <from>..<head>` — `<from>` is the last reviewed head, else the merge-base with `origin/<base>` |
    | A pass on the head, `blocked` or `changes requested` | the fix prompt |
    | A pass on the head, `ready to merge`, nothing open | `/mluk-repo:promote <branch>` |

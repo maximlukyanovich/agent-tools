@@ -186,9 +186,10 @@ never rewritten.
     anything named in the profile's blast-radius list, structural refactoring.
     After fixing, run `validate` and close with one line.
 
-12. **Hand off** — last, once the owner has answered steps 10–11:
-    `/mluk-repo:handoff` for the same branch prints the fix prompt, the
-    promote line, or both. When `fix` left the tree dirty, offer
+12. **Hand off** — last, once steps 10–11 are answered or skipped: run
+    `/mluk-repo:handoff` for the same branch yourself, through the Skill
+    tool, without asking. It prints the fix prompt, the promote line, or
+    both. When `fix` left the tree dirty, offer
     `/mluk-repo:commit` instead; it hands off after the commit.
 
 ## Hard rules

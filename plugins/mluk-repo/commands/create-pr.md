@@ -99,8 +99,9 @@ stops after printing the PR URL.
      default — a merged worktree left behind is clutter nobody asked for.
 
 7. **Wrap up**: PR URL and status (`opened` / `merged` / `pending CI`), the
-   `git-safety` reminder line, then `/mluk-repo:handoff` — after opening it
-   names the review or the merge to run next, after a merge the next task.
+   `git-safety` reminder line, then run `/mluk-repo:handoff` yourself, without
+   asking — after opening it names the review or the merge to run next, after
+   a merge the next task.
 
 ## Hard rules
 

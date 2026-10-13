@@ -55,7 +55,8 @@ source when the target moved. A single hop to the next branch is the same as
 
 5. **Wrap up**: segments merged, segments skipped, PR URLs, `git log --oneline
    -5` of the target, the `git-safety` reminder line, a checkout back to the
-   branch the owner started on, then `/mluk-repo:handoff`.
+   branch the owner started on, then run `/mluk-repo:handoff` yourself,
+   without asking.
 
 ## Hard rules
 

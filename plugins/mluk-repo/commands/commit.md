@@ -103,8 +103,9 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    it passed on: `git -C <tree> rev-parse HEAD^{tree} >
    "$(git -C <tree> rev-parse --git-dir)/validated-tree"`. `create-pr` then
    skips a second identical run. When the commits close a task or a round of
-   review fixes, end with `/mluk-repo:handoff` for the same worktree or branch
-   — it prints the review to run next, in a fresh session.
+   review fixes, run `/mluk-repo:handoff` for the same worktree or branch
+   yourself, through the Skill tool, without asking — it prints the review to
+   run next, in a fresh session.
 
 ## When to stop and ask
 
