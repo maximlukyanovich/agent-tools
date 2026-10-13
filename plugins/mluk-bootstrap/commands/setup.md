@@ -52,10 +52,11 @@ The order is fixed. Steps are not reordered or skipped.
    MCP, docs. Plugins are installed with `--scope project`.
 
    **Local commands are the exception, not the rule.** `commit`, `create-pr`,
-   `promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs` exist in
-   `mluk-repo` and read the profile. Write a local `.claude/commands/<name>.md`
-   only when the answer to a question showed that the *procedure* differs —
-   and say in the plan which library command it overrides and why.
+   `promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs`,
+   `handoff` exist in `mluk-repo` and read the profile. Write a local
+   `.claude/commands/<name>.md` only when the answer to a question showed that
+   the *procedure* differs — and say in the plan which library command it
+   overrides and why.
 
 5. **Run the final check** from `${CLAUDE_PLUGIN_ROOT}/reference/checklist.md`
    and report what is green and what is not.

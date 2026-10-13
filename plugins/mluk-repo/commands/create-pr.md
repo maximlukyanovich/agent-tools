@@ -98,8 +98,9 @@ stops after printing the PR URL.
      branches, `git push origin --delete <branch>`. Offer this cleanup by
      default — a merged worktree left behind is clutter nobody asked for.
 
-7. **Wrap up**: PR URL and status (`opened` / `merged` / `pending CI`), and the
-   `git-safety` reminder line.
+7. **Wrap up**: PR URL and status (`opened` / `merged` / `pending CI`), the
+   `git-safety` reminder line, then `/mluk-repo:handoff` — after opening it
+   names the review or the merge to run next, after a merge the next task.
 
 ## Hard rules
 

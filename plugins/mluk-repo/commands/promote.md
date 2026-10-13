@@ -54,8 +54,8 @@ source when the target moved. A single hop to the next branch is the same as
    Red CI stops the run; the remaining segments do not execute.
 
 5. **Wrap up**: segments merged, segments skipped, PR URLs, `git log --oneline
-   -5` of the target, the `git-safety` reminder line, and a checkout back to
-   the branch the owner started on.
+   -5` of the target, the `git-safety` reminder line, a checkout back to the
+   branch the owner started on, then `/mluk-repo:handoff`.
 
 ## Hard rules
 

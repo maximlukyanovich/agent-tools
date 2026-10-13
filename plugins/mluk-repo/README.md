@@ -16,6 +16,7 @@ procedure lives here, the project supplies `.claude/project-profile.md`.
 | `/mluk-repo:commit` | yes | Stage explicitly, validate, draft by the preset, commit. Never pushes. |
 | `/mluk-repo:create-pr` | yes | PR texts by `pr-conventions` → push → `gh pr create` → optionally merge after green CI. |
 | `/mluk-repo:promote` | yes | Walk the profile's chain; each boundary is `sync` + `create-pr` + merge, confirmed. |
+| `/mluk-repo:handoff` | a local note, only when a block runs long | The next session's prompt at a phase boundary — the review after a task's commit, the fixes or the promote after a review, the next task after a merge — from git and the ledger. `commit`, `review`, `create-pr` and `promote` call it at their end. |
 | `/mluk-repo:help` | no | This plugin's surface. |
 
 `/promote` to the next branch is the same as `/create-pr merge`; `promote`
@@ -28,7 +29,7 @@ Every command reads `## Repository` first; `start`, `next`, `task`, `review`,
 and defaults: `reference/profile.md`. When the profile is silent the command
 asks and offers to write the answer into the profile.
 
-`commit`, `review` and `promote` also act on a branch in a
+`commit`, `review`, `promote` and `handoff` also act on a branch in a
 worktree, named by folder or branch: `reference/commands.md`.
 
 ## Skills
