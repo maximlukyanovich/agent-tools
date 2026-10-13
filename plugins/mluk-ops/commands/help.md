@@ -1,6 +1,7 @@
 ---
 description: What mluk-ops can do — srv, the PreToolUse guard and its three classes, the server-ops skill, and whether this machine has servers configured. Never connects to a server.
 argument-hint: '[<language code>]'
+disable-model-invocation: true
 ---
 
 # /mluk-ops:help

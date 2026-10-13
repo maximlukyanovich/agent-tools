@@ -1,6 +1,6 @@
 ---
 description: Review the current branch — or a named branch or worktree, or a specific PR — against the base branch, and return findings sorted by severity with a file:line anchor each. Keeps a pass ledger so a repeat run reviews only what changed. Read-only apart from the ledger; edits only with the fix argument.
-argument-hint: '[<PR#> | <branch> | <worktree-path>] [<sha>..<sha>] [<severity>+] [full] [fix]'
+argument-hint: '[<PR#> | <branch> | <worktree-path>] [<sha>..<sha>] [<severity>+] [full] [fix] [model=<name>]'
 ---
 
 # /mluk-repo:review
@@ -25,24 +25,14 @@ Positional, optional, any order — recognised by shape: a bare number is a PR;
 `<sha>..<sha>` is an explicit commit range; `blocker+` / `major+` / `minor+`
 narrows what is written out in full; `full` ignores the ledger's delta and
 reviews the whole target; `fix` applies the narrow list of deterministic fixes
-after the report, confirmed. A path is a worktree folder; any other word that
-names a local branch (`git rev-parse --verify refs/heads/<word>`) is that
-branch.
+after the report, confirmed; `model=<name>` sets the model of the group
+agents for this run. A folder or a local branch is the work to review (below).
 
 ## The tree under review
 
-A named branch, or a worktree folder, is reviewed **where it is checked out**:
-`git worktree list --porcelain` gives its folder, and from then on every git
-command is `git -C <folder> …`, every file is read from that folder, and
-`validate` runs there. The ledger stays the repository's — at the profile's
-`ledger` path in the main tree. A named branch checked out nowhere is reviewed
-from git alone (`git diff origin/<base>...<branch>`, files via
-`git show <branch>:<path>`), and the header says that `validate` did not run.
-
-No argument and the current branch is the base: look for the work instead of
-stopping — the worktrees whose branch is ahead of the base
-(`git rev-list --count origin/<base>..<branch>`). Exactly one → review it and
-name it in the header; several → ask which; none → nothing to review.
+`${CLAUDE_PLUGIN_ROOT}/reference/commands.md` says which tree is reviewed,
+where `validate` runs, and what happens with no argument on the base branch
+or with a branch checked out nowhere. Read it before step 1.
 
 ## The ledger
 
@@ -69,13 +59,15 @@ never rewritten.
 ## Scope control
 
 - A diff under ~25 files and ~2000 lines is reviewed inline. Past either,
-  delegate to subagents **cut by file group**, each with its slice of the diff
-  and the whole rubric but **not the ledger**; cap at 4–6. A subagent returns
-  findings (`severity | tag | file:line | what | one-line fix | anchor`), never
-  diff.
-- Synthesis stays in the main thread: deduplicate, catch cross-slice problems
-  (a field changed here, its test asserting the old shape there), normalise
-  severities.
+  delegate **by file group** to the `mluk-repo:review-group` agent, in
+  parallel, cap 4–6 — read-only, on Sonnet unless `model=` names another,
+  passed as the Agent call's `model`. Each gets the tree, the base, its slice
+  of the diff and the whole rubric of step 5, **not the ledger**, and returns
+  finding lines, never diff.
+- Synthesis, the refutation of step 6 and the ledger stay with the main
+  model: deduplicate, check the `cross-slice` lines, catch cross-slice
+  problems (a field changed here, its test asserting the old shape there),
+  normalise severities.
 - Never read a file in full speculatively; open one only when a finding needs
   its context.
 
@@ -193,6 +185,12 @@ never rewritten.
     model or serializer shapes, permission logic, validators, test expectations,
     anything named in the profile's blast-radius list, structural refactoring.
     After fixing, run `validate` and close with one line.
+
+12. **Hand off** — last, once steps 10–11 are answered or skipped: run
+    `/mluk-repo:handoff` for the same branch yourself, through the Skill
+    tool, without asking. It prints the fix prompt, the promote line, or
+    both. When `fix` left the tree dirty, offer
+    `/mluk-repo:commit` instead; it hands off after the commit.
 
 ## Hard rules
 

@@ -56,6 +56,8 @@ documents are never translated.
    commit subjects. A `docs/local/` note with open items is mentioned by name
    and count, never quoted.
 
+6. **End** with `/mluk-repo:next` in a code block, ready to copy.
+
 ## Hard rules
 
 - Read-only; nothing started, stopped, installed or written.

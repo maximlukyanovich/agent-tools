@@ -1,6 +1,7 @@
 ---
 description: What mluk-ru can do — the review command, the principles the skill carries, and what the project profile's Copy section adds.
 argument-hint: '[<language code>]'
+disable-model-invocation: true
 ---
 
 # /mluk-ru:help

@@ -7,7 +7,8 @@ argument-hint: '[worktree] [<flavour>] <task description>'
 
 The single entry point into new work. The brief is passed inline; the
 command gathers context, checks what already exists, asks what the code cannot
-answer, and returns a **plan** through the `kickoff` method.
+answer, and returns a **plan** through the `kickoff` method — load that skill
+first; steps 5–7 follow it.
 
 **Only plans.** Writes no production code, does not commit, does not call
 `gh`. Reads `## Task` (`flavours`, `brief sources`, `branch prefix`, `blast
@@ -59,9 +60,10 @@ owner names, or ask. There is no tracker.
    - commands act on the session's working directory, so a command run in
      the main tree sees the main tree's branch. The working session moves into
      the worktree (`EnterWorktree` with the folder's path) or addresses it
-     explicitly (`git -C <folder>`, paths inside it); a review offered for a
-     fresh session names the branch — `/mluk-repo:review <branch>` — since
-     that session starts in the main tree.
+     explicitly (`git -C <folder>`, paths inside it); a command offered for
+     a fresh session names the branch — `/mluk-repo:review <branch>`, and
+     `commit`, `promote`, `handoff` the same way — since that session starts
+     in the main tree.
 
    A worktree is temporary: once its branch is merged, `/mluk-repo:create-pr`
    offers to remove it; a folder deleted by hand leaves a stale entry that
@@ -79,15 +81,13 @@ owner names, or ask. There is no tracker.
    field)? The result is an explicit section of the plan: reused, extended,
    genuinely new and why.
 
-5. **Ask** what the code cannot answer, by the `kickoff` questionnaire rules —
-   recommendation first and marked, at most four a round, a closing "anything
-   to add" only when new input is plausible.
+5. **Ask** what the code cannot answer, by the `kickoff` questionnaire rules.
 
-6. **Produce the plan** by the `kickoff` shape: context, decisions table,
-   architecture, slices with files and the proof each slice needs (tests,
-   browser check, migration), effect on live data when `blast radius` names
-   operations the plan touches — explicitly, even when "none" — documentation
-   to update, assumptions, open questions.
+6. **Produce the plan** by the `kickoff` shape — the state table included
+   when state changes — plus the proof each slice needs (tests, browser
+   check, migration), the effect on live data when `blast radius` names
+   operations the plan touches — explicitly, even when "none" — and the
+   documentation to update.
 
 7. **Stop and request approval** through the plan-approval mechanism.
 

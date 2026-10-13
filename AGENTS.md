@@ -14,6 +14,10 @@ holds only the rules for working on the repository itself.
   is public and other people install it, so `main` is what they get; a pull
   request leaves a diff to read before it lands. A trivial fix — a typo, a
   broken link — may land on `main` directly. No force push.
+- **Before a new branch, the open pull requests touching the same files** —
+  `gh pr list --json number,headRefName,files`. An overlap is merged first,
+  or the work goes onto that branch; two branches editing one file book a
+  conflict in advance.
 - **Plugin files are addressed through `${CLAUDE_PLUGIN_ROOT}`** inside plugin
   texts, never found by searching the filesystem. An installed plugin is a
   copy under `~/.claude/plugins/cache/`, even when the marketplace is
@@ -38,8 +42,8 @@ holds only the rules for working on the repository itself.
 
 - **Language.** Everything committed is English — plugin texts, README, commit
   messages, this file. The one exception is `plugins/mluk-ru/skills/
-  business-russian/SKILL.md`: its rules and examples are Russian, because the
-  subject is Russian.
+  business-russian/SKILL.md` with its `plugins/mluk-ru/reference/legal.md`:
+  their rules and examples are Russian, because the subject is Russian.
 - **Commits.** `:gitmoji: type(scope): Subject`, blank line, body as `- ` bullets
   explaining why, each bullet on one line, no hard wrap. Scope is the plugin
   name without the prefix (`bootstrap`, `repo`, `ru`) or `readme` / `catalog`
@@ -49,14 +53,24 @@ holds only the rules for working on the repository itself.
 - **Plugin names are fixed once.**
 - **Descriptions are the loading mechanism.** A skill's `description` decides
   when the agent loads it; a command's decides what completion shows. Both are
-  written narrowly and both are paid for in every session.
+  written narrowly and both are paid for in every session — except a
+  command only a human runs, such as `help`, which carries
+  `disable-model-invocation: true` and stays out of the model's context.
+- **`model:` goes on agents, not on commands or skills.** A command's
+  override lasts one turn, and the next turn re-reads the whole history
+  without cache; a subagent starts with an empty context, so its model is
+  where the choice pays.
+- **A command ends with its next step** as a code block ready to copy;
+  alternatives are separate blocks. A step answered in the same session — a
+  yes to a commit, a choice between closing steps — stays a question.
 
 ## 3. Checks before a pull request
 
 The only automated gate is the `Hook tests` workflow. Before opening a pull request, its author checks by hand:
 
 - every `commands/*.md` has frontmatter with `description` and `argument-hint`;
-- every `skills/*/SKILL.md` has `name` and `description`;
+- every `skills/*/SKILL.md` has `name` and `description`, every
+  `agents/*.md` has `name`, `description` and `tools`;
 - every file reference inside a plugin resolves — a relative link to a file that
   exists, or a `${CLAUDE_PLUGIN_ROOT}` path;
 - `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
@@ -78,6 +92,7 @@ plugins/<name>/
   .claude-plugin/plugin.json      manifest
   commands/*.md                   procedures a human invokes
   skills/<name>/SKILL.md          knowledge the agent loads by itself
+  agents/*.md                     subagents a command delegates to
   reference/*.md                  read one file at a time, on instruction
   README.md                       for people, links to the skill
 ```

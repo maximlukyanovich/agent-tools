@@ -16,6 +16,7 @@ procedure lives here, the project supplies `.claude/project-profile.md`.
 | `/mluk-repo:commit` | yes | Stage explicitly, validate, draft by the preset, commit. Never pushes. |
 | `/mluk-repo:create-pr` | yes | PR texts by `pr-conventions` → push → `gh pr create` → optionally merge after green CI. |
 | `/mluk-repo:promote` | yes | Walk the profile's chain; each boundary is `sync` + `create-pr` + merge, confirmed. |
+| `/mluk-repo:handoff` | a local note, only when a block runs long | The next session's prompt at a phase boundary — the review after a task's commit, the fixes or the promote after a review, the next task after a merge — from git and the ledger. `commit`, `review`, `create-pr` and `promote` call it at their end. |
 | `/mluk-repo:help` | no | This plugin's surface. |
 
 `/promote` to the next branch is the same as `/create-pr merge`; `promote`
@@ -27,6 +28,14 @@ Every command reads `## Repository` first; `start`, `next`, `task`, `review`,
 `update-docs` also read `## Checks`, `## Task`, `## Review`, `## Docs`. Keys
 and defaults: `reference/profile.md`. When the profile is silent the command
 asks and offers to write the answer into the profile.
+
+`commit`, `review`, `promote` and `handoff` also act on a branch in a
+worktree, named by folder or branch: `reference/commands.md`.
+
+## Agents
+
+- `review-group` — reviews one file group of a large diff for `review`;
+  read-only, on Sonnet, returns finding lines only.
 
 ## Skills
 
@@ -41,9 +50,6 @@ asks and offers to write the answer into the profile.
 - `kickoff` — how a task is started: plan mode, exploration, the questionnaire
   rules, the decisions table, slices, approval, and proposing a project rule
   when a problem recurs. `/mluk-repo:task` runs it.
-- `yandex-browser` — reproducing Yandex-Browser-only bugs under Playwright
-  without installing the browser, and its known quirk: a swipe that starts on
-  an overlay's shadow goes to the wrong scroller.
 
 ## Local overrides
 

@@ -1,6 +1,7 @@
 ---
 description: What mluk-deploy can do — the deployment skills (VPS, Vercel, DNS), when each one applies, and which deployment files this project has.
 argument-hint: '[<language code>]'
+disable-model-invocation: true
 ---
 
 # /mluk-deploy:help

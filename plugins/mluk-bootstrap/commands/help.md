@@ -1,6 +1,7 @@
 ---
 description: What mluk-bootstrap can do — commands, the layer model it applies, what it creates, and where the working method lives.
 argument-hint: '[<language code>]'
+disable-model-invocation: true
 ---
 
 # /mluk-bootstrap:help

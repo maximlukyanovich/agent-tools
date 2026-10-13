@@ -1,6 +1,6 @@
 ---
 name: kickoff
-description: How a piece of work is started and planned — plan mode, exploration, the questionnaire rules (a marked recommendation first, at most four questions a round, a closing "anything to add" always in the first round, later only when new input is plausible), the decisions table, slices, approval before code, separate commits on an explicit go-ahead, and proposing a project rule when a problem recurs. Use when starting any task that needs a plan, when about to ask the owner questions, and when the same kind of mistake shows up again. Not for trivial edits.
+description: How a piece of work is started and planned — plan mode, the questionnaire rules, the decisions table, slices, a state table for a state change, approval before code, commits on a go-ahead, a project rule when a problem recurs. Use when starting any task that needs a plan, before asking the owner questions, and when the same mistake shows up again. Not for trivial edits.
 ---
 
 # kickoff
@@ -56,6 +56,13 @@ rename does not need this.
    behaviour), assumptions the owner can
    overturn, open questions, and verification (how the result is proven — tests,
    a browser check, a curl).
+   A change to state — a hook's or a component's lifecycle, a store, a state
+   machine, an async flow, a timer — adds three things: a **state table**
+   (state × event → expected → the test that proves it); **what we rely on in
+   the framework**, each point with `file:line` in the library's source or
+   the docs URL; and one line on **why not the structural option** — the
+   change that would make the bad state impossible to express (a reset by
+   key, a reducer, a discriminated union).
    The plan is written in the language of the chat — the owner reads it in the
    approval dialog. Identifiers, paths and class names stay as they are;
    committed text (commits, PR bodies, code comments) keeps the repository's
@@ -75,6 +82,9 @@ rename does not need this.
      a test that also passes on the old code proves nothing. When it genuinely
      cannot be tested, the commit body says why. A test promised for "the next
      commit" is the gap reviews keep finding.
+   - **A state change starts from its transition table** — the rows of the
+     plan's state table it touches: one row, one test that turns red when the
+     change is reverted. The commit lists the rows it covers.
    - **Shared code changes only when the change is right for every consumer.**
      Walk the call sites first; a need that only one caller has stays with that
      caller.

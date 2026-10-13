@@ -1,6 +1,6 @@
 ---
 description: Build a commit for the current changes — stage explicitly, run the profile's validate command, draft the message by the commit preset, commit. Never pushes.
-argument-hint: '[topic or short hint]'
+argument-hint: '[<worktree | branch>] [topic or short hint]'
 ---
 
 # /mluk-repo:commit
@@ -11,8 +11,10 @@ parameters from the profile's `## Repository`: `validate`, `targeted checks`,
 
 **Writes to git.** Never pushes — that is `/mluk-repo:create-pr` or `:promote`.
 
-The argument is an optional hint about the topic. Advice, not an order: if the
-diff says otherwise, pick the topic from the diff and say so in one line.
+A leading folder or local branch commits the work in that worktree, by
+`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`; every step below runs in its
+tree. The rest is an optional hint about the topic. Advice, not an order: if
+the diff says otherwise, pick the topic from the diff and say so in one line.
 
 ## Steps
 
@@ -80,8 +82,9 @@ diff says otherwise, pick the topic from the diff and say so in one line.
    body.
 
 7. **Show and commit.** `commit confirm: ask` (default) → print the file
-   groups, the check results and the message verbatim, and **wait for the
-   go-ahead**. `commit confirm: auto` → print the same for visibility and
+   groups, the check results, the transition rows its tests cover when the
+   commit changes state (`kickoff`), and the message verbatim, and **wait for
+   the go-ahead**. `commit confirm: auto` → print the same for visibility and
    proceed; stop only for the reasons below.
 
    ```bash
@@ -95,14 +98,14 @@ diff says otherwise, pick the topic from the diff and say so in one line.
    More groups → repeat for the next one.
 
 8. **Wrap up**: `git log --oneline -<N>` with the new commits on top, and a
-   one-line reminder that nothing was pushed. When the commits close a task or
-   a round of review fixes, add the review to run next, in a fresh session, as
-   its own code block ready to copy: `/mluk-repo:review` (the ledger narrows it
-   to the new commits), with the branch name after it when the commits live in
-   a worktree. If step 4
-   ran the **full** `validate` (not a targeted row) and the tree is now clean,
-   record the tree it passed on: `git rev-parse HEAD^{tree} > "$(git rev-parse
-   --git-dir)/validated-tree"`. `create-pr` then skips a second identical run.
+   one-line reminder that nothing was pushed. If step 4 ran the **full**
+   `validate` (not a targeted row) and the tree is now clean, record the tree
+   it passed on: `git -C <tree> rev-parse HEAD^{tree} >
+   "$(git -C <tree> rev-parse --git-dir)/validated-tree"`. `create-pr` then
+   skips a second identical run. When the commits close a task or a round of
+   review fixes, run `/mluk-repo:handoff` for the same worktree or branch
+   yourself, through the Skill tool, without asking — it prints the review to
+   run next, in a fresh session.
 
 ## When to stop and ask
 

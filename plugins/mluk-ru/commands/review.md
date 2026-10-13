@@ -27,8 +27,9 @@ only when the owner asks, and then finding by finding.
    about a term or a promise is checked against the set, not the file alone.
 
 3. **Run the self-check first** — the two mistakes the agent repeats (a
-   dropped subject, a tautology) — then the general checklist, then the legal
-   checklist when `legal` is given.
+   dropped subject, a tautology) — then the general checklist; with `legal`,
+   read `${CLAUDE_PLUGIN_ROOT}/reference/legal.md` and apply its principles
+   and its checklist.
 
 4. **Report**, in document order, one finding per item:
 

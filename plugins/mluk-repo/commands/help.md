@@ -1,6 +1,7 @@
 ---
 description: What mluk-repo can do — the workflow commands, their usual order, the profile sections they read, and the skills they lean on.
 argument-hint: '[<language code>]'
+disable-model-invocation: true
 ---
 
 # /mluk-repo:help
@@ -15,11 +16,12 @@ Language: the conversation's, unless `$1` gives a code.
    `argument-hint` out of every file in `${CLAUDE_PLUGIN_ROOT}/commands/`. Use
    that path verbatim — never search the filesystem for the plugin. Mark the
    mutating ones: `commit`, `create-pr`, `promote`, `sync`; `update-docs`
-   writes after confirmation; `next` writes only a roadmap status patch, after confirmation; `review` writes only its gitignored ledger, code only with `fix`.
+   writes after confirmation; `next` writes only a roadmap status patch, after confirmation; `review` writes only its gitignored ledger, code only with `fix`; `handoff` writes only a local note.
 
 2. **Show the usual order:** `start` → `next` → `task` → work → `commit` → `review` →
    `sync` when the base moved → `create-pr` or `promote`; `update-docs` before
-   a commit that changed behaviour.
+   a commit that changed behaviour; `handoff` at each boundary, each phase in
+   a fresh session — `commit`, `review`, `create-pr` and `promote` call it.
 
 3. **Say what the profile must contain** — `## Repository` for every command,
    `## Checks` for `start`, `## Task` for `task`, `## Review` for `review`,
