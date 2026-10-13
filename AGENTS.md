@@ -50,6 +50,9 @@ holds only the rules for working on the repository itself.
 - **Descriptions are the loading mechanism.** A skill's `description` decides
   when the agent loads it; a command's decides what completion shows. Both are
   written narrowly and both are paid for in every session.
+- **A command ends with its next step** as a code block ready to copy;
+  alternatives are separate blocks. A step answered in the same session — a
+  yes to a commit, a choice between closing steps — stays a question.
 
 ## 3. Checks before a pull request
 

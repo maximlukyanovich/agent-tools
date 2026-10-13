@@ -57,6 +57,9 @@ same commit as the code, through `/mluk-repo:commit`.
    repository are applied there only when the owner says so — it has its own
    branch and its own commit preset.
 
+7. **End** with `/mluk-repo:commit` in a code block — the documents ship in
+   the same commit as the code.
+
 ## Hard rules
 
 - No writes before confirmation; no commits at all.

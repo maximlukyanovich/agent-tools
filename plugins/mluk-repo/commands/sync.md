@@ -49,6 +49,9 @@ inventory of the codebase.
    `base now provides: … / our branch has: file:line / suggested swap: … /
    blast radius: local | crosses N files | unclear`. Nothing found → one line.
 
+7. **End** with the two ways on, each its own code block:
+   `/mluk-repo:create-pr` and `/mluk-repo:promote <target>`.
+
 ## Hard rules
 
 - Do not silently replace shared code; propose the swap, the owner decides.

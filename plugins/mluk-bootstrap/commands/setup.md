@@ -62,6 +62,7 @@ The order is fixed. Steps are not reordered or skipped.
    and report what is green and what is not.
 
 6. **Report**: created, changed, deliberately left out and why, still open.
+   End with `/mluk-repo:commit` in a code block when `mluk-repo` is enabled.
 
 ## Hard rules
 
