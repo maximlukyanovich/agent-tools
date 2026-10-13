@@ -90,10 +90,15 @@ The harness exists; the job is to find the gaps, not to rewrite it.
 ## Report
 
 A table: finding → layer → severity → proposed action. Rules that are not
-project-specific as a separate short list. Questions to the owner follow the
-questionnaire rules of `mluk-repo`'s `kickoff` skill, a closing "anything to
-add?" included. Apply changes after confirmation, one group at a time,
+project-specific as a separate short list. Before asking the owner, load the
+`mluk-repo:kickoff` skill — its questionnaire rules apply, a closing "anything
+to add?" included. Apply changes after confirmation, one group at a time,
 never all at once.
+
+End with the next step in a code block. Changes applied → the project's commit
+command (`/mluk-repo:commit` or its local override), to run in this session —
+it runs `/mluk-repo:handoff` after. Nothing applied → the first proposed
+change, as a prompt that applies it.
 
 ## Hard rules
 

@@ -43,12 +43,35 @@ still applies.
 
 ## Quick start
 
+Once per machine — it adds the source and loads nothing into sessions:
+
 ```bash
 claude plugin marketplace add maximlukyanovich/agent-tools
-claude plugin install mluk-bootstrap@mluk-agent-tools --scope user
 ```
 
-Then, in your repository, run `/mluk-bootstrap:setup`. It looks at the code,
+In an existing repository, then run `/mluk-bootstrap:setup`:
+
+```bash
+claude plugin install mluk-bootstrap@mluk-agent-tools --scope project
+```
+
+`mluk-repo` comes with it as a dependency. `--scope local` keeps the record in
+the gitignored `.claude/settings.local.json`, for a project whose rules keep AI
+settings out of git. `--scope user` works too, at a price: the plugins'
+descriptions join every session on the machine, in unrelated projects as well.
+
+From scratch, in an empty folder — `--marketplace` adds the marketplace when it
+is not there yet:
+
+```bash
+mkdir my-app && cd my-app
+claude plugin install mluk-bootstrap --marketplace maximlukyanovich/agent-tools --scope project && claude "/mluk-bootstrap:new"
+```
+
+`new` asks the stack, runs its generator, pins the environment, and makes the
+first commit and the remote on your yes; `setup` follows in a fresh session.
+
+`setup` looks at the code,
 asks only what the code cannot answer, shows a plan and, once you approve it,
 writes the harness — `AGENTS.md`, the project profile, and a
 `.claude/settings.json` that enables the plugins the project needs, so every
@@ -96,7 +119,7 @@ Language follows the conversation; pass a language code to override.
 
 | Plugin | Kind | What it does |
 | --- | --- | --- |
-| `mluk-bootstrap` | generator + audit | Initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model. |
+| `mluk-bootstrap` | generator + audit | Create a project in an empty folder; initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model. |
 | `mluk-repo` | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs`, `handoff`, and the `kickoff` method — how a task is started. Reads `.claude/project-profile.md`. |
 | `mluk-design` | library | `design-port` — how a design kit is ported. Enabled where a kit exists. |
 | `mluk-fe` | library + hooks | Frontend conventions for React / Next.js: `web-ui-conventions`, `component-discipline`, `yandex-browser`, and PostToolUse hooks for locale parity, translation keys and metadata titles. Reads the profile's `## Frontend`. Enabled in a web front. |
@@ -167,7 +190,7 @@ command it ships and every document quoting them.
 
 | Plugin | Commands |
 | --- | --- |
-| `mluk-bootstrap` | `:setup`, `:audit`, `:help` |
+| `mluk-bootstrap` | `:new`, `:setup`, `:audit`, `:help` |
 | `mluk-repo` | `:commit`, `:create-pr`, `:promote`, `:review`, `:sync`, `:start`, `:next`, `:task`, `:update-docs`, `:handoff`, `:help` |
 | `mluk-ru` | `:review`, `:help` |
 | `mluk-fe` | `:help` |

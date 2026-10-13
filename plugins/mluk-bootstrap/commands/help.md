@@ -16,9 +16,12 @@ Language: the conversation's, unless `$1` gives a code.
    `argument-hint` out of every file in `${CLAUDE_PLUGIN_ROOT}/commands/`. Use
    that path verbatim — never search the filesystem for the plugin.
 
-2. **Show the order:** `/mluk-bootstrap:setup` on a repository without a
-   harness, `/mluk-bootstrap:audit` on one that has it. The library commands
-   (`/mluk-repo:*`) are enabled by `setup` and driven by the profile.
+2. **Show the order:** `/mluk-bootstrap:new` in an empty folder,
+   `/mluk-bootstrap:setup` on a repository without a harness,
+   `/mluk-bootstrap:audit` on one that has it. `mluk-repo` comes with this
+   plugin; `setup` installs the rest of the project's set, and the profile
+   drives them. From scratch it is one line in a new folder:
+   `claude plugin install mluk-bootstrap --marketplace maximlukyanovich/agent-tools --scope project && claude "/mluk-bootstrap:new"`.
 
 3. **State the layer model in a few lines** — deterministic checks, hooks,
    documents, skills, commands; the cheapest layer that can catch the rule — and

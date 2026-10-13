@@ -75,10 +75,11 @@ Without `extraKnownMarketplaces` the plugins resolve only on a machine whose
 user settings already know the marketplace — a collaborator who clones the
 repository gets "enabled but not installed" with nowhere to install from. With
 it, trusting the folder makes the marketplace known; each enabled plugin is then
-installed once (`claude plugin install <name>@mluk-agent-tools --scope project`).
+installed once (`claude plugin install <name>@mluk-agent-tools --scope project`,
+or `--scope local` to keep the record in the gitignored `settings.local.json`).
 GitHub is the one source for everyone, the author included: a library change
-reaches a project once pushed to the library's `main`. The repository is
-private, so a collaborator needs read access.
+reaches a project once pushed to the library's `main`. A private marketplace
+repository needs read access for every collaborator.
 
 ## Two traps that cost a rewrite
 
