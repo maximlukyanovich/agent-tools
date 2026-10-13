@@ -37,6 +37,7 @@ Matching `.gitignore`:
 !.claude/skills/
 !.claude/settings.json
 !.claude/hooks/
+!.claude/hooks-local/
 !.claude/README.md
 !.claude/COMMANDS.md
 !.claude/project-profile.md
@@ -54,7 +55,10 @@ docs/local/*
 
 `.claude/*` with a whitelist keeps `project-profile.local.md` out without a line
 of its own. A repository whose `.gitignore` lists exclusions one by one instead
-adds `.claude/project-profile.local.md` explicitly.
+adds `.claude/project-profile.local.md` explicitly. A directory committed only
+in part is whitelisted itself before its contents are excluded: `.claude/*`
+excludes `hooks-local/` as a whole, git never looks inside an excluded
+directory, and `!.claude/hooks-local/README.md` alone re-includes nothing.
 
 `settings.json` declares where the library comes from and enables it:
 
