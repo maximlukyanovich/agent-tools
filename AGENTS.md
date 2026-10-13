@@ -53,7 +53,9 @@ holds only the rules for working on the repository itself.
 - **Plugin names are fixed once.**
 - **Descriptions are the loading mechanism.** A skill's `description` decides
   when the agent loads it; a command's decides what completion shows. Both are
-  written narrowly and both are paid for in every session.
+  written narrowly and both are paid for in every session — except a
+  command only a human runs, such as `help`, which carries
+  `disable-model-invocation: true` and stays out of the model's context.
 - **`model:` goes on agents, not on commands or skills.** A command's
   override lasts one turn, and the next turn re-reads the whole history
   without cache; a subagent starts with an empty context, so its model is

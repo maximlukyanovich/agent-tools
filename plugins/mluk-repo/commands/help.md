@@ -1,6 +1,7 @@
 ---
 description: What mluk-repo can do — the workflow commands, their usual order, the profile sections they read, and the skills they lean on.
 argument-hint: '[<language code>]'
+disable-model-invocation: true
 ---
 
 # /mluk-repo:help

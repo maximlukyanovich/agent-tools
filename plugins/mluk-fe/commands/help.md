@@ -1,6 +1,7 @@
 ---
 description: What mluk-fe can do — the two skills, the three PostToolUse hooks, and what the project profile's Frontend section configures.
 argument-hint: '[<language code>]'
+disable-model-invocation: true
 ---
 
 # /mluk-fe:help
