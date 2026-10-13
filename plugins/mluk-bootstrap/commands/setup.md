@@ -38,10 +38,11 @@ The order is fixed. Steps are not reordered or skipped.
    `${CLAUDE_PLUGIN_ROOT}/reference/scaffold/<stack>.md`, read its `For the
    harness` section — what the generator left that the harness must respect.
 
-2. **Ask what the code cannot answer.** One or two batches, never one question
-   per turn, every question with a default marked as the recommendation. Load
-   the `mluk-repo:kickoff` skill before the first question — its questionnaire
-   rules apply; `mluk-repo` is installed with this plugin. The list is in
+2. **Ask what the code cannot answer.** Two rounds, three with UI, never one
+   question per turn, every question with a default marked as the
+   recommendation. Load the `mluk-repo:kickoff` skill before the first
+   question — its questionnaire rules apply; `mluk-repo` is installed with this
+   plugin. The list and its split into rounds are in
    `${CLAUDE_PLUGIN_ROOT}/reference/questions.md` — eleven questions, and the
    most valuable is "what has already gone wrong here", because without it the
    hook set comes out speculative. Wait for the answers.
