@@ -50,9 +50,6 @@ worktree, named by folder or branch: `reference/commands.md`.
 - `kickoff` — how a task is started: plan mode, exploration, the questionnaire
   rules, the decisions table, slices, approval, and proposing a project rule
   when a problem recurs. `/mluk-repo:task` runs it.
-- `yandex-browser` — reproducing Yandex-Browser-only bugs under Playwright
-  without installing the browser, and its known quirk: a swipe that starts on
-  an overlay's shadow goes to the wrong scroller.
 
 ## Local overrides
 
