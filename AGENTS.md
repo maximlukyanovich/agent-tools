@@ -14,6 +14,10 @@ holds only the rules for working on the repository itself.
   is public and other people install it, so `main` is what they get; a pull
   request leaves a diff to read before it lands. A trivial fix — a typo, a
   broken link — may land on `main` directly. No force push.
+- **Before a new branch, the open pull requests touching the same files** —
+  `gh pr list --json number,headRefName,files`. An overlap is merged first,
+  or the work goes onto that branch; two branches editing one file book a
+  conflict in advance.
 - **Plugin files are addressed through `${CLAUDE_PLUGIN_ROOT}`** inside plugin
   texts, never found by searching the filesystem. An installed plugin is a
   copy under `~/.claude/plugins/cache/`, even when the marketplace is
