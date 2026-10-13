@@ -21,7 +21,9 @@ The order is fixed. Steps are not reordered or skipped.
    remote uses (`git@github.com:` is the personal key, `git@github-work:` the
    work one — load the `mluk-repo:github-accounts` skill), commit style,
    git hooks. Documentation and local notes. Integrations: MCP examples,
-   environment templates.
+   environment templates. A history of one scaffold commit, as
+   `/mluk-bootstrap:new` writes it, shows the library's default, not the
+   project's style: Q6 is still asked.
 
    Decide the mode from what you found:
    - no manifest and only service entries (the list is step 1 of
