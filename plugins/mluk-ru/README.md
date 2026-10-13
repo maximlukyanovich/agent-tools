@@ -16,8 +16,10 @@ complaint is not made twice.
 
 `skills/business-russian` — loaded by itself whenever a Russian text for
 people is being written or edited: the two mistakes the agent repeats, the
-principles with ✗/✓ examples, the legal-text addendum, the checklists, and the
-rule for keeping the set alive. The skill is in Russian; its subject is.
+principles with ✗/✓ examples, the checklist, and the rule for keeping the set
+alive. The legal-text addendum — principles 16–28 and the second checklist —
+is `reference/legal.md`, read only for a binding text. Both are in Russian;
+their subject is.
 
 ## Profile
 

@@ -42,8 +42,8 @@ holds only the rules for working on the repository itself.
 
 - **Language.** Everything committed is English — plugin texts, README, commit
   messages, this file. The one exception is `plugins/mluk-ru/skills/
-  business-russian/SKILL.md`: its rules and examples are Russian, because the
-  subject is Russian.
+  business-russian/SKILL.md` with its `plugins/mluk-ru/reference/legal.md`:
+  their rules and examples are Russian, because the subject is Russian.
 - **Commits.** `:gitmoji: type(scope): Subject`, blank line, body as `- ` bullets
   explaining why, each bullet on one line, no hard wrap. Scope is the plugin
   name without the prefix (`bootstrap`, `repo`, `ru`) or `readme` / `catalog`
