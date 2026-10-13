@@ -7,7 +7,8 @@ argument-hint: '[worktree] [<flavour>] <task description>'
 
 The single entry point into new work. The brief is passed inline; the
 command gathers context, checks what already exists, asks what the code cannot
-answer, and returns a **plan** through the `kickoff` method.
+answer, and returns a **plan** through the `kickoff` method — load that skill
+first; steps 5–7 follow it.
 
 **Only plans.** Writes no production code, does not commit, does not call
 `gh`. Reads `## Task` (`flavours`, `brief sources`, `branch prefix`, `blast
@@ -80,15 +81,13 @@ owner names, or ask. There is no tracker.
    field)? The result is an explicit section of the plan: reused, extended,
    genuinely new and why.
 
-5. **Ask** what the code cannot answer, by the `kickoff` questionnaire rules —
-   recommendation first and marked, at most four a round, a closing "anything
-   to add" only when new input is plausible.
+5. **Ask** what the code cannot answer, by the `kickoff` questionnaire rules.
 
-6. **Produce the plan** by the `kickoff` shape: context, decisions table,
-   architecture, slices with files and the proof each slice needs (tests,
-   browser check, migration), effect on live data when `blast radius` names
-   operations the plan touches — explicitly, even when "none" — documentation
-   to update, assumptions, open questions.
+6. **Produce the plan** by the `kickoff` shape — the state table included
+   when state changes — plus the proof each slice needs (tests, browser
+   check, migration), the effect on live data when `blast radius` names
+   operations the plan touches — explicitly, even when "none" — and the
+   documentation to update.
 
 7. **Stop and request approval** through the plan-approval mechanism.
 
