@@ -4,5 +4,8 @@
   "author": {
     "name": "Maxim Lukyanovich",
     "email": "maximlukyanovich94@gmail.com"
-  }
+  },
+  "dependencies": [
+    "mluk-repo"
+  ]
 }

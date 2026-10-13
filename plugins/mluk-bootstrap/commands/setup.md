@@ -19,7 +19,7 @@ The order is fixed. Steps are not reordered or skipped.
    other agents' config, a `project-profile.md`. The stack and its quality
    commands, from the manifest files. Branches, remotes, the account alias the
    remote uses (`git@github.com:` is the personal key, `git@github-work:` the
-   work one — see the `github-accounts` skill in `mluk-repo`), commit style,
+   work one — load the `mluk-repo:github-accounts` skill), commit style,
    git hooks. Documentation and local notes. Integrations: MCP examples,
    environment templates.
 
@@ -27,8 +27,9 @@ The order is fixed. Steps are not reordered or skipped.
    already there → say so and offer `/mluk-bootstrap:audit` instead.
 
 2. **Ask what the code cannot answer.** One or two batches, never one question
-   per turn, every question with a default marked as the recommendation. The
-   questionnaire rules are in the `kickoff` skill of `mluk-repo`; the list is in
+   per turn, every question with a default marked as the recommendation. Load
+   the `mluk-repo:kickoff` skill before the first question — its questionnaire
+   rules apply; `mluk-repo` is installed with this plugin. The list is in
    `${CLAUDE_PLUGIN_ROOT}/reference/questions.md` — ten questions, and the
    most valuable is "what has already gone wrong here", because without it the
    hook set comes out speculative. Wait for the answers.

@@ -3,7 +3,8 @@
 Rules: ask in batches through the questionnaire tool, never one per turn; every
 question carries a default marked as the recommendation; never ask what the
 inventory already answered. **If an answer changes no file, the question is
-redundant.** The questionnaire rules themselves are in the `kickoff` skill of `mluk-repo`.
+redundant.** The questionnaire rules themselves are in the `mluk-repo:kickoff`
+skill, loaded before the first question.
 
 **Q1. The repository's role and current phase.** What the product is, in a
 paragraph; who the repository's clients are; whether there are sibling
@@ -40,8 +41,8 @@ type(scope): Subject`, body one bullet per point. Alternative `topic-prose` —
 `Topic: description` with a prose body and a closing `Tests:` line. Ask whether
 there is machine enforcement (commitlint, husky) or only agreement, and whether
 `commit` should stage with confirmation or treat the invocation as
-authorisation. Both presets are described in the `commit-conventions` skill of
-`mluk-repo`.
+authorisation. Both presets are described in the `mluk-repo:commit-conventions`
+skill.
 
 **Q7. Languages.** Three independent answers: the language of code,
 identifiers, commits and PRs — English; the language of committed
