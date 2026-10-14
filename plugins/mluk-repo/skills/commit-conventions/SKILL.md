@@ -66,7 +66,7 @@ paragraph on one line. A paragraph may open with a thematic lead-in ending in a
 colon (`Editor:`, `Storage:`). It explains why, names incidental fixes, and
 states rejected alternatives. Last line: `Tests: N cases covering …` when tests
 were added or changed; when a change genuinely cannot be tested, say why
-instead of omitting the line. Russian UI terms are quoted with guillemets.
+instead of omitting the line.
 
 ## Rules for both presets
 
@@ -83,7 +83,10 @@ instead of omitting the line. Russian UI terms are quoted with guillemets.
 - **No hard wrap.** Each bullet or paragraph is one line; the tooling wraps.
 - **One task, one commit.** A mixed diff is split into groups.
 - **Documentation ships in the same commit** as the code that changes it.
-- **English.**
+- **English, UI included.** An element of the interface is described in the
+  message's language — "the dialog confirming account deletion", "the
+  settings tab" — not quoted from its copy in another language; a translation
+  key (`Account.delete.title`) may appear as it is.
 - The message goes through a HEREDOC so the formatting survives shell quoting:
 
   ```sh
@@ -106,5 +109,6 @@ instead of omitting the line. Russian UI terms are quoted with guillemets.
   `upstream develop`, a commit (`d571244`), "the owner's decision of
   2026-10-11", "a review finding".
 - Links to chat, DMs or personal notes that are not in the repository.
-- A language other than English.
+- A language other than English, interface copy quoted in another language
+  included.
 - A subject that restates the diff (`update models.py`) instead of the change.
