@@ -56,10 +56,11 @@ Once per machine — it adds the source and loads nothing into sessions:
 claude plugin marketplace add maximlukyanovich/agent-tools
 ```
 
-In an existing repository, then run `/mluk-bootstrap:setup`:
+In an existing repository — install, then run `setup`:
 
 ```bash
 claude plugin install mluk-bootstrap@mluk-agent-tools --scope project
+claude "/mluk-bootstrap:setup"
 ```
 
 `mluk-repo` comes with it as a dependency. `--scope local` keeps the record in
