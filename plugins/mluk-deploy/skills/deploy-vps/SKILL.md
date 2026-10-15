@@ -9,8 +9,8 @@ metadata:
 
 # deploy-vps
 
-The scheme for a backend (Django/DRF + Celery + Postgres + Redis was the
-first; nothing below depends on Django). The project keeps the concrete files:
+The scheme for a containerised backend, whatever its language. The project
+keeps the concrete files:
 - `Dockerfile`, `docker-compose.server.yml`, `deploy/server/{bootstrap,deploy,rollback}.sh`;
 - the Caddy site files;
 - the env templates;
