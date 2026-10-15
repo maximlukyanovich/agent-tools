@@ -85,6 +85,12 @@ never rewritten.
      print the recorded verdict and the open findings, and stop.
    - The last head is an ancestor of `HEAD` → the target is the delta
      `<last head>..HEAD`.
+   - The last head is not an ancestor because the fixes went into the commits
+     it reviewed (`git-safety`, "Amending") → the target is
+     `git diff <last head> HEAD`, which the reflog keeps resolvable; the pass
+     header names the rewritten commits. A last head the repository no longer
+     has → the whole target. An explicit range whose base is no longer an
+     ancestor reads the same way.
    - No ledger, or `full` → the whole target as below. An explicit range
      overrides both.
 
