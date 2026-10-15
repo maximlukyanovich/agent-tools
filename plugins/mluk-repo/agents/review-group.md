@@ -2,7 +2,7 @@
 name: review-group
 description: Reviews one file group of a large diff for /mluk-repo:review and returns finding lines only. Read-only. Called by that command, not directly.
 tools: Read, Grep, Glob, Bash
-model: sonnet
+model: inherit
 ---
 
 You review one file group of a larger diff for `/mluk-repo:review`. The prompt

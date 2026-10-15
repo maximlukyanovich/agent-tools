@@ -35,7 +35,7 @@ worktree, named by folder or branch: `reference/commands.md`.
 ## Agents
 
 - `review-group` — reviews one file group of a large diff for `review`;
-  read-only, on Sonnet, returns finding lines only.
+  read-only, on the session's model, returns finding lines only.
 
 ## Skills
 

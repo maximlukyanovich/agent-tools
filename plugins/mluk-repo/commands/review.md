@@ -60,10 +60,12 @@ never rewritten.
 
 - A diff under ~25 files and ~2000 lines is reviewed inline. Past either,
   delegate **by file group** to the `mluk-repo:review-group` agent, in
-  parallel, cap 4–6 — read-only, on Sonnet unless `model=` names another,
-  passed as the Agent call's `model`. Each gets the tree, the base, its slice
-  of the diff and the whole rubric of step 5, **not the ledger**, and returns
-  finding lines, never diff.
+  parallel, cap 4–6 — read-only, on the session's model unless `model=`
+  names another, passed as the Agent call's `model`. Not a cheaper default:
+  on a large diff the groups are what reads the code, and the refutation of
+  step 6 drops false findings but never recovers missed ones. Each gets the
+  tree, the base, its slice of the diff and the whole rubric of step 5,
+  **not the ledger**, and returns finding lines, never diff.
 - Synthesis, the refutation of step 6 and the ledger stay with the main
   model: deduplicate, check the `cross-slice` lines, catch cross-slice
   problems (a field changed here, its test asserting the old shape there),
