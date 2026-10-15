@@ -26,7 +26,8 @@ A folder or a local branch — the work to hand off, by
 
 1. **Read the state** in one Bash call where possible: the branch and its
    head, `git status --porcelain`, `git fetch origin <base> --quiet`, whether
-   the head is in `origin/<base>` (`git merge-base --is-ancestor`). A branch
+   the head is in `origin/<base>` (`git merge-base --is-ancestor`), the
+   branch's commits (`git log --oneline origin/<base>..<branch>`). A branch
    the caller has just merged and deleted counts as merged. From the profile:
    `base branch`, `ledger`.
 
@@ -49,10 +50,24 @@ A folder or a local branch — the work to hand off, by
    | A pass on the head, `ready to merge`, nothing open | `/mluk-repo:promote <branch>` |
    | `ready to merge` with open findings | the fix prompt and the promote line, as two blocks |
 
+   A review in the middle of a task closes the range it read, not the task.
+   Before either `ready to merge` row offers promote, read the plan of step 3
+   against the branch's commits: when the plan still holds work the branch
+   has not done, the continue prompt takes the promote block's place, and
+   promote waits for the task's end. A review after the plan's last step, or
+   with no plan found, offers promote as the table says.
+
    The fix prompt, in the chat's language:
 
    ```
    Fix the open findings of pass <N> in <ledger path> (R3, R7). Plan — <plan path>. Target — <branch>.
+   ```
+
+   The continue prompt — `<next step>` is the plan's first step the branch
+   has not done, named as the plan names it:
+
+   ```
+   Continue the plan <plan path> from <next step>. Target — <branch>.
    ```
 
 5. **Print** each block as its own code block, with one line above it saying

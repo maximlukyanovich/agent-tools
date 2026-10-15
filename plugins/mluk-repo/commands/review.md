@@ -60,10 +60,12 @@ never rewritten.
 
 - A diff under ~25 files and ~2000 lines is reviewed inline. Past either,
   delegate **by file group** to the `mluk-repo:review-group` agent, in
-  parallel, cap 4–6 — read-only, on Sonnet unless `model=` names another,
-  passed as the Agent call's `model`. Each gets the tree, the base, its slice
-  of the diff and the whole rubric of step 5, **not the ledger**, and returns
-  finding lines, never diff.
+  parallel, cap 4–6 — read-only, on the session's model unless `model=`
+  names another, passed as the Agent call's `model`. Not a cheaper default:
+  on a large diff the groups are what reads the code, and the refutation of
+  step 6 drops false findings but never recovers missed ones. Each gets the
+  tree, the base, its slice of the diff and the whole rubric of step 5,
+  **not the ledger**, and returns finding lines, never diff.
 - Synthesis, the refutation of step 6 and the ledger stay with the main
   model: deduplicate, check the `cross-slice` lines, catch cross-slice
   problems (a field changed here, its test asserting the old shape there),
@@ -188,9 +190,9 @@ never rewritten.
 
 12. **Hand off** — last, once steps 10–11 are answered or skipped: run
     `/mluk-repo:handoff` for the same branch yourself, through the Skill
-    tool, without asking. It prints the fix prompt, the promote line, or
-    both. When `fix` left the tree dirty, offer
-    `/mluk-repo:commit` instead; it hands off after the commit.
+    tool, without asking. It prints the fix prompt, the promote line or the
+    plan's next step, as the state calls for. When `fix` left the tree
+    dirty, offer `/mluk-repo:commit` instead; it hands off after the commit.
 
 ## Hard rules
 
