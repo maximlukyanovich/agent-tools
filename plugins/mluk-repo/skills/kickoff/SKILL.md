@@ -1,6 +1,10 @@
 ---
 name: kickoff
 description: How a piece of work is started and planned — plan mode, the questionnaire rules, the decisions table, slices, a state table for a state change, approval before code, commits on a go-ahead, a project rule when a problem recurs. Use when starting any task that needs a plan, before asking the owner questions, and when the same mistake shows up again. Not for trivial edits.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # kickoff

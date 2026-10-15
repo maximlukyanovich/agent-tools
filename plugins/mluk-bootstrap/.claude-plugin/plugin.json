@@ -5,6 +5,9 @@
     "name": "Maxim Lukyanovich",
     "email": "maximlukyanovich94@gmail.com"
   },
+  "homepage": "https://github.com/maximlukyanovich/agent-tools/tree/main/plugins/mluk-bootstrap",
+  "repository": "https://github.com/maximlukyanovich/agent-tools",
+  "license": "MIT",
   "dependencies": [
     "mluk-repo"
   ]

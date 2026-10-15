@@ -1,6 +1,10 @@
 ---
 name: component-discipline
 description: How a React component is written so that it stays small and exact — when to extract and when not to, text metrics (size + line-height + tracking), promoting repeated literals to semantic tokens and registering them with tailwind-merge, the shadcn CVA variant convention, the view / hook split, section-shaped skeletons with aria-busy, not inventing assets the design left out, and fake timers in component tests. Use when writing, refactoring or reviewing a component. Porting a kit's look is mluk-design:design-port; screen-level rules are web-ui-conventions.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # Component discipline

@@ -1,6 +1,10 @@
 ---
 name: design-port
 description: How a design kit (a component library with markup + CSS, e.g. a Claude Design project) is ported into a codebase — reading the source at write time, wearing kit classes on a third-party primitive whose DOM already matches, the stretched-link recipe for cards that hold buttons, real data versus demo data, and what to do when the kit itself is wrong. Use when building or changing UI against a kit. Not for projects without a design source.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # Porting a design kit
