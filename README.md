@@ -17,22 +17,29 @@ stay in the project.
 
 ## Does it fit your project
 
-Built for, and used on:
+Each plugin is enabled on its own, so a project takes only what fits. Some work
+anywhere; the rest follow the stack they were grown on.
 
-- **GitHub with `gh`, no issue tracker.** The workflow commands open pull
-  requests with `gh`; a task starts from a description in chat, not from a
-  ticket.
-- **A React / Next.js front** — App Router, Tailwind, next-intl — deployed on
-  Vercel.
-- **A backend in Docker Compose on a VPS** behind Caddy, deployed by GitHub
-  Actions. The first one was Django + Celery + Postgres + Redis; the scheme
-  does not depend on Django.
-- **A site built against a design kit**, and **client-facing copy in Russian**.
+**Any project:**
 
-Each plugin is enabled separately, so a project takes only what fits.
-`mluk-bootstrap` and `mluk-repo` are stack-agnostic. A different forge (GitLab,
-Bitbucket) or a tracker-driven process is not covered by `mluk-repo`; the rest
-still applies.
+- `mluk-bootstrap` — sets up and audits the agent harness of any repository:
+  frontend, backend, monorepo, library, CLI.
+- `mluk-ru` — client-facing, legal and documentation copy in Russian.
+- `mluk-ops` — safe agent access to any server reached over `ssh`.
+
+**GitHub without an issue tracker:** `mluk-repo`, the everyday workflow, opens
+pull requests with `gh` and starts a task from a description in chat, not from
+a ticket. A different forge (GitLab, Bitbucket) or a tracker-driven process is
+not covered; the plugins above still apply.
+
+**A particular stack:**
+
+- `mluk-fe` — a React / Next.js front with Tailwind and next-intl; a hook whose
+  files are missing stays silent.
+- `mluk-design` — a site built against a design kit.
+- `mluk-deploy` — a Next.js front on Vercel, a backend in Docker Compose on a
+  VPS behind Caddy and GitHub Actions, whatever the backend is written in. Its
+  `domain-dns` skill fits any domain moving to Cloudflare.
 
 ## Requirements
 
@@ -115,120 +122,47 @@ Every plugin can introduce itself — read-only, safe to run at any time:
 
 Language follows the conversation; pass a language code to override.
 
+## Everyday use
+
+With `mluk-repo`, a task runs in phases, each in a fresh session, and every
+command ends with the next step as a block ready to copy:
+
+```bash
+/mluk-repo:next                              what to take next: roadmap, notes, issues, open PRs
+/mluk-repo:task Add a password reset form    the plan: branch, questions, slices; no code before your yes
+/mluk-repo:commit                            stage, validate, message by the preset; never pushes
+/mluk-repo:review                            findings by severity, each with file:line
+/mluk-repo:create-pr merge                   push and open the PR on your yes, merge after green CI
+```
+
+The other plugins mostly need no command: their skills load when the work
+reaches them — "build the settings screen" brings `web-ui-conventions` in a
+front with `mluk-fe` — and their hooks check what the agent writes. A client
+letter goes through `/mluk-ru:review letter.md`.
+
 ## Plugins
 
 | Plugin | Kind | What it does |
 | --- | --- | --- |
-| `mluk-bootstrap` | generator + audit | Create a project in an empty folder; initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model. |
-| `mluk-repo` | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs`, `handoff`, and the `kickoff` method — how a task is started. Reads `.claude/project-profile.md`. |
-| `mluk-design` | library | `design-port` — how a design kit is ported. Enabled where a kit exists. |
-| `mluk-fe` | library + hooks | Frontend conventions for React / Next.js: `web-ui-conventions`, `component-discipline`, `yandex-browser`, and PostToolUse hooks for locale parity, translation keys and metadata titles. Reads the profile's `## Frontend`. Enabled in a web front. |
-| `mluk-deploy` | library | How projects are deployed: `deploy-vps`, `deploy-vercel`, `domain-dns`. Skills and a `help` command. |
-| `mluk-ops` | library + hook | Safe agent access to servers: `srv` with an audit log, a guard hook, the `server-ops` protocol. Enabled only where the agent works on a server. |
-| `mluk-ru` | library | Business Russian: the principles of client-facing and legal copy, the self-check, the checklist, and `review` for a text. |
+| [`mluk-bootstrap`](plugins/mluk-bootstrap/README.md) | generator + audit | Create a project in an empty folder; initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model. |
+| [`mluk-repo`](plugins/mluk-repo/README.md) | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs`, `handoff`, and the `kickoff` method — how a task is started. Reads `.claude/project-profile.md`. |
+| [`mluk-design`](plugins/mluk-design/README.md) | library | `design-port` — how a design kit is ported. Enabled where a kit exists. |
+| [`mluk-fe`](plugins/mluk-fe/README.md) | library + hooks | Frontend conventions for React / Next.js: `web-ui-conventions`, `component-discipline`, `yandex-browser`, and PostToolUse hooks for locale parity, translation keys and metadata titles. Reads the profile's `## Frontend`. Enabled in a web front. |
+| [`mluk-deploy`](plugins/mluk-deploy/README.md) | library | How projects are deployed: `deploy-vps`, `deploy-vercel`, `domain-dns`. Skills and a `help` command. |
+| [`mluk-ops`](plugins/mluk-ops/README.md) | library + hook | Safe agent access to servers: `srv` with an audit log, a guard hook, the `server-ops` protocol. Enabled only where the agent works on a server. |
+| [`mluk-ru`](plugins/mluk-ru/README.md) | library | Business Russian: the principles of client-facing and legal copy, the self-check, the checklist, and `review` for a text. |
 
-## Two kinds of plugin
+## How it's built
 
-**A generator** runs once and writes files into the project. What it produces
-becomes the project's own code: edited locally, never updated from here.
-`mluk-bootstrap:setup` is a generator — `AGENTS.md`, the profile and domain
-skills are about one repository.
-
-**A library** keeps its commands and skills here and is invoked from any
-project. The project contributes only a profile. `mluk-repo` and `mluk-ru` are
-libraries: the procedure is identical everywhere, the differences (base branch,
-validate command, commit preset, glossary) are data.
-
-| | Generator | Library |
-| --- | --- | --- |
-| Appears in the project | `AGENTS.md`, domain skills, hooks, the profile | profile lines only |
-| Commands come from | the project | the plugin |
-| Updating the method | not updated; it is project code now | `claude plugin update` |
-
-**Library base, local override.** `/mluk-repo:commit` is the default in every
-project. A project that genuinely needs a different procedure — not different
-parameters — writes its own `.claude/commands/commit.md`; the two coexist under
-different names. The test: if the difference fits in a profile line, it is the
-library. If the procedure differs, it is a local command. `mluk-bootstrap:audit`
-reports local commands that merely duplicate the library.
-
-## Method here, project there
-
-**Here — the method.** How a task is started and planned, how a commit and a PR
-are shaped, how a review is scoped, how Russian copy is phrased, templates for
-`AGENTS.md` and skills.
-
-**In the project — the profile and the domain.** Branch chain, validate command,
-commit preset, design-system id, doc map, glossary; domain skills (design
-fidelity for this kit, module placement for this tree); hooks.
-
-The rule of thumb: if a rule survives a change of project, it belongs here. If
-it names concrete paths, ids or a design system, it belongs to the project.
-
-### Precedence
-
-Every command and skill here reads the project profile before it acts and treats
-it as authoritative. Strongest first:
-
-1. What the developer says in the current session.
-2. This clone's overrides — `.claude/project-profile.local.md`, gitignored: a
-   fork's trunk, the paths of sibling checkouts. Single keys, same headings.
-3. The project profile — `.claude/project-profile.md`.
-4. The project's own `AGENTS.md` and skills.
-5. The defaults in this repository.
-
-A plugin never dictates a branch name or a commit format: it ships a default,
-reads the profile, and asks when the profile is silent.
-
-## Command naming
-
-Claude Code prefixes a plugin's commands with the plugin name and a colon —
-`/mluk-repo:commit`. The prefix lives in the **plugin name**; the command name
-stays a short verb. Never a colon in a filename, never the plugin name repeated
-inside a command name. Plugin names are fixed once: renaming one changes every
-command it ships and every document quoting them.
-
-| Plugin | Commands |
-| --- | --- |
-| `mluk-bootstrap` | `:new`, `:setup`, `:audit`, `:help` |
-| `mluk-repo` | `:commit`, `:create-pr`, `:promote`, `:review`, `:sync`, `:start`, `:next`, `:task`, `:update-docs`, `:handoff`, `:help` |
-| `mluk-ru` | `:review`, `:help` |
-| `mluk-fe` | `:help` |
-| `mluk-design` | `:help` |
-| `mluk-deploy` | `:help` |
-| `mluk-ops` | `:help` |
-
-## Layout
-
-```
-.claude-plugin/marketplace.json   the catalogue
-plugins/<name>/
-  .claude-plugin/plugin.json      manifest
-  commands/*.md                   procedures a human invokes
-  skills/<name>/SKILL.md          knowledge the agent loads by itself
-  agents/*.md                     subagents a command delegates to
-  reference/*.md                  read one file at a time, on instruction
-  README.md                       for people, links to the skill
-```
-
-`commands/` is the older of the two plugin formats; Claude Code now prefers
-skills with `disable-model-invocation`; the layout migrates in one move when
-it does.
+`mluk-bootstrap` generates: what `setup` writes becomes the project's own code.
+The rest are libraries: the procedure stays here, and the project contributes a
+profile, `.claude/project-profile.md`, that every command reads first. The
+model — generator versus library, what lives here and what in the project,
+precedence, command naming — is in [`docs/design.md`](docs/design.md).
 
 ## Contributing
 
-Issues and pull requests are welcome — a rule that misfired in your project, a
-trap worth naming, a fix.
-
-- Plugin texts, commits and pull requests are in English (the business-Russian
-  skill is the one exception: its subject is Russian).
-- A rule that names your project's paths, ids or design system belongs in your
-  project's profile, not here.
-- Before opening a pull request, run the checks in
-  [`AGENTS.md`](AGENTS.md) §3, and run the changed command or skill once in a
-  real repository — say in the pull request where and how. To try a plugin
-  straight from a checkout, without installing: `claude --plugin-dir
-  <checkout>/plugins`.
+Issues and pull requests are welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## License
 

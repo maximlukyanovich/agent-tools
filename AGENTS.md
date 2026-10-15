@@ -1,9 +1,9 @@
 # Agent instructions
 
 Canonical guidance for this repository. It ships tooling that teaches other
-repositories to have a harness, so it has one of its own. README.md explains the
-model — generator versus library, the profile, precedence, naming. This file
-holds only the rules for working on the repository itself.
+repositories to have a harness, so it has one of its own. `docs/design.md`
+explains the model — generator versus library, the profile, precedence,
+naming. This file holds only the rules for working on the repository itself.
 
 ## 1. Working agreements
 
@@ -96,3 +96,7 @@ plugins/<name>/
   reference/*.md                  read one file at a time, on instruction
   README.md                       for people, links to the skill
 ```
+
+`commands/` is the older of the two plugin formats; Claude Code now prefers
+skills with `disable-model-invocation`; the layout migrates in one move when
+it does.
