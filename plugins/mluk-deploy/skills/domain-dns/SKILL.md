@@ -1,6 +1,10 @@
 ---
 name: domain-dns
 description: Moving a domain's authoritative DNS to Cloudflare without breaking the mail the registrar hosts — export and diff the zone, MX/SPF/DKIM/DMARC as DNS only, CAA and DNSSEC before the nameserver switch, which records to proxy — plus naming environments on subdomains and separating transactional and marketing mail. Use when adding or moving a domain, its DNS records or mail.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # domain-dns

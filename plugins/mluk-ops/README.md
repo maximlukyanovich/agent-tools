@@ -5,6 +5,14 @@ server; everywhere else it is not loaded, and with no servers configured it does
 
 The protocol is the skill [`server-ops`](skills/server-ops/SKILL.md); this file covers setup only.
 
+## Install
+
+```bash
+claude plugin install mluk-ops --marketplace maximlukyanovich/agent-tools --scope project
+```
+
+Other scopes and updating: [Quick start](../../README.md#quick-start).
+
 ## What is in it
 
 | Part | Role |

@@ -1,6 +1,10 @@
 ---
 name: pr-conventions
 description: The shape of a pull request title and body in GitHub projects — plain conventional title without gitmoji, the body sections, the test plan as checkboxes, no hard wrap, English, and the habit of reading the last merged PRs first. Use when drafting, editing or reviewing a PR title or description.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # pr-conventions

@@ -5,6 +5,14 @@ phrased. The rules were earned on live copy — an offer, a partner
 agreement, refund terms, UI strings — and are written down so the same
 complaint is not made twice.
 
+## Install
+
+```bash
+claude plugin install mluk-ru --marketplace maximlukyanovich/agent-tools --scope project
+```
+
+Other scopes and updating: [Quick start](../../README.md#quick-start).
+
 ## Commands
 
 | Command | What it does |

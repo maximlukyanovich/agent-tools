@@ -1,6 +1,10 @@
 ---
 name: server-ops
 description: How an agent works on a remote server it has SSH access to — every command through `srv`, commands sorted into read / reversible change / irreversible, the preview an owner sees before a change, backups before risk and their cleanup after, and the rule that irreversible commands are handed to the owner, not run. Use before any command that touches a server listed in ~/.config/mluk-ops/servers.json.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # server-ops

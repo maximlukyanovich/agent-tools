@@ -3,6 +3,14 @@
 The repository workflow for GitHub projects, as a library: the
 procedure lives here, the project supplies `.claude/project-profile.md`.
 
+## Install
+
+```bash
+claude plugin install mluk-repo --marketplace maximlukyanovich/agent-tools --scope project
+```
+
+Other scopes and updating: [Quick start](../../README.md#quick-start).
+
 ## Commands
 
 | Command | Mutating | What it does |

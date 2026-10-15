@@ -1,6 +1,10 @@
 ---
 name: git-safety
 description: What an agent never runs in git and gh, what needs an explicit go-ahead in the current turn (commit, push, PR, merge), when amending is acceptable (unpushed commits only), and how staging and secrets are handled. Use before any git or gh action that changes state.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # git-safety

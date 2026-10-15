@@ -1,6 +1,10 @@
 ---
 name: github-accounts
 description: Two GitHub accounts on one machine — personal and work — selected by SSH host alias in the remote URL, never by switching gh's global account; how to recognise the wrong account ("Repository not found") and what to check before a push or gh call. Use before pushing, creating a repository or a PR, or diagnosing a push failure.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # github-accounts

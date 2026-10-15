@@ -1,12 +1,16 @@
 ---
 name: deploy-vps
 description: The deployment scheme for a backend on a single VPS — Docker Compose stack per environment behind Caddy on the host, image built on the server and tagged by commit, GitHub Actions deploy over SSH gated by a repository variable, a bootstrap script for a fresh Ubuntu host, and the traps met along the way. Use when setting up, changing or debugging a VPS deployment. For work on the live server itself, load server-ops (mluk-ops).
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # deploy-vps
 
-The scheme for a backend (Django/DRF + Celery + Postgres + Redis was the
-first; nothing below depends on Django). The project keeps the concrete files:
+The scheme for a containerised backend, whatever its language. The project
+keeps the concrete files:
 - `Dockerfile`, `docker-compose.server.yml`, `deploy/server/{bootstrap,deploy,rollback}.sh`;
 - the Caddy site files;
 - the env templates;

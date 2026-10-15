@@ -4,6 +4,14 @@ Create a project in an empty folder, then initialise and audit its agent
 harness. Stack-agnostic: frontend, backend, monorepo, library, CLI; `new`
 follows a recipe per stack and asks when there is none.
 
+## Install
+
+```bash
+claude plugin install mluk-bootstrap --marketplace maximlukyanovich/agent-tools --scope project
+```
+
+Other scopes and updating: [Quick start](../../README.md#quick-start).
+
 ## Commands
 
 | Command | What it does |

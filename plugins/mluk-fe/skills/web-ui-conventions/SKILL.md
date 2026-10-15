@@ -1,6 +1,10 @@
 ---
 name: web-ui-conventions
 description: The UI rules every screen of a React / Next.js web project follows from the first commit — the full set of screen states, interactive states with cursor-pointer on clickable non-links, mobile-first overflow, svh instead of vh for full-screen sections, design tokens instead of literals, a root stylesheet that is only an import list, reduced motion, navigation that never freezes, accessibility as the floor. Use when building or reviewing any screen or interactive element. Not for porting a kit's look — that is mluk-design:design-port.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # Web UI conventions

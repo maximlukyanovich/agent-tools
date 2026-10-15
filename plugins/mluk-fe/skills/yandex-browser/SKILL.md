@@ -1,6 +1,10 @@
 ---
 name: yandex-browser
 description: Reproducing and avoiding Yandex-Browser-only bugs — running Yandex Browser under Playwright without installing it (Linux package unpacked next to the session, playwright-core, touch swipes through CDP, stock Chromium of the same milestone for comparison) and its known quirk, a finger swipe that starts on an overlay's shadow, outline or rounded corner going to the wrong scroller. Use when a bug shows only in Yandex Browser, when asked to test there, or when an overlay with a shadow sits over a nested scroller.
+license: MIT
+metadata:
+  author: Maxim Lukyanovich
+  source: https://github.com/maximlukyanovich/agent-tools
 ---
 
 # yandex-browser
