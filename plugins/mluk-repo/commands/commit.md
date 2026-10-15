@@ -35,15 +35,19 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    immediately (`git-safety` skill). Read `git diff` by affected area for
    substance — not whole files.
 
-3. **Decide between a new commit and an amend.** If the change belongs to the
-   last commit and that commit is **unpushed** (it appears in `git log @{u}..`),
-   propose `--amend`, say plainly that the commit is unpushed and the rewrite is
-   safe, and let the owner choose. A pushed commit is never amended.
+3. **Fold a fix into the unpushed commit it corrects.** A change that fixes a
+   commit no remote holds yet — a review finding, a bug a fix round brought
+   in — goes into that commit, as the `git-safety` skill's "Amending" section
+   says: `--amend` for `HEAD`, `--fixup` and autosquash for an older one. Say
+   in one line which commit took it. A pushed commit is never rewritten; the
+   fix is a new commit.
 
 4. **Run the checks.** The profile's `validate` command — unless every changed
    path falls into a row of `targeted checks` (docs only, harness only, config
    only), in which case run what the row says and state what was not
-   exercised. A migration-shipping repository: a model change without its
+   exercised. The session already ran the full `validate` green after its last
+   edit and the commit takes the whole diff → name that run and do not repeat
+   it: a gate of minutes run twice on one tree makes every small fix wait. A migration-shipping repository: a model change without its
    migration in the diff is an incomplete commit — stop.
 
    A check failed → **stop**. Print the error verbatim, commit nothing, do not
@@ -98,8 +102,9 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    More groups → repeat for the next one.
 
 8. **Wrap up**: `git log --oneline -<N>` with the new commits on top, and a
-   one-line reminder that nothing was pushed. If step 4 ran the **full**
-   `validate` (not a targeted row) and the tree is now clean, record the tree
+   one-line reminder that nothing was pushed. If the **full** `validate` (not a
+   targeted row) passed — in step 4 or the run it relied on — and the tree is
+   now clean, record the tree
    it passed on: `git -C <tree> rev-parse HEAD^{tree} >
    "$(git -C <tree> rev-parse --git-dir)/validated-tree"`. `create-pr` then
    skips a second identical run. When the commits close a task or a round of

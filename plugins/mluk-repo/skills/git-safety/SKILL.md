@@ -41,13 +41,25 @@ cover the next one.
 
 ## Amending
 
-`--amend` is **acceptable for an unpushed commit** when the change belongs to
-it — a follow-up fix to the same task, a file that should have been in it, a
-wrong word in the message. Check that the commit is not on the remote
-(`git log @{u}..` lists it, or `git status -sb` shows the branch ahead), say so
-plainly, propose the amend, and let the owner choose between amending and a
-new commit. Never amend silently, and never amend a commit that has been
-pushed.
+**A fix to a commit not yet pushed goes into that commit** — a review
+finding, a bug a fix round brought in, a file that should have been in it, a
+wrong word in the message. A branch merges with its history, and "fix", then
+"fix the fix" tells a later reader nothing the corrected commit does not; the
+review's story is in its ledger.
+
+- Check that no remote holds it: `git branch -r --contains <sha>` prints
+  nothing (for `HEAD`, `git log @{u}..` lists it).
+- `HEAD` → `git commit --amend`. An older commit →
+  `git commit --fixup=<sha>`, then `git rebase --autosquash <sha>~`. Before
+  git 2.44 a rebase without `-i` ignores `--autosquash` and says nothing;
+  there it is `GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash <sha>~`.
+- A rebase that stops on a conflict — a later commit changed the same lines —
+  is aborted (`git rebase --abort`) and the fix becomes a new commit: a
+  conflict resolved inside history the checks never see again breaks a commit.
+- Reword the message when the fix changes what it says, and say in one line
+  which commit took the fix. Never fold silently.
+- A pushed commit is never rewritten: the fix is a new commit, and there is no
+  force push.
 
 ## Working tree
 
