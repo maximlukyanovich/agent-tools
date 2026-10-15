@@ -188,9 +188,9 @@ never rewritten.
 
 12. **Hand off** — last, once steps 10–11 are answered or skipped: run
     `/mluk-repo:handoff` for the same branch yourself, through the Skill
-    tool, without asking. It prints the fix prompt, the promote line, or
-    both. When `fix` left the tree dirty, offer
-    `/mluk-repo:commit` instead; it hands off after the commit.
+    tool, without asking. It prints the fix prompt, the promote line or the
+    plan's next step, as the state calls for. When `fix` left the tree
+    dirty, offer `/mluk-repo:commit` instead; it hands off after the commit.
 
 ## Hard rules
 
