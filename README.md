@@ -30,7 +30,9 @@ anywhere; the rest follow the stack they were grown on.
 **GitHub without an issue tracker:** `mluk-repo`, the everyday workflow, opens
 pull requests with `gh` and starts a task from a description in chat, not from
 a ticket. A different forge (GitLab, Bitbucket) or a tracker-driven process is
-not covered; the plugins above still apply.
+not covered; the plugins above still apply. For GitLab or Jira there is
+[work-agent-tools](https://github.com/maximlukyanovich/work-agent-tools), which
+writes the workflow commands into the project, shaped to its forge and tracker.
 
 **A particular stack:**
 
@@ -87,10 +89,17 @@ clone gets the same tools:
 
 ```json
 "extraKnownMarketplaces": {
-  "mluk-agent-tools": { "source": { "source": "github", "repo": "maximlukyanovich/agent-tools" } }
+  "mluk-agent-tools": {
+    "source": { "source": "github", "repo": "maximlukyanovich/agent-tools" },
+    "autoUpdate": true
+  }
 },
 "enabledPlugins": { "mluk-repo@mluk-agent-tools": true }
 ```
+
+Committed settings turn the plugins on in every clone but download nothing, so
+`setup` also writes the project's `/start`: a collaborator trusts the folder,
+runs it, and it installs what is missing before the overview.
 
 Which plugins to enable:
 
@@ -103,12 +112,14 @@ Which plugins to enable:
 | the agent works on a live server | + `mluk-ops` |
 | Russian texts for people | + `mluk-ru` |
 
-An installed plugin is a copy in `~/.claude/plugins/cache/`. To pick up a new
-version:
+An installed plugin is a copy in `~/.claude/plugins/cache/`. With `autoUpdate`
+declared, a new version arrives up to ten minutes after an interactive
+session's first message, and `/reload-plugins` applies it to an open session.
+By hand:
 
 ```bash
 claude plugin marketplace update mluk-agent-tools
-claude plugin update mluk-repo@mluk-agent-tools     # each installed plugin, then restart the session
+claude plugin update mluk-repo@mluk-agent-tools --scope project   # each installed plugin at its scope, then /reload-plugins
 ```
 
 ## Where to start

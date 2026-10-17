@@ -22,10 +22,12 @@ naming. This file holds only the rules for working on the repository itself.
   texts, never found by searching the filesystem. An installed plugin is a
   copy under `~/.claude/plugins/cache/`, even when the marketplace is
   registered from this checkout; `${CLAUDE_PLUGIN_ROOT}` points there.
-- **An edit here is not live.** After changing a plugin run
-  `claude plugin update <plugin>@mluk-agent-tools` (per installed scope) and
-  restart the session. While writing a plugin, test it straight from the
-  checkout with `claude --plugin-dir …/agent-tools/plugins`.
+- **An edit here is not live** until it lands on `main`: a project that
+  declares the marketplace with `autoUpdate` gets it up to ten minutes after
+  an interactive session's first message, by hand
+  `claude plugin update <plugin>@mluk-agent-tools` (per installed scope);
+  `/reload-plugins` applies it to an open session. While writing a plugin,
+  test it straight from the checkout with `claude --plugin-dir …/agent-tools/plugins`.
 - **Library base, local override.** A project keeps a local command only when
   its procedure differs from the library's, not when a parameter does. The
   parameter goes to the profile.
@@ -33,8 +35,10 @@ naming. This file holds only the rules for working on the repository itself.
   rule that names a concrete path, id or design system does not belong in a
   plugin. A rule that survives a change of project does not belong in a project.
 - **No workspace specifics.** The plugins work in any clone of any project:
-  nothing here names the author's machine, paths, sibling repositories, other
-  tool libraries or personal habits of working with this one.
+  nothing in a plugin names the author's machine, paths, sibling repositories,
+  other tool libraries or personal habits of working with this one. The
+  README may point a reader to the sibling library that fits their project
+  better.
 - **One fact, one place.** The skill is the source; README links to it and does
   not restate it.
 
