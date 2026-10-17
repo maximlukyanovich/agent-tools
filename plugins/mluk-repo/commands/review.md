@@ -198,7 +198,8 @@ never rewritten.
     `/mluk-repo:handoff` for the same branch yourself, through the Skill
     tool, without asking. It prints the fix prompt, the promote line or the
     plan's next step, as the state calls for. When `fix` left the tree
-    dirty, offer `/mluk-repo:commit` instead; it hands off after the commit.
+    dirty, offer `/mluk-repo:commit` instead, as a code block with the same
+    worktree or branch argument; it hands off after the commit.
 
 ## Hard rules
 

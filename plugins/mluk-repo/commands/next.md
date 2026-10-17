@@ -30,7 +30,8 @@ the owner confirms it. Nothing is committed, pushed, opened or started.
    branch`, `chain`, `upstream`). A roadmap in a sibling repository is read
    from the clone the local `## Siblings` names, else through
    `gh api repos/<owner>/<repo>/contents/<path>`. No profile → say so, offer
-   `/mluk-bootstrap:setup`, and work with `AGENTS.md` and `docs/`.
+   `/mluk-bootstrap:setup` as a code block, and work with `AGENTS.md` and
+   `docs/`.
 
 3. **Read the plan.**
    - **The roadmap's queue** — the part that orders work: a priority table, a

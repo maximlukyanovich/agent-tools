@@ -25,7 +25,8 @@ stops after printing the PR URL.
      target was given → stop; protected branches advance through
      `/mluk-repo:promote`.
    - `git status --porcelain`. Dirty → show the diff and offer
-     `/mluk-repo:commit`. Do not commit or stash on the owner's behalf.
+     `/mluk-repo:commit` as a code block. Do not commit or stash on the
+     owner's behalf.
    - `git remote -v`, `gh auth status`. The remote alias must match the
      profile's `remote account` and `gh`'s active account must own the
      repository (`github-accounts` skill); otherwise stop and say so. An
@@ -36,7 +37,7 @@ stops after printing the PR URL.
      `validate` — red → stop and show; green → record the tree the same way.
      Only a full run is recorded, never a targeted one.
    - Behaviour, domain or scope changed and the docs did not → offer
-     `/mluk-repo:update-docs` before pushing.
+     `/mluk-repo:update-docs` as a code block before pushing.
 
 2. **Show what moves.**
 

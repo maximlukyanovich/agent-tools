@@ -41,8 +41,8 @@ owner names, or ask. There is no tracker.
    propose `<branch prefix>/<kebab-slug>` and create it **only on
    confirmation**. On a feature branch → ask: fork a fresh branch off here,
    stay and append, open a worktree, or abort. A dirty tree before any switch
-   → show the diff, offer `/mluk-repo:commit`, a stash or a worktree; never
-   discard.
+   → show the diff, offer `/mluk-repo:commit` as a code block, a stash or a
+   worktree; never discard.
 
    **A worktree** — asked for, or accepted when offered — is confirmed with
    its folder, `../<repo>-<slug>`, beside the repository so the main tree's

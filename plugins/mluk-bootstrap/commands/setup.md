@@ -32,7 +32,7 @@ The order is fixed. Steps are not reordered or skipped.
    - no harness, or fragments of one — an `AGENTS.md` or `CLAUDE.md` holding
      only a generator's block is a fragment → set up;
    - a harness already there → say so and offer `/mluk-bootstrap:audit`
-     instead.
+     instead, as a code block.
 
    With a recipe for the stack at
    `${CLAUDE_PLUGIN_ROOT}/reference/scaffold/<stack>.md`, read its `For the

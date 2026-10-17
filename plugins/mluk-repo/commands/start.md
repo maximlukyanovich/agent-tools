@@ -20,7 +20,8 @@ documents are never translated.
    `.claude/COMMANDS.md`, `.claude/project-profile.md` (`## Repository`,
    `## Checks`, `## Docs`) and this clone's `project-profile.local.md` if
    present, `docs/README.md` if present. No profile → say so and offer
-   `/mluk-bootstrap:setup`; continue with what `AGENTS.md` gives.
+   `/mluk-bootstrap:setup` as a code block; continue with what `AGENTS.md`
+   gives.
 
 2. **Run the checks** from `## Checks` in one Bash call where possible, plus
    the git baseline:

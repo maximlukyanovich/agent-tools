@@ -61,8 +61,12 @@ naming. This file holds only the rules for working on the repository itself.
   without cache; a subagent starts with an empty context, so its model is
   where the choice pays.
 - **A command ends with its next step** as a code block ready to copy;
-  alternatives are separate blocks. A step answered in the same session — a
-  yes to a commit, a choice between closing steps — stays a question.
+  alternatives are separate blocks. So does a step that stops early and sends
+  the owner to another command — a dirty tree to the commit: the command is
+  also given as a block, with the worktree or branch argument the work needs.
+  Naming it inside a sentence is fine; what the stop must not lack is the
+  block. A step answered in the same session — a yes to a commit, a choice
+  between closing steps — stays a question.
 
 ## 3. Checks before a pull request
 
