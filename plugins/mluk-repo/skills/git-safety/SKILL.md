@@ -83,3 +83,8 @@ review's story is in its ledger.
 Every mutating command ends with what it did (`git log --oneline -N`, PR
 URLs) and a one-line reminder of what it did not do — nothing was pushed,
 nothing was force-pushed, no hook was bypassed.
+
+A commit made outside `/mluk-repo:commit` — in the working session, by a
+git call — ends the way that command does: when it closes a task or a round
+of review fixes, run `/mluk-repo:handoff` for the same worktree or branch
+through the Skill tool, without asking, rather than end on a summary.
