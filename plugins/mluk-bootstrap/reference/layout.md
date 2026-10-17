@@ -77,12 +77,20 @@ directory, and `!.claude/hooks-local/README.md` alone re-includes nothing.
 
 Without `extraKnownMarketplaces` the plugins resolve only on a machine whose
 user settings already know the marketplace — a collaborator who clones the
-repository gets "enabled but not installed" with nowhere to install from. With
-it, trusting the folder makes the marketplace known; each enabled plugin is then
-installed once (`claude plugin install <name>@mluk-agent-tools --scope project`,
-or `--scope local` to keep the record in the gitignored `settings.local.json`).
+repository gets "enabled but not installed" with nowhere to install from. So
+every marketplace `enabledPlugins` names is declared, `claude-plugins-official`
+included: an interactive first start adds that one on its own, a profile used
+only from the CLI lacks it. Trusting the folder registers the declared
+marketplaces but downloads no plugin; the project's `/start` installs the
+missing ones at local scope — the settings already turn them on, and a
+project-scope install writes into the committed `settings.json`. No marketplace
+is added by hand: a declared one needs no add, and at two scopes the add does
+harm — `--scope local` replaces the committed entry and drops its
+`autoUpdate`, `--scope project` rewrites the committed `settings.json`.
 GitHub is the one source for everyone, the author included: a library change
-reaches a project once pushed to the library's `main`. A private marketplace
+reaches a project once pushed to the library's `main`, and `autoUpdate` brings
+it up to ten minutes after an interactive session's first message;
+`/reload-plugins` applies it to an open session. A private marketplace
 repository needs read access for every collaborator.
 
 ## Two traps that cost a rewrite

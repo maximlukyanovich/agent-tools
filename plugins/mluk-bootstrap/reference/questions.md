@@ -29,10 +29,13 @@ rather than asking from scratch.
 
 **Q3. What "verified" means.** Which command must be green before a commit (the
 profile's `validate`), and whether a manual step is required — a browser check
-through the Playwright tool against the owner's dev server, a real request, a
+through the Playwright tool against the running dev server, a real request, a
 migration. Separately: does every behaviour change ship with a test, or is that
-incidental? Who runs the dev server and the containers — by default the owner,
-and the agent never starts or stops them.
+incidental? How the dev server and the stack start goes to `AGENTS.md` §2 and
+the fixes in `## Checks`, as commands. Who starts them — the developer or the
+agent — is a habit of one machine, not a project rule: the answer goes to the
+gitignored `project-profile.local.md` (`agent starts`), and without it the
+agent starts and stops nothing.
 
 **Q4. Source of design** — only if the repository has UI. A Claude Design
 project (DesignSync, needs the project id), Figma, screenshots plus prose, or

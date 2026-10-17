@@ -18,7 +18,12 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    the project believes it has — check each against the config, and the prose
    that cites it against what the rule actually forbids. **Prose
    that contradicts the code is stale prose, and it is worse than no prose** —
-   it looks like a source of truth without being one.
+   it looks like a source of truth without being one. Does `AGENTS.md` say
+   how the project runs — install, dev server, the stack — as commands that
+   work from the repository root? Missing, prose without commands, or a rule
+   about who starts them (that habit belongs in the clone's
+   `project-profile.local.md`) is a finding: `/mluk-repo:start` prints that
+   section for a newcomer.
 
 2. **Duplication.** The same rule in `AGENTS.md`, `CLAUDE.md`, a project skill
    and a library skill — collapse to one place plus links. The library is the
@@ -31,7 +36,8 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    and deleting the local file. A genuine procedural difference → keep, and
    check it is documented as an override in `.claude/COMMANDS.md`. An index
    that lists library commands is a copy going stale — propose replacing the
-   rows with a pointer to the plugins' `help`.
+   rows with a pointer to the plugins' `help`. The project's `/start` from
+   the template is not such a copy; §14 checks it.
 
 4. **The profile.** Does `.claude/project-profile.md` exist and carry the
    sections the enabled plugins read (`${CLAUDE_PLUGIN_ROOT}/reference/
@@ -62,8 +68,9 @@ The harness exists; the job is to find the gaps, not to rewrite it.
 10. **Cross-agent availability.** Do the rules live in `AGENTS.md` rather than
    only in a vendor file? Are the skill symlinks present and unbroken, and
    pointing the right way? Is every marketplace named in `enabledPlugins`
-   declared in the project's own `extraKnownMarketplaces`? One known only to
-   the author's user settings works on the author's machine and nowhere else.
+   declared in the project's own `extraKnownMarketplaces`,
+   `claude-plugins-official` included? One known only to the author's user
+   settings works on the author's machine and nowhere else.
    A declared marketplace in a private repository is still out of reach for a
    collaborator without read access: compare the project's collaborators
    (`gh api repos/<project>/collaborators --jq '.[].login'`) with the
@@ -86,6 +93,17 @@ The harness exists; the job is to find the gaps, not to rewrite it.
     fresh clone — not in the author's tree, where a warm `node_modules` hides a
     build script missing from `allowBuilds`? Under pnpm 11 that gap fails the
     deploy's install and nothing earlier.
+
+14. **A fresh clone gets its plugins.** Is there a `.claude/commands/start.md`
+    from `${CLAUDE_PLUGIN_ROOT}/templates/start/`? Without it a collaborator's
+    clone has the plugins turned on and no command to install them. Does its
+    version line match the template's — and, with Node, the one in
+    `scripts/agent-plugins.mjs` and its `lib/`? Compare with `diff` against
+    the template, not by reading both. Is it still thin — it installs and
+    hands over to `/mluk-repo:start`, with no overview or checks copied in?
+    Are the `## Checks` row, the `.claude/COMMANDS.md` row and the README's
+    «Agent tooling» there? A version behind → propose copying the template
+    again, with the project's placeholders kept.
 
 ## Report
 

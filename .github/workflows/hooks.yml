@@ -1,6 +1,7 @@
 # The plugins' hooks are code that runs on every Write/Edit or Bash call in the projects that enable
-# them; their tests run here on every push and pull request, since no project's CI covers them.
-name: Hook tests
+# them, and the template setup copies runs in every project it sets up; their tests run here on
+# every push and pull request, since no project's CI covers them until the copy is made.
+name: Plugin tests
 
 on:
   push:
@@ -22,3 +23,5 @@ jobs:
         run: node --test 'plugins/mluk-fe/hooks/*.test.mjs'
       - name: mluk-ops guard
         run: python3 plugins/mluk-ops/hooks/test_guard.py
+      - name: mluk-bootstrap start template
+        run: node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'

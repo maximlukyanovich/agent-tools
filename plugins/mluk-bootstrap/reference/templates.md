@@ -14,7 +14,7 @@ plugin skill, not a restatement.
 # Agent instructions
 
 ## 1. Project        what it is, which surfaces, sibling repositories, current phase
-## 2. Commands       install, dev (who runs it), the one gate command, tests, build
+## 2. Commands       install, dev, the stack — commands run from the root, how not who; the gate, tests, build
 ## 3. Architecture   layers table: path, responsibility, what it may import
 ## 4. Conventions    languages, branches, commits (preset name → skill), styling, copy
 ## 5. Sources of truth   priority order, design source, what to do on conflict
@@ -102,13 +102,36 @@ know: the project's own commands and its overrides.
 
 | Command | Mutating | What it does |
 | --- | --- | --- |
+| [`/start`](commands/start.md) | installs plugins, on a yes | First command in a fresh clone: installs the declared plugins that are missing, then runs `/mluk-repo:start` |
 | [`/<local>`](commands/<local>.md) | … | … |
+
+`/start` is local because a plugin that is not installed has no commands, so
+the library cannot install itself.
 
 ## Overrides
 
 None. A local command overrides a library one only when the procedure differs
 — a parameter goes to the profile. Each override is a row here:
 `/<local>` overrides `/mluk-repo:<name>` because <reason>.
+```
+
+## The project's /start
+
+Copied, not written: `${CLAUDE_PLUGIN_ROOT}/templates/start/` — setup step 4
+says how. Its version line is what `audit` compares; a project that changes the
+copy records why in `.claude/COMMANDS.md`.
+
+## README — Agent tooling
+
+```markdown
+## Agent tooling
+
+Optional, for Claude Code: start it at the repository root and trust the
+folder. That registers the plugin marketplaces `.claude/settings.json`
+declares but downloads no plugin — run `/start`, which installs the missing
+ones and then gives the overview. A session that is already open loads new or
+updated plugins after `/reload-plugins`. Other agents read
+[AGENTS.md](AGENTS.md).
 ```
 
 ## .mcp.json.example

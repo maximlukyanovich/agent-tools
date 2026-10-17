@@ -70,7 +70,7 @@ naming. This file holds only the rules for working on the repository itself.
 
 ## 3. Checks before a pull request
 
-The only automated gate is the `Hook tests` workflow. Before opening a pull request, its author checks by hand:
+The only automated gate is the `Plugin tests` workflow. Before opening a pull request, its author checks by hand:
 
 - every `commands/*.md` has frontmatter with `description` and `argument-hint`;
 - every `skills/*/SKILL.md` has `name` and `description`, every
@@ -79,9 +79,10 @@ The only automated gate is the `Hook tests` workflow. Before opening a pull requ
   exists, or a `${CLAUDE_PLUGIN_ROOT}` path;
 - `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
   name matches its catalogue entry;
-- a changed hook passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
-  `python3 plugins/mluk-ops/hooks/test_guard.py`; the `Hook tests` workflow runs the same on
-  every push;
+- a changed hook or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
+  `python3 plugins/mluk-ops/hooks/test_guard.py`,
+  `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`; the `Plugin tests`
+  workflow runs the same on every push;
 - the changed command or skill was run once, in a real repository, after
   `claude plugin update` (or via `--plugin-dir`), and did what its text says.
 
@@ -98,6 +99,7 @@ plugins/<name>/
   skills/<name>/SKILL.md          knowledge the agent loads by itself
   agents/*.md                     subagents a command delegates to
   reference/*.md                  read one file at a time, on instruction
+  templates/<name>/               files setup copies into a project as they are
   README.md                       for people, links to the skill
 ```
 

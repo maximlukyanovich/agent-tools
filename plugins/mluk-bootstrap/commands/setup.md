@@ -60,17 +60,38 @@ The order is fixed. Steps are not reordered or skipped.
    Order: `AGENTS.md` first — everything else references it — then `CLAUDE.md`,
    the profile, settings, skills, hooks, MCP, docs. A file the generator wrote
    (`AGENTS.md`, `.gitignore`) is appended to, and its block stays where it is.
+   When Q3 let the agent start the dev server or the stack, that answer goes
+   to this clone's `.claude/project-profile.local.md` — `## Checks`,
+   `agent starts` — gitignored, so no other clone inherits it; otherwise the
+   key is left out, and the agent starts nothing.
 
-   Settings go to the file Q11 chose: the `mluk-agent-tools` marketplace in
-   `extraKnownMarketplaces` and empty `attribution`. Then each plugin of the
-   Q11 set is installed with the command a person would run —
+   Settings go to the file Q11 chose: every marketplace the set comes from in
+   `extraKnownMarketplaces` — `mluk-agent-tools` with `autoUpdate`, and
+   `claude-plugins-official` when one of its plugins is enabled (an
+   interactive first start adds it on its own, a profile used only from the
+   CLI lacks it) — and empty `attribution`. Then each plugin of the Q11 set is
+   installed with the command a person would run —
    `claude plugin install <plugin>@mluk-agent-tools --scope project`, or
    `--scope local` for `settings.local.json` — which writes `enabledPlugins`
    itself. The plugins load in the next session.
 
-   **Local commands are the exception, not the rule.** `commit`, `create-pr`,
-   `promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs`,
-   `handoff` exist in `mluk-repo` and read the profile. Write a local
+   **The project's `/start`** installs those plugins in every other clone: a
+   plugin that is not installed has no commands, so the library cannot do it.
+   Copy `${CLAUDE_PLUGIN_ROOT}/templates/start/` with `cp`: `start.md` to
+   `.claude/commands/`, and — when the project has Node — `agent-plugins.mjs`
+   with its `lib/` to `scripts/`, its test joining the project's test run.
+   The scripts are never read into context; the copied `start.md` is the one
+   file read, to edit it: keep the `node` variant, or
+   the `prose` one without Node; drop the other's blocks and the variant
+   markers, renumber, fill the `<…>` placeholders, keep the version line.
+   With it go a `## Checks` row — `agent plugins — <the report> — /start` —
+   a `.claude/COMMANDS.md` row saying why it is local, and the README's
+   «Agent tooling» (`${CLAUDE_PLUGIN_ROOT}/reference/templates.md`).
+
+   **Local commands are the exception, not the rule.** Besides `/start`,
+   which every project gets, `commit`, `create-pr`, `promote`, `review`,
+   `sync`, `start`, `next`, `task`, `update-docs`, `handoff` exist in
+   `mluk-repo` and read the profile. Write a local
    `.claude/commands/<name>.md` only when the answer to a question showed that
    the *procedure* differs — and say in the plan which library command it
    overrides and why.

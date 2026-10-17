@@ -25,12 +25,16 @@ Other scopes and updating: [Quick start](../../README.md#quick-start).
 
 `AGENTS.md` as the canonical document, `CLAUDE.md` as a thin vendor layer, the
 project profile every library plugin reads first, `.claude/settings.json` with
-the library plugins enabled, domain skills, hooks where a repeated pain
-justifies one, and the `docs/**` skeleton with a gitignored `docs/local/`.
+the library plugins enabled, the project's `/start` — copied from
+`templates/start/` — that installs those plugins in a fresh clone, domain
+skills, hooks where a repeated pain justifies one, and the `docs/**` skeleton
+with a gitignored `docs/local/`.
 
-It does **not** create `commit`, `create-pr`, `promote`, `review`, `sync`,
-`start`, `next`, `task` or `update-docs` commands — those come from `mluk-repo` and are
-driven by the profile. A local command is written only when the project's
+Besides that `/start`, it does **not** create `commit`, `create-pr`,
+`promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs` or
+`handoff` commands — those come from `mluk-repo` and are driven by the
+profile; the library's `start` is the overview the project's `/start` hands
+over to. A local command is written only when the project's
 procedure differs from the library's.
 
 ## Skills
@@ -52,4 +56,6 @@ Read one at a time, not as a whole: `questions.md` (the eleven asked in phase 1)
 `templates.md` (skeletons), `project-profile.md` (the sectioned file the library
 plugins read), `checklist.md` (the final check), `scaffold/<stack>.md` (how
 `new` runs a stack's generator, and what `setup` must respect afterwards —
-`next.md` so far).
+`next.md` so far). `templates/start/` is not read but copied: the project's
+`/start` and, with Node, the script that reports and installs the missing
+plugins, with its test.

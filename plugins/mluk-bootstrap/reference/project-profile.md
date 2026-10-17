@@ -33,8 +33,8 @@ Task flavours and the skill each loads (e.g. `ui → task-ui`, `api → task-api
 Where a brief comes from when not inline.
 
 ## Checks
-What `start` verifies live: dev server port (owner-run), containers, env file,
-migrations, gh auth. One line each with the command and the fix.
+What `start` verifies live: the agent plugins, dev server port, containers,
+env file, migrations, gh auth. One line each with the command and the fix.
 
 ## Review
 Project-specific review lenses added to the library rubric — a security check
