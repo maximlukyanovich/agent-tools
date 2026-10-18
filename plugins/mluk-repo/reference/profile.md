@@ -76,10 +76,20 @@ hold in every clone.
 ## Checks
 
 A list, one per line: `label — command — fix when not ok`. `start` runs them
-read-only and prints the table. Typical rows: dev server on its port (owner-run,
-never started by the agent), containers up, `.env` present, migrations
-applied, `gh auth status`, working tree clean. The validate command is shown as
-`info` and not run.
+read-only and prints the table. Typical rows: the agent plugins installed
+(the report the project's `/start` runs), dev server on its port, containers
+up, `.env` present, migrations applied, `gh auth status`, working tree clean.
+The validate command is shown as `info` and not run. A fix says how, as a
+command — not who runs it.
+
+Who may start and stop the dev server or the stack is a habit of one machine,
+so it lives only in the local file:
+
+| Key | Default | Read by |
+| --- | --- | --- |
+| `agent starts` | none — the agent starts and stops nothing and names the fix for the developer; else the list it may run itself (`dev server`, `stack`) | any step that needs one running — a browser check, tests inside the stack |
+
+`start` starts nothing either way.
 
 ## Review
 

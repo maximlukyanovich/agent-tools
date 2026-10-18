@@ -13,8 +13,9 @@ inventory of the codebase.
 
 ## Steps
 
-1. **Pre-flight.** Dirty tree → refuse and offer `/mluk-repo:commit`; do not
-   stash for the owner. Current branch is the source, or is protected → refuse.
+1. **Pre-flight.** Dirty tree → refuse and offer `/mluk-repo:commit` as a
+   code block; do not stash for the owner. Current branch is the source, or
+   is protected → refuse.
    `git fetch origin <source> --quiet`.
 
 2. **Merge.** `git merge origin/<source> --no-edit` — merge, not rebase, not

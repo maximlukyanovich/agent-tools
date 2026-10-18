@@ -7,9 +7,18 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
 - [ ] `CLAUDE.md` imports it and duplicates not a single line of it.
 - [ ] `.claude/project-profile.md` exists with every section an enabled plugin
       reads; no section copies what a command answers.
-- [ ] The settings file Q11 chose declares `mluk-agent-tools` in
-      `extraKnownMarketplaces` (GitHub source), enables the Q11 set and sets
-      empty attribution.
+- [ ] The settings file Q11 chose declares in `extraKnownMarketplaces` every
+      marketplace `enabledPlugins` names — `mluk-agent-tools` (GitHub source,
+      `autoUpdate`), `claude-plugins-official` when its plugins are enabled —
+      enables the Q11 set and sets empty attribution.
+- [ ] `.claude/commands/start.md` comes from `templates/start/` with the
+      current version line, one variant left and every placeholder filled; it
+      only installs and hands over. With Node, `scripts/agent-plugins.mjs` and
+      its `lib/` are beside it and their test passes in the project's run.
+      `## Checks` has the plugin row, `.claude/COMMANDS.md` the `/start` row,
+      README the «Agent tooling» paragraph.
+- [ ] `AGENTS.md` §2 says how the project runs as commands from the
+      repository root — install, dev server, the stack — and not who runs them.
 - [ ] Skills: real directories under `.claude/skills/`, working symlinks in
       `.agents/skills/`, each with a precise `description`, none restating a
       library skill.
@@ -34,8 +43,9 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       ignored except its README.
 - [ ] No harness file contains a secret, an absolute path, or a person's name.
 - [ ] Committed text holds in every clone: sibling repositories by slug, not
-      `../path`; no remote name standing for a repository; a fork's trunk and
-      local paths only in the gitignored `project-profile.local.md`.
+      `../path`; no remote name standing for a repository; a fork's trunk,
+      local paths and who starts the dev server or the stack
+      (`agent starts`) only in the gitignored `project-profile.local.md`.
 - [ ] Every collaborator of the project can read the marketplace repository.
 - [ ] `/mluk-repo:start` runs and prints a green table — or rows with concrete
       actions.

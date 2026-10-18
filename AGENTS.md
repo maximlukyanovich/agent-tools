@@ -22,10 +22,12 @@ naming. This file holds only the rules for working on the repository itself.
   texts, never found by searching the filesystem. An installed plugin is a
   copy under `~/.claude/plugins/cache/`, even when the marketplace is
   registered from this checkout; `${CLAUDE_PLUGIN_ROOT}` points there.
-- **An edit here is not live.** After changing a plugin run
-  `claude plugin update <plugin>@mluk-agent-tools` (per installed scope) and
-  restart the session. While writing a plugin, test it straight from the
-  checkout with `claude --plugin-dir …/agent-tools/plugins`.
+- **An edit here is not live** until it lands on `main`: a project that
+  declares the marketplace with `autoUpdate` gets it up to ten minutes after
+  an interactive session's first message, by hand
+  `claude plugin update <plugin>@mluk-agent-tools` (per installed scope);
+  `/reload-plugins` applies it to an open session. While writing a plugin,
+  test it straight from the checkout with `claude --plugin-dir …/agent-tools/plugins`.
 - **Library base, local override.** A project keeps a local command only when
   its procedure differs from the library's, not when a parameter does. The
   parameter goes to the profile.
@@ -33,10 +35,19 @@ naming. This file holds only the rules for working on the repository itself.
   rule that names a concrete path, id or design system does not belong in a
   plugin. A rule that survives a change of project does not belong in a project.
 - **No workspace specifics.** The plugins work in any clone of any project:
-  nothing here names the author's machine, paths, sibling repositories, other
-  tool libraries or personal habits of working with this one.
+  nothing in a plugin names the author's machine, paths, sibling repositories,
+  other tool libraries or personal habits of working with this one. The
+  README may point a reader to the sibling library that fits their project
+  better.
 - **One fact, one place.** The skill is the source; README links to it and does
   not restate it.
+- **A tool's behaviour is stated only after a check.** What a plugin text says
+  Claude Code, git, Compose or any other tool does — which file a value comes
+  from, what a flag or a scope changes, which entry wins a merge — is checked
+  first: a probe in a scratch directory, the tool's documentation (Context7)
+  or its source, never memory or inference. A claim that holds for some
+  options names them; a reason that names no property ("that copy lacks what
+  the declaration carries") was not checked.
 
 ## 2. Conventions
 
@@ -61,12 +72,16 @@ naming. This file holds only the rules for working on the repository itself.
   without cache; a subagent starts with an empty context, so its model is
   where the choice pays.
 - **A command ends with its next step** as a code block ready to copy;
-  alternatives are separate blocks. A step answered in the same session — a
-  yes to a commit, a choice between closing steps — stays a question.
+  alternatives are separate blocks. So does a step that stops early and sends
+  the owner to another command — a dirty tree to the commit: the command is
+  also given as a block, with the worktree or branch argument the work needs.
+  Naming it inside a sentence is fine; what the stop must not lack is the
+  block. A step answered in the same session — a yes to a commit, a choice
+  between closing steps — stays a question.
 
 ## 3. Checks before a pull request
 
-The only automated gate is the `Hook tests` workflow. Before opening a pull request, its author checks by hand:
+The only automated gate is the `Plugin tests` workflow. Before opening a pull request, its author checks by hand:
 
 - every `commands/*.md` has frontmatter with `description` and `argument-hint`;
 - every `skills/*/SKILL.md` has `name` and `description`, every
@@ -75,9 +90,10 @@ The only automated gate is the `Hook tests` workflow. Before opening a pull requ
   exists, or a `${CLAUDE_PLUGIN_ROOT}` path;
 - `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
   name matches its catalogue entry;
-- a changed hook passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
-  `python3 plugins/mluk-ops/hooks/test_guard.py`; the `Hook tests` workflow runs the same on
-  every push;
+- a changed hook or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
+  `python3 plugins/mluk-ops/hooks/test_guard.py`,
+  `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`; the `Plugin tests`
+  workflow runs the same on every push;
 - the changed command or skill was run once, in a real repository, after
   `claude plugin update` (or via `--plugin-dir`), and did what its text says.
 
@@ -94,6 +110,7 @@ plugins/<name>/
   skills/<name>/SKILL.md          knowledge the agent loads by itself
   agents/*.md                     subagents a command delegates to
   reference/*.md                  read one file at a time, on instruction
+  templates/<name>/               files setup copies into a project as they are
   README.md                       for people, links to the skill
 ```
 

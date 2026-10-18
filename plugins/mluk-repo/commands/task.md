@@ -41,22 +41,35 @@ owner names, or ask. There is no tracker.
    propose `<branch prefix>/<kebab-slug>` and create it **only on
    confirmation**. On a feature branch → ask: fork a fresh branch off here,
    stay and append, open a worktree, or abort. A dirty tree before any switch
-   → show the diff, offer `/mluk-repo:commit`, a stash or a worktree; never
-   discard.
+   → show the diff, offer `/mluk-repo:commit` as a code block, a stash or a
+   worktree; never discard.
 
    **A worktree** — asked for, or accepted when offered — is confirmed with
    its folder, `../<repo>-<slug>`, beside the repository so the main tree's
    linters, tests and type-check never pick it up:
    - `git worktree add -b <branch> ../<repo>-<slug> <base branch>`;
-   - link in what git ignores but the work reads — local notes, env files,
-     tool configs; list the candidates from the main tree's ignored files and
-     confirm them, since a folder that is tracked for one file (a README) is
-     linked entry by entry, not as a whole. A linked folder is a symlink, and
-     an ignore rule ending in `/` matches directories only, so the link shows
-     as untracked — add its path to `.git/info/exclude` (shared by every
-     worktree, never committed) rather than risk committing it;
+   - link in what git ignores but the work reads — local notes, env files
+     (one that takes the tree's own port or Compose project name is copied
+     instead, see below), tool configs; list the candidates from the main
+     tree's ignored files and confirm them, since a folder that is tracked
+     for one file (a README) is linked entry by entry, not as a whole. A
+     linked folder is a symlink, and an ignore rule ending in `/` matches
+     directories only, so the link shows as untracked — add its path to
+     `.git/info/exclude` (shared by every worktree, never committed) rather
+     than risk committing it;
    - install dependencies in the new tree with the project's package manager;
-   - a second dev server or workshop needs a free port;
+   - a second dev server or workshop needs a free port, and a Compose stack
+     its own `COMPOSE_PROJECT_NAME` beside it: under the main tree's name,
+     `up` in the worktree recreates the running containers with the
+     worktree's code. The port goes into the env file the dev server reads,
+     the name into the `.env` beside the compose file (or the file
+     `--env-file` names) — Compose takes its own variables from there, never
+     from a service's `env_file:`. Either file is copied from the main tree,
+     not linked, since a value written through a link lands in the main
+     tree's file. What the compose file names outright is the same for both
+     stacks even then, and collides or is shared: a host port, a
+     `container_name`, a network or volume with its own `name:` or marked
+     `external`;
    - commands act on the session's working directory, so a command run in
      the main tree sees the main tree's branch. The working session moves into
      the worktree (`EnterWorktree` with the folder's path) or addresses it

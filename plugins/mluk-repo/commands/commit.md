@@ -56,7 +56,7 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
 5. **Plan the commits.** One task, one commit. A diff that holds several tasks
    is split into groups; a debatable split is shown and confirmed. Behaviour
    described in the project's docs changed but the document did not → say so
-   and offer `/mluk-repo:update-docs` first.
+   and offer `/mluk-repo:update-docs` first, as a code block.
 
    **A changed fact is searched for before the commit.** When the diff changes
    something the repository states in words — a level, a command, a default,
