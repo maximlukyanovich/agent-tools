@@ -41,6 +41,13 @@ naming. This file holds only the rules for working on the repository itself.
   better.
 - **One fact, one place.** The skill is the source; README links to it and does
   not restate it.
+- **A tool's behaviour is stated only after a check.** What a plugin text says
+  Claude Code, git, Compose or any other tool does — which file a value comes
+  from, what a flag or a scope changes, which entry wins a merge — is checked
+  first: a probe in a scratch directory, the tool's documentation (Context7)
+  or its source, never memory or inference. A claim that holds for some
+  options names them; a reason that names no property ("that copy lacks what
+  the declaration carries") was not checked.
 
 ## 2. Conventions
 
