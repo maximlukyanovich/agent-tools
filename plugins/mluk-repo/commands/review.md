@@ -182,6 +182,11 @@ never rewritten.
    rule cannot be checked. **Stop and ask** what a further pass should add
    when this is pass 3+ with no new commits, when findings grew while the delta
    is small, or when `escalated` plus `fix-critique` are over half the findings.
+   When the verdict reads ready and the growth is `missed` findings in code
+   older than the delta, the first option offered is to close the range: one
+   fix round on the open ids, then a pass over that round's delta alone at
+   `minor+` — not another full pass, which on a large range finds a fresh
+   batch of old nits every time.
 
 9. **Append the pass to the ledger** — without asking; it is gitignored and
    holds only the review's own memory. Update statuses the owner stated.
