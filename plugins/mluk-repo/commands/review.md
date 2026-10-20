@@ -111,7 +111,11 @@ never rewritten.
    previous verdict first anchors this one. General lenses: `bug` (unhandled
    branches, `None` assumptions, boundary cases, a missing transaction; for
    async code and stateful hooks, walk the lifecycle transitions — A→B mid-event,
-   A→none→A — and a peer that misbehaves, such as a 200 that closes at once),
+   A→none→A — and a peer that misbehaves, such as a 200 that closes at once;
+   in UI, an element holding the focus that leaves the page outside a modal's
+   focus scope with nowhere named for the focus to go, which the plan's state
+   table names (`kickoff`): the browser drops it to `<body>` — a `nit`,
+   `minor` only when a keyboard user loses their place in a flow under way),
    `perf` (N+1, a per-row query, a full scan on a hot path, a client-only fetch
    on an SEO surface), `dup` (a rule written inline next to the shared
    implementation), `test` (a behaviour change with no test in the same commit is its own
@@ -179,6 +183,11 @@ never rewritten.
    rule cannot be checked. **Stop and ask** what a further pass should add
    when this is pass 3+ with no new commits, when findings grew while the delta
    is small, or when `escalated` plus `fix-critique` are over half the findings.
+   When the verdict reads ready and the growth is `missed` findings in code
+   older than the delta, the first option offered is to close the range: one
+   fix round on the open ids, then a pass over that round's delta alone at
+   `minor+` — not another full pass, which on a large range finds a fresh
+   batch of old nits every time.
 
 9. **Append the pass to the ledger** — without asking; it is gitignored and
    holds only the review's own memory. Update statuses the owner stated.

@@ -62,7 +62,9 @@ rename does not need this.
    a browser check, a curl).
    A change to state — a hook's or a component's lifecycle, a store, a state
    machine, an async flow, a timer — adds three things: a **state table**
-   (state × event → expected → the test that proves it); **what we rely on in
+   (state × event → expected → the test that proves it; in UI, every element
+   that leaves while it may hold the focus — a button its own press replaces,
+   a row a re-read removes — with where the focus goes); **what we rely on in
    the framework**, each point with `file:line` in the library's source or
    the docs URL; and one line on **why not the structural option** — the
    change that would make the bad state impossible to express (a reset by
