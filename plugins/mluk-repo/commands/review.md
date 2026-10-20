@@ -111,7 +111,10 @@ never rewritten.
    previous verdict first anchors this one. General lenses: `bug` (unhandled
    branches, `None` assumptions, boundary cases, a missing transaction; for
    async code and stateful hooks, walk the lifecycle transitions — A→B mid-event,
-   A→none→A — and a peer that misbehaves, such as a 200 that closes at once),
+   A→none→A — and a peer that misbehaves, such as a 200 that closes at once;
+   in UI, an element holding the focus that leaves the page outside a modal's
+   focus scope — a button its own press replaces, a row a re-read removes —
+   with nowhere named for the focus to go: the browser drops it to `<body>`),
    `perf` (N+1, a per-row query, a full scan on a hot path, a client-only fetch
    on an SEO surface), `dup` (a rule written inline next to the shared
    implementation), `test` (a behaviour change with no test in the same commit is its own
