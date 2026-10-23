@@ -118,9 +118,14 @@ never rewritten.
    `minor` only when a keyboard user loses their place in a flow under way),
    `perf` (N+1, a per-row query, a full scan on a hot path, a client-only fetch
    on an SEO surface), `dup` (a rule written inline next to the shared
-   implementation), `test` (a behaviour change with no test in the same commit is its own
-   `major`, unless it is genuinely untestable and the commit says why; a test
-   passing by coincidence), `shared` (a change to a shared function, hook or
+   implementation), `test` (by `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`: a
+   change in a risk class with no test in the same commit is its own `major`,
+   unless it is genuinely untestable and the commit says why; any other
+   behaviour change whose live check the commit or the report records needs
+   no test — a missing one is a `nit` at most — and with neither a test nor a
+   recorded check it is a `minor`; a test passing by coincidence, or one that
+   may — focus, timing, a fake, async — never run against the code it
+   replaces), `shared` (a change to a shared function, hook or
    component that alters behaviour for an existing caller — walk every call
    site; an extension that is not backward-compatible and did not migrate its
    callers is `major`), `convention` (placement, style drift), `docs` (behaviour or

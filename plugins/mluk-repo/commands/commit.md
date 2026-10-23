@@ -87,7 +87,7 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    body.
 
 7. **Show and commit.** `commit confirm: ask` (default) → print the file
-   groups, the check results, the transition rows its tests cover when the
+   groups, the check results, the transition rows and their proof when the
    commit changes state (`kickoff`), and the message verbatim, and **wait for
    the go-ahead**. `commit confirm: auto` → print the same for visibility and
    proceed; stop only for the reasons below.
