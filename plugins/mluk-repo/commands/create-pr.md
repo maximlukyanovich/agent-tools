@@ -31,11 +31,10 @@ stops after printing the PR URL.
      profile's `remote account` and `gh`'s active account must own the
      repository (`github-accounts` skill); otherwise stop and say so. An
      `upstream` remote is out of scope — a PR must target `origin`.
-   - The gate: `git rev-parse HEAD^{tree}` equals `$(git rev-parse
-     --git-dir)/validated-tree` → `commit` already ran the full `validate` on
-     exactly this tree; say so and skip. Otherwise run the profile's
-     `validate` — red → stop and show; green → record the tree the same way.
-     Only a full run is recorded, never a targeted one.
+   - The gate, by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The
+     gate": a tree a review or a commit already recorded green is skipped
+     with a line saying so; otherwise the full `validate` — red → stop and
+     show; green → record the tree.
    - Behaviour, domain or scope changed and the docs did not → offer
      `/mluk-repo:update-docs` as a code block before pushing.
 

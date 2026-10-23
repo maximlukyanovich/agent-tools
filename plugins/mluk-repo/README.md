@@ -21,7 +21,7 @@ Other scopes and updating: [Quick start](../../README.md#quick-start).
 | `/mluk-repo:review` | ledger only (`fix` opt-in) | Review the branch against the base — the current one, a named branch or worktree — or a PR, findings by severity; a pass ledger makes a repeat run review only what changed. Run it in a fresh session. |
 | `/mluk-repo:sync` | yes | Merge the base branch into the current one, run the profile's post-merge checks, report what landed. |
 | `/mluk-repo:update-docs` | after confirmation | Measure drift since the last docs update, classify, propose patches by the profile's doc map. |
-| `/mluk-repo:commit` | yes | Stage explicitly, validate, draft by the preset, commit. Never pushes. |
+| `/mluk-repo:commit` | yes | Stage explicitly, check what changed, draft by the preset, commit. Never pushes. |
 | `/mluk-repo:create-pr` | yes | PR texts by `pr-conventions` → push → `gh pr create` → optionally merge after green CI. |
 | `/mluk-repo:promote` | yes | Walk the profile's chain; each boundary is `sync` + `create-pr` + merge, confirmed. |
 | `/mluk-repo:handoff` | a local note, only when a block runs long | The next session's prompt at a phase boundary — the review after a task's commit, the fixes, the plan's next step or the promote after a review, the next task after a merge — from git and the ledger. `commit`, `review`, `create-pr` and `promote` call it at their end. |

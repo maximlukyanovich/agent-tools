@@ -142,7 +142,7 @@ command ends with the next step as a block ready to copy:
 ```bash
 /mluk-repo:next                              what to take next: roadmap, notes, issues, open PRs
 /mluk-repo:task Add a password reset form    the plan: branch, questions, slices; no code before your yes
-/mluk-repo:commit                            stage, validate, message by the preset; never pushes
+/mluk-repo:commit                            stage, check what changed, message by the preset; never pushes
 /mluk-repo:review                            findings by severity, each with file:line
 /mluk-repo:create-pr merge                   push and open the PR on your yes, merge after green CI
 ```

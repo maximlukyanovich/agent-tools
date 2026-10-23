@@ -23,7 +23,7 @@ source when the target moved. A single hop to the next branch is the same as
    chain printed. Print `source → target`.
 
 2. **Pre-flight** as in `create-pr`: clean tree, correct remote alias and `gh`
-   account, `upstream` out of scope, `validate` green when the first source is
+   account, `upstream` out of scope, the gate green when the first source is
    the working branch.
 
 3. **Build the segments** — the chain prefix ending at the target:

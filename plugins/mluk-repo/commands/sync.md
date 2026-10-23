@@ -6,7 +6,7 @@ argument-hint: '[<source-branch>]'
 # /mluk-repo:sync
 
 Bring the base branch into the current feature branch. Reads `## Repository`
-for `base branch`, `validate`, `post-merge checks`.
+for `base branch`, `validate`, `targeted checks`, `post-merge checks`.
 
 **Writes to git** (a merge commit). Token-efficient by design: this is not an
 inventory of the codebase.
@@ -26,7 +26,10 @@ inventory of the codebase.
 3. **Post-merge checks.** The profile's `post-merge checks` first (a second
    migration head, a lockfile drift, a generated file out of date) — report a
    hit as the top finding with the fix, and do not apply the fix yourself.
-   Then `validate`; failures are shown and stop the report.
+   Then the targeted checks of the paths the merge brought in (step 4's
+   first list), by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The
+   gate" — not the full `validate`, which runs in the review and before the
+   push; failures are shown and stop the report.
 
 4. **Capture the boundary.**
 

@@ -78,9 +78,11 @@ rename does not need this.
    question in chat. The owner may return the plan with comments: apply them,
    ask for approval again.
 
-7. **After approval**: code in slices, validate after each, verify in the real
-   environment, and commit each slice separately — only on an explicit
-   go-ahead, never pushed without its own. Inside each slice:
+7. **After approval**: code in slices, the targeted checks of what changed
+   after each edit (`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The
+   gate"; the full gate runs once, in the review and before the push), verify
+   in the real environment, and commit each slice separately — only on an
+   explicit go-ahead, never pushed without its own. Inside each slice:
    - **A behaviour change ships with its test in the same commit** — new or
      changed logic, a hook's lifecycle, an event handler, a timer: the commit
      carries the test that would fail without it — shown red against the code
@@ -136,6 +138,6 @@ rename does not need this.
 ## How it is verified
 
 The plan file exists and has the decisions table, slices and a verification
-section before approval is requested. Each slice ends with the validate command
+section before approval is requested. Each slice ends with its targeted checks
 green and a real check (browser, request, test) the plan named. Every commit was
 preceded by an explicit go-ahead in that turn.
