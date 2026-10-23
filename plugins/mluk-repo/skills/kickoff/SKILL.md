@@ -111,6 +111,11 @@ rename does not need this.
      changed**, not only on the finding's scenario: each kind a shared view
      serves, each consumer of a changed contract. A fix that breaks a
      neighbour costs a whole review pass more than the check does.
+   A slice ends with its next step as code blocks, one per option: the
+   commit command while the slice is uncommitted; once it is committed and
+   the plan goes on, continuing here after `/compact <focus>`, or the plan's
+   continue prompt for a fresh session, which `/mluk-repo:handoff` prints.
+   The task's last commit hands the review over through `commit`.
    When the work is a queue of small tasks, each one ends at the base branch:
    its PR is merged there after green CI on the owner's go-ahead. Promotion up
    the branch chain (to staging, to production) happens in batches, only when

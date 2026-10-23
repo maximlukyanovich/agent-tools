@@ -35,12 +35,13 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    immediately (`git-safety` skill). Read `git diff` by affected area for
    substance — not whole files.
 
-3. **Fold a fix into the unpushed commit it corrects.** A change that fixes a
-   commit no remote holds yet — a review finding, a bug a fix round brought
-   in — goes into that commit, as the `git-safety` skill's "Amending" section
-   says: `--amend` for `HEAD`, `--fixup` and autosquash for an older one. Say
-   in one line which commit took it. A pushed commit is never rewritten; the
-   fix is a new commit.
+3. **Place a fix by the `git-safety` skill's "Amending" section.** A round of
+   review fixes: the first round is one new commit on top of the series, a
+   later round goes into that fix commit — `--amend` for `HEAD`, `--fixup`
+   and autosquash for an older one — while no remote holds it. Any other fix
+   to an unpushed commit goes into the commit it corrects. Say in one line
+   which commit took it. A pushed commit is never rewritten; the fix is a new
+   commit.
 
 4. **Run the checks** by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`,
    "The gate": the `targeted checks` rows of the changed paths, and the full
@@ -84,7 +85,9 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    available to an agent.
 
 6. **Draft the message** by the preset in `commit-conventions`. Always with a
-   body.
+   body. A round of review fixes names the ids it closes in one body line
+   (`Review pass 2: R3, R7`; a later round amending the fix commit adds its
+   own) — `handoff` reads it to tell a fixed range from new work.
 
 7. **Show and commit.** `commit confirm: ask` (default) → print the file
    groups, the check results, the transition rows and their proof when the

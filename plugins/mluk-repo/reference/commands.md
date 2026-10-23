@@ -4,8 +4,8 @@ Read by the commands that point here, so each rule is written once.
 
 ## A worktree or branch argument
 
-`commit`, `review`, `promote` and `handoff` act on the session's own tree
-unless a leading argument names other work, usually a branch living in a
+`commit`, `review`, `fix`, `promote` and `handoff` act on the session's own
+tree unless a leading argument names other work, usually a branch living in a
 worktree beside the repository. The word is recognised by shape:
 
 1. **An existing folder** is that worktree; its branch is
@@ -27,8 +27,8 @@ Once the tree is known:
 
 **A branch checked out nowhere** has no tree. `review` and `handoff` read it
 from refs — `git diff origin/<base>...<branch>`, files through
-`git show <branch>:<path>` — and say that the gate did not run. `commit` and
-`promote` stop and print the line that checks it out:
+`git show <branch>:<path>` — and say that the gate did not run. `commit`,
+`fix` and `promote` stop and print the line that checks it out:
 
 ```
 git worktree add ../<repo>-<slug> <branch>

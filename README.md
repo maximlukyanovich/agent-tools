@@ -144,6 +144,7 @@ command ends with the next step as a block ready to copy:
 /mluk-repo:task Add a password reset form    the plan: branch, questions, slices; no code before your yes
 /mluk-repo:commit                            stage, check what changed, message by the preset; never pushes
 /mluk-repo:review                            findings by severity, each with file:line
+/mluk-repo:fix                               one round on the open findings, then the commit on your yes
 /mluk-repo:create-pr merge                   push and open the PR on your yes, merge after green CI
 ```
 
@@ -157,7 +158,7 @@ letter goes through `/mluk-ru:review letter.md`.
 | Plugin | Kind | What it does |
 | --- | --- | --- |
 | [`mluk-bootstrap`](plugins/mluk-bootstrap/README.md) | generator + audit | Create a project in an empty folder; initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model. |
-| [`mluk-repo`](plugins/mluk-repo/README.md) | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `sync`, `start`, `next`, `task`, `update-docs`, `handoff`, and the `kickoff` method — how a task is started. Reads `.claude/project-profile.md`. |
+| [`mluk-repo`](plugins/mluk-repo/README.md) | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `fix`, `sync`, `start`, `next`, `task`, `update-docs`, `handoff`, and the `kickoff` method — how a task is started. Reads `.claude/project-profile.md`. |
 | [`mluk-design`](plugins/mluk-design/README.md) | library | `design-port` — how a design kit is ported. Enabled where a kit exists. |
 | [`mluk-fe`](plugins/mluk-fe/README.md) | library + hooks | Frontend conventions for React / Next.js: `web-ui-conventions`, `component-discipline`, `yandex-browser`, and PostToolUse hooks for locale parity, translation keys and metadata titles. Reads the profile's `## Frontend`. Enabled in a web front. |
 | [`mluk-deploy`](plugins/mluk-deploy/README.md) | library | How projects are deployed: `deploy-vps`, `deploy-vercel`, `domain-dns`. Skills and a `help` command. |

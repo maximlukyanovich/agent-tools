@@ -45,11 +45,20 @@ cover the next one.
 
 ## Amending
 
-**A fix to a commit not yet pushed goes into that commit** — a review
-finding, a bug a fix round brought in, a file that should have been in it, a
-wrong word in the message. A branch merges with its history, and "fix", then
-"fix the fix" tells a later reader nothing the corrected commit does not; the
-review's story is in its ledger.
+**A fix to a commit not yet pushed goes into that commit** — a bug found
+while the work goes on, a file that should have been in it, a wrong word in
+the message. A branch merges with its history, and "fix", then "fix the fix"
+tells a later reader nothing the corrected commit does not.
+
+**Review fixes go into one fix commit.** The first round after a review is a
+new commit on top of the series; every later round goes into that fix commit
+while no remote holds it — amended, or folded with `--fixup` when it is not
+`HEAD`. The series' own commits are not rewritten for a review fix:
+spreading a round across them means blame by hunk, several reworded
+messages and a rebase that stops on files more than one commit changed. The
+fix commit is the one the first round made after the first reviewed head
+(`git log <head>..HEAD`); when that is not plain, ask. The review's story is
+in its ledger, which reads a rewritten head as `git diff <last head> HEAD`.
 
 - Check that no remote holds it: `git branch -r --contains <sha>` prints
   nothing (for `HEAD`, `git log @{u}..` lists it).

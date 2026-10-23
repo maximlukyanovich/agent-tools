@@ -67,7 +67,7 @@ command it ships and every document quoting them.
 | Plugin | Commands |
 | --- | --- |
 | `mluk-bootstrap` | `:new`, `:setup`, `:audit`, `:help` |
-| `mluk-repo` | `:commit`, `:create-pr`, `:promote`, `:review`, `:sync`, `:start`, `:next`, `:task`, `:update-docs`, `:handoff`, `:help` |
+| `mluk-repo` | `:commit`, `:create-pr`, `:promote`, `:review`, `:fix`, `:sync`, `:start`, `:next`, `:task`, `:update-docs`, `:handoff`, `:help` |
 | `mluk-ru` | `:review`, `:help` |
 | `mluk-fe` | `:help` |
 | `mluk-design` | `:help` |
