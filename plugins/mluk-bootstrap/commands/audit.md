@@ -1,5 +1,5 @@
 ---
-description: Audit an existing agent harness against the layer model — drift, duplication, local commands that copy the library, a profile with missing sections — and report in priority order. Read-only.
+description: Audit an existing agent harness against the layer model — drift, duplication, local commands that copy the library, a profile with missing sections, the efficiency journal — and report in priority order. Read-only until a change is approved.
 argument-hint: ''
 ---
 
@@ -53,10 +53,13 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    positives, links to files that no longer exist.
 
 7. **Where the gate runs.** Is a git hook running the whole validate command —
-   minutes per push, soon bypassed? The library's `commit` and `create-pr` run
-   it. Does lint-staged run the formatter after the linter's fixes? The wrong
-   order leaves linter edits unformatted while the hook passes, and the gate
-   fails a commit later.
+   minutes per push, soon bypassed? The library runs the full gate once per
+   tree, in the review and before the push, and the targeted checks between
+   edits and in a commit: does every code path have a `targeted checks` row
+   whose command narrows, and does a gate of several parts skip a part whose
+   content is unchanged? Does lint-staged run the formatter after the linter's
+   fixes? The wrong order leaves linter edits unformatted while the hook
+   passes, and the gate fails a commit later.
 
 8. **Gaps.** Layers from the model that are absent. Absence is allowed — but it
    must be deliberate and written down, with the conditions that would fill it.
@@ -104,6 +107,21 @@ The harness exists; the job is to find the gaps, not to rewrite it.
     Are the `## Checks` row, the `.claude/COMMANDS.md` row and the README's
     «Agent tooling» there? A version behind → propose copying the template
     again, with the project's placeholders kept.
+
+15. **The efficiency journal.** Do `docs/local/efficiency-remarks.md` and its
+    line in `AGENTS.md` §6 exist? Then read the rows not yet marked analysed
+    and group them by cause:
+    - a cause in this project — a rule, a skill, a hook, a profile key, a
+      check that does not narrow — is a finding of this audit, with its edit;
+    - a cause in a library plugin goes into **one** issue draft for that
+      library's repository (its `plugin.json` `repository`), the whole
+      audit's worth: the mechanism and the proposed change, with no project
+      name, task key, path or quote — the library's issues are public. The
+      draft is shown verbatim and filed with `gh issue create` only on an
+      explicit yes. When the session's instructions name another route for
+      library proposals, the draft goes there instead.
+
+    The analysed rows get the audit's date in their last column.
 
 ## Report
 

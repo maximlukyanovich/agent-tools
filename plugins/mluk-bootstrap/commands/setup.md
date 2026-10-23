@@ -58,7 +58,8 @@ The order is fixed. Steps are not reordered or skipped.
    belongs on: the `layers` skill.
 
    Order: `AGENTS.md` first — everything else references it — then `CLAUDE.md`,
-   the profile, settings, skills, hooks, MCP, docs. A file the generator wrote
+   the profile, settings, skills, hooks, MCP, docs — `docs/local/README.md`
+   and the efficiency journal among them. A file the generator wrote
    (`AGENTS.md`, `.gitignore`) is appended to, and its block stays where it is.
    When Q3 let the agent start the dev server or the stack, that answer goes
    to this clone's `.claude/project-profile.local.md` — `## Checks`,
@@ -90,7 +91,7 @@ The order is fixed. Steps are not reordered or skipped.
 
    **Local commands are the exception, not the rule.** Besides `/start`,
    which every project gets, `commit`, `create-pr`, `promote`, `review`,
-   `sync`, `start`, `next`, `task`, `update-docs`, `handoff` exist in
+   `fix`, `sync`, `start`, `next`, `task`, `update-docs`, `handoff` exist in
    `mluk-repo` and read the profile. Write a local
    `.claude/commands/<name>.md` only when the answer to a question showed that
    the *procedure* differs — and say in the plan which library command it
