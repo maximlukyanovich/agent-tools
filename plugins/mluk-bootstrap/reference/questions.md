@@ -27,11 +27,15 @@ plus a shared layer, each module's public API through a single entry file. If
 boundaries are already visible in the tree, state them and ask for confirmation
 rather than asking from scratch.
 
-**Q3. What "verified" means.** Which command must be green before a commit (the
-profile's `validate`), and whether a manual step is required — a browser check
-through the Playwright tool against the running dev server, a real request, a
-migration. Separately: does every behaviour change ship with a test, or is that
-incidental? How the dev server and the stack start goes to `AGENTS.md` §2 and
+**Q3. What "verified" means.** Which command is the full gate (the profile's
+`validate`), and which narrow commands check a change between edits and in a
+commit — the linter on the changed files, the type-check, the tests related to
+them (`targeted checks`, each tried once to see that it narrows). Whether a
+manual step is required — a browser check through the Playwright tool against
+the running dev server, a real request, a migration. Separately: which changes
+need a test — the default is `mluk-repo`'s `reference/proof.md` (money, data
+written or deleted, access, merges, what lets a confirmation through,
+branching logic), with a recorded live check for the rest. How the dev server and the stack start goes to `AGENTS.md` §2 and
 the fixes in `## Checks`, as commands. Who starts them — the developer or the
 agent — is a habit of one machine, not a project rule: the answer goes to the
 gitignored `project-profile.local.md` (`agent starts`), and without it the

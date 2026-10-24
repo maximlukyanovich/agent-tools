@@ -45,13 +45,22 @@ hold in every clone.
 | `protected` | `develop`, `main` (and `staging` if in the chain) — never pushed directly | `commit`, `create-pr`, `promote` |
 | `upstream` | none; if named, never pushed to, never targeted by a PR | `promote`, `create-pr`, `next` |
 | `validate` | asked (e.g. `pnpm validate`, `make test`) | `commit`, `create-pr`, `sync`, `review` |
-| `targeted checks` | none — table of "changed only X → run Y or nothing" | `commit` |
+| `targeted checks` | none — table "path class → command"; a step runs the rows of the paths it changed, and a path no row covers runs `validate` | `commit`, `fix`, `sync` |
 | `commit preset` | `gitmoji-conventional` | `commit` |
 | `commit confirm` | `ask` — stage and show the draft, commit on go-ahead; `auto` — the invocation is the authorisation | `commit` |
 | `merge method` | `merge` (no squash, no rebase) | `create-pr`, `promote` |
 | `delete branch` | `yes` for feature branches after merge, safe form only | `create-pr` |
 | `pr language` | `en` | `create-pr`, `promote` |
 | `post-merge checks` | none — commands to run after a `sync` (e.g. `makemigrations --check`) | `sync` |
+
+How the two gate keys work together is `reference/commands.md`, "The gate".
+A `targeted checks` command really narrows: the linter and the formatter on
+`<files>` (the row's changed paths), the type-check, the tests related to
+`<files>` (`vitest related <files> --run`, one app's tests with `--keepdb`).
+A filter that silently runs the whole suite is not one — run it once before
+writing it down. Shared configuration — the lockfile, the linter's,
+type-checker's or test runner's config, the test setup — gets no row: a
+change there reaches every file, so it runs `validate`.
 
 ## Docs
 

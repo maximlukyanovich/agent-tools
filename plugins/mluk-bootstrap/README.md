@@ -18,7 +18,7 @@ Other scopes and updating: [Quick start](../../README.md#quick-start).
 | --- | --- |
 | `/mluk-bootstrap:new` | Creates a project in an empty folder: the stack's recipe, its generator with every option explicit, a pinned environment, git; the first commit and the remote on your yes. Then `setup`, in a fresh session. |
 | `/mluk-bootstrap:setup` | Inventories the repository, asks only what the code cannot answer, shows a plan, then creates the harness. |
-| `/mluk-bootstrap:audit` | Checks an existing harness against the model — drift, duplication, local commands that merely copy the library, a profile with missing sections. Read-only. |
+| `/mluk-bootstrap:audit` | Checks an existing harness against the model — drift, duplication, local commands that merely copy the library, a profile with missing sections — and reads the project's efficiency journal: project causes become findings, library causes one issue draft, filed only on your yes. Read-only until you confirm. |
 | `/mluk-bootstrap:help` | What this plugin can do: commands, the layer model, what it creates. Optional language argument. |
 
 ## What `setup` creates

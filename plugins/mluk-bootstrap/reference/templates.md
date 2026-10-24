@@ -26,6 +26,11 @@ Rules that keep it cheap: no rule appears twice; anything expressible as lint
 configuration is a one-line reference, not a paragraph; the absence of a layer
 is recorded deliberately, with its reason.
 
+§6 carries one line for the efficiency journal: a remark from the developer
+about the agent's speed, cost or quality of work goes as a row into
+`docs/local/efficiency-remarks.md` in the same session — date, task, the
+quote, context, a link, no judgement; `/mluk-bootstrap:audit` reads it.
+
 With pnpm 11, §2 says next to how a dependency is added that one with a build
 script — direct or transitive — needs an `allowBuilds` entry in
 `pnpm-workspace.yaml`. A missing entry fails the install with
@@ -149,6 +154,23 @@ has a test. A hook that fires on ordinary edits gets ignored and then removed.
 ## docs/local/README.md
 
 The only committed file in the personal space. It states what lives there —
-plans, handoffs, excerpts, a copy journal, task notes — and one rule for the
-agent: this material is context, never a source of truth, and is never quoted
-into committed content.
+plans, handoffs, excerpts, a copy journal, the efficiency journal, task notes
+— and one rule for the agent: this material is context, never a source of
+truth, and is never quoted into committed content.
+
+## docs/local/efficiency-remarks.md
+
+The developer's remarks about how the agent spends time, tokens and care —
+raw material for `/mluk-bootstrap:audit`, not decisions. Gitignored with the
+rest of `docs/local/`, written in the conversation's language:
+
+```markdown
+# Efficiency remarks
+
+One row per remark about the agent's speed, cost or quality of work, in the
+session it was made: the words as said and what happened. No judgement — the
+audit draws the conclusions and fills the last column.
+
+| Date | Task / phase | Quote | Context | Details | Analysed |
+| --- | --- | --- | --- | --- | --- |
+```

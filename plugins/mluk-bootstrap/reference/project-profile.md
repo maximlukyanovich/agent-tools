@@ -20,7 +20,8 @@ both.
 
 ## Repository
 Platform and CLI (GitHub, gh). Remote account alias. Base branch. Branch chain.
-Upstream policy. Validate command. Commit preset and confirm mode. Merge
+Upstream policy. Validate command, and the targeted checks — a row per path
+class with a command that narrows. Commit preset and confirm mode. Merge
 method. PR language.
 
 ## Docs

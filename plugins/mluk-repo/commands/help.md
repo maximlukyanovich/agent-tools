@@ -15,18 +15,23 @@ Language: the conversation's, unless `$1` gives a code.
 1. **List the commands from their frontmatter.** Read `description` and
    `argument-hint` out of every file in `${CLAUDE_PLUGIN_ROOT}/commands/`. Use
    that path verbatim — never search the filesystem for the plugin. Mark the
-   mutating ones: `commit`, `create-pr`, `promote`, `sync`; `update-docs`
+   mutating ones: `commit`, `create-pr`, `promote`, `sync`; `fix` edits code
+   and leaves the commit to `commit`; `update-docs`
    writes after confirmation; `next` writes only a roadmap status patch, after confirmation; `review` writes only its gitignored ledger, code only with `fix`; `handoff` writes only a local note.
 
 2. **Show the usual order:** `start` → `next` → `task` → work → `commit` → `review` →
+   `fix` while findings are open (it calls `commit`) → `review` of its delta →
    `sync` when the base moved → `create-pr` or `promote`; `update-docs` before
    a commit that changed behaviour; `handoff` at each boundary, each phase in
    a fresh session — `commit`, `review`, `create-pr` and `promote` call it.
+   `fix` is a round on the ledger's findings; `review … fix` only applies a
+   few mechanical fixes after a report.
 
 3. **Say what the profile must contain** — `## Repository` for every command,
-   `## Checks` for `start`, `## Task` for `task`, `## Review` for `review`,
-   `## Docs` for `update-docs`, `## Docs` and `## Task` for `next` — and point at
-   `${CLAUDE_PLUGIN_ROOT}/reference/profile.md` for keys and defaults.
+   `## Checks` for `start`, `## Task` for `task`, `## Review` for `review` and
+   `fix`, `## Docs` for `update-docs`, `## Docs` and `## Task` for `next` —
+   and point at `${CLAUDE_PLUGIN_ROOT}/reference/profile.md` for keys and
+   defaults.
 
 4. **Name the skills from their frontmatter** — `name` and `description` out
    of every `${CLAUDE_PLUGIN_ROOT}/skills/*/SKILL.md`, one line each.

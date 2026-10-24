@@ -19,9 +19,10 @@ Other scopes and updating: [Quick start](../../README.md#quick-start).
 | `/mluk-repo:next` | roadmap patch after confirmation | What to take next: one recommendation from the roadmap, local notes, open issues and PRs and the branch chain; what waits and on whom; housekeeping. Ends with the `task` line. |
 | `/mluk-repo:task` | no | Kickoff: brief → branch decision (or a worktree) → flavour → exploration → questions → plan. No code. |
 | `/mluk-repo:review` | ledger only (`fix` opt-in) | Review the branch against the base — the current one, a named branch or worktree — or a PR, findings by severity; a pass ledger makes a repeat run review only what changed. Run it in a fresh session. |
+| `/mluk-repo:fix` | code, no commit | One round on a review's open findings: the narrow fix with its proof by risk, one read of the round's diff, then `commit` on its go-ahead. Asks before a structural fix or a long measure. |
 | `/mluk-repo:sync` | yes | Merge the base branch into the current one, run the profile's post-merge checks, report what landed. |
 | `/mluk-repo:update-docs` | after confirmation | Measure drift since the last docs update, classify, propose patches by the profile's doc map. |
-| `/mluk-repo:commit` | yes | Stage explicitly, validate, draft by the preset, commit. Never pushes. |
+| `/mluk-repo:commit` | yes | Stage explicitly, check what changed, draft by the preset, commit. Never pushes. |
 | `/mluk-repo:create-pr` | yes | PR texts by `pr-conventions` → push → `gh pr create` → optionally merge after green CI. |
 | `/mluk-repo:promote` | yes | Walk the profile's chain; each boundary is `sync` + `create-pr` + merge, confirmed. |
 | `/mluk-repo:handoff` | a local note, only when a block runs long | The next session's prompt at a phase boundary — the review after a task's commit, the fixes, the plan's next step or the promote after a review, the next task after a merge — from git and the ledger. `commit`, `review`, `create-pr` and `promote` call it at their end. |
@@ -37,8 +38,10 @@ Every command reads `## Repository` first; `start`, `next`, `task`, `review`,
 and defaults: `reference/profile.md`. When the profile is silent the command
 asks and offers to write the answer into the profile.
 
-`commit`, `review`, `promote` and `handoff` also act on a branch in a
-worktree, named by folder or branch: `reference/commands.md`.
+`commit`, `review`, `fix`, `promote` and `handoff` also act on a branch in
+a worktree, named by folder or branch: `reference/commands.md`. The same file
+holds the gate rule — targeted checks between edits, the full `validate`
+once per tree — and `reference/proof.md` what proves a change.
 
 ## Agents
 

@@ -62,9 +62,10 @@ rename does not need this.
    a browser check, a curl).
    A change to state — a hook's or a component's lifecycle, a store, a state
    machine, an async flow, a timer — adds three things: a **state table**
-   (state × event → expected → the test that proves it; in UI, every element
-   that leaves while it may hold the focus — a button its own press replaces,
-   a row a re-read removes — with where the focus goes); **what we rely on in
+   (state × event → expected → its proof, a test or a live check by
+   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`; in UI, every element that
+   leaves while it may hold the focus — a button its own press replaces, a
+   row a re-read removes — with where the focus goes); **what we rely on in
    the framework**, each point with `file:line` in the library's source or
    the docs URL; and one line on **why not the structural option** — the
    change that would make the bad state impossible to express (a reset by
@@ -78,19 +79,21 @@ rename does not need this.
    question in chat. The owner may return the plan with comments: apply them,
    ask for approval again.
 
-7. **After approval**: code in slices, validate after each, verify in the real
-   environment, and commit each slice separately — only on an explicit
-   go-ahead, never pushed without its own. Inside each slice:
-   - **A behaviour change ships with its test in the same commit** — new or
-     changed logic, a hook's lifecycle, an event handler, a timer: the commit
-     carries the test that would fail without it — shown red against the code
-     it replaces (the base version), not only against a rule broken by hand:
-     a test that also passes on the old code proves nothing. When it genuinely
-     cannot be tested, the commit body says why. A test promised for "the next
-     commit" is the gap reviews keep finding.
+7. **After approval**: code in slices, the targeted checks of what changed
+   after each edit (`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The
+   gate"; the full gate runs once, in the review and before the push), verify
+   in the real environment, and commit each slice separately — only on an
+   explicit go-ahead, never pushed without its own. Inside each slice:
+   - **A change carries its proof**, by
+     `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`: a test in the same commit
+     for a change in a risk class (money, data written or deleted, access, a
+     merge, what lets a confirmation through, branching logic), a recorded
+     live check for the rest, a run against the old code for a test that may
+     pass by coincidence, and one read of the slice's diff before the commit.
+     A test promised for "the next commit" is the gap reviews keep finding.
    - **A state change starts from its transition table** — the rows of the
-     plan's state table it touches: one row, one test that turns red when the
-     change is reverted. The commit lists the rows it covers.
+     plan's state table it touches, each with its proof by the same file. The
+     commit lists the rows it covers.
    - **Shared code changes only when the change is right for every consumer.**
      Walk the call sites first; a need that only one caller has stays with that
      caller.
@@ -108,6 +111,11 @@ rename does not need this.
      changed**, not only on the finding's scenario: each kind a shared view
      serves, each consumer of a changed contract. A fix that breaks a
      neighbour costs a whole review pass more than the check does.
+   A slice ends with its next step as code blocks, one per option: the
+   commit command while the slice is uncommitted; once it is committed and
+   the plan goes on, continuing here after `/compact <focus>`, or the plan's
+   continue prompt for a fresh session, which `/mluk-repo:handoff` prints.
+   The task's last commit hands the review over through `commit`.
    When the work is a queue of small tasks, each one ends at the base branch:
    its PR is merged there after green CI on the owner's go-ahead. Promotion up
    the branch chain (to staging, to production) happens in batches, only when
@@ -136,6 +144,6 @@ rename does not need this.
 ## How it is verified
 
 The plan file exists and has the decisions table, slices and a verification
-section before approval is requested. Each slice ends with the validate command
+section before approval is requested. Each slice ends with its targeted checks
 green and a real check (browser, request, test) the plan named. Every commit was
 preceded by an explicit go-ahead in that turn.

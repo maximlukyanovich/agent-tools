@@ -46,13 +46,15 @@ added to `Aliases:`; the file is not renamed.
 Aliases: PR #12, feat/<slug>
 Trajectory: P1 a1b2c3d 0/2/5/5 changes · P2 e4f5a6b 0/0/1/2 ready
 ## Open
-- R3 minor bug src/api/client.ts:114 — error body lost when it is not JSON
+- R3 minor bug fix-now src/api/client.ts:114 — error body lost when it is not JSON
 ## Pass 2 — <date> — head e4f5a6b · base a1b2c3d · delta — ready to merge
 - R9 minor fix-critique src/api/client.ts:83 — helper duplicated in connect.ts — open
 ```
 
-Finding ids `R<n>` never change between passes. Status is one of `open`,
-`fixed`, `deferred (<reason>)`, `false-positive (<mechanism>)`, `disputed`.
+Finding ids `R<n>` never change between passes. A `minor` or `nit` worth
+fixing before the merge carries `fix-now` after its class (step 8). Status is
+one of `open`, `fixed`, `deferred (<reason>)`, `false-positive (<mechanism>)`,
+`disputed`.
 Only `Trajectory` and `Open` are read by default; pass sections are appended,
 never rewritten.
 
@@ -100,7 +102,11 @@ never rewritten.
    --porcelain`, `git diff`, `git ls-files --others --exclude-standard` —
    untracked files are the easiest thing to miss — all in the tree under
    review. `HEAD` on the base branch, no PR and no worktree ahead of it →
-   nothing to review. Run the profile's `validate` once, in that tree.
+   nothing to review. Start the gate by
+   `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The gate": a tree recorded
+   green is skipped with a line saying so; otherwise the full `validate` runs
+   in the background, in that tree, while steps 4–7 go on, and its result is
+   read before step 8.
 
 4. **Frame the scope** in one line from the branch name, PR text and commit
    subjects: a whole task or a slice? What a slice leaves out is not a missing
@@ -118,9 +124,14 @@ never rewritten.
    `minor` only when a keyboard user loses their place in a flow under way),
    `perf` (N+1, a per-row query, a full scan on a hot path, a client-only fetch
    on an SEO surface), `dup` (a rule written inline next to the shared
-   implementation), `test` (a behaviour change with no test in the same commit is its own
-   `major`, unless it is genuinely untestable and the commit says why; a test
-   passing by coincidence), `shared` (a change to a shared function, hook or
+   implementation), `test` (by `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`: a
+   change in a risk class with no test in the same commit is its own `major`,
+   unless it is genuinely untestable and the commit says why; any other
+   behaviour change whose live check the commit or the report records needs
+   no test — a missing one is a `nit` at most — and with neither a test nor a
+   recorded check it is a `minor`; a test passing by coincidence, or one that
+   may — focus, timing, a fake, async — never run against the code it
+   replaces), `shared` (a change to a shared function, hook or
    component that alters behaviour for an existing caller — walk every call
    site; an extension that is not backward-compatible and did not migrate its
    callers is `major`), `convention` (placement, style drift), `docs` (behaviour or
@@ -155,6 +166,12 @@ never rewritten.
    deferred finding raised higher — only with a named new cause, otherwise it
    keeps its old severity), `fix-critique` (targets a fix a previous pass asked
    for). A recorded false positive is not raised again without a new mechanism.
+   On a delta pass, a `missed` finding in lines the delta does not change is
+   written out only at `major` and above; the rest are counted, not listed —
+   a line in the report's opening block and in the ledger's pass. They
+   survived the passes that read them, and listing them is what kept a large
+   range from converging: each full repeat found a fresh batch of old nits.
+   The first pass and `full` list everything.
 
 8. **Assemble the report.** It always opens with the same block, on every
    pass, zeros included — the owner compares passes by it (labels in the
@@ -163,6 +180,7 @@ never rewritten.
    ```
    **Review `<target>`, pass <N>.** <range>, <commits>, <files / lines>; uncommitted: <yes / no>; focus: <…>
    Trajectory: P1 <head> <b/m/m/n> <verdict> → P2 <head> <b/m/m/n> <verdict>
+   Outside the delta, not listed: <n> minor · <n> nit      ← delta passes only
 
    | blocker | major | minor | nit |
    |---|---|---|---|
@@ -175,19 +193,22 @@ never rewritten.
    grouped by severity — each with tag, class, `file:line`, what is wrong, the
    anchor, a one-line fix
    — then "what is good" if there is anything honest to say, then open
-   questions for the owner. When a finding's class has come up before — in
-   earlier passes of this ledger, in other ledgers, or in several places of
-   this diff — add one line proposing the rule in the project's repository that
-   would prevent it during the work (kickoff step 8). Propose a check first — a
-   lint rule, a test, a hook — and a line in AGENTS.md or a skill only when the
-   rule cannot be checked. **Stop and ask** what a further pass should add
+   questions for the owner. A `minor` or `nit` that is cheap and real — a
+   defect a user can meet or a statement that is wrong, fixed in a line or
+   two — is marked `fix-now`; the other minors and nits stay open for the next
+   task or the techdebt file and do not hold the merge. When a finding's class
+   has come up before — in earlier passes of this ledger, in other ledgers, or
+   in several places of this diff — add one line proposing the rule in the
+   project's repository that would prevent it during the work (kickoff step
+   8). Propose a check first — a lint rule, a test, a hook — and a line in
+   AGENTS.md or a skill only when the rule cannot be checked. **Stop and ask** what a further pass should add
    when this is pass 3+ with no new commits, when findings grew while the delta
    is small, or when `escalated` plus `fix-critique` are over half the findings.
    When the verdict reads ready and the growth is `missed` findings in code
-   older than the delta, the first option offered is to close the range: one
-   fix round on the open ids, then a pass over that round's delta alone at
-   `minor+` — not another full pass, which on a large range finds a fresh
-   batch of old nits every time.
+   older than the delta, the first option offered is to close the range: the
+   merge; the second, when there are `fix-now` ids, one fix round on them and
+   a pass over that round's delta alone — not another full pass, which on a
+   large range finds a fresh batch of old nits every time.
 
 9. **Append the pass to the ledger** — without asking; it is gitignored and
    holds only the review's own memory. Update statuses the owner stated.
@@ -205,7 +226,7 @@ never rewritten.
 
 12. **Hand off** — last, once steps 10–11 are answered or skipped: run
     `/mluk-repo:handoff` for the same branch yourself, through the Skill
-    tool, without asking. It prints the fix prompt, the promote line or the
+    tool, without asking. It prints the `fix` command, the promote line or the
     plan's next step, as the state calls for. When `fix` left the tree
     dirty, offer `/mluk-repo:commit` instead, as a code block with the same
     worktree or branch argument; it hands off after the commit.

@@ -1,5 +1,5 @@
 ---
-description: Build a commit for the current changes — stage explicitly, run the profile's validate command, draft the message by the commit preset, commit. Never pushes.
+description: Build a commit for the current changes — stage explicitly, run the checks of the changed paths, draft the message by the commit preset, commit. Never pushes.
 argument-hint: '[<worktree | branch>] [topic or short hint]'
 ---
 
@@ -35,20 +35,22 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    immediately (`git-safety` skill). Read `git diff` by affected area for
    substance — not whole files.
 
-3. **Fold a fix into the unpushed commit it corrects.** A change that fixes a
-   commit no remote holds yet — a review finding, a bug a fix round brought
-   in — goes into that commit, as the `git-safety` skill's "Amending" section
-   says: `--amend` for `HEAD`, `--fixup` and autosquash for an older one. Say
-   in one line which commit took it. A pushed commit is never rewritten; the
-   fix is a new commit.
+3. **Place a fix by the `git-safety` skill's "Amending" section.** A round of
+   review fixes: the first round is one new commit on top of the series, a
+   later round goes into that fix commit — `--amend` for `HEAD`, `--fixup`
+   and autosquash for an older one — while no remote holds it. Any other fix
+   to an unpushed commit goes into the commit it corrects. Say in one line
+   which commit took it. A pushed commit is never rewritten; the fix is a new
+   commit.
 
-4. **Run the checks.** The profile's `validate` command — unless every changed
-   path falls into a row of `targeted checks` (docs only, harness only, config
-   only), in which case run what the row says and state what was not
-   exercised. The session already ran the full `validate` green after its last
-   edit and the commit takes the whole diff → name that run and do not repeat
-   it: a gate of minutes run twice on one tree makes every small fix wait. A migration-shipping repository: a model change without its
-   migration in the diff is an incomplete commit — stop.
+4. **Run the checks** by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`,
+   "The gate": the `targeted checks` rows of the changed paths, and the full
+   `validate` only for a path no row covers or a profile without the table.
+   The full gate of the range runs in the review and before the push, not
+   here. The session already ran the same checks green after its last edit
+   and the commit takes the whole diff → name that run and do not repeat it.
+   A migration-shipping repository: a model change without its migration in
+   the diff is an incomplete commit — stop.
 
    A check failed → **stop**. Print the error verbatim, commit nothing, do not
    fix it quietly inside this command.
@@ -83,10 +85,12 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    available to an agent.
 
 6. **Draft the message** by the preset in `commit-conventions`. Always with a
-   body.
+   body. A round of review fixes names the ids it closes in one body line
+   (`Review pass 2: R3, R7`; a later round amending the fix commit adds its
+   own) — `handoff` reads it to tell a fixed range from new work.
 
 7. **Show and commit.** `commit confirm: ask` (default) → print the file
-   groups, the check results, the transition rows its tests cover when the
+   groups, the check results, the transition rows and their proof when the
    commit changes state (`kickoff`), and the message verbatim, and **wait for
    the go-ahead**. `commit confirm: auto` → print the same for visibility and
    proceed; stop only for the reasons below.
@@ -104,13 +108,11 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
 8. **Wrap up**: `git log --oneline -<N>` with the new commits on top, and a
    one-line reminder that nothing was pushed. If the **full** `validate` (not a
    targeted row) passed — in step 4 or the run it relied on — and the tree is
-   now clean, record the tree
-   it passed on: `git -C <tree> rev-parse HEAD^{tree} >
-   "$(git -C <tree> rev-parse --git-dir)/validated-tree"`. `create-pr` then
-   skips a second identical run. When the commits close a task or a round of
-   review fixes, run `/mluk-repo:handoff` for the same worktree or branch
-   yourself, through the Skill tool, without asking — it prints the review to
-   run next, in a fresh session.
+   now clean, record the tree by "The gate", so `review`, `create-pr` and
+   `promote` skip a second identical run. When the commits close a task or a
+   round of review fixes, run `/mluk-repo:handoff` for the same worktree or
+   branch yourself, through the Skill tool, without asking — it prints the
+   review to run next, in a fresh session.
 
 ## When to stop and ask
 
