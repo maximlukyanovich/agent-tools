@@ -87,7 +87,8 @@ rename does not need this.
    - **A change carries its proof**, by
      `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`: a test in the same commit
      for a change in a risk class (money, data written or deleted, access, a
-     merge, what lets a confirmation through, branching logic), a recorded
+     merge, what lets a confirmation through, branching logic, a costly break
+     where nobody looks), a recorded
      live check for the rest, a run against the old code for a test that may
      pass by coincidence, and one read of the slice's diff before the commit.
      A test promised for "the next commit" is the gap reviews keep finding.
