@@ -20,8 +20,9 @@ session, as the review's handoff prints it.
 
 A leading folder or local branch is the work to fix, by
 `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`; none → the session's tree.
-Ids (`R3 R7`) choose the findings; none → every open `blocker` and `major`
-plus the `fix-now` ones. The rest are named in the report as left open.
+Ids (`R3 R7`) choose the findings; none → every open `blocker` and `major`,
+the `fix-now` ones, and each `deferred (<techdebt file, section>)` whose row
+that file does not hold yet. The rest are named in the report as left open.
 
 ## Steps
 
@@ -60,7 +61,10 @@ plus the `fix-now` ones. The rest are named in the report as left open.
 
 6. **Close every finding taken.** One that cannot be closed in the round — it
    waits on an answer, a key, another team — is named with its reason; none
-   drops out silently.
+   drops out silently. The techdebt places go in with the fixes: each
+   becomes its row in the profile's `techdebt` file — what breaks, who sees
+   it, the priority, the finding's id — in the round's commit when the file
+   is in git.
 
 7. **Report** — one table, then the checks that ran and what they did not
    exercise:

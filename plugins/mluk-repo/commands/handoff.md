@@ -44,14 +44,14 @@ A folder or a local branch — the work to hand off, by
    | State | Blocks |
    | --- | --- |
    | Uncommitted changes | `/mluk-repo:commit <branch>` — it commits on its own go-ahead and hands off after |
-   | Merged into the base | `/mluk-repo:next`; below the block, as plain text, one line with the ledger's open findings (ids, ledger path) — they go to the next task or to techdebt |
+   | Merged into the base | `/mluk-repo:next`. Findings are not listed: by now each has its place. Below the block, as plain text, only a gap, with the ledger path — an id still `open`, or a techdebt place whose row the file lacks |
    | Commits after the ledger's last head, or no ledger | `/mluk-repo:review <branch> <from>..<head>` — `<from>` is the last reviewed head, else the merge-base with `origin/<base>`. When `Open` holds a `blocker`, `major` or `fix-now` that no commit after the head names in its body (a fix round names the ids it closes), `/mluk-repo:fix <branch>` instead: the review waits for its commit, then reads the fixes and the new commits in one pass |
    | A pass on the head, `blocked` or `changes requested` | `/mluk-repo:fix <branch>` |
-   | A pass on the head, `ready to merge`, no `fix-now` open | `/mluk-repo:promote <branch>`; open minors and nits as one plain line below, with the ledger path |
-   | `ready to merge` with `fix-now` ids open | `/mluk-repo:promote <branch>` first, then `/mluk-repo:fix <branch> <ids>` — two blocks; the other open ids as one plain line |
+   | A pass on the head, `ready to merge`, no `fix-now` open, every techdebt row written | `/mluk-repo:promote <branch>` |
+   | `ready to merge` with `fix-now` ids open, or techdebt rows to write | `/mluk-repo:fix <branch> <ids>` — its commit hands over the review of the round's delta, and that review the promote. `/mluk-repo:promote <branch>` first only on the owner's word to ship now |
 
    A review in the middle of a task closes the range it read, not the task.
-   Before either `ready to merge` row offers promote, read the plan of step 3
+   Before a `ready to merge` row offers promote, read the plan of step 3
    against the branch's commits: when the plan still holds work the branch
    has not done, the continue prompt takes the promote block's place, and
    promote waits for the task's end. A review after the plan's last step, or
