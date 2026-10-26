@@ -53,8 +53,10 @@ Trajectory: P1 a1b2c3d 0/2/5/5 changes · P2 e4f5a6b 0/0/1/2 ready
 
 Finding ids `R<n>` never change between passes. A `minor` or `nit` worth
 fixing before the merge carries `fix-now` after its class (step 8). Status is
-one of `open`, `fixed`, `deferred (<reason>)`, `false-positive (<mechanism>)`,
-`disputed`.
+one of `open`, `fixed`, `deferred (<techdebt file, section>)`,
+`deferred (accepted: <reason>)`, `false-positive (<mechanism>)`, `disputed`.
+Every other `minor` and `nit` gets one of the two `deferred` places in the
+pass that raises it, and none is `open` at the merge (step 8).
 Only `Trajectory` and `Open` are read by default; pass sections are appended,
 never rewritten.
 
@@ -124,15 +126,14 @@ never rewritten.
    `minor` only when a keyboard user loses their place in a flow under way),
    `perf` (N+1, a per-row query, a full scan on a hot path, a client-only fetch
    on an SEO surface), `dup` (a rule written inline next to the shared
-   implementation), `test` (by `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`: a
-   change in a risk class with no test in the same commit is its own `major`,
-   unless it is genuinely untestable and the commit says why; any other
-   behaviour change whose live check the commit or the report records needs
-   no test — a missing one is a `nit` at most — and with neither a test nor a
-   recorded check it is a `minor`; a test passing by coincidence, or one that
-   may — focus, timing, a fake, async — never run against the code it
-   replaces), `shared` (a change to a shared function, hook or
-   component that alters behaviour for an existing caller — walk every call
+   implementation), `test` (graded by
+   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`, "In review": a risk-class
+   break with no test, a removed or weakened guard, or a document claiming a
+   test that does not assert the decision is `major`; the same gap in code
+   the branch did not touch or claim is `minor` at most and goes to
+   techdebt; a test of the look is a `nit` to remove), `shared` (a change
+   to a shared function, hook or component that alters behaviour for an
+   existing caller — walk every call
    site; an extension that is not backward-compatible and did not migrate its
    callers is `major`), `convention` (placement, style drift), `docs` (behaviour or
    contract changed, document did not; a type's doc comment contradicted by the
@@ -195,8 +196,15 @@ never rewritten.
    — then "what is good" if there is anything honest to say, then open
    questions for the owner. A `minor` or `nit` that is cheap and real — a
    defect a user can meet or a statement that is wrong, fixed in a line or
-   two — is marked `fix-now`; the other minors and nits stay open for the next
-   task or the techdebt file and do not hold the merge. When a finding's class
+   two — is marked `fix-now`. Every other `minor` and `nit` gets its place in
+   the same report: a row for the profile's `techdebt` file — what breaks,
+   who sees it, the priority — or `deferred (accepted: <reason>)`; a
+   `security` finding goes only to techdebt, or where the owner's word puts
+   it. The ledger records the place as the status, the owner's word
+   overturns it, and the fix round writes the techdebt rows. These do not
+   hold the merge, and none stays `open` past it: the ledger lives outside
+   git, by branch, so an `open` is lost after the merge, and `next` sees
+   only techdebt with a priority. When a finding's class
    has come up before — in earlier passes of this ledger, in other ledgers, or
    in several places of this diff — add one line proposing the rule in the
    project's repository that would prevent it during the work (kickoff step
@@ -204,11 +212,15 @@ never rewritten.
    AGENTS.md or a skill only when the rule cannot be checked. **Stop and ask** what a further pass should add
    when this is pass 3+ with no new commits, when findings grew while the delta
    is small, or when `escalated` plus `fix-critique` are over half the findings.
-   When the verdict reads ready and the growth is `missed` findings in code
-   older than the delta, the first option offered is to close the range: the
-   merge; the second, when there are `fix-now` ids, one fix round on them and
-   a pass over that round's delta alone — not another full pass, which on a
-   large range finds a fresh batch of old nits every time.
+   A ready verdict with `fix-now` ids open, or techdebt rows still to write,
+   offers one fix round on them first, a pass over that round's delta alone
+   next, and the promote last; without them, the promote. The promote goes
+   first only on the owner's word to ship now: a fix in the same unmerged
+   branch is one commit, one delta and one PR, and after the merge it is a
+   new branch, a PR, CI and a review. When the verdict reads ready and the
+   growth is `missed` findings in code older than the delta, the range closes
+   that way — not with another full pass, which on a large range finds a
+   fresh batch of old nits every time.
 
 9. **Append the pass to the ledger** — without asking; it is gitignored and
    holds only the review's own memory. Update statuses the owner stated.

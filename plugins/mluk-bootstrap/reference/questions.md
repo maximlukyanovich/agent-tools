@@ -35,7 +35,8 @@ manual step is required — a browser check through the Playwright tool against
 the running dev server, a real request, a migration. Separately: which changes
 need a test — the default is `mluk-repo`'s `reference/proof.md` (money, data
 written or deleted, access, merges, what lets a confirmation through,
-branching logic), with a recorded live check for the rest. How the dev server and the stack start goes to `AGENTS.md` §2 and
+branching logic, a costly break where nobody looks), with a recorded live
+check for the rest. How the dev server and the stack start goes to `AGENTS.md` §2 and
 the fixes in `## Checks`, as commands. Who starts them — the developer or the
 agent — is a habit of one machine, not a project rule: the answer goes to the
 gitignored `project-profile.local.md` (`agent starts`), and without it the

@@ -14,13 +14,66 @@ change:
 - permissions and access — who may see or change what;
 - a merge of records or accounts;
 - what lets a confirmation through, or blocks it;
-- logic that branches on its input — a parser, a rule, a validator.
+- logic that branches on its input — a parser, a rule, a validator;
+- what breaks where nobody looks:
+  - the request a page assembles — a field's name, a hidden fingerprint, the
+    form a checkbox or a button belongs to, a `formaction`;
+  - what lets a key, a tap or a submit reach an action — above all one that
+    deletes or charges;
+  - a contract of shared code other screens lean on — a lock taken and
+    released, a queue that moves, a global flag reset, a fallback that never
+    leaves the user stuck;
+  - a path the local check cannot reach — the exchange with a provider, a
+    slow or failing network, a first visit, reduced motion, touch.
+
+  The whole class holds on one condition, on any screen: the break costs
+  data, access, a merge or a payment, or leaves the user stuck. A break of
+  the look alone is outside it.
 
 Any other behaviour — the focus, an announcement, the look, a transition
 between screens — is checked live (a browser, a request), and the check is
 recorded in the commit body or the report; or one end-to-end story covers it.
 It needs no test of its own per transition. A risk-class change that
 genuinely cannot be tested says why in the commit body.
+
+A test that holds a convention of the project's code — the module graph, the
+language of messages, the number of queries as the data grows — is a
+deterministic check, like a lint rule: this rule neither asks for it nor
+removes it, and it lives as long as the convention does.
+
+## What a test asserts
+
+The decision: the request sent, the handler called, the code or the status
+returned, a guarding attribute (`inert`, `form=`). Not a class, the layout or
+a text, and not what a mock was told to return. Markup that assembles the
+next request is a decision, not the look.
+
+## An existing test
+
+An audit of the tests removes a test that proves nothing, and one whose break
+the live check of the change itself would show — a break of the look alone
+among them. A test of a break that happens silently, or somewhere else, stays,
+even where a new change would not have required it.
+
+## In review
+
+The `test` lens of `review` grades by this file:
+
+- **`major`** — no test where this file asks for one: a risk-class change
+  without its test in the same commit, unless it genuinely cannot be tested
+  and the commit says why; a deleted or weakened test that guarded such a
+  break; a document or a comment that calls a behaviour tested when its test
+  does not assert the decision. An item of the last class whose break meets
+  none of its condition is not a finding.
+- **`minor` at most** — the same gap in code the branch did not change or
+  delete and made no claim about; its place is the techdebt file.
+- **Any other behaviour change** — a recorded live check needs no test, and a
+  missing one is a `nit` at most; with neither a test nor a recorded check it
+  is a `minor`.
+- **`nit`, "remove"** — a test that asserts the look: a class, the layout, a
+  text.
+- **A finding** — a test that passes by coincidence, or may, and was never run
+  against the code it replaces (below).
 
 ## A test that must go red on the old code
 

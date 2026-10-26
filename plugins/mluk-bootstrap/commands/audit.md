@@ -1,5 +1,5 @@
 ---
-description: Audit an existing agent harness against the layer model — drift, duplication, local commands that copy the library, a profile with missing sections, the efficiency journal — and report in priority order. Read-only until a change is approved.
+description: Audit an existing agent harness against the layer model — drift, duplication, local commands that copy the library, a profile with missing sections, the efficiency journal, on a yes the test suite by risk — and report in priority order. Read-only until a change is approved.
 argument-hint: ''
 ---
 
@@ -122,6 +122,32 @@ The harness exists; the job is to find the gaps, not to rewrite it.
       library proposals, the draft goes there instead.
 
     The analysed rows get the audit's date in their last column.
+
+16. **Tests by risk.** Asked as a step of its own, with its price — it reads
+    every test and spends a second reviewer, so the question names the
+    suite's size and an estimate. On a yes, against `mluk-repo`'s
+    `reference/proof.md` ("Tests by risk", "An existing test"):
+    - **Every test sorted** A — proves nothing; B — its break shows in the
+      live check of a change; C — it breaks silently or somewhere else. A and
+      B go on the removal list. A second, independent reviewer — a subagent
+      that never receives the first pass's sorting — goes over that list
+      with one question per test: would whoever makes the change see this
+      break? Observed on a live project: the second pass found mistakes of
+      the first.
+    - **What a test costs to keep** — the git history of each test file
+      (`git log --follow --oneline`): a test edited along with its code in
+      most commits is the expensive one.
+    - **What the suite costs to run** — a test class inheriting a working
+      `TestCase` that reruns its parent's tests, a slow password hasher left
+      on in tests. Observed: these alone took a backend suite from 84 s to
+      39 s.
+    - **Gaps** — code in a risk class with no test is the report's first
+      level, the rest the second.
+    - **A defect found** becomes its own task in the roadmap, not an edit
+      inside the audit.
+    - **A researcher's claim** — "these tests send paid requests" — is proven
+      by a run (a spy, a counter) before it enters the plan. Observed: one
+      such claim was refuted by a spy that counted zero requests.
 
 ## Report
 
