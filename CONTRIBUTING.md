@@ -7,6 +7,9 @@ trap worth naming, a fix.
   skill is the one exception: its subject is Russian).
 - A rule that names your project's paths, ids or design system belongs in your
   project's profile, not here.
+- A change to a plugin's files, its README aside, raises that plugin's
+  `version` in `plugin.json` — the levels are in [`AGENTS.md`](AGENTS.md) §1.
+  Without the raise the change reaches nobody.
 - Before opening a pull request, run the checks in
   [`AGENTS.md`](AGENTS.md) §3, and run the changed command or skill once in a
   real repository — say in the pull request where and how. To try a plugin

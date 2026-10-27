@@ -19,7 +19,7 @@ validate command, commit preset, glossary) are data.
 | --- | --- | --- |
 | Appears in the project | `AGENTS.md`, domain skills, hooks, the profile | profile lines only |
 | Commands come from | the project | the plugin |
-| Updating the method | not updated; it is project code now | `claude plugin update` |
+| Updating the method | not updated; it is project code now | a raised version, through `autoUpdate` or `claude plugin update` |
 
 **Library base, local override.** `/mluk-repo:commit` is the default in every
 project. A project that genuinely needs a different procedure — not different

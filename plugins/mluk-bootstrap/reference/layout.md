@@ -88,10 +88,10 @@ is added by hand: a declared one needs no add, and at two scopes the add does
 harm — `--scope local` replaces the committed entry and drops its
 `autoUpdate`, `--scope project` rewrites the committed `settings.json`.
 GitHub is the one source for everyone, the author included: a library change
-reaches a project once pushed to the library's `main`, and `autoUpdate` brings
-it up to ten minutes after an interactive session's first message;
-`/reload-plugins` applies it to an open session. A private marketplace
-repository needs read access for every collaborator.
+reaches a project once it lands on the library's `main` under a raised
+version, and `autoUpdate` brings it up to ten minutes after an interactive
+session's first message; `/reload-plugins` applies it to an open session. A
+private marketplace repository needs read access for every collaborator.
 
 ## Two traps that cost a rewrite
 

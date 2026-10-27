@@ -112,15 +112,7 @@ Which plugins to enable:
 | the agent works on a live server | + `mluk-ops` |
 | Russian texts for people | + `mluk-ru` |
 
-An installed plugin is a copy in `~/.claude/plugins/cache/`. With `autoUpdate`
-declared, a new version arrives up to ten minutes after an interactive
-session's first message, and `/reload-plugins` applies it to an open session.
-By hand:
-
-```bash
-claude plugin marketplace update mluk-agent-tools
-claude plugin update mluk-repo@mluk-agent-tools --scope project   # each installed plugin at its scope, then /reload-plugins
-```
+How a new version arrives is in [Versions and updates](#versions-and-updates).
 
 ## Where to start
 
@@ -164,6 +156,27 @@ letter goes through `/mluk-ru:review letter.md`.
 | [`mluk-deploy`](plugins/mluk-deploy/README.md) | library | How projects are deployed: `deploy-vps`, `deploy-vercel`, `domain-dns`. Skills and a `help` command. |
 | [`mluk-ops`](plugins/mluk-ops/README.md) | library + hook | Safe agent access to servers: `srv` with an audit log, a guard hook, the `server-ops` protocol. Enabled only where the agent works on a server. |
 | [`mluk-ru`](plugins/mluk-ru/README.md) | library | Business Russian: the principles of client-facing and legal copy, the self-check, the checklist, and `review` for a text. |
+
+## Versions and updates
+
+Every plugin carries a `version` in its `plugin.json`, and `claude plugin list`
+shows the one you have. A major means your project must act, a minor brings a
+new rule, command or template section, a patch rewords or fixes; the rule is
+in [`AGENTS.md`](AGENTS.md) §1.
+
+An installed plugin is a copy in `~/.claude/plugins/cache/`, replaced only when
+the plugin's version changes. A project set up by `setup` declares the
+marketplace with `autoUpdate` and follows `main`: every raised version arrives
+up to ten minutes after an interactive session's first message, and
+`/reload-plugins` applies it to an open session. By hand:
+
+```bash
+claude plugin marketplace update mluk-agent-tools
+claude plugin update mluk-repo@mluk-agent-tools --scope project   # each installed plugin at its scope, then /reload-plugins
+```
+
+Updating delivers the method; it never edits a project — what `setup` wrote
+stays the project's, and `/mluk-bootstrap:audit` proposes the edits.
 
 ## How it's built
 

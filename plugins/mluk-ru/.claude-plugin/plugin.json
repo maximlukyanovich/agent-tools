@@ -1,5 +1,6 @@
 {
   "name": "mluk-ru",
+  "version": "1.0.0",
   "description": "Business Russian for client-facing, legal and documentation texts: the principles, the self-check, the checklist, and a review command.",
   "author": {
     "name": "Maxim Lukyanovich",

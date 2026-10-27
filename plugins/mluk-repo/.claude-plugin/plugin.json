@@ -1,5 +1,6 @@
 {
   "name": "mluk-repo",
+  "version": "1.0.0",
   "description": "Repository workflow driven by a project profile, from the task's plan to promotion, with a fresh session per phase. GitHub with gh; no tracker.",
   "author": {
     "name": "Maxim Lukyanovich",

@@ -13,7 +13,8 @@ naming. This file holds only the rules for working on the repository itself.
 - **Changes go through a branch and a pull request into `main`.** The library
   is public and other people install it, so `main` is what they get; a pull
   request leaves a diff to read before it lands. A trivial fix — a typo, a
-  broken link — may land on `main` directly. No force push.
+  broken link — may land on `main` directly; inside a plugin it still raises
+  the patch version. No force push.
 - **Before a new branch, the open pull requests touching the same files** —
   `gh pr list --json number,headRefName,files`. An overlap is merged first,
   or the work goes onto that branch; two branches editing one file book a
@@ -22,12 +23,21 @@ naming. This file holds only the rules for working on the repository itself.
   texts, never found by searching the filesystem. An installed plugin is a
   copy under `~/.claude/plugins/cache/`, even when the marketplace is
   registered from this checkout; `${CLAUDE_PLUGIN_ROOT}` points there.
-- **An edit here is not live** until it lands on `main`: a project that
-  declares the marketplace with `autoUpdate` gets it up to ten minutes after
-  an interactive session's first message, by hand
-  `claude plugin update <plugin>@mluk-agent-tools` (per installed scope);
-  `/reload-plugins` applies it to an open session. While writing a plugin,
-  test it straight from the checkout with `claude --plugin-dir …/agent-tools/plugins`.
+- **An edit here is not live** until it lands on `main` with its plugin's
+  `version` raised: a project that declares the marketplace with
+  `autoUpdate` gets it up to ten minutes after an interactive session's
+  first message, by hand `claude plugin update <plugin>@mluk-agent-tools`
+  (per installed scope); `/reload-plugins` applies it to an open session.
+  While writing a plugin, test it straight from the checkout with
+  `claude --plugin-dir …/agent-tools/plugins`.
+- **A change raises the `version` of every plugin it touches**, in its
+  `plugin.json`; a change to the plugin's README alone needs none. Major when
+  a project must act or it breaks — a profile format, a new required plugin,
+  a removed command; minor for a new rule, command or template section; patch
+  for wording or a fix that keeps the behaviour. Claude Code replaces an
+  installed plugin only when its version differs from the installed one, so
+  a change without a raise reaches nobody, the owner included. The catalogue
+  carries no `version`: `plugin.json` wins over it, and a second copy drifts.
 - **Library base, local override.** A project keeps a local command only when
   its procedure differs from the library's, not when a parameter does. The
   parameter goes to the profile.
