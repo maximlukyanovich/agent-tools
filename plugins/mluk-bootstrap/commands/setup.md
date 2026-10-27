@@ -68,21 +68,24 @@ The order is fixed. Steps are not reordered or skipped.
 
    Settings go to the file Q11 chose: every marketplace the set comes from in
    `extraKnownMarketplaces` — `mluk-agent-tools` with `autoUpdate`, and
-   `claude-plugins-official` when one of its plugins is enabled (an
-   interactive first start adds it on its own, a profile used only from the
-   CLI lacks it) — and empty `attribution`. When Q11 pinned a release,
-   `mluk-agent-tools`'s `source` carries `"ref": "<tag>"` beside `repo`,
-   `autoUpdate` kept: the latest tag, the name after `refs/tags/` in the first
-   line of
+   `claude-plugins-official` when one of its plugins is enabled (an interactive
+   first start adds it on its own, a profile used only from the CLI lacks it) —
+   and empty `attribution`. When Q11 pinned a release, `mluk-agent-tools`'s
+   `source` carries `"ref": "<tag>"` beside `repo`, `autoUpdate` kept: the
+   latest tag, the name after `refs/tags/` in the first line of
    `git ls-remote --tags --refs --sort=-v:refname https://github.com/maximlukyanovich/agent-tools 'v*'`.
-   Then each plugin of the Q11 set is installed with the command a person
-   would run — `claude plugin install <plugin>@mluk-agent-tools --scope project`, or
+   Then each plugin of the Q11 set is installed with the command a person would
+   run — `claude plugin install <plugin>@mluk-agent-tools --scope project`, or
    `--scope local` for `settings.local.json` — which writes `enabledPlugins`
-   itself. The plugins load in the next session. A pinned project's installs
-   came from the catalogue this machine already knows; the next session start
-   fetches it from the tag, and
-   `claude plugin update <plugin>@mluk-agent-tools --scope <scope>` moves each
-   install there — the report says so.
+   itself. The plugins load in the next session. The pin holds only on a
+   machine whose user settings do not declare the marketplace: when
+   `~/.claude/settings.json` has a `mluk-agent-tools` entry under
+   `extraKnownMarketplaces`, the report says to delete it — the project's
+   settings declare it now. A pinned project's installs came from the catalogue
+   this machine already knows; the next session start here fetches it from the
+   tag, and `autoUpdate` moves the installs there — or
+   `claude plugin update <plugin>@mluk-agent-tools --scope <scope>` right after
+   that start — the report says so.
 
    **The project's `/start`** installs those plugins in every other clone: a
    plugin that is not installed has no commands, so the library cannot do it.
