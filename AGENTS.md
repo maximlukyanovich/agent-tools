@@ -38,6 +38,23 @@ naming. This file holds only the rules for working on the repository itself.
   installed plugin only when its version differs from the installed one, so
   a change without a raise reaches nobody, the owner included. The catalogue
   carries no `version`: `plugin.json` wins over it, and a second copy drifts.
+- **A merged batch is released** on the owner's word, like a push: an
+  annotated tag `vYYYY.MM.DD` on the batch's merge commit into `main` — that
+  commit's date, `git log -1 --format=%cs <merge>`; `.2`, `.3` for a second
+  and third batch that day — and a GitHub release whose notes put
+  `scripts/release_notes.py` — the plugin versions and what a project must
+  do — above the merged pull requests:
+
+  ```bash
+  git tag -a <tag> -m <tag> <merge> && git push origin <tag>
+  gh release create <tag> --verify-tag --title <tag> \
+    --notes "$(python3 scripts/release_notes.py <previous tag> <tag>)" \
+    --generate-notes --notes-start-tag <previous tag>
+  ```
+
+  Release immutability is on: a released tag cannot be moved or deleted, so a
+  wrong release is corrected by the next tag. The date says which release a
+  project runs; a plugin's version says whether the project must act.
 - **Library base, local override.** A project keeps a local command only when
   its procedure differs from the library's, not when a parameter does. The
   parameter goes to the profile.
@@ -138,6 +155,7 @@ plugins/<name>/
   templates/<name>/               files setup copies into a project as they are
   README.md                       for people, links to the skill
 scripts/check.py                  the pull-request gate, run by CI
+scripts/release_notes.py          a release's notes: plugin versions, action needed
 .github/workflows/check.yml       runs the gate
 .github/workflows/hooks.yml       runs the hooks' and the start template's tests
 ```

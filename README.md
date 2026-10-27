@@ -178,6 +178,16 @@ claude plugin update mluk-repo@mluk-agent-tools --scope project   # each install
 Updating delivers the method; it never edits a project — what `setup` wrote
 stays the project's, and `/mluk-bootstrap:audit` proposes the edits.
 
+### Releases
+
+Each merged batch is released: an annotated tag `vYYYY.MM.DD` on `main` — the
+merge's date, `.2` for a second batch that day — and a GitHub
+[release](https://github.com/maximlukyanovich/agent-tools/releases) whose notes
+list every plugin's version against the previous release, then what a project
+must do — a major, a removed plugin — then the merged pull requests. The date
+says which release you run; a plugin's version says whether you must act. A
+released tag is never moved.
+
 ## How it's built
 
 `mluk-bootstrap` generates: what `setup` writes becomes the project's own code.
