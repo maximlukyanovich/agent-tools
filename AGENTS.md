@@ -41,6 +41,11 @@ naming. This file holds only the rules for working on the repository itself.
   better.
 - **One fact, one place.** The skill is the source; README links to it and does
   not restate it.
+- **A change corrects every text it makes untrue, in the same commit** —
+  README, `AGENTS.md`, `CONTRIBUTING.md`, `docs/design.md`, a plugin's README
+  and `help`. Before committing, search the repository for the statements the
+  change touches. "One fact, one place" keeps the copies few; this keeps the
+  ones left true.
 - **A tool's behaviour is stated only after a check.** What a plugin text says
   Claude Code, git, Compose or any other tool does — which file a value comes
   from, what a flag or a scope changes, which entry wins a merge — is checked
