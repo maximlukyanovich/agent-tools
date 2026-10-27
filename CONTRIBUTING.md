@@ -11,8 +11,9 @@ trap worth naming, a fix.
   `version` in `plugin.json` — the levels are in [`AGENTS.md`](AGENTS.md) §1.
   Without the raise the change reaches nobody.
 - Before opening a pull request, run the checks in
-  [`AGENTS.md`](AGENTS.md) §3, and run the changed command or skill once in a
-  real repository — say in the pull request where and how. To try a plugin
+  [`AGENTS.md`](AGENTS.md) §3 — `python3 scripts/check.py` after `git fetch`;
+  in a fork, pass `--base upstream/main` — and run the changed command or
+  skill once in a real repository — say in the pull request where and how. To try a plugin
   straight from a checkout, without installing: `claude --plugin-dir
   <checkout>/plugins`.
 

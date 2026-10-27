@@ -96,15 +96,25 @@ naming. This file holds only the rules for working on the repository itself.
 
 ## 3. Checks before a pull request
 
-The only automated gate is the `Plugin tests` workflow. Before opening a pull request, its author checks by hand:
+Two workflows gate every pull request and `main`. `Check` runs
+`scripts/check.py`; run it locally before pushing, after `git fetch` —
+`python3 scripts/check.py`. It compares versions against `origin/main`, or the
+`--base` you pass, and stops when that ref is missing. It checks:
+
+- `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
+  name matches its catalogue entry;
+- every `plugin.json` has a `version` of the form `MAJOR.MINOR.PATCH`, the
+  catalogue has none, and a plugin whose files changed, its README aside, has
+  a version above the base's.
+
+`Plugin tests` runs the hooks' and the start template's tests. Before opening
+a pull request, its author checks by hand:
 
 - every `commands/*.md` has frontmatter with `description` and `argument-hint`;
 - every `skills/*/SKILL.md` has `name` and `description`, every
   `agents/*.md` has `name`, `description` and `tools`;
 - every file reference inside a plugin resolves — a relative link to a file that
   exists, or a `${CLAUDE_PLUGIN_ROOT}` path;
-- `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
-  name matches its catalogue entry;
 - a changed hook or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
   `python3 plugins/mluk-ops/hooks/test_guard.py`,
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`; the `Plugin tests`
@@ -127,6 +137,9 @@ plugins/<name>/
   reference/*.md                  read one file at a time, on instruction
   templates/<name>/               files setup copies into a project as they are
   README.md                       for people, links to the skill
+scripts/check.py                  the pull-request gate, run by CI
+.github/workflows/check.yml       runs the gate
+.github/workflows/hooks.yml       runs the hooks' and the start template's tests
 ```
 
 `commands/` is the older of the two plugin formats; Claude Code now prefers
