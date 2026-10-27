@@ -188,6 +188,42 @@ must do — a major, a removed plugin — then the merged pull requests. The dat
 says which release you run; a plugin's version says whether you must act. A
 released tag is never moved.
 
+### Pinning a release
+
+A project that follows `main` gets every raised version as it lands. A team
+that moves between releases deliberately pins a tag instead — `ref` inside
+`source`, `autoUpdate` kept:
+
+```json
+"extraKnownMarketplaces": {
+  "mluk-agent-tools": {
+    "source": { "source": "github", "repo": "maximlukyanovich/agent-tools", "ref": "vYYYY.MM.DD" },
+    "autoUpdate": true
+  }
+}
+```
+
+The latest tag is the first line of
+`git ls-remote --tags --refs --sort=-v:refname https://github.com/maximlukyanovich/agent-tools 'v*'`.
+
+Moving to the next tag:
+
+1. A pull request in the project changes `ref`; its reviewer reads the
+   releases between the two tags.
+2. After the merge, each developer starts an interactive session at the
+   repository root: the session fetches the catalogue from the new tag.
+3. The plugins follow through `autoUpdate` after the first message, or at
+   once — `claude plugin update <plugin>@mluk-agent-tools --scope <scope>`
+   for each installed plugin; then `/reload-plugins`.
+4. When a release asks a project to act, `/mluk-bootstrap:audit` finds
+   what to change.
+
+Rolling back is the same move to an older tag; going back to `main` is
+removing `ref`. Two commands look right and do not do it:
+`claude plugin marketplace update` does not see a changed `ref` — only a
+session start does — and `claude plugin marketplace add` replaces the declared
+source, its `ref` included.
+
 ## How it's built
 
 `mluk-bootstrap` generates: what `setup` writes becomes the project's own code.
