@@ -74,13 +74,13 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    declared in the project's own `extraKnownMarketplaces`,
    `claude-plugins-official` included? One known only to the author's user
    settings works on the author's machine and nowhere else. When
-   `mluk-agent-tools`'s `source` pins a `ref`, does it name an existing tag,
+   `mluk-agent-tools`'s `source` pins a `ref`: does it name an existing tag,
    and is a newer one out — the first line of
    `git ls-remote --tags --refs --sort=-v:refname https://github.com/maximlukyanovich/agent-tools 'v*'`?
    A newer tag is reported with its release, never moved here — moving is the
-   project's own reviewed change. Does `~/.claude/settings.json` declare
-   `mluk-agent-tools` as well? That declaration wins, so the pin does not hold
-   on this machine — report it with the entry to delete. A source without `ref`
+   project's own reviewed change. And does `~/.claude/settings.json` declare
+   `mluk-agent-tools` too? That declaration wins, so the pin does not hold on
+   this machine — report it with the entry to delete. A source without `ref`
    follows `main`, and nothing is asked.
    A declared marketplace in a private repository is still out of reach for a
    collaborator without read access: compare the project's collaborators
