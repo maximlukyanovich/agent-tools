@@ -95,7 +95,10 @@ scratch: `mluk-bootstrap` and `mluk-repo` always (already installed),
 server, `mluk-ru` where the project has Russian texts for people. The file:
 `.claude/settings.json` by default, committed, so every clone gets the set;
 `.claude/settings.local.json` when the project's rules keep AI settings out of
-git.
+git. Which release of the library: follow `main` — every raised version
+arrives through `autoUpdate`, the default for one developer — or pin the
+latest release tag, so a team moves between releases by a reviewed settings
+change.
 
 There is no question about a tracker or time tracking. A task brief comes inline, from a `docs/local/` note, or from a GitHub
 issue when one exists.

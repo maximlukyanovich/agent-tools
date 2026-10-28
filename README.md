@@ -58,6 +58,10 @@ Once per machine — it adds the source and loads nothing into sessions:
 claude plugin marketplace add maximlukyanovich/agent-tools
 ```
 
+The add declares the marketplace in your user settings — skip it on a machine
+that works in a project pinned to a release, see
+[Pinning a release](#pinning-a-release).
+
 In an existing repository — install, then run `setup`:
 
 ```bash
@@ -112,15 +116,7 @@ Which plugins to enable:
 | the agent works on a live server | + `mluk-ops` |
 | Russian texts for people | + `mluk-ru` |
 
-An installed plugin is a copy in `~/.claude/plugins/cache/`. With `autoUpdate`
-declared, a new version arrives up to ten minutes after an interactive
-session's first message, and `/reload-plugins` applies it to an open session.
-By hand:
-
-```bash
-claude plugin marketplace update mluk-agent-tools
-claude plugin update mluk-repo@mluk-agent-tools --scope project   # each installed plugin at its scope, then /reload-plugins
-```
+How a new version arrives is in [Versions and updates](#versions-and-updates).
 
 ## Where to start
 
@@ -164,6 +160,95 @@ letter goes through `/mluk-ru:review letter.md`.
 | [`mluk-deploy`](plugins/mluk-deploy/README.md) | library | How projects are deployed: `deploy-vps`, `deploy-vercel`, `domain-dns`. Skills and a `help` command. |
 | [`mluk-ops`](plugins/mluk-ops/README.md) | library + hook | Safe agent access to servers: `srv` with an audit log, a guard hook, the `server-ops` protocol. Enabled only where the agent works on a server. |
 | [`mluk-ru`](plugins/mluk-ru/README.md) | library | Business Russian: the principles of client-facing and legal copy, the self-check, the checklist, and `review` for a text. |
+
+## Versions and updates
+
+Every plugin carries a `version` in its `plugin.json`, and `claude plugin list`
+shows the one you have. A major means your project must act, a minor brings a
+new rule, command or template section, a patch rewords or fixes; the rule is
+in [`AGENTS.md`](AGENTS.md) §1.
+
+An installed plugin is a copy in `~/.claude/plugins/cache/`, replaced only when
+the plugin's version changes. A project set up by `setup` declares the
+marketplace with `autoUpdate` and follows `main`: every raised version arrives
+up to ten minutes after an interactive session's first message, and
+`/reload-plugins` applies it to an open session. By hand:
+
+```bash
+claude plugin marketplace update mluk-agent-tools
+claude plugin update mluk-repo@mluk-agent-tools --scope project   # each installed plugin at its scope, then /reload-plugins
+```
+
+Updating delivers the method; it never edits a project — what `setup` wrote
+stays the project's, and `/mluk-bootstrap:audit` proposes the edits.
+
+### Releases
+
+Each merged batch is released: an annotated tag `vYYYY.MM.DD` on `main` — the
+merge's date, `.2` for a second batch that day — and a GitHub
+[release](https://github.com/maximlukyanovich/agent-tools/releases) whose notes
+list every plugin's version against the previous release, then what a project
+must do — a major, a removed plugin — then the merged pull requests. The date
+says which release you run; a plugin's version says whether you must act. A
+released tag is never moved.
+
+### Pinning a release
+
+A project that follows `main` gets every raised version as it lands. A team
+that moves between releases deliberately pins a tag instead — `ref` inside
+`source`, `autoUpdate` kept:
+
+```json
+"extraKnownMarketplaces": {
+  "mluk-agent-tools": {
+    "source": { "source": "github", "repo": "maximlukyanovich/agent-tools", "ref": "vYYYY.MM.DD" },
+    "autoUpdate": true
+  }
+}
+```
+
+The latest tag is the first line of
+`git ls-remote --tags --refs --sort=-v:refname https://github.com/maximlukyanovich/agent-tools 'v*'`.
+`setup` asks whether a project follows `main` or pins a release, and writes
+the latest tag itself.
+
+A pin holds on a machine under two conditions:
+
+- **The user settings do not declare the marketplace.** The once-per-machine
+  `claude plugin marketplace add` writes it into `~/.claude/settings.json`
+  without `ref`, and that declaration wins: a session in the pinned project
+  either registers no marketplace at all or installs the plugins from `main`.
+  Skip the add on a machine that works in a pinned project — trusting the
+  folder registers the marketplace from the project's settings — or delete the
+  `mluk-agent-tools` entry under `extraKnownMarketplaces` in
+  `~/.claude/settings.json`; a project set up by `setup` declares it in its own
+  settings.
+- **The plugins update in the project's own session.** The catalogue is one
+  clone per machine, and a session in another project fetches it from that
+  project's source. A session start in the pinned project fetches its tag
+  back, and `autoUpdate` then works from it; `claude plugin update` takes the
+  clone as the machine's last session left it, so after a session elsewhere it
+  moves the pinned project to that source.
+
+Moving to the next tag:
+
+1. A pull request in the project changes `ref`; its reviewer reads the
+   releases between the two tags.
+2. After the merge, each developer starts an interactive session at the
+   repository root: the session fetches the catalogue from the new tag.
+3. The plugins follow through `autoUpdate`, up to ten minutes after that
+   session's first message, and `/reload-plugins` applies them. To move at
+   once, run `claude plugin update <plugin>@mluk-agent-tools --scope <scope>`
+   for each installed plugin right after that start, before a session in
+   another project.
+4. When a release asks a project to act, `/mluk-bootstrap:audit` finds
+   what to change.
+
+Rolling back is the same move to an older tag; going back to `main` is
+removing `ref`. Two commands look right and do not do it:
+`claude plugin marketplace update` does not see a changed `ref` — only a
+session start does — and `claude plugin marketplace add` replaces the declared
+source, its `ref` included.
 
 ## How it's built
 

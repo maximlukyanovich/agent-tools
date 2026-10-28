@@ -13,7 +13,8 @@ naming. This file holds only the rules for working on the repository itself.
 - **Changes go through a branch and a pull request into `main`.** The library
   is public and other people install it, so `main` is what they get; a pull
   request leaves a diff to read before it lands. A trivial fix — a typo, a
-  broken link — may land on `main` directly. No force push.
+  broken link — may land on `main` directly; inside a plugin it still raises
+  the patch version. No force push.
 - **Before a new branch, the open pull requests touching the same files** —
   `gh pr list --json number,headRefName,files`. An overlap is merged first,
   or the work goes onto that branch; two branches editing one file book a
@@ -22,12 +23,38 @@ naming. This file holds only the rules for working on the repository itself.
   texts, never found by searching the filesystem. An installed plugin is a
   copy under `~/.claude/plugins/cache/`, even when the marketplace is
   registered from this checkout; `${CLAUDE_PLUGIN_ROOT}` points there.
-- **An edit here is not live** until it lands on `main`: a project that
-  declares the marketplace with `autoUpdate` gets it up to ten minutes after
-  an interactive session's first message, by hand
-  `claude plugin update <plugin>@mluk-agent-tools` (per installed scope);
-  `/reload-plugins` applies it to an open session. While writing a plugin,
-  test it straight from the checkout with `claude --plugin-dir …/agent-tools/plugins`.
+- **An edit here is not live** until it lands on `main` with its plugin's
+  `version` raised: a project that declares the marketplace with
+  `autoUpdate` gets it up to ten minutes after an interactive session's
+  first message, by hand `claude plugin update <plugin>@mluk-agent-tools`
+  (per installed scope); `/reload-plugins` applies it to an open session.
+  While writing a plugin, test it straight from the checkout with
+  `claude --plugin-dir …/agent-tools/plugins`.
+- **A change raises the `version` of every plugin it touches**, in its
+  `plugin.json`; a change to the plugin's README alone needs none. Major when
+  a project must act or it breaks — a profile format, a new required plugin,
+  a removed command; minor for a new rule, command or template section; patch
+  for wording or a fix that keeps the behaviour. Claude Code replaces an
+  installed plugin only when its version differs from the installed one, so
+  a change without a raise reaches nobody, the owner included. The catalogue
+  carries no `version`: `plugin.json` wins over it, and a second copy drifts.
+- **A merged batch is released** on the owner's word, like a push: an
+  annotated tag `vYYYY.MM.DD` on the batch's merge commit into `main` — that
+  commit's date, `git log -1 --format=%cs <merge>`; `.2`, `.3` for a second
+  and third batch that day — and a GitHub release whose notes put
+  `scripts/release_notes.py` — the plugin versions and what a project must
+  do — above the merged pull requests:
+
+  ```bash
+  git tag -a <tag> -m <tag> <merge> && git push origin <tag>
+  gh release create <tag> --verify-tag --title <tag> \
+    --notes "$(python3 scripts/release_notes.py <previous tag> <tag>)" \
+    --generate-notes --notes-start-tag <previous tag>
+  ```
+
+  Release immutability is on: a released tag cannot be moved or deleted, so a
+  wrong release is corrected by the next tag. The date says which release a
+  project runs; a plugin's version says whether the project must act.
 - **Library base, local override.** A project keeps a local command only when
   its procedure differs from the library's, not when a parameter does. The
   parameter goes to the profile.
@@ -41,6 +68,11 @@ naming. This file holds only the rules for working on the repository itself.
   better.
 - **One fact, one place.** The skill is the source; README links to it and does
   not restate it.
+- **A change corrects every text it makes untrue, in the same commit** —
+  README, `AGENTS.md`, `CONTRIBUTING.md`, `docs/design.md`, a plugin's README
+  and `help`. Before committing, search the repository for the statements the
+  change touches. "One fact, one place" keeps the copies few; this keeps the
+  ones left true.
 - **A tool's behaviour is stated only after a check.** What a plugin text says
   Claude Code, git, Compose or any other tool does — which file a value comes
   from, what a flag or a scope changes, which entry wins a merge — is checked
@@ -81,15 +113,25 @@ naming. This file holds only the rules for working on the repository itself.
 
 ## 3. Checks before a pull request
 
-The only automated gate is the `Plugin tests` workflow. Before opening a pull request, its author checks by hand:
+Two workflows gate every pull request and `main`. `Check` runs
+`scripts/check.py`; run it locally before pushing, after `git fetch` —
+`python3 scripts/check.py`. It compares versions against `origin/main`, or the
+`--base` you pass, and stops when that ref is missing. It checks:
+
+- `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
+  name matches its catalogue entry;
+- every `plugin.json` has a `version` of the form `MAJOR.MINOR.PATCH`, the
+  catalogue has none, and a plugin whose files changed, its README aside, has
+  a version above the base's.
+
+`Plugin tests` runs the hooks' and the start template's tests. Before opening
+a pull request, its author checks by hand:
 
 - every `commands/*.md` has frontmatter with `description` and `argument-hint`;
 - every `skills/*/SKILL.md` has `name` and `description`, every
   `agents/*.md` has `name`, `description` and `tools`;
 - every file reference inside a plugin resolves — a relative link to a file that
   exists, or a `${CLAUDE_PLUGIN_ROOT}` path;
-- `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
-  name matches its catalogue entry;
 - a changed hook or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
   `python3 plugins/mluk-ops/hooks/test_guard.py`,
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`; the `Plugin tests`
@@ -112,6 +154,10 @@ plugins/<name>/
   reference/*.md                  read one file at a time, on instruction
   templates/<name>/               files setup copies into a project as they are
   README.md                       for people, links to the skill
+scripts/check.py                  the pull-request gate, run by CI
+scripts/release_notes.py          a release's notes: plugin versions, action needed
+.github/workflows/check.yml       runs the gate
+.github/workflows/hooks.yml       runs the hooks' and the start template's tests
 ```
 
 `commands/` is the older of the two plugin formats; Claude Code now prefers

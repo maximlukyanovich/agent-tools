@@ -1,0 +1,23 @@
+# The mechanical part of AGENTS.md §3, run on every pull request and on main.
+# The part a machine cannot check — the changed command run once in a real
+# repository — stays with the author and the reviewer.
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      # Versions are raised against the first parent: on a pull request the
+      # base's tip under the trial merge, on a push the previous main.
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+      - run: python3 scripts/check.py --base HEAD^1

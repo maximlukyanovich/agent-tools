@@ -9,7 +9,8 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       reads; no section copies what a command answers.
 - [ ] The settings file Q11 chose declares in `extraKnownMarketplaces` every
       marketplace `enabledPlugins` names — `mluk-agent-tools` (GitHub source,
-      `autoUpdate`), `claude-plugins-official` when its plugins are enabled —
+      `autoUpdate`, and `ref` when Q11 pinned a release),
+      `claude-plugins-official` when its plugins are enabled —
       enables the Q11 set and sets empty attribution.
 - [ ] `.claude/commands/start.md` comes from `templates/start/` with the
       current version line, one variant left and every placeholder filled; it
