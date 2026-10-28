@@ -7,6 +7,8 @@ trap worth naming, a fix.
   skill is the one exception: its subject is Russian).
 - A rule that names your project's paths, ids or design system belongs in your
   project's profile, not here.
+- No real project is named — not its name, issue keys, paths or quotes, in
+  the change or in the pull request.
 - A change to a plugin's files, its README aside, raises that plugin's
   `version` in `plugin.json` — the levels are in [`AGENTS.md`](AGENTS.md) §1.
   Without the raise the change reaches nobody.

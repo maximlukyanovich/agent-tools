@@ -91,6 +91,11 @@ naming. This file holds only the rules for working on the repository itself.
   explaining why, each bullet on one line, no hard wrap. Scope is the plugin
   name without the prefix (`bootstrap`, `repo`, `ru`) or `readme` / `catalog`
   for the repository level. No agent attribution of any kind.
+- **No real project is named** — a client's or the owner's own — in plugin
+  texts, examples, commit messages, pull requests or issues: not its name,
+  issue keys, paths, recognisable domain terms or quotes from it. A lesson
+  from a live project is described as "observed on a live project", without
+  saying which.
 - **Command names** are short verbs; the plugin name is the prefix, added by the
   harness with a colon. Never a colon in a filename.
 - **Plugin names are fixed once.**
