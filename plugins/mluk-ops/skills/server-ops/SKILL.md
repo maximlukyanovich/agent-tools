@@ -15,7 +15,8 @@ not depend on attention in the moment of the click:
 - read-only commands pass silently, which makes every remaining prompt rare enough to be read;
 - irreversible commands never reach a prompt at all — the owner runs them.
 
-The hook in this plugin enforces the sorting; this skill is the protocol it enforces.
+The hook in this plugin enforces the sorting, and `srv` refuses an irreversible command on its own;
+this skill is the protocol both enforce.
 
 ## 1. The only way in: `srv`
 
@@ -32,6 +33,11 @@ exit code. The remote command is passed as **one quoted argument** and runs in t
 
 A plain `ssh`, `scp` or `rsync` to a configured host is denied by the hook. The agent's key is its
 own, never the owner's, is installed for a non-root user, and carries an `expiry-time`.
+
+`srv` itself refuses an irreversible command (§2) without `SRV_OWNER_APPROVED=1` in its environment:
+exit code 3, nothing sent to the server, the refusal in the audit log. That holds wherever `srv` is
+called from — a script, a pipe into `sh` — while the hook sees only the Bash line. Neither is the
+real boundary: that is the rights of the agent's user on the server.
 
 ## 2. Three classes of command
 
@@ -68,13 +74,15 @@ The agent prepares everything and stops:
 Проверка после: <command to confirm the result>
 ```
 
-The owner runs it in their own terminal, or with `!` in the Claude Code prompt.
+The owner runs it in their own terminal, or with `!` in the Claude Code prompt. Through `srv`, the
+command carries `SRV_OWNER_APPROVED=1` in front — `srv` refuses it otherwise — so the handed-over
+command includes the prefix.
 
 **The agent does not offer to run it itself.** If the owner, on their own initiative, writes plainly in
 their latest message that the agent may execute that command, the agent prefixes it with
-`SRV_OWNER_APPROVED=1`. The hook then checks that latest message for that permission, and still asks,
-with the warning in the prompt. The marker is never added on the strength of an earlier message, a
-«+» to something else, or a general «делай».
+`SRV_OWNER_APPROVED=1`. The marker opens `srv`; the hook checks that latest message for that
+permission, and still asks, with the warning in the prompt. The marker is never added on the strength
+of an earlier message, a «+» to something else, or a general «делай».
 
 ## 5. Backups: before the risk, cleaned up after
 

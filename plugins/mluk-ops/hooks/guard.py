@@ -6,10 +6,14 @@
     irreversible    → deny: the owner runs it (skill server-ops, §4) — unless the command carries
                       SRV_OWNER_APPROVED=1 AND the owner's latest typed message explicitly lets the
                       agent run it; then ask, with the warning in the prompt
+    srv glued to other commands → the srv calls are classified as above; an irreversible one is
+                      denied or asked the same way, anything else asks
     ssh/scp/rsync to a configured host outside srv → deny
 
 Inert when ~/.config/mluk-ops/servers.json lists no servers, and for any Bash command that does not
-touch one. When unsure, a command is classified as the stricter class — the rules are in
+touch one. The hook sees only the Bash line: an srv call inside a script, a pipe into sh or
+python3 -c reaches srv unseen, and srv itself refuses an irreversible command there without the
+marker. When unsure, a command is classified as the stricter class — the rules are in
 lib/ops_classify.py. Checks: hooks/test_guard.py.
 """
 from __future__ import annotations
@@ -22,18 +26,20 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'lib'))
 import ops_config  # noqa: E402
-from ops_classify import APPROVAL_MARKER, CHANGE, READ, READ_COMMANDS, classify_call  # noqa: E402
+from ops_classify import (APPROVAL_MARKER, CHANGE, IRREVERSIBLE, READ, READ_COMMANDS,  # noqa: E402
+                          classify_call, classify_remote)
 
 CONSENT = re.compile(
     r'(выполни|выполняй|запусти|запускай|разрешаю|можешь\s+(сам\s+)?(это\s+)?(выполн|запуст)|'
     r'сам\s+(выполни|запусти)|go ahead and run|you may run|run it yourself)', re.IGNORECASE)
+SRV_WORD = re.compile(r'\bsrv\b')
 
 
-def srv_calls(command: str) -> list[list[str]] | None:
-    """Argument lists of every srv call in the command, or None if a part of it is not srv.
+def srv_calls(command: str) -> tuple[list[list[str]], bool] | None:
+    """(argument lists of every srv call, whether anything else runs next to them), or None when the
+    command does not parse.
 
-    Local segments made of harmless filters (`| grep`, `| tail`) are allowed around srv; anything
-    else next to it makes the whole command fall back to the normal permission flow.
+    Local segments made of harmless filters (`| grep`, `| tail`) do not count as running next to srv.
     """
     lex = shlex.shlex(command, posix=True, punctuation_chars=';&|')
     lex.whitespace_split = True
@@ -42,7 +48,7 @@ def srv_calls(command: str) -> list[list[str]] | None:
     except ValueError:
         return None
     calls = []
-    local_ok = True
+    glued = False
     segments: list[list[str]] = [[]]
     for tok in parts:
         if tok in (';', '&&', '||', '|', '&', ';;', '|&'):
@@ -50,16 +56,16 @@ def srv_calls(command: str) -> list[list[str]] | None:
         else:
             segments[-1].append(tok)
     for seg in segments:
-        seg = [t for t in seg if not re.match(r'^\w+=', t)] if seg else seg
+        # Only leading assignments: the remote command is one quoted token, and `'X=1 rm …'` is one too.
+        while seg and re.match(r'^\w+=', seg[0]):
+            seg = seg[1:]
         if not seg:
             continue
         if seg[0].rsplit('/', 1)[-1] == 'srv':
             calls.append(seg[1:])
         elif not (seg[0] in READ_COMMANDS and seg[0] not in ('cd',)):
-            local_ok = False
-    if not calls:
-        return []
-    return calls if local_ok else None
+            glued = True
+    return calls, glued
 
 
 def latest_human_message(transcript_path: str | None) -> str:
@@ -97,15 +103,21 @@ def decide(command: str, config: dict, transcript_path: str | None) -> tuple[str
     if not servers:
         return None
     markers = ops_config.host_markers(config)
-    calls = srv_calls(command)
+    parsed = srv_calls(command)
+    calls, glued = parsed if parsed is not None else ([], True)
 
-    if not calls:
+    if not calls or glued:
         uses_transport = re.search(r'(^|[\s;&|(])(ssh|scp|sftp|rsync|sshfs)(?=\s|$)', command)
         if uses_transport and any(m in command for m in markers):
             return 'deny', ('Прямой ssh/scp/rsync на сервер проекта запрещён: используйте srv '
                             '(навык server-ops) — он пишет журнал и проходит проверку.')
-        if calls is None and re.search(r'(^|/)srv\s', command):
-            return 'ask', 'Команда srv вместе с другими командами — проверьте её целиком.'
+    if parsed is None and SRV_WORD.search(command):
+        # Its srv calls cannot be told apart, so the whole line, unquoted, is classified as one remote command.
+        cls, why = classify_remote(re.sub(r'[\'"]', ' ', command))
+        if cls == IRREVERSIBLE:
+            return irreversible(why, command, command, transcript_path)
+        return 'ask', f'Команду с srv не удалось разобрать — проверьте её целиком:\n{command}'
+    if not calls:
         return None
 
     worst, why, shown = READ, '', []
@@ -121,10 +133,18 @@ def decide(command: str, config: dict, transcript_path: str | None) -> tuple[str
             worst, why = cls, reason
 
     detail = '\n'.join(shown)
+    if worst == IRREVERSIBLE:
+        return irreversible(why, detail, command, transcript_path)
+    if glued:
+        return 'ask', f'Команда srv вместе с другими командами — проверьте её целиком.\n{detail}'
     if worst == READ:
         return 'allow', f'Только чтение: {detail}'
-    if worst == CHANGE:
-        return 'ask', f'Изменение на сервере ({why}):\n{detail}\nСверьте с превью в чате: что меняется и как откатить.'
+    return 'ask', f'Изменение на сервере ({why}):\n{detail}\nСверьте с превью в чате: что меняется и как откатить.'
+
+
+def irreversible(why: str, detail: str, command: str, transcript_path: str | None) -> tuple[str, str]:
+    """Deny, or ask with the warning when the command carries the marker and the owner's latest
+    message lets the agent run it."""
     approved = APPROVAL_MARKER in command and CONSENT.search(latest_human_message(transcript_path))
     if approved:
         return 'ask', (f'⚠ НЕОБРАТИМО — {why}. Владелец разрешил выполнение агенту в последнем сообщении.\n'

@@ -1,7 +1,9 @@
-"""The command classifier of hooks/guard.py: read, change or irreversible, with the reason.
+"""Shared by bin/srv and hooks/guard.py: a command bound for a server is read, change or irreversible.
 
-What each class leads to is in hooks/guard.py. When unsure, a command is classified as the stricter
-class. The reasons are Russian: they reach the owner in the hook's prompt. Checks: hooks/test_guard.py.
+What each class leads to is in hooks/guard.py; srv refuses an irreversible command on its own unless
+SRV_OWNER_APPROVED=1 is in its environment. When unsure, a command is classified as the stricter
+class. The reasons are Russian: they reach the owner in the hook's prompt and in srv's refusal.
+Checks: hooks/test_guard.py, lib/test_srv.py.
 """
 from __future__ import annotations
 
@@ -9,7 +11,8 @@ import re
 import shlex
 
 READ, CHANGE, IRREVERSIBLE = 0, 1, 2
-APPROVAL_MARKER = 'SRV_OWNER_APPROVED=1'
+APPROVAL_VAR = 'SRV_OWNER_APPROVED'
+APPROVAL_MARKER = f'{APPROVAL_VAR}=1'
 
 # Destructive whatever the context. (pattern, what is lost)
 IRREVERSIBLE_PATTERNS = [

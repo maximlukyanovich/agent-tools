@@ -19,7 +19,8 @@ Language: the conversation's, unless `$1` gives a code.
    filesystem for the plugin.
 
 2. **State the three classes in a few lines:** a read passes; a reversible change asks the owner,
-   with a preview; an irreversible command is denied and handed to the owner, who runs it with `!`.
+   with a preview; an irreversible command is denied and handed to the owner, who runs it with `!`
+   and `SRV_OWNER_APPROVED=1` in front — `srv` itself refuses one without it, whoever calls it.
    A plain `ssh`, `scp` or `rsync` to a configured host is denied — it goes through `srv`. Point at
    `${CLAUDE_PLUGIN_ROOT}/skills/server-ops/SKILL.md` for the protocol.
 

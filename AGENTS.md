@@ -138,11 +138,12 @@ Two workflows gate every pull request and `main`. `Check` runs
   catalogue has none, and a plugin whose files changed, its README aside, has
   a version above the base's.
 
-`Plugin tests` runs the hooks' and the start template's tests. Before opening
+`Plugin tests` runs the plugins' tests — the hooks, `srv` and the start
+template. Before opening
 a pull request, its author checks by hand:
 
-- a changed hook or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
-  `python3 plugins/mluk-ops/hooks/test_guard.py`,
+- a changed hook, script or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
+  `python3 plugins/mluk-ops/hooks/test_guard.py`, `python3 plugins/mluk-ops/lib/test_srv.py`,
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`; the `Plugin tests`
   workflow runs the same on every push;
 - the changed command or skill was run once, in a real repository, after
@@ -166,7 +167,7 @@ plugins/<name>/
 scripts/check.py                  the pull-request gate, run by CI
 scripts/release_notes.py          a release's notes: plugin versions, action needed
 .github/workflows/check.yml       runs the gate
-.github/workflows/hooks.yml       runs the hooks' and the start template's tests
+.github/workflows/hooks.yml       runs the plugins' tests — hooks, `srv`, the start template
 ```
 
 `commands/` is the older of the two plugin formats; Claude Code now prefers
