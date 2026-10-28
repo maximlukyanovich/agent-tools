@@ -9,6 +9,8 @@ Checks what a reviewer should never have to read for:
   - marketplace.json lists every plugin under plugins/, sources exist, names match plugin.json;
   - every plugin hook points at a script that exists, in its `command` or its `args`;
   - every Python script compiles;
+  - every plugin text — a `*.md` under plugins/ but a README — is at most 10 KB, or a warning says
+    so: splitting it is a decision, not drift;
   - every plugin.json has a MAJOR.MINOR.PATCH `version` and the catalogue has none; a plugin whose
     files differ from the merge base with --base, its README aside, has a version above the one at
     --base's tip.
@@ -17,12 +19,14 @@ The sections are the work-agent-tools gate's, kept in pairs; it differs in three
 keeps a CHANGES.md, so there is no section for one; commands here carry `argument-hint`; plugins
 here ship agents.
 
-Standard library and git only, so CI needs nothing but a Python image. Exit code 1 on any finding.
+Standard library and git only, so CI needs nothing but a Python image. Exit code 1 on any finding;
+a size warning alone leaves it 0, and under GitHub Actions it also becomes an annotation on the file.
 Run: git fetch origin main && python3 scripts/check.py [--base <ref>]   (default origin/main)
 """
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -31,6 +35,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PLUGINS = ROOT / "plugins"
 problems = []
+warnings = []
 
 parser = argparse.ArgumentParser(description="The pull-request gate; see the module docstring.")
 parser.add_argument("--base", default="origin/main", help="the ref versions are raised against (default origin/main)")
@@ -131,6 +136,15 @@ for script in sorted(ROOT.rglob("*.py")):
     except SyntaxError as e:
         fail(script, f"does not compile: line {e.lineno}: {e.msg}")
 
+# ---------------------------------------------------------------- size
+# Every byte of a command, skill or reference is paid for on each turn after the
+# agent reads it; growth past the limit should be a decision, so it is named.
+SIZE_LIMIT = 10 * 1024
+for md in sorted(PLUGINS.rglob("*.md")):
+    size = md.stat().st_size
+    if md.name != "README.md" and size > SIZE_LIMIT:
+        warnings.append((md.relative_to(ROOT), f"{size / 1024:.1f} KB, above {SIZE_LIMIT // 1024} KB"))
+
 # ---------------------------------------------------------------- versions
 # Claude Code replaces an installed plugin only when its version changes: a
 # change without a raise reaches nobody, and nothing else would say so.
@@ -184,8 +198,13 @@ else:
                  f"{plugin} changed since {args.base}, but its version {shown(versions[plugin])} "
                  f"is not above {shown(base_version)} there")
 
+for path, message in warnings:
+    print(f"warning: {path}: {message}")
+    if os.environ.get("GITHUB_ACTIONS") == "true":
+        print(f"::warning file={path}::{message}")
+tail = f", {len(warnings)} warning(s)" if warnings else ""
 if problems:
     print("\n".join(problems))
-    print(f"\n{len(problems)} problem(s)")
+    print(f"\n{len(problems)} problem(s){tail}")
     sys.exit(1)
-print("all checks passed")
+print(f"all checks passed{tail}")
