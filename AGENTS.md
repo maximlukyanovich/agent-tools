@@ -123,8 +123,15 @@ Two workflows gate every pull request and `main`. `Check` runs
 `python3 scripts/check.py`. It compares versions against `origin/main`, or the
 `--base` you pass, and stops when that ref is missing. It checks:
 
+- every `commands/*.md` has frontmatter with `description` and `argument-hint`;
+- every `skills/*/SKILL.md` has `name` and `description`, every
+  `agents/*.md` has `name`, `description` and `tools`;
+- every file reference inside a plugin resolves — a relative link to a file that
+  exists, or a `${CLAUDE_PLUGIN_ROOT}` path;
 - `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
   name matches its catalogue entry;
+- every plugin hook points at a script that exists, in `command` or `args`;
+- every Python script compiles;
 - every `plugin.json` has a `version` of the form `MAJOR.MINOR.PATCH`, the
   catalogue has none, and a plugin whose files changed, its README aside, has
   a version above the base's.
@@ -132,11 +139,6 @@ Two workflows gate every pull request and `main`. `Check` runs
 `Plugin tests` runs the hooks' and the start template's tests. Before opening
 a pull request, its author checks by hand:
 
-- every `commands/*.md` has frontmatter with `description` and `argument-hint`;
-- every `skills/*/SKILL.md` has `name` and `description`, every
-  `agents/*.md` has `name`, `description` and `tools`;
-- every file reference inside a plugin resolves — a relative link to a file that
-  exists, or a `${CLAUDE_PLUGIN_ROOT}` path;
 - a changed hook or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
   `python3 plugins/mluk-ops/hooks/test_guard.py`,
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`; the `Plugin tests`
