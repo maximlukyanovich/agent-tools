@@ -7,8 +7,12 @@
     srv --list                               configured servers
 
 Servers come from ~/.config/mluk-ops/servers.json (see the plugin README). The agent's own key is
-used with IdentitiesOnly, so the owner's keys in ssh-agent are never offered. The guard hook
-(hooks/guard.py) decides whether a call may run; srv only executes and records it.
+used with IdentitiesOnly, so the owner's keys in ssh-agent are never offered.
+
+An irreversible command (lib/ops_classify.py) is refused before ssh, with exit code 3 and a logged
+`refused`, unless SRV_OWNER_APPROVED=1 is in the environment — whoever calls srv: a script, a pipe
+into sh, python3 -c, none of which the guard hook sees. The owner's consent to the marker is checked
+by the hook (hooks/guard.py), which decides every call it does see. Checks: lib/test_srv.py.
 """
 from __future__ import annotations
 
@@ -20,7 +24,10 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'lib'))
+import ops_classify  # noqa: E402
 import ops_config  # noqa: E402
+
+REFUSED = 3
 
 
 def usage(code: int = 2) -> None:
@@ -76,16 +83,29 @@ def main(argv: list[str]) -> int:
         shown = remote
 
     started = dt.datetime.now(dt.timezone.utc)
-    code = subprocess.call(cmd)
-    audit(config, {
+    approved = os.environ.get(ops_classify.APPROVAL_VAR) == '1'
+    cls, reason = ops_classify.classify_call(rest)
+    refused = cls == ops_classify.IRREVERSIBLE and not approved
+    if refused:
+        print(f'srv: ⚠ НЕОБРАТИМО — {reason}. Без {ops_classify.APPROVAL_MARKER} srv такие команды не '
+              f'выполняет: агент передаёт её владельцу в формате server-ops §4 (команда, что пропадёт, '
+              f'бэкап, проверка после), владелец запускает её с этим префиксом.\n{name}: {shown}',
+              file=sys.stderr)
+        code = REFUSED
+    else:
+        code = subprocess.call(cmd)
+    record = {
         'ts': started.isoformat(timespec='seconds'),
         'server': name,
         'command': shown,
         'exit': code,
         'seconds': round((dt.datetime.now(dt.timezone.utc) - started).total_seconds(), 1),
-        'owner_approved': os.environ.get('SRV_OWNER_APPROVED') == '1',
+        'owner_approved': approved,
         'cwd': os.getcwd(),
-    })
+    }
+    if refused:
+        record['refused'] = reason
+    audit(config, record)
     return code
 
 

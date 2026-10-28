@@ -91,6 +91,11 @@ naming. This file holds only the rules for working on the repository itself.
   explaining why, each bullet on one line, no hard wrap. Scope is the plugin
   name without the prefix (`bootstrap`, `repo`, `ru`) or `readme` / `catalog`
   for the repository level. No agent attribution of any kind.
+- **No real project is named** — a client's or the owner's own — in plugin
+  texts, examples, commit messages, pull requests or issues: not its name,
+  issue keys, paths, recognisable domain terms or quotes from it. A lesson
+  from a live project is described as "observed on a live project", without
+  saying which.
 - **Command names** are short verbs; the plugin name is the prefix, added by the
   harness with a colon. Never a colon in a filename.
 - **Plugin names are fixed once.**
@@ -118,22 +123,27 @@ Two workflows gate every pull request and `main`. `Check` runs
 `python3 scripts/check.py`. It compares versions against `origin/main`, or the
 `--base` you pass, and stops when that ref is missing. It checks:
 
-- `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
-  name matches its catalogue entry;
-- every `plugin.json` has a `version` of the form `MAJOR.MINOR.PATCH`, the
-  catalogue has none, and a plugin whose files changed, its README aside, has
-  a version above the base's.
-
-`Plugin tests` runs the hooks' and the start template's tests. Before opening
-a pull request, its author checks by hand:
-
 - every `commands/*.md` has frontmatter with `description` and `argument-hint`;
 - every `skills/*/SKILL.md` has `name` and `description`, every
   `agents/*.md` has `name`, `description` and `tools`;
 - every file reference inside a plugin resolves — a relative link to a file that
   exists, or a `${CLAUDE_PLUGIN_ROOT}` path;
-- a changed hook or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
-  `python3 plugins/mluk-ops/hooks/test_guard.py`,
+- `marketplace.json` lists every plugin under `plugins/`, and each `plugin.json`
+  name matches its catalogue entry;
+- every plugin hook points at a script that exists, in `command` or `args`;
+- every Python script compiles;
+- it warns, without failing, about a plugin text above 10 KB — any `*.md`
+  under `plugins/` but a README: splitting it is a decision, not drift;
+- every `plugin.json` has a `version` of the form `MAJOR.MINOR.PATCH`, the
+  catalogue has none, and a plugin whose files changed, its README aside, has
+  a version above the base's.
+
+`Plugin tests` runs the plugins' tests — the hooks, `srv` and the start
+template. Before opening
+a pull request, its author checks by hand:
+
+- a changed hook, script or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
+  `python3 plugins/mluk-ops/hooks/test_guard.py`, `python3 plugins/mluk-ops/lib/test_srv.py`,
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`; the `Plugin tests`
   workflow runs the same on every push;
 - the changed command or skill was run once, in a real repository, after
@@ -157,7 +167,7 @@ plugins/<name>/
 scripts/check.py                  the pull-request gate, run by CI
 scripts/release_notes.py          a release's notes: plugin versions, action needed
 .github/workflows/check.yml       runs the gate
-.github/workflows/hooks.yml       runs the hooks' and the start template's tests
+.github/workflows/hooks.yml       runs the plugins' tests — hooks, `srv`, the start template
 ```
 
 `commands/` is the older of the two plugin formats; Claude Code now prefers

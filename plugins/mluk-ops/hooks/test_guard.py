@@ -70,9 +70,32 @@ CASES = [
     ('ssh other.host uptime', None, ()),
     ("ssh-keygen -t ed25519 -f ~/.ssh/k -C 'api.example.test'", None, ()),
     ('rsync -a ./x deploy@203.0.113.7:/tmp/', 'deny', ()),
-    # srv glued to something else
+    # srv glued to something else: its calls are still classified
     (f"{SRV} box 'uptime'; rm -rf ~/x", 'ask', ()),
     (f"{SRV} nope 'uptime'", 'deny', ()),
+    (f"{SRV} box 'rm -rf /srv/old' | tee out.log", 'deny', ()),
+    (f"cd /tmp && {SRV} box 'rm -rf /srv/old'", 'deny', ()),
+    ("cd /tmp && srv box 'rm -rf /srv/old'", 'deny', ()),
+    (f"export SRV_OWNER_APPROVED=1; {SRV} box 'rm -rf /srv/old'", 'deny', ()),
+    (f"export SRV_OWNER_APPROVED=1; {SRV} box 'rm -rf /srv/old'", 'ask', ('Можешь сам выполнить удаление',)),
+    (f"{SRV} box 'rm -rf /srv/old'; true", 'deny', ()),
+    (f"{SRV} box 'rm -rf /srv/old' | tail -5", 'deny', ()),
+    (f"{SRV} box 'docker compose -f x.yml ps' | tee out.log", 'ask', ()),
+    (f"cd /tmp && {SRV} box 'uptime'", 'ask', ()),
+    (f"{SRV} box 'uptime'; ssh deploy@203.0.113.7 uptime", 'deny', ()),
+    # the path quoted, as the skill writes it; an assignment inside the remote command
+    (f"\"{SRV}\" box 'rm -rf /srv/old'", 'deny', ()),
+    (f"\"{SRV}\" box 'uptime'", 'allow', ()),
+    (f"{SRV} box 'X=1 rm -rf /srv/old'", 'deny', ()),
+    (f"SRV_OWNER_APPROVED=1 {SRV} box 'X=1 rm -rf /srv/old'", 'deny', ()),
+    (f"{SRV} box 'LC_ALL=C df -h'", 'allow', ()),
+    # a line that does not parse is classified whole
+    (f"{SRV} box 'rm -rf /srv/old", 'deny', ()),
+    (f"{SRV} box 'uptime", 'ask', ()),
+    # the boundary: calls the hook never sees — srv itself refuses an irreversible one (lib/test_srv.py)
+    (f"echo \"SRV_OWNER_APPROVED=1 {SRV} box 'rm -rf /x'\" | sh", None, ()),
+    (f"python3 -c \"import os; os.system('{SRV} box rm -rf /y')\"", None, ()),
+    ('bash ./deploy-all.sh', None, ()),
 ]
 
 
