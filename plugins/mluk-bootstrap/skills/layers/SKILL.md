@@ -34,6 +34,11 @@ result worse. The mechanical layer takes the decision away: a hook fires every
 time, a command runs a fixed procedure with confirmation points. A rule written
 only as prose is obeyed probabilistically.
 
+## A finding that comes back
+
+The rule for a mechanism found a second time — where it moves and who
+decides — is `mluk-repo:kickoff`, step 8.
+
 ## Keeping it cheap
 
 The harness is paid for by every session.

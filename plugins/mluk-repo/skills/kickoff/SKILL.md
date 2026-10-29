@@ -129,12 +129,16 @@ rename does not need this.
    the branch chain (to staging, to production) happens in batches, only when
    the owner asks for it — not once per task.
 
-8. **A problem that recurs** — the same class of mistake met again by a
+8. **A problem that recurs** — the same mechanism met a second time by a
    review, a check, a hook or the owner (a test missing for new behaviour, a
-   gate failing the same way) — gets a one-line proposal of the rule that would
-   have prevented it while working, in the project's repository: AGENTS.md, a
-   project skill, a lint rule, a hook. A deterministic check beats a prose
-   rule; one sighting is not yet a pattern.
+   gate failing the same way) — gets a one-line proposal moving it to the
+   cheapest layer that would have caught it while working: in the project's
+   repository — AGENTS.md, a project skill, a lint rule, a hook — or, when
+   the rule survives a change of project, in `mluk-agent-tools`. The owner
+   decides where, and whether. Name the mechanism ("a fix closed one state
+   of a request and left its twin"), not the incident ("the retry button in
+   the feed"). A deterministic check beats a prose rule; a single sighting is
+   a fix, not a rule.
 
 ## How not to do it
 
