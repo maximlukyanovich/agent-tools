@@ -76,7 +76,13 @@ and never copies the second from a demo.
 7. **Verify against the design, not against the code compiling.** Open the
    page, measure what the kit specifies (sizes, offsets, colours, states, both
    themes, the narrow viewport, reduced motion) and compare numbers, then look at
-   the screenshot. A dev server may not pick up a newly created stylesheet added
+   the screenshot. Before the first number, check that
+   `window.devicePixelRatio` is 1: the browser keeps a zoom level per host,
+   and every size read at another scale is off by its factor. Not 1 → open
+   the same server under another host (`127.0.0.1` for `localhost`) and
+   measure nothing fractional until it reads 1. Observed on a live project:
+   `localhost` opened at 80%, borders measured 1.25 px, and device-metrics
+   emulation did not reset the zoom. A dev server may not pick up a newly created stylesheet added
    through an import, or an edit to the global stylesheet — when the served rule
    demonstrably differs from the file, ask the owner to restart it before
    debugging the CSS.
@@ -107,6 +113,6 @@ and never copies the second from a demo.
 
 Every kit value the port depends on can be pointed to in the kit source that was
 read in the same session. The rendered page measures to those values in both
-themes and at a phone width. Web-only additions are marked in the stylesheet.
+themes and at a phone width, at a device pixel ratio of 1. Web-only additions are marked in the stylesheet.
 Kit flaws found on the way are listed for the owner, with the fix proposed for
 the kit.
