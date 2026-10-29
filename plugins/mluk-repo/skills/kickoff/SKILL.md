@@ -72,6 +72,11 @@ rename does not need this.
    the docs URL; and one line on **why not the structural option** — the
    change that would make the bad state impossible to express (a reset by
    key, a reducer, a discriminated union).
+   When the plan describes access — who sees what, and where — the state
+   table serves better as a who × where table with the states before and
+   after a reset (a link reissued, rights revoked), and under it the events
+   that move a person between columns mid-flow: a missed combination is an
+   empty cell.
    The plan is written in the language of the chat — the owner reads it in the
    approval dialog. Identifiers, paths and class names stay as they are;
    committed text (commits, PR bodies, code comments) keeps the repository's
