@@ -59,7 +59,9 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    tree, in the review and before the push, and the targeted checks between
    edits and in a commit: does every code path have a `targeted checks` row
    whose command narrows, and does a gate of several parts skip a part whose
-   content is unchanged? Does lint-staged run the formatter after the linter's
+   content is unchanged — and does every path a part excludes name its probe,
+   by the checklist's "The gate is fast"
+   (`${CLAUDE_PLUGIN_ROOT}/reference/checklist.md`)? Does lint-staged run the formatter after the linter's
    fixes? The wrong order leaves linter edits unformatted while the hook
    passes, and the gate fails a commit later.
 
