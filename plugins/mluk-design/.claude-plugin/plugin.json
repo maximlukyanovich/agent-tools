@@ -1,6 +1,6 @@
 {
   "name": "mluk-design",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Working against a design kit (a component library with markup and CSS, e.g. a Claude Design project): porting it into the codebase and what to do when the kit itself is wrong. Enable in projects that have a kit.",
   "author": {
     "name": "Maxim Lukyanovich",

@@ -17,7 +17,10 @@ the owner's decisions — recorded, not remembered.
 
 Any task whose answer is not obvious from one file: a feature, an integration,
 a refactor across modules, a workflow change. A typo, a one-line fix or a
-rename does not need this.
+rename does not need this. `/mluk-repo:task` names the change's level first —
+small, normal or critical ("The change's level" there): a small change takes
+a short plan in chat and the owner's yes instead of steps 1, 3 and 6, and its
+yes is the approval this skill asks for.
 
 ## How to do it
 
@@ -63,13 +66,20 @@ rename does not need this.
    A change to state — a hook's or a component's lifecycle, a store, a state
    machine, an async flow, a timer — adds three things: a **state table**
    (state × event → expected → its proof, a test or a live check by
-   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`; in UI, every element that
+   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`; its rows include the state
+   lists of the project's testing skill — the profile's `testing skill`,
+   loaded before the table is written; in UI, every element that
    leaves while it may hold the focus — a button its own press replaces, a
    row a re-read removes — with where the focus goes); **what we rely on in
    the framework**, each point with `file:line` in the library's source or
    the docs URL; and one line on **why not the structural option** — the
    change that would make the bad state impossible to express (a reset by
    key, a reducer, a discriminated union).
+   When the plan describes access — who sees what, and where — the state
+   table serves better as a who × where table with the states before and
+   after a reset (a link reissued, rights revoked), and under it the events
+   that move a person between columns mid-flow: a missed combination is an
+   empty cell.
    The plan is written in the language of the chat — the owner reads it in the
    approval dialog. Identifiers, paths and class names stay as they are;
    committed text (commits, PR bodies, code comments) keeps the repository's
@@ -116,18 +126,24 @@ rename does not need this.
    commit command while the slice is uncommitted; once it is committed and
    the plan goes on, continuing here after `/compact <focus>`, or the plan's
    continue prompt for a fresh session, which `/mluk-repo:handoff` prints.
-   The task's last commit hands the review over through `commit`.
+   The task's last commit hands the review over through `commit` — to a
+   fresh session, or here for a small change while its measured diff stays
+   small; a critical change's review is never here.
    When the work is a queue of small tasks, each one ends at the base branch:
    its PR is merged there after green CI on the owner's go-ahead. Promotion up
    the branch chain (to staging, to production) happens in batches, only when
    the owner asks for it — not once per task.
 
-8. **A problem that recurs** — the same class of mistake met again by a
+8. **A problem that recurs** — the same mechanism met a second time by a
    review, a check, a hook or the owner (a test missing for new behaviour, a
-   gate failing the same way) — gets a one-line proposal of the rule that would
-   have prevented it while working, in the project's repository: AGENTS.md, a
-   project skill, a lint rule, a hook. A deterministic check beats a prose
-   rule; one sighting is not yet a pattern.
+   gate failing the same way) — gets a one-line proposal moving it to the
+   cheapest layer that would have caught it while working: in the project's
+   repository — AGENTS.md, a project skill, a lint rule, a hook — or, when
+   the rule survives a change of project, in `mluk-agent-tools`. The owner
+   decides where, and whether. Name the mechanism ("a fix closed one state
+   of a request and left its twin"), not the incident ("the retry button in
+   the feed"). A deterministic check beats a prose rule; a single sighting is
+   a fix, not a rule.
 
 ## How not to do it
 

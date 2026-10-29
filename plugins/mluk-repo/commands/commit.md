@@ -112,7 +112,7 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    `promote` skip a second identical run. When the commits close a task or a
    round of review fixes, run `/mluk-repo:handoff` for the same worktree or
    branch yourself, through the Skill tool, without asking — it prints the
-   review to run next, in a fresh session.
+   review to run next, in a fresh session, or here for a small change.
 
 ## When to stop and ask
 

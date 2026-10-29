@@ -6,7 +6,8 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       the code.
 - [ ] `CLAUDE.md` imports it and duplicates not a single line of it.
 - [ ] `.claude/project-profile.md` exists with every section an enabled plugin
-      reads; no section copies what a command answers.
+      reads; no section copies what a command answers. A project with a
+      testing skill names it in `## Task` as `testing skill`.
 - [ ] The settings file Q11 chose declares in `extraKnownMarketplaces` every
       marketplace `enabledPlugins` names — `mluk-agent-tools` (GitHub source,
       `autoUpdate`, and `ref` when Q11 pinned a release),
@@ -40,7 +41,14 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       since the last green run, not by the branch's diff — a part whose
       content is unchanged is skipped, its fingerprint taken before and after
       its checks and recorded only when the two match, and `--all` runs
-      everything; the test runner runs in parallel only where the tests share
+      everything. A part's content is everything its tool reads — its own
+      globs, the files they import, the files they read from disk (tests read
+      the stylesheets and the static assets). A path leaves a part only by a
+      probe named in a comment beside the rule — a command
+      (`tsc --listFilesOnly`) or a way to look (a search for imports and disk
+      reads in the part's files) — never by the tool's `include` or ignore
+      configuration; in doubt the path stays, since a missing path is a false
+      green. The test runner runs in parallel only where the tests share
       no outside state — a Redis-backed config, a cache or a database the dev
       stack also uses — the linter keeps a cache when no rule needs type
       information, the type-check is incremental. CI runs without these
@@ -62,6 +70,9 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       local paths and who starts the dev server or the stack
       (`agent starts`) only in the gitignored `project-profile.local.md`.
 - [ ] Every collaborator of the project can read the marketplace repository.
+- [ ] GitHub's `delete_branch_on_merge` matches the profile's `delete branch`
+      — on only with `platform` — and no branch of the chain but the last is
+      exposed to it.
 - [ ] `/mluk-repo:start` runs and prints a green table — or rows with concrete
       actions.
 

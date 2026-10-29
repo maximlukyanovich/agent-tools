@@ -1,12 +1,12 @@
 ---
-description: The next session's prompt at a phase boundary — after a task's commit, a review or a merge — as copyable blocks built from git and the review ledger. Read-only.
+description: The next session's prompt at a phase boundary — after a task's commit, a review or a merge — as copyable blocks built from git and the review ledger; for a small change, the next step here. Read-only.
 argument-hint: '[<worktree | branch>]'
 ---
 
 # /mluk-repo:handoff
 
 Every phase of a task — the work, its review, the fixes, the merge — runs in
-its own fresh session: a fresh session is cheaper than a long one and does not
+its own fresh session, a small change's phases aside: a fresh session is cheaper than a long one and does not
 confirm its own reasons. It needs a prompt that points at the plan, the ledger
 and the branch instead of retelling them. This command prints that prompt.
 
@@ -30,6 +30,15 @@ A folder or a local branch — the work to hand off, by
    branch's commits (`git log --oneline origin/<base>..<branch>`). A branch
    the caller has just merged and deleted counts as merged. From the profile:
    `base branch`, `ledger`.
+
+   **The change's level** — from the first line of `/mluk-repo:task`'s
+   answer in this session, else from the plan; found nowhere — a new
+   session, a compacted context — the change is normal. With commits on the
+   branch, measure them:
+   `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/change_size.py" <branch> --base <base>`
+   (`${CLAUDE_PLUGIN_ROOT}/reference/change-size.md`). A small change whose
+   measure reads `normal` becomes normal, said in one line with the
+   script's reason; the measure never lowers a level.
 
 2. **Read the ledger** for the branch, named as `review` names it — only
    `Trajectory`, `Open` and the last pass's head and verdict.
@@ -65,7 +74,8 @@ A folder or a local branch — the work to hand off, by
    ```
 
 5. **Print** each block as its own code block, with one line above it saying
-   it goes to a fresh session — or, for the commit, that it runs here.
+   it goes to a fresh session — or, for the commit and for every block of a
+   small change measured small, that it runs here.
    Alternatives are separate blocks, so each copies alone. The text and the
    first block name the same step, the nearest one: while a commit or another
    step of the task is ahead, the block is for it, and a review command
@@ -78,7 +88,9 @@ A folder or a local branch — the work to hand off, by
   the next block is the fix, and the next review reads the fix and the new
   commits in one pass.
 - One phase, one fresh session. A review never runs in the session that wrote
-  the code, a merge never in the session that reviewed it.
+  the code, a merge never in the session that reviewed it — except for a
+  small change measured small, whose review and merge run where it was made.
+  A critical change's review is always fresh.
 - `/compact` only inside a long phase that is not finished. At a boundary the
   fresh session is the cheaper option.
 - Links, not retelling: paths, ids, shas. The next session reads the plan and

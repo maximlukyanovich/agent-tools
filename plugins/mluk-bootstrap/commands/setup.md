@@ -45,7 +45,10 @@ The order is fixed. Steps are not reordered or skipped.
    plugin. The list and its split into rounds are in
    `${CLAUDE_PLUGIN_ROOT}/reference/questions.md` — eleven questions, and the
    most valuable is "what has already gone wrong here", because without it the
-   hook set comes out speculative. Wait for the answers.
+   hook set comes out speculative. Before Q5, read the facts its branch
+   deletion question carries — the setting, the default and the protected
+   branches — read only; that question alone has no recommendation. Wait for
+   the answers.
 
 3. **Show the plan**: which files will be created, which changed, which left
    alone, and which library commands the project will use as they are. Wait

@@ -81,7 +81,10 @@ stops after printing the PR URL.
      `gh run view <run-id> --log-failed`; no retry, no bypass. No CI configured
      → say so and state when `validate` last ran.
    - Re-confirm, then `gh pr merge <n> --<merge method>` plus
-     `--delete-branch` when the profile says so. Never `--squash` unless the
+     `--delete-branch` when `delete branch` is `merge` (or `yes`, or
+     missing). With `ask`, ask after the merge whether to delete the remote
+     branch; with `platform`, GitHub deletes it and the command touches only
+     the local branch and the worktree. Never `--squash` unless the
      profile's method is squash; never `--admin`. Verify with
      `gh pr view <n> --json state,mergedAt`.
    - `git fetch origin <target> --quiet && git checkout <target> && git pull
@@ -94,8 +97,9 @@ stops after printing the PR URL.
      nor `--delete-branch` (which checks it out too) works from the worktree.
      Merge without `--delete-branch`, then, from the main tree and each on
      confirmation: pull the target there (`--ff-only`), `git worktree remove
-     <folder>`, `git branch -d <branch>`, and, when the profile deletes
-     branches, `git push origin --delete <branch>`. Offer this cleanup by
+     <folder>`, `git branch -d <branch>`, and `git push origin --delete
+     <branch>` — without asking under `merge`, on a yes under `ask`, never
+     under `platform`. Offer this cleanup by
      default — a merged worktree left behind is clutter nobody asked for.
 
 7. **Wrap up**: PR URL and status (`opened` / `merged` / `pending CI`), the

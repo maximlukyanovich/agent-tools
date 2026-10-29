@@ -1,5 +1,5 @@
 ---
-description: Kick off a task — parse the brief, decide about a branch with confirmation, load the flavour's skills from the profile, explore, ask by the kickoff method, and return a plan. No production code until the plan is approved.
+description: Kick off a task — parse the brief, decide about a branch with confirmation, load the flavour's skills from the profile, explore, ask by the kickoff method, and return a plan — a short one in chat for a small change. No production code until the plan is approved.
 argument-hint: '[worktree] [<flavour>] <task description>'
 ---
 
@@ -12,7 +12,7 @@ first; steps 5–7 follow it.
 
 **Only plans.** Writes no production code, does not commit, does not call
 `gh`. Reads `## Task` (`flavours`, `brief sources`, `branch prefix`, `blast
-radius`) and `## Repository` (`base branch`).
+radius`, `testing skill`) and `## Repository` (`base branch`).
 
 ## Arguments
 
@@ -30,6 +30,28 @@ the tree busy; on a free tree a worktree only adds setup.
 
 No arguments → take the brief from a `docs/local/` note or a GitHub issue the
 owner names, or ask. There is no tracker.
+
+## The change's level
+
+The first line of the answer names it, predicted from the brief and the
+exploration — there is no diff yet. Every fresh session starts by re-reading
+the harness and the task, and a handoff is worth that only when the phase it
+closes was large.
+
+- **small** — prose, or a change that keeps behaviour, within the thresholds
+  `/mluk-repo:handoff` measures (at most 100 lines and 5 files, prose alone
+  up to 300; `${CLAUDE_PLUGIN_ROOT}/reference/change-size.md`), and in no
+  risk class of the testing skill. Steps 1–4 and the testing skill as usual;
+  then a short plan in chat — what changes, which files, how it is proven —
+  and the owner's yes take the place of steps 5–7 and plan mode. The review
+  and the merge run in this session;
+- **critical** — money, access, a migration, deleted data. Its review runs
+  only in a fresh session;
+- **normal** — everything else, by the steps below.
+
+The owner may raise the level at any time; the agent never lowers a critical
+one. Observed on a live project: a 31-line documentation change took nine
+sessions, nearly nine tenths of its cost spent on their starts.
 
 ## Steps
 
@@ -97,7 +119,14 @@ owner names, or ask. There is no tracker.
 5. **Ask** what the code cannot answer, by the `kickoff` questionnaire rules.
 
 6. **Produce the plan** by the `kickoff` shape — the state table included
-   when state changes — plus the proof each slice needs (tests, browser
+   when state changes. Before writing it, load the skill the profile's
+   `testing skill` names, whatever the flavour — without the key,
+   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`: its proof by risk sets the
+   plan's verification, and its state lists — a write while another is in
+   flight, data out of date while a re-read runs — become rows of the state
+   table. Observed on a live project: a 22-row state table held neither
+   kind, and three of the first review's seven majors were rows of them.
+   Then the proof each slice needs (tests, browser
    check, migration), the effect on live data when `blast radius` names
    operations the plan touches — explicitly, even when "none" — and the
    documentation to update.
@@ -106,7 +135,8 @@ owner names, or ask. There is no tracker.
 
 ## Hard rules
 
-- No production code before the plan is explicitly approved; no draft files.
+- No production code before the plan is explicitly approved — for a small
+  change, the owner's yes to the short plan; no draft files.
 - No `git checkout -b` / `git switch` without confirmation.
 - Never lose uncommitted work.
 - Do not invent requirements, fields, semantics or library behaviour — a gap

@@ -1,6 +1,6 @@
 # The plugins' hooks are code that runs on every Write/Edit or Bash call in the projects that enable
-# them, srv carries every command an agent sends to a server, and the template setup copies runs in
-# every project it sets up; their tests run here on every push and pull request, since no project's
+# them, srv carries every command an agent sends to a server, the template setup copies runs in
+# every project it sets up, and change_size.py decides whether a review leaves the session; their tests run here on every push and pull request, since no project's
 # CI covers them until the copy is made.
 name: Plugin tests
 
@@ -28,3 +28,5 @@ jobs:
         run: python3 plugins/mluk-ops/lib/test_srv.py
       - name: mluk-bootstrap start template
         run: node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'
+      - name: mluk-repo change_size
+        run: python3 plugins/mluk-repo/scripts/test_change_size.py

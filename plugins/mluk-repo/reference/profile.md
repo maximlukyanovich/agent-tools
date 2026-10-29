@@ -49,7 +49,7 @@ hold in every clone.
 | `commit preset` | `gitmoji-conventional` | `commit` |
 | `commit confirm` | `ask` — stage and show the draft, commit on go-ahead; `auto` — the invocation is the authorisation | `commit` |
 | `merge method` | `merge` (no squash, no rebase) | `create-pr`, `promote` |
-| `delete branch` | `yes` for feature branches after merge, safe form only | `create-pr` |
+| `delete branch` | `merge` — who deletes the remote feature branch after a merge: `ask` — the command asks; `merge` — the merge does (`yes` is its older spelling); `platform` — GitHub's automatic deletion. The local branch goes on confirmation, safe form only | `create-pr` |
 | `pr language` | `en` | `create-pr`, `promote` |
 | `post-merge checks` | none — commands to run after a `sync` (e.g. `makemigrations --check`) | `sync` |
 
@@ -81,6 +81,7 @@ change there reaches every file, so it runs `validate`.
 | `brief sources` | inline, `docs/local/` note, GitHub issue | `task`, `next` |
 | `branch prefix` | `feat|fix|refactor|chore|docs|perf/<kebab-slug>` off the base branch | `task` |
 | `blast radius` | none — operations that must be named in every plan (e.g. anything that orphans live sessions) | `task` |
+| `testing skill` | none — the project's skill that holds proof by risk and the state lists; `task` loads it before the plan, and without it `reference/proof.md` | `task` |
 
 ## Checks
 
