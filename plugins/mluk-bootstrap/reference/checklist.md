@@ -6,7 +6,8 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       the code.
 - [ ] `CLAUDE.md` imports it and duplicates not a single line of it.
 - [ ] `.claude/project-profile.md` exists with every section an enabled plugin
-      reads; no section copies what a command answers.
+      reads; no section copies what a command answers. A project with a
+      testing skill names it in `## Task` as `testing skill`.
 - [ ] The settings file Q11 chose declares in `extraKnownMarketplaces` every
       marketplace `enabledPlugins` names — `mluk-agent-tools` (GitHub source,
       `autoUpdate`, and `ref` when Q11 pinned a release),

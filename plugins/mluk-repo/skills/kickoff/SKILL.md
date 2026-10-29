@@ -63,7 +63,9 @@ rename does not need this.
    A change to state — a hook's or a component's lifecycle, a store, a state
    machine, an async flow, a timer — adds three things: a **state table**
    (state × event → expected → its proof, a test or a live check by
-   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`; in UI, every element that
+   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`; its rows include the state
+   lists of the project's testing skill — the profile's `testing skill`,
+   loaded before the table is written; in UI, every element that
    leaves while it may hold the focus — a button its own press replaces, a
    row a re-read removes — with where the focus goes); **what we rely on in
    the framework**, each point with `file:line` in the library's source or

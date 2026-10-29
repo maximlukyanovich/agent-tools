@@ -43,7 +43,9 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    sections the enabled plugins read (`${CLAUDE_PLUGIN_ROOT}/reference/
    project-profile.md`)? A missing section makes the library ask the same
    question every session. A copied fact (a list an API answers) is a second
-   truth going stale.
+   truth going stale. A project skill that holds proof by risk or the state
+   lists, while `## Task` has no `testing skill`, is a finding: propose the
+   key, since `/mluk-repo:task` otherwise plans from `proof.md` alone.
 
 5. **A rule on the wrong layer.** A paragraph of prose about something a linter
    rule expresses — move it down. A hook that needs contextual judgement — move

@@ -12,7 +12,7 @@ first; steps 5–7 follow it.
 
 **Only plans.** Writes no production code, does not commit, does not call
 `gh`. Reads `## Task` (`flavours`, `brief sources`, `branch prefix`, `blast
-radius`) and `## Repository` (`base branch`).
+radius`, `testing skill`) and `## Repository` (`base branch`).
 
 ## Arguments
 
@@ -97,7 +97,14 @@ owner names, or ask. There is no tracker.
 5. **Ask** what the code cannot answer, by the `kickoff` questionnaire rules.
 
 6. **Produce the plan** by the `kickoff` shape — the state table included
-   when state changes — plus the proof each slice needs (tests, browser
+   when state changes. Before writing it, load the skill the profile's
+   `testing skill` names, whatever the flavour — without the key,
+   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`: its proof by risk sets the
+   plan's verification, and its state lists — a write while another is in
+   flight, data out of date while a re-read runs — become rows of the state
+   table. Observed on a live project: a 22-row state table held neither
+   kind, and three of the first review's seven majors were rows of them.
+   Then the proof each slice needs (tests, browser
    check, migration), the effect on live data when `blast radius` names
    operations the plan touches — explicitly, even when "none" — and the
    documentation to update.

@@ -81,6 +81,7 @@ change there reaches every file, so it runs `validate`.
 | `brief sources` | inline, `docs/local/` note, GitHub issue | `task`, `next` |
 | `branch prefix` | `feat|fix|refactor|chore|docs|perf/<kebab-slug>` off the base branch | `task` |
 | `blast radius` | none — operations that must be named in every plan (e.g. anything that orphans live sessions) | `task` |
+| `testing skill` | none — the project's skill that holds proof by risk and the state lists; `task` loads it before the plan, and without it `reference/proof.md` | `task` |
 
 ## Checks
 
