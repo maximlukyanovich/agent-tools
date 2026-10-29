@@ -1,5 +1,5 @@
 ---
-description: Kick off a task — parse the brief, decide about a branch with confirmation, load the flavour's skills from the profile, explore, ask by the kickoff method, and return a plan. No production code until the plan is approved.
+description: Kick off a task — parse the brief, decide about a branch with confirmation, load the flavour's skills from the profile, explore, ask by the kickoff method, and return a plan — a short one in chat for a small change. No production code until the plan is approved.
 argument-hint: '[worktree] [<flavour>] <task description>'
 ---
 
@@ -30,6 +30,28 @@ the tree busy; on a free tree a worktree only adds setup.
 
 No arguments → take the brief from a `docs/local/` note or a GitHub issue the
 owner names, or ask. There is no tracker.
+
+## The change's level
+
+The first line of the answer names it, predicted from the brief and the
+exploration — there is no diff yet. Every fresh session starts by re-reading
+the harness and the task, and a handoff is worth that only when the phase it
+closes was large.
+
+- **small** — prose, or a change that keeps behaviour, within the thresholds
+  `/mluk-repo:handoff` measures (at most 100 lines and 5 files, prose alone
+  up to 300; `${CLAUDE_PLUGIN_ROOT}/reference/change-size.md`), and in no
+  risk class of the testing skill. Steps 1–4 and the testing skill as usual;
+  then a short plan in chat — what changes, which files, how it is proven —
+  and the owner's yes take the place of steps 5–7 and plan mode. The review
+  and the merge run in this session;
+- **critical** — money, access, a migration, deleted data. Its review runs
+  only in a fresh session;
+- **normal** — everything else, by the steps below.
+
+The owner may raise the level at any time; the agent never lowers a critical
+one. Observed on a live project: a 31-line documentation change took nine
+sessions, nearly nine tenths of its cost spent on their starts.
 
 ## Steps
 
@@ -113,7 +135,8 @@ owner names, or ask. There is no tracker.
 
 ## Hard rules
 
-- No production code before the plan is explicitly approved; no draft files.
+- No production code before the plan is explicitly approved — for a small
+  change, the owner's yes to the short plan; no draft files.
 - No `git checkout -b` / `git switch` without confirmation.
 - Never lose uncommitted work.
 - Do not invent requirements, fields, semantics or library behaviour — a gap

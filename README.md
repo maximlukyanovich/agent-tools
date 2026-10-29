@@ -132,7 +132,8 @@ Language follows the conversation; pass a language code to override.
 
 ## Everyday use
 
-With `mluk-repo`, a task runs in phases, each in a fresh session, and every
+With `mluk-repo`, a task runs in phases, each in a fresh session — a small
+change runs whole in one — and every
 command ends with the next step as a block ready to copy:
 
 ```bash

@@ -23,7 +23,8 @@ Language: the conversation's, unless `$1` gives a code.
    `fix` while findings are open (it calls `commit`) → `review` of its delta →
    `sync` when the base moved → `create-pr` or `promote`; `update-docs` before
    a commit that changed behaviour; `handoff` at each boundary, each phase in
-   a fresh session — `commit`, `review`, `create-pr` and `promote` call it.
+   a fresh session, a small change's in one — `commit`, `review`,
+   `create-pr` and `promote` call it.
    `fix` is a round on the ledger's findings; `review … fix` only applies a
    few mechanical fixes after a report.
 

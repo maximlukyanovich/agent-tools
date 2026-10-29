@@ -17,7 +17,10 @@ the owner's decisions — recorded, not remembered.
 
 Any task whose answer is not obvious from one file: a feature, an integration,
 a refactor across modules, a workflow change. A typo, a one-line fix or a
-rename does not need this.
+rename does not need this. `/mluk-repo:task` names the change's level first —
+small, normal or critical ("The change's level" there): a small change takes
+a short plan in chat and the owner's yes instead of steps 1, 3 and 6, and its
+yes is the approval this skill asks for.
 
 ## How to do it
 
@@ -123,7 +126,9 @@ rename does not need this.
    commit command while the slice is uncommitted; once it is committed and
    the plan goes on, continuing here after `/compact <focus>`, or the plan's
    continue prompt for a fresh session, which `/mluk-repo:handoff` prints.
-   The task's last commit hands the review over through `commit`.
+   The task's last commit hands the review over through `commit` — to a
+   fresh session, or here for a small change while its measured diff stays
+   small; a critical change's review is never here.
    When the work is a queue of small tasks, each one ends at the base branch:
    its PR is merged there after green CI on the owner's go-ahead. Promotion up
    the branch chain (to staging, to production) happens in batches, only when

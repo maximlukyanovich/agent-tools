@@ -18,6 +18,8 @@ a PR only on an explicit yes at the end.
 session remembers its own reasons and tends to confirm them. Everything a review
 needs from the past is in the ledger, not in the conversation. The fresh
 session may sit in the main tree: a branch in a worktree is reached by name.
+A small change (`/mluk-repo:task`, "The change's level") is reviewed in the
+session that made it; a critical one never is.
 
 ## Arguments
 
@@ -113,7 +115,9 @@ never rewritten.
 4. **Frame the scope** in one line from the branch name, PR text and commit
    subjects: a whole task or a slice? What a slice leaves out is not a missing
    feature — at most "expected in a follow-up". If this session edited files in
-   the diff, say so in the header and recommend a fresh session.
+   the diff, say so in the header and recommend a fresh session — except for
+   a small change, which recommends nothing; for a critical change, stop and
+   print this review command as a block for a fresh session.
 
 5. **Run the rubric, blind.** Do not open the ledger's findings yet — reading a
    previous verdict first anchors this one. General lenses: `bug` (unhandled
