@@ -63,7 +63,12 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    by the checklist's "The gate is fast"
    (`${CLAUDE_PLUGIN_ROOT}/reference/checklist.md`)? Does lint-staged run the formatter after the linter's
    fixes? The wrong order leaves linter edits unformatted while the hook
-   passes, and the gate fails a commit later.
+   passes, and the gate fails a commit later. Does GitHub's
+   `delete_branch_on_merge` agree with the profile's `delete branch` — on
+   with `platform`, off otherwise (`yes` reads as `merge`) — and is no branch
+   of the chain but the last exposed to it, neither protected nor the
+   default? A mismatch or an exposed branch is a finding with a question to
+   the owner, never an edit; the facts go into the report.
 
 8. **Gaps.** Layers from the model that are absent. Absence is allowed — but it
    must be deliberate and written down, with the conditions that would fill it.

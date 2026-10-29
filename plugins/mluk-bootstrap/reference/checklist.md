@@ -70,6 +70,9 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       local paths and who starts the dev server or the stack
       (`agent starts`) only in the gitignored `project-profile.local.md`.
 - [ ] Every collaborator of the project can read the marketplace repository.
+- [ ] GitHub's `delete_branch_on_merge` matches the profile's `delete branch`
+      — on only with `platform` — and no branch of the chain but the last is
+      exposed to it.
 - [ ] `/mluk-repo:start` runs and prints a green table — or rows with concrete
       actions.
 

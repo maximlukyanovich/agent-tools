@@ -54,6 +54,38 @@ develop → main`; a `staging` stage by answer. Where a PR goes by default, what
 protected from direct pushes, whether an `upstream` exists that must never be
 touched. All of it lands in the profile's `## Repository`.
 
+Then **who deletes a merged branch on GitHub** — the owner's decision, the
+one question asked with the facts and **without a recommendation**, written
+as `delete branch`:
+
+- `ask` — after the merge, `/mluk-repo:create-pr` asks whether to delete the
+  remote branch;
+- `merge` — the merge deletes it: `gh pr merge --delete-branch`, or
+  `git push origin --delete` for a branch in a worktree. The default without
+  the key, and what an older `yes` means;
+- `platform` — GitHub's "Automatically delete head branches" deletes it, and
+  the command removes only the local branch and the worktree.
+
+The facts come before the question, read only:
+
+- the setting — `gh api repos/{owner}/{repo} --jq .delete_branch_on_merge`;
+- the default branch and which branches of the chain are protected
+  (`gh api repos/{owner}/{repo}/branches/<branch>/protection` — 404 when
+  the branch has none, 403 when the repository's plan offers no protection,
+  and then no branch is protected);
+- the branch the setting would delete: any branch of the chain but the last
+  that is neither protected nor the default — an unprotected `staging` after
+  a `staging → main` pull request. GitHub never deletes the default branch,
+  and a protection rule that does not allow deletions — its default —
+  keeps a branch too; a pull request from a fork follows the fork's
+  setting;
+- who may change the setting: an admin of the repository.
+
+On `platform` with a branch exposed, `setup` names it again and offers to
+protect it. It changes the setting only on a separate yes, by the command it
+shows — `gh api -X PATCH repos/{owner}/{repo} -F delete_branch_on_merge=true`;
+without admin rights it prints that step for someone who has them.
+
 **Q6. Commit convention.** Default `gitmoji-conventional` — `:gitmoji:
 type(scope): Subject`, body one bullet per point. Alternative `topic-prose` —
 `Topic: description` with a prose body and a closing `Tests:` line. Ask whether
