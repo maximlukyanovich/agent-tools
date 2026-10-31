@@ -44,8 +44,8 @@ holds the gate rule — targeted checks between edits, the full `validate`
 once per tree — and `reference/proof.md` what proves a change;
 `reference/change-size.md` is what `change_size.py` measures,
 `reference/review-target.md` what `review_target.py` sets as a pass's
-target, and `reference/review-rubric.md` the lenses `review` and its agent
-read.
+target, `reference/review-rubric.md` the lenses `review` and its agent
+read, and `reference/review-reasons.md` why `review` works as it does.
 
 ## Agents
 

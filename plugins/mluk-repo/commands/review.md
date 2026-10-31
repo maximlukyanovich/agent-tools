@@ -14,9 +14,8 @@ profile's `base branch`, through the library rubric plus the project lenses in
 file it writes is its own ledger (below). Code edits only with `fix`; posting to
 a PR only on an explicit yes at the end.
 
-**Run it in a fresh session**, not the one that wrote the code. The authoring
-session remembers its own reasons and tends to confirm them. Everything a review
-needs from the past is in the ledger, not in the conversation. The fresh
+**Run it in a fresh session**, not the one that wrote the code: everything a
+review needs from the past is in the ledger. The fresh
 session may sit in the main tree: a branch in a worktree is reached by name.
 A small change (`/mluk-repo:task`, "The change's level") is reviewed in the
 session that made it; a critical one never is.
@@ -67,9 +66,8 @@ never rewritten.
 - A diff under ~25 files and ~2000 lines is reviewed inline. Past either,
   delegate **by file group** to the `mluk-repo:review-group` agent, in
   parallel, cap 4–6 — read-only, on the session's model unless `model=`
-  names another, passed as the Agent call's `model`. Not a cheaper default:
-  on a large diff the groups are what reads the code, and the refutation of
-  step 6 drops false findings but never recovers missed ones. Each gets the
+  names another, passed as the Agent call's `model` — not a cheaper
+  default. Each gets the
   tree, the base, its slice of the diff, the path of the rubric file of
   step 5 — which it reads itself — and the project lenses, **not the
   ledger**, and returns finding lines, never diff.
@@ -114,8 +112,7 @@ never rewritten.
    a small change, which recommends nothing; for a critical change, stop and
    print this review command as a block for a fresh session.
 
-5. **Run the rubric, blind.** Do not open the ledger's findings yet — reading a
-   previous verdict first anchors this one. The rubric is
+5. **Run the rubric, blind.** Do not open the ledger's findings yet. The rubric is
    `${CLAUDE_PLUGIN_ROOT}/reference/review-rubric.md` — the general lenses
    and the checks across them — with the project lenses from `## Review` at
    the same weight.
@@ -136,10 +133,7 @@ never rewritten.
    for). A recorded false positive is not raised again without a new mechanism.
    On a delta pass, a `missed` finding in lines the delta does not change is
    written out only at `major` and above; the rest are counted, not listed —
-   a line in the report's opening block and in the ledger's pass. They
-   survived the passes that read them, and listing them is what kept a large
-   range from converging: each full repeat found a fresh batch of old nits.
-   The first pass and `full` list everything.
+   a line in the report's opening block and in the ledger's pass. The first pass and `full` list everything.
 
 8. **Assemble the report.** It always opens with the same block, on every
    pass, zeros included — the owner compares passes by it (labels in the
@@ -169,9 +163,7 @@ never rewritten.
    `security` finding goes only to techdebt, or where the owner's word puts
    it. The ledger records the place as the status, the owner's word
    overturns it, and the fix round writes the techdebt rows. These do not
-   hold the merge, and none stays `open` past it: the ledger lives outside
-   git, by branch, so an `open` is lost after the merge, and `next` sees
-   only techdebt with a priority. When a finding's class
+   hold the merge, and none stays `open` past it. When a finding's class
    has come up before — in earlier passes of this ledger, in other ledgers, or
    in several places of this diff — add one line proposing the rule in the
    project's repository that would prevent it during the work (kickoff step
@@ -182,12 +174,9 @@ never rewritten.
    A ready verdict with `fix-now` ids open, or techdebt rows still to write,
    offers one fix round on them first, a pass over that round's delta alone
    next, and the promote last; without them, the promote. The promote goes
-   first only on the owner's word to ship now: a fix in the same unmerged
-   branch is one commit, one delta and one PR, and after the merge it is a
-   new branch, a PR, CI and a review. When the verdict reads ready and the
-   growth is `missed` findings in code older than the delta, the range closes
-   that way — not with another full pass, which on a large range finds a
-   fresh batch of old nits every time.
+   first only on the owner's word to ship now. When the verdict reads ready
+   and the growth is `missed` findings in code older than the delta, the
+   range closes that way — not with another full pass.
 
 9. **Append the pass to the ledger** — without asking; it is gitignored and
    holds only the review's own memory. Update statuses the owner stated.
