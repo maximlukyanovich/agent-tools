@@ -136,7 +136,10 @@ Two workflows gate every pull request and `main`. `Check` runs
   under `plugins/` but a README: splitting it is a decision, not drift;
 - every `plugin.json` has a `version` of the form `MAJOR.MINOR.PATCH`, the
   catalogue has none, and a plugin whose files changed, its README aside, has
-  a version above the base's.
+  a version above the base's;
+- no commit of the range, and in CI no pull-request body, carries agent
+  attribution — a co-author trailer naming Claude, a "Generated with Claude
+  Code" line.
 
 `Plugin tests` runs the plugins' tests — the hooks, `srv`, the start
 template and `change_size.py`. Before opening
