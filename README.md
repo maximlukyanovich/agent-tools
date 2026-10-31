@@ -182,6 +182,9 @@ claude plugin update mluk-repo@mluk-agent-tools --scope project   # each install
 
 Updating delivers the method; it never edits a project — what `setup` wrote
 stays the project's, and `/mluk-bootstrap:audit` proposes the edits.
+`/mluk-repo:start` says when: the `Harness:` line of `.claude/COMMANDS.md`
+names the `mluk-bootstrap` version the harness last matched, and an
+installed version ahead of it is a `⚠`.
 
 ### Releases
 

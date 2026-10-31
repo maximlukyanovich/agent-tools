@@ -42,8 +42,10 @@ Project-specific review lenses added to the library rubric — a security check
 that matters here, a data-loss path, a contract that clients rely on.
 
 ## Sources of truth
-Design source (DesignSync project id, Figma file), spec, product docs — as
-durable links, with priority order and what to do on conflict.
+Design source (Design System and Design artifact URLs, Figma file), spec,
+product docs — as durable links, with priority order and what to do on
+conflict. The design's per-screen statuses, when the project keeps them — a
+durable link and which page or status means ready.
 
 ## Languages
 Committed text, user-facing strings, conversation.

@@ -35,13 +35,9 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    immediately (`git-safety` skill). Read `git diff` by affected area for
    substance — not whole files.
 
-3. **Place a fix by the `git-safety` skill's "Amending" section.** A round of
-   review fixes: the first round is one new commit on top of the series, a
-   later round goes into that fix commit — `--amend` for `HEAD`, `--fixup`
-   and autosquash for an older one — while no remote holds it. Any other fix
-   to an unpushed commit goes into the commit it corrects. Say in one line
-   which commit took it. A pushed commit is never rewritten; the fix is a new
-   commit.
+3. **Place a fix by the `git-safety` skill's "Amending" section**, which the
+   profile's `amend unpushed` switches. Say in one line which commit took it.
+   A pushed commit is never rewritten; the fix is a new commit.
 
 4. **Run the checks** by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`,
    "The gate": the `targeted checks` rows of the changed paths, and the full

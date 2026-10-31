@@ -102,6 +102,7 @@ The order is fixed. Steps are not reordered or skipped.
    With it go a `## Checks` row — `agent plugins — <the report> — /start` —
    a `.claude/COMMANDS.md` row saying why it is local, and the README's
    «Agent tooling» (`${CLAUDE_PLUGIN_ROOT}/reference/templates.md`).
+   `.claude/COMMANDS.md` also gets its `Harness:` line, by the same file.
 
    **Local commands are the exception, not the rule.** Besides `/start`,
    which every project gets, `commit`, `create-pr`, `promote`, `review`,

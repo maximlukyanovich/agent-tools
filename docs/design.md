@@ -21,6 +21,17 @@ validate command, commit preset, glossary) are data.
 | Commands come from | the project | the plugin |
 | Updating the method | not updated; it is project code now | a raised version, through `autoUpdate` or `claude plugin update`; a pinned project moves its `ref` |
 
+**No change log for the generator.** A generator that writes the process
+commands into each project needs a log of what a project must carry over.
+Here the process commands — `task`, `commit`, `review`, `fix`, `create-pr`,
+`promote` — live in `mluk-repo` and arrive with its update; `setup` generates
+only the harness: `AGENTS.md`, the profile, `CLAUDE.md`, domain skills,
+`/start`, `docs/local/`. Its state is one line, `Harness:` in
+`.claude/COMMANDS.md`: the `mluk-bootstrap` `MAJOR.MINOR` the harness last
+matched. A minor raise is a new rule or template section — what `audit`
+checks — so it is what moves the line; `/mluk-repo:start` compares it with the
+installed plugin and points to `audit` when the plugin is ahead.
+
 **Library base, local override.** `/mluk-repo:commit` is the default in every
 project. A project that genuinely needs a different procedure — not different
 parameters — writes its own `.claude/commands/commit.md`; the two coexist under

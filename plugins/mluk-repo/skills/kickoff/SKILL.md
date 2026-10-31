@@ -31,13 +31,21 @@ yes is the approval this skill asks for.
    and the design source is not a question. Use exploration subagents for broad
    sweeps (one per area, at most three in parallel); read the critical files
    yourself afterwards. Verify library versions and APIs through the docs tool
-   rather than memory.
+   rather than memory. When the task builds screens from the design source,
+   check each screen's design status — by the Design canvas (a module's page
+   is ready, a page on review is not), by the per-screen statuses the
+   profile's `## Sources of truth` names, or by the owner's word quoted with
+   its date in the plan. A screen not ready goes into the last slice and a
+   risk line of the plan.
 
 3. **Ask what the code cannot answer** — with the questionnaire tool, not as
    prose in chat:
    - **The recommendation goes first and is marked** `(Recommended)`. Every
      other option carries a one-line trade-off, so the owner can choose without
      asking back.
+   - **A screen with no design status found is a question** of the first
+     round — where the statuses are kept, or the owner's word — and the
+     answer is recorded; "no status found" is not a finding.
    - **At most four questions a round.** More than one round is fine; a wall of
      questions is not.
    - **Multi-select where choices are not exclusive** (which providers, which

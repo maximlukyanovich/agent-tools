@@ -103,6 +103,8 @@ commands; each plugin's `help` lists them (`/mluk-repo:help` first). They read
 `project-profile.local.md`. This file lists only what the library does not
 know: the project's own commands and its overrides.
 
+Harness: mluk-bootstrap <MAJOR.MINOR> — <setup | audit> of <YYYY-MM-DD>.
+
 ## Local
 
 | Command | Mutating | What it does |
@@ -119,6 +121,13 @@ None. A local command overrides a library one only when the procedure differs
 — a parameter goes to the profile. Each override is a row here:
 `/<local>` overrides `/mluk-repo:<name>` because <reason>.
 ```
+
+The `Harness:` line is the `mluk-bootstrap` version whose templates and
+checklist the harness last matched — `MAJOR.MINOR` from
+`${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json`, since a patch changes no
+check. `setup` writes it, `audit` rewrites it as its last change, and
+`/mluk-repo:start` shows a `⚠` with `/mluk-bootstrap:audit` when the
+installed plugin is ahead of it.
 
 ## The project's /start
 

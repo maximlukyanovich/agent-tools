@@ -42,10 +42,10 @@ agent — is a habit of one machine, not a project rule: the answer goes to the
 gitignored `project-profile.local.md` (`agent starts`), and without it the
 agent starts and stops nothing.
 
-**Q4. Source of design** — only if the repository has UI. A Claude Design
-project (DesignSync, needs the project id), Figma, screenshots plus prose, or
-none. Affects the design-fidelity skill, the profile's `## Sources of truth`,
-and the MCP set.
+**Q4. Source of design** — only if the repository has UI. A Design System
+artifact and a Design canvas over it (their URLs, read with the Artifact
+tool), Figma, screenshots plus prose, or none. Affects the design-fidelity
+skill, the profile's `## Sources of truth`, and the MCP set.
 
 **Q5. Git: remote, account, chain.** GitHub with `gh`. Which account alias the
 remote uses (`git@github.com:` personal, `git@github-work:` work — the wrong one
@@ -110,7 +110,7 @@ has already gone wrong here, or anything else to add?" — with the options
 "nothing yet, all covered" and "yes, I will describe it in chat".*
 
 **Q9. External access.** Which MCP servers and CLIs exist or are needed: library
-docs (Context7), design (DesignSync, Figma), browser (Playwright). Whether there
+docs (Context7), design (the Artifact tool, Figma), browser (Playwright). Whether there
 are tokens and where they live. *Not asked: the plan states the set derived
 from the inventory, Q3 and Q4 as an assumption the owner can overturn.*
 

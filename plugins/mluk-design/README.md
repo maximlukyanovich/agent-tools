@@ -18,7 +18,7 @@ Other scopes and updating: [Quick start](../../README.md#quick-start).
 
 `/mluk-design:help` introduces the plugin and checks whether the project names a design source.
 
-Project specifics — which kit, its id, the sync tool, the paths — stay in the project.
+Project specifics — which kit, its artifact URLs, the paths — stay in the project.
 
 ## In use
 

@@ -14,8 +14,9 @@ stops after printing the PR URL.
 
 ## Arguments
 
-- `<target-branch>` — the PR base. Default: the next branch in the chain
-  (`feature/* → develop`, `develop → main`, or `staging` when the chain has it).
+- `<target-branch>` — the PR base. Default: the branch after the current one
+  in `chain` (without one, asked as `${CLAUDE_PLUGIN_ROOT}/reference/profile.md`
+  says).
 - `merge` — after the PR is open, wait for CI and merge.
 
 ## Steps

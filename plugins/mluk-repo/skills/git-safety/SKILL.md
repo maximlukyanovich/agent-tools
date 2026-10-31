@@ -31,7 +31,7 @@ cover the next one.
   protection. A broken hook is fixed, not skipped.
 - `git add -A`, `git add .`, `git add -u`. Paths are listed explicitly so the
   owner sees in chat what is staged.
-- Direct pushes to protected branches (`develop`, `main`, `staging`). They
+- Direct pushes to the branches the profile's `protected` names. They
   advance only through a merged PR.
 - Squash or rebase merges unless the profile says so. History is preserved
   with a merge commit.
@@ -44,6 +44,9 @@ cover the next one.
   left unstaged.
 
 ## Amending
+
+This section holds while the profile's `amend unpushed` is `yes`, the
+default. With `no`, every fix and every review round is a new commit.
 
 **A fix to a commit not yet pushed goes into that commit** — a bug found
 while the work goes on, a file that should have been in it, a wrong word in

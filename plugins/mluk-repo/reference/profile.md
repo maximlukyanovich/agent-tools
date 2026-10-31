@@ -40,14 +40,16 @@ hold in every clone.
 | --- | --- | --- |
 | `platform` | `github` with `gh` | all |
 | `remote account` | `personal` (`git@github.com:`); `work` means `git@github-work:` | `create-pr`, `promote`, `start` |
-| `base branch` | `develop` | all |
-| `chain` | `feature/* → develop → main` | `promote`, `create-pr`, `next` |
-| `protected` | `develop`, `main` (and `staging` if in the chain) — never pushed directly | `commit`, `create-pr`, `promote` |
+| `base branch` | the branch after `feature/*` in `chain` | all |
+| `chain` | asked once; the chain the project's documents already name is offered first as recommended, else `feature/* → develop → main`; the answer is written down | `promote`, `create-pr`, `next` |
+| `protected` | every branch of `chain` after `feature/*` — never pushed directly | `commit`, `create-pr`, `promote` |
 | `upstream` | none; if named, never pushed to, never targeted by a PR | `promote`, `create-pr`, `next` |
 | `validate` | asked (e.g. `pnpm validate`, `make test`) | `commit`, `create-pr`, `sync`, `review` |
 | `targeted checks` | none — table "path class → command"; a step runs the rows of the paths it changed, and a path no row covers runs `validate` | `commit`, `fix`, `sync` |
 | `commit preset` | `gitmoji-conventional` | `commit` |
 | `commit confirm` | `ask` — stage and show the draft, commit on go-ahead; `auto` — the invocation is the authorisation | `commit` |
+| `worktree folder` | `../<repo>-<slug>` — beside the repository, so the main tree's linters, tests and type-check never pick it up | `task` |
+| `amend unpushed` | `yes` — a fix goes into the unpushed commit it corrects, by `git-safety` "Amending"; `no` — every fix and every review round is a new commit | `commit`, `fix` |
 | `merge method` | `merge` (no squash, no rebase) | `create-pr`, `promote` |
 | `delete branch` | `merge` — who deletes the remote feature branch after a merge: `ask` — the command asks; `merge` — the merge does (`yes` is its older spelling); `platform` — GitHub's automatic deletion. The local branch goes on confirmation, safe form only | `create-pr` |
 | `pr language` | `en` | `create-pr`, `promote` |
@@ -111,7 +113,7 @@ contract clients rely on, a language rule for user-facing strings.
 | Key | Default | Read by |
 | --- | --- | --- |
 | `ledger` | `docs/local/reviews/` — must be gitignored; one file per reviewed target | `review`, `create-pr` |
-| `design source` | none — where the visual design lives (a design-system project, a kit path); read, never written | `review` |
+| `design source` | none — where the visual design lives (a Design System artifact URL, a kit path); read, never written | `review` |
 | `consumers` | none — sibling repositories (by slug) that consume this one's contract | `review` |
 
 ## Sources of truth
@@ -120,8 +122,10 @@ Where the answer to a question lives, in priority order, and what to do when two
 of them disagree (the default: show the owner the conflict, never pick one
 silently). One line per source: the code and the schema it publishes, product
 docs (by slug when in a sibling), the design source (a durable link or id),
-third-party library docs (the docs tool before memory). `task` reads the design
-source from here when the task has UI.
+the design's per-screen statuses when the project keeps them (a durable link
+and which page or status means ready), third-party library docs (the docs tool
+before memory). `task` reads the design source and the statuses from here when
+the task has UI.
 
 ## Languages
 

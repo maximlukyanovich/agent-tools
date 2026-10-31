@@ -54,8 +54,8 @@ the owner confirms it. Nothing is committed, pushed, opened or started.
    gh pr list --state open --json number,title,headRefName,baseRefName,isDraft,reviewDecision,statusCheckRollup
    ```
 
-   For each adjacent pair in `chain` after the base (`develop → staging`,
-   `staging → main`): `git rev-list --count origin/<next>..origin/<prev>` —
+   For each adjacent pair in `chain` after the base — each hop between
+   protected branches: `git rev-list --count origin/<next>..origin/<prev>` —
    work waiting for promotion. With an `upstream` in the profile, read the
    state of the pull request into it; never act on it.
 
