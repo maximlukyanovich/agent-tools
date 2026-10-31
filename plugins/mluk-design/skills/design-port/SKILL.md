@@ -1,6 +1,6 @@
 ---
 name: design-port
-description: How a design kit (a component library with markup + CSS, e.g. a Claude Design project) is ported into a codebase — reading the source at write time, wearing kit classes on a third-party primitive whose DOM already matches, the stretched-link recipe for cards that hold buttons, real data versus demo data, and what to do when the kit itself is wrong. Use when building or changing UI against a kit. Not for projects without a design source.
+description: How a design kit (a component library with markup + CSS, e.g. a Design System artifact) is ported into a codebase — reading the source at write time, wearing kit classes on a third-party primitive whose DOM already matches, the stretched-link recipe for cards that hold buttons, real data versus demo data, and what to do when the kit itself is wrong. Use when building or changing UI against a kit. Not for projects without a design source.
 license: MIT
 metadata:
   author: Maxim Lukyanovich
@@ -14,14 +14,26 @@ copy. The codebase is the source of truth for the **engineering**: rendering
 model, data, i18n, accessibility, performance. A port matches the first exactly
 and never copies the second from a demo.
 
+## The source
+
+- **The design system is the only source** — tokens, components with live
+  cards, the prototype built into its bundle. A Design canvas over it holds a
+  copy, refreshed after the system changes; a port reads the system.
+- **Canvas pages go by status, not by date.** A module's page holds only the
+  canon, and only it is ported; a page on review holds open questions with
+  variants side by side and a recommendation; an archive keeps what was
+  decided.
+- **A decision has one number everywhere** — the canvas, its index, the
+  decisions log. A port that follows one names it in a comment.
+
 ## How to do it
 
 1. **Read the source at write time, not from memory.** The stylesheet AND the
    component code of the thing being ported, every time — a plan written from an
-   earlier read goes stale the moment the owner touches the kit. When the kit
-   arrives through a tool that returns files one by one, keep local copies in the
-   project's gitignored notes folder, named so the linter skips them; a scratch
-   directory does not survive a pause.
+   earlier read goes stale the moment the owner touches the kit. An artifact's
+   files are read with the Artifact tool (`read` with `path` or `paths`); keep
+   local copies in the project's gitignored notes folder (`out_dir`), named
+   so the linter skips them; a scratch directory does not survive a pause.
 
 2. **A third-party primitive whose DOM already matches the kit wears the kit's
    classes.** Toasts, dialogs, menus from a library often render the same
@@ -68,7 +80,7 @@ and never copies the second from a demo.
    needs the owner's explicit agreement — one place, one decision, no precedent.
    When the session can write to the design source, offer to apply the agreed
    fix or deviation there yourself instead of only describing it — the owner
-   starts the sync and approves the exact list of files first. Mechanical
+   approves the exact list of files first. Mechanical
    changes (a fix, a decided deviation, folding an accepted proposal into the
    canon, a decisions note) go this way; new visual design stays with the
    designer.
