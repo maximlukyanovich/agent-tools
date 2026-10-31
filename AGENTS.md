@@ -104,6 +104,11 @@ naming. This file holds only the rules for working on the repository itself.
   written narrowly and both are paid for in every session — except a
   command only a human runs, such as `help`, which carries
   `disable-model-invocation: true` and stays out of the model's context.
+- **A plugin text holds only rules that outlive the project.** Every line is
+  paid for in each run that loads it, so a case of one project goes to that
+  project's memory or harness. What is already there is moved or sharpened
+  before anything is added, and a rule a plugin states elsewhere is linked,
+  not repeated.
 - **`model:` goes on agents, not on commands or skills.** A command's
   override lasts one turn, and the next turn re-reads the whole history
   without cache; a subagent starts with an empty context, so its model is
@@ -150,6 +155,8 @@ a pull request, its author checks by hand:
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`,
   `python3 plugins/mluk-repo/scripts/test_change_size.py`; the `Plugin tests`
   workflow runs the same on every push;
+- the pull request names the growth in bytes of every plugin text it
+  changes; a notable growth is explained in its body or cut;
 - the changed command or skill was run once, in a real repository, after
   `claude plugin update` (or via `--plugin-dir`), and did what its text says.
 
