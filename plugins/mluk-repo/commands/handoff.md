@@ -12,7 +12,7 @@ and the branch instead of retelling them. This command prints that prompt.
 
 **Read-only**, apart from a local note when a block runs long.
 
-`commit` (when its commits close a task or a round of fixes), `review`,
+`commit` (after every commit), `review`,
 `create-pr` and `promote` run it themselves at their end, through the Skill
 tool, without asking; the owner may call it at any time. Called before a
 commit, it prints the commit command — the nearest step — not a review.
@@ -54,6 +54,7 @@ A folder or a local branch — the work to hand off, by
    | --- | --- |
    | Uncommitted changes | `/mluk-repo:commit <branch>` — it commits on its own go-ahead and hands off after |
    | Merged into the base | `/mluk-repo:next`. Findings are not listed: by now each has its place. Below the block, as plain text, only a gap, with the ledger path — an id still `open`, or a techdebt place whose row the file lacks |
+   | Commits after the ledger's last head that name no id of `Open` in their bodies, and the plan of step 3 still holds work the branch has not done | the continue prompt below for a fresh session, or `/compact <focus>` here — by the criterion below; the review waits for the task's last commit |
    | Commits after the ledger's last head, or no ledger | `/mluk-repo:review <branch> <from>..<head>` — `<from>` and `<head>` from `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/review_target.py" --ledger <ledger file> --tree <tree>`: the two shas of `delta` or `rewritten`, the merge-base with `origin/<base>` for `whole`; `none` is the next row. When `Open` holds a `blocker`, `major` or `fix-now` that no commit after the head names in its body (a fix round names the ids it closes), `/mluk-repo:fix <branch>` instead: the review waits for its commit, then reads the fixes and the new commits in one pass |
    | A pass on the head, `blocked` or `changes requested` | `/mluk-repo:fix <branch>` |
    | A pass on the head, `ready to merge`, no `fix-now` open, every techdebt row written | `/mluk-repo:promote <branch>` |
@@ -73,6 +74,13 @@ A folder or a local branch — the work to hand off, by
    Continue the plan <plan path> from <next step>. Target — <branch>.
    ```
 
+   **A fresh session or `/compact` for the next slice.** A fresh session
+   when the plan and the task's notes hold all the next slice needs; heavy
+   context — screenshots, long logs — counts for it too, since every tool
+   call re-reads it. `/compact <focus>` only while the slice's decisions
+   live in the conversation alone — and better: write them into the plan,
+   then go fresh. The recommended block comes first.
+
 5. **Print** each block as its own code block, with one line above it saying
    it goes to a fresh session — or, for the commit and for every block of a
    small change measured small, that it runs here.
@@ -91,8 +99,8 @@ A folder or a local branch — the work to hand off, by
   the code, a merge never in the session that reviewed it — except for a
   small change measured small, whose review and merge run where it was made.
   A critical change's review is always fresh.
-- `/compact` only inside a long phase that is not finished. At a boundary the
-  fresh session is the cheaper option.
+- `/compact` only for the next slice of an unfinished plan, by the criterion
+  of step 4. At a boundary the fresh session is the cheaper option.
 - Links, not retelling: paths, ids, shas. The next session reads the plan and
   the ledger itself.
 - A fresh session starts in the main tree, so a block names the branch, not a
