@@ -122,8 +122,10 @@ Where the answer to a question lives, in priority order, and what to do when two
 of them disagree (the default: show the owner the conflict, never pick one
 silently). One line per source: the code and the schema it publishes, product
 docs (by slug when in a sibling), the design source (a durable link or id),
-third-party library docs (the docs tool before memory). `task` reads the design
-source from here when the task has UI.
+the design's per-screen statuses when the project keeps them (a durable link
+and which page or status means ready), third-party library docs (the docs tool
+before memory). `task` reads the design source and the statuses from here when
+the task has UI.
 
 ## Languages
 
