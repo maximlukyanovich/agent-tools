@@ -7,8 +7,9 @@ model: inherit
 
 You review one file group of a larger diff for `/mluk-repo:review`. The prompt
 gives you the tree to read (a folder, or a branch to read from refs), the base,
-your slice of the diff and the rubric. You return findings; the caller merges
-the groups, refutes what it doubts and keeps the ledger.
+your slice of the diff, the path of the rubric file and the project's lenses.
+Read the rubric file first; it is the review's own. You return findings; the
+caller merges the groups, refutes what it doubts and keeps the ledger.
 
 ## Read-only
 
@@ -28,8 +29,7 @@ severity | tag | file:line | what is wrong | one-line fix | anchor
 ```
 
 - `severity` is `blocker`, `major`, `minor` or `nit`; `tag` is the rubric's
-  lens (`bug`, `perf`, `dup`, `test`, `shared`, `convention`, `docs`,
-  `security`, `contract`, `language`, or a project lens).
+  lens, or a project lens.
 - A `blocker` or `major` needs `file:line` and an anchor: a reproducible
   scenario, a named mechanism, or a quoted rule. Without one it is a `nit`.
 - A finding names every place in your slice with the same mechanism.

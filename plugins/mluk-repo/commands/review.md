@@ -70,8 +70,9 @@ never rewritten.
   names another, passed as the Agent call's `model`. Not a cheaper default:
   on a large diff the groups are what reads the code, and the refutation of
   step 6 drops false findings but never recovers missed ones. Each gets the
-  tree, the base, its slice of the diff and the whole rubric of step 5,
-  **not the ledger**, and returns finding lines, never diff.
+  tree, the base, its slice of the diff, the path of the rubric file of
+  step 5 — which it reads itself — and the project lenses, **not the
+  ledger**, and returns finding lines, never diff.
 - Synthesis, the refutation of step 6 and the ledger stay with the main
   model: deduplicate, check the `cross-slice` lines, catch cross-slice
   problems (a field changed here, its test asserting the old shape there),
@@ -120,42 +121,10 @@ never rewritten.
    print this review command as a block for a fresh session.
 
 5. **Run the rubric, blind.** Do not open the ledger's findings yet — reading a
-   previous verdict first anchors this one. General lenses: `bug` (unhandled
-   branches, `None` assumptions, boundary cases, a missing transaction; for
-   async code and stateful hooks, walk the lifecycle transitions — A→B mid-event,
-   A→none→A — and a peer that misbehaves, such as a 200 that closes at once;
-   in UI, an element holding the focus that leaves the page outside a modal's
-   focus scope with nowhere named for the focus to go, which the plan's state
-   table names (`kickoff`): the browser drops it to `<body>` — a `nit`,
-   `minor` only when a keyboard user loses their place in a flow under way),
-   `perf` (N+1, a per-row query, a full scan on a hot path, a client-only fetch
-   on an SEO surface), `dup` (a rule written inline next to the shared
-   implementation), `test` (graded by
-   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`, "In review": a risk-class
-   break with no test, a removed or weakened guard, or a document claiming a
-   test that does not assert the decision is `major`; the same gap in code
-   the branch did not touch or claim is `minor` at most and goes to
-   techdebt; a test of the look is a `nit` to remove), `shared` (a change
-   to a shared function, hook or component that alters behaviour for an
-   existing caller — walk every call
-   site; an extension that is not backward-compatible and did not migrate its
-   callers is `major`), `convention` (placement, style drift), `docs` (behaviour or
-   contract changed, document did not; a type's doc comment contradicted by the
-   code; a compromise as a `TODO` instead of a techdebt entry), `security` (a
-   secret in the diff, a token logged, an auth shortcut widened, an object
-   lookup not scoped to the requesting user, user content interpolated without
-   bound, a surface that changes data — a button, a list action, an endpoint —
-   still usable by an account that may only read its page: each new one is
-   walked as the least-privileged account that can open it), `contract` (a
-   field renamed or retyped without a note in the contract log), `language` (a
-   user-facing string in the wrong language). Project
-   lenses from `## Review` carry the same weight. A finding names **every** place
-   with the same mechanism, not only the first one found. UI in the diff is
-   checked against the profile's `design source` (read only). A contract change
-   — a field, an endpoint, a payload's shape or timing — is followed into each
-   `consumers` repository's call sites (its clone from the local profile's
-   `## Siblings`); a consumer that now misreads it is a
-   finding here.
+   previous verdict first anchors this one. The rubric is
+   `${CLAUDE_PLUGIN_ROOT}/reference/review-rubric.md` — the general lenses
+   and the checks across them — with the project lenses from `## Review` at
+   the same weight.
 
 6. **Try to refute each `blocker` / `major`** in the code before keeping it — a
    guard elsewhere, a caller that never passes the bad input. What survives is
