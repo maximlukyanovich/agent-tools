@@ -80,7 +80,8 @@ and never copies the second from a demo.
    needs the owner's explicit agreement — one place, one decision, no precedent.
    When the session can write to the design source, offer to apply the agreed
    fix or deviation there yourself instead of only describing it — the owner
-   approves the exact list of files first. Mechanical
+   approves the exact list of files first. Before writing to an artifact,
+   read `${CLAUDE_PLUGIN_ROOT}/reference/artifact-sandbox.md`. Mechanical
    changes (a fix, a decided deviation, folding an accepted proposal into the
    canon, a decisions note) go this way; new visual design stays with the
    designer.
