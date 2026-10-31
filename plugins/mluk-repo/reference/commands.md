@@ -31,7 +31,7 @@ from refs — `git diff origin/<base>...<branch>`, files through
 `fix` and `promote` stop and print the line that checks it out:
 
 ```
-git worktree add ../<repo>-<slug> <branch>
+git worktree add <worktree folder> <branch>
 ```
 
 **No argument, and the session's tree is on the base branch** with nothing of

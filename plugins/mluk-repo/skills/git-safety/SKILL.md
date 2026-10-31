@@ -45,6 +45,9 @@ cover the next one.
 
 ## Amending
 
+This section holds while the profile's `amend unpushed` is `yes`, the
+default. With `no`, every fix and every review round is a new commit.
+
 **A fix to a commit not yet pushed goes into that commit** — a bug found
 while the work goes on, a file that should have been in it, a wrong word in
 the message. A branch merges with its history, and "fix", then "fix the fix"

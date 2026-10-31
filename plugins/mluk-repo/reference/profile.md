@@ -48,6 +48,8 @@ hold in every clone.
 | `targeted checks` | none — table "path class → command"; a step runs the rows of the paths it changed, and a path no row covers runs `validate` | `commit`, `fix`, `sync` |
 | `commit preset` | `gitmoji-conventional` | `commit` |
 | `commit confirm` | `ask` — stage and show the draft, commit on go-ahead; `auto` — the invocation is the authorisation | `commit` |
+| `worktree folder` | `../<repo>-<slug>` — beside the repository, so the main tree's linters, tests and type-check never pick it up | `task` |
+| `amend unpushed` | `yes` — a fix goes into the unpushed commit it corrects, by `git-safety` "Amending"; `no` — every fix and every review round is a new commit | `commit`, `fix` |
 | `merge method` | `merge` (no squash, no rebase) | `create-pr`, `promote` |
 | `delete branch` | `merge` — who deletes the remote feature branch after a merge: `ask` — the command asks; `merge` — the merge does (`yes` is its older spelling); `platform` — GitHub's automatic deletion. The local branch goes on confirmation, safe form only | `create-pr` |
 | `pr language` | `en` | `create-pr`, `promote` |

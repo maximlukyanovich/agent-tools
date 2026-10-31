@@ -67,9 +67,8 @@ sessions, nearly nine tenths of its cost spent on their starts.
    worktree; never discard.
 
    **A worktree** — asked for, or accepted when offered — is confirmed with
-   its folder, `../<repo>-<slug>`, beside the repository so the main tree's
-   linters, tests and type-check never pick it up:
-   - `git worktree add -b <branch> ../<repo>-<slug> <base branch>`;
+   its folder, the profile's `worktree folder`:
+   - `git worktree add -b <branch> <worktree folder> <base branch>`;
    - link in what git ignores but the work reads — local notes, env files
      (one that takes the tree's own port or Compose project name is copied
      instead, see below), tool configs; list the candidates from the main
