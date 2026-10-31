@@ -51,7 +51,7 @@ Only when the diff has migrations, new dependencies, new runtime config keys, or
 
 ## Test plan
 
-- [x] `pnpm validate` green (typecheck, lint, format, tests)
+- [x] `<validate>` green
 - [x] Verified in the browser: <which flows, light/dark, narrow/wide>
 - [ ] <what the reviewer still has to check>
 
@@ -63,8 +63,8 @@ Only when there are real ones — data-loss paths, feature flags, deferred items
 - **The test plan is a checkbox list** (`- [x]` done, `- [ ]` pending), never
   plain bullets — the owner ticks it in the UI.
 - **No hard wrap.** Each bullet and paragraph is one line; GitHub wraps.
-- For a `develop → main` promotion the body aggregates what accumulated since
-  the last promotion instead of restating every commit.
+- For a promotion between protected branches the body aggregates what
+  accumulated since the last promotion instead of restating every commit.
 
 ## Tone
 

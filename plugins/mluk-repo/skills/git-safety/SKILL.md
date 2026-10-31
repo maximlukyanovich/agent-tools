@@ -31,7 +31,7 @@ cover the next one.
   protection. A broken hook is fixed, not skipped.
 - `git add -A`, `git add .`, `git add -u`. Paths are listed explicitly so the
   owner sees in chat what is staged.
-- Direct pushes to protected branches (`develop`, `main`, `staging`). They
+- Direct pushes to the branches the profile's `protected` names. They
   advance only through a merged PR.
 - Squash or rebase merges unless the profile says so. History is preserved
   with a merge commit.

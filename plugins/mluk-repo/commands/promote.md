@@ -5,8 +5,8 @@ argument-hint: '[<worktree | branch>] [<target-branch>]'
 
 # /mluk-repo:promote
 
-Walk the chain from `## Repository` (`chain`, default `feature/* → develop →
-main`) up to `<target>`. Every boundary that still has unpromoted commits is
+Walk the chain from `## Repository` (`chain`; without one, asked as
+`${CLAUDE_PLUGIN_ROOT}/reference/profile.md` says) up to `<target>`. Every boundary that still has unpromoted commits is
 one `/mluk-repo:create-pr merge` hop, preceded by a sync of the target into the
 source when the target moved. A single hop to the next branch is the same as
 `/mluk-repo:create-pr merge`; this command exists for several.
@@ -27,7 +27,8 @@ source when the target moved. A single hop to the next branch is the same as
    the working branch.
 
 3. **Build the segments** — the chain prefix ending at the target:
-   `feat/x → develop`, then `develop → main`. Already at or past the target →
+   the working branch → the first protected branch, then each hop between
+   protected branches. Already at or past the target →
    say so and finish.
 
 4. **Walk each segment**, in order:
@@ -39,13 +40,14 @@ source when the target moved. A single hop to the next branch is the same as
      keys, blast-radius paths for the PR body.
    - **Sync when the target moved** — if `origin/<dst>` has commits not in
      `<src>`, run the `sync` procedure into `<src>` first (merge, conflicts
-     stop the run, post-merge checks). A protected source (`develop`) is never
-     pushed directly: its sync PR is the same hop.
-   - **Push the source** — feature branches and `develop` only when ahead, on
-     confirmation. A source of `main` ahead of origin is an error: a protected
-     branch was edited by hand.
+     stop the run, post-merge checks). A protected source (an intermediate branch of
+     the chain) is never pushed directly: its sync PR is the same hop.
+   - **Push the source** — a feature branch only when ahead, on confirmation.
+     A protected source ahead of origin is an error: a protected branch was
+     edited by hand.
    - **PR + CI + merge** — the `create-pr` steps 3–6 with `<dst>` as target.
-     For a `develop → main` hop the body aggregates since the last promotion.
+     For a hop between protected branches the body aggregates since the last
+     promotion.
      For the production branch **re-confirm separately**, even when the run
      started with it as the argument.
    - **Pull the merged target locally** with `--ff-only`; a failure stops the

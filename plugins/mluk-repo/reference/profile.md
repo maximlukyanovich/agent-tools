@@ -40,9 +40,9 @@ hold in every clone.
 | --- | --- | --- |
 | `platform` | `github` with `gh` | all |
 | `remote account` | `personal` (`git@github.com:`); `work` means `git@github-work:` | `create-pr`, `promote`, `start` |
-| `base branch` | `develop` | all |
-| `chain` | `feature/* → develop → main` | `promote`, `create-pr`, `next` |
-| `protected` | `develop`, `main` (and `staging` if in the chain) — never pushed directly | `commit`, `create-pr`, `promote` |
+| `base branch` | the branch after `feature/*` in `chain` | all |
+| `chain` | asked once; the chain the project's documents already name is offered first as recommended, else `feature/* → develop → main`; the answer is written down | `promote`, `create-pr`, `next` |
+| `protected` | every branch of `chain` after `feature/*` — never pushed directly | `commit`, `create-pr`, `promote` |
 | `upstream` | none; if named, never pushed to, never targeted by a PR | `promote`, `create-pr`, `next` |
 | `validate` | asked (e.g. `pnpm validate`, `make test`) | `commit`, `create-pr`, `sync`, `review` |
 | `targeted checks` | none — table "path class → command"; a step runs the rows of the paths it changed, and a path no row covers runs `validate` | `commit`, `fix`, `sync` |
