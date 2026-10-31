@@ -44,8 +44,8 @@ documents are never translated.
    run. Check the remote alias against `remote account` (`github-accounts`
    skill).
 
-   **The plugins.** One `claude plugin list --json`, cut to `id`, `scope`,
-   `enabled`, `projectPath`, `installPath` with `jq` or `python3` before it
+   **The plugins.** One `claude plugin list --json`, cut to `id`, `version`,
+   `scope`, `enabled`, `projectPath`, `installPath` with `jq` or `python3` before it
    is read — never the raw list. An install counts for this checkout when
    its scope is `user` or `managed`, or its `projectPath` is this checkout or
    another checkout of the same repository (`git -C <path> rev-parse
@@ -54,6 +54,10 @@ documents are never translated.
    with `/start` — or, when step 1 found no project `/start`, with
    `claude plugin install <id> --scope local`; a profile row for the
    plugins, when there is one, runs the same report and replaces this one.
+   `mluk-bootstrap` installed for this checkout with a `MAJOR.MINOR` above
+   the `Harness:` line of `.claude/COMMANDS.md`, or with no such line, is a
+   `⚠` row: the harness predates the plugin's checks; the fix is
+   `/mluk-bootstrap:audit`, as a code block. Not installed → no row.
 
 3. **Print the summary** — each section at most four lines, identifiers
    verbatim: product and phase (from `AGENTS.md` §1), stack and layout (§2–3),

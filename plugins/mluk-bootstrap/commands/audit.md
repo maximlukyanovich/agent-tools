@@ -123,7 +123,10 @@ The harness exists; the job is to find the gaps, not to rewrite it.
     hands over to `/mluk-repo:start`, with no overview or checks copied in?
     Are the `## Checks` row, the `.claude/COMMANDS.md` row and the README's
     «Agent tooling» there? A version behind → propose copying the template
-    again, with the project's placeholders kept.
+    again, with the project's placeholders kept. Does `.claude/COMMANDS.md`
+    carry the `Harness:` line (`${CLAUDE_PLUGIN_ROOT}/reference/templates.md`)?
+    Missing → a finding; above this plugin's `MAJOR.MINOR` → this clone's
+    plugin is behind the project, say so and audit nothing it does not know.
 
 15. **The efficiency journal.** Do `docs/local/efficiency-remarks.md` and its
     line in `AGENTS.md` §6 exist? Then read the rows not yet marked analysed
@@ -172,7 +175,9 @@ A table: finding → layer → severity → proposed action. Rules that are not
 project-specific as a separate short list. Before asking the owner, load the
 `mluk-repo:kickoff` skill — its questionnaire rules apply, a closing "anything
 to add?" included. Apply changes after confirmation, one group at a time,
-never all at once.
+never all at once. The last change, on the same yes or alone when nothing
+else was found: the `Harness:` line rewritten with this plugin's
+`MAJOR.MINOR` and today's date.
 
 End with the next step in a code block. Changes applied → the project's commit
 command (`/mluk-repo:commit` or its local override), to run in this session —

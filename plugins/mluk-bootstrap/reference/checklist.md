@@ -19,6 +19,8 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       its `lib/` are beside it and their test passes in the project's run.
       `## Checks` has the plugin row, `.claude/COMMANDS.md` the `/start` row,
       README the «Agent tooling» paragraph.
+- [ ] `.claude/COMMANDS.md` carries the `Harness:` line with this plugin's
+      `MAJOR.MINOR` and the date of this setup or audit.
 - [ ] `AGENTS.md` §2 says how the project runs as commands from the
       repository root — install, dev server, the stack — and not who runs them.
 - [ ] Skills: real directories under `.claude/skills/`, working symlinks in
