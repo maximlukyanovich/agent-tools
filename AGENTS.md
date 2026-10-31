@@ -158,6 +158,16 @@ a pull request, its author checks by hand:
   `python3 plugins/mluk-repo/scripts/test_change_size.py`,
   `python3 plugins/mluk-repo/scripts/test_review_target.py`; the `Plugin tests`
   workflow runs the same on every push;
+- a change to a command that has cases under its plugin's `evals/` runs them
+  once and the pull request names the scores — `claude plugin eval
+  plugins/<plugin> --scaffold --runs 1 --ablation with-without
+  --max-cost-usd 5 --allow-tools Write Edit Bash`. Each run is a paid
+  session, so only then. Bash is granted whole: a pattern such as
+  `Bash(git *)` denies the chained commands the plugins start with, and the
+  run fails on its first call. A granted Bash runs in the OS sandbox, writes
+  only to the run's workspace and reaches no network: on Linux it needs
+  `bubblewrap` and `socat`, and it refuses a `~/.docker` with a symbolic link
+  anywhere inside;
 - the pull request names the growth in bytes of every plugin text it
   changes; a notable growth is explained in its body or cut;
 - the changed command or skill was run once, in a real repository, after
