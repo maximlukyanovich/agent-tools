@@ -48,7 +48,9 @@ writes the workflow commands into the project, shaped to its forge and tracker.
 - Claude Code.
 - `git`, and `gh` signed in — for `mluk-repo`.
 - Node — for the `mluk-fe` hooks; CI tests them on Node 24.
-- Python 3 and `ssh` — for `mluk-ops`; CI tests its guard on Python 3.12.
+- `python3` in `PATH` — Linux, macOS or WSL — for the `mluk-repo` scripts and
+  `mluk-ops`, with `ssh` for the latter; CI tests on Python 3.12. Without it
+  the `mluk-ops` guard does not run: [`mluk-ops`](plugins/mluk-ops/README.md).
 
 ## Quick start
 

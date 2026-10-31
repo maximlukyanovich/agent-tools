@@ -73,6 +73,10 @@ a fake `ssh` (run after every edit). CI runs both on every push — `.github/wor
 
 - **A deny in the user's settings still wins over the hook's allow.** The hook's allow only skips the
   prompt.
+- **Without `python3` in `PATH` there is no guard.** The hook calls `python3` by name; when it is
+  missing, Claude Code records a non-blocking hook error, the model is not told, and the Bash call
+  goes on unguarded — `srv` still refuses an irreversible command. Linux, macOS and WSL have it;
+  Windows outside WSL usually does not.
 - **Commands the owner runs with `!` in the prompt bypass hooks.** That is how the owner runs an
   irreversible command — through `srv` with `SRV_OWNER_APPROVED=1` in front, or `srv` refuses it.
 - **The consent check reads the session transcript,** which is written asynchronously. If the latest
