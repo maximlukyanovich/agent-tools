@@ -147,13 +147,14 @@ Two workflows gate every pull request and `main`. `Check` runs
   Code" line.
 
 `Plugin tests` runs the plugins' tests — the hooks, `srv`, the start
-template and `change_size.py`. Before opening
+template, `change_size.py` and `review_target.py`. Before opening
 a pull request, its author checks by hand:
 
 - a changed hook, script or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
   `python3 plugins/mluk-ops/hooks/test_guard.py`, `python3 plugins/mluk-ops/lib/test_srv.py`,
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`,
-  `python3 plugins/mluk-repo/scripts/test_change_size.py`; the `Plugin tests`
+  `python3 plugins/mluk-repo/scripts/test_change_size.py`,
+  `python3 plugins/mluk-repo/scripts/test_review_target.py`; the `Plugin tests`
   workflow runs the same on every push;
 - the pull request names the growth in bytes of every plugin text it
   changes; a notable growth is explained in its body or cut;
@@ -179,7 +180,7 @@ plugins/<name>/
 scripts/check.py                  the pull-request gate, run by CI
 scripts/release_notes.py          a release's notes: plugin versions, action needed
 .github/workflows/check.yml       runs the gate
-.github/workflows/hooks.yml       runs the plugins' tests — hooks, `srv`, the start template, `change_size.py`
+.github/workflows/hooks.yml       runs the plugins' tests — hooks, `srv`, the start template, the scripts
 ```
 
 `commands/` is the older of the two plugin formats; Claude Code now prefers

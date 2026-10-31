@@ -86,20 +86,14 @@ never rewritten.
    `## Review` with `ledger`, `design source` and `consumers`, `## Docs` for
    the contract log and techdebt file).
 
-2. **Find the ledger and set the target.** `HEAD` below is the head of the
-   tree under review.
-   - The ledger's last head equals `HEAD` and no `full` → there is nothing new:
-     print the recorded verdict and the open findings, and stop.
-   - The last head is an ancestor of `HEAD` → the target is the delta
-     `<last head>..HEAD`.
-   - The last head is not an ancestor because the fixes went into the commits
-     it reviewed (`git-safety`, "Amending") → the target is
-     `git diff <last head> HEAD`, which the reflog keeps resolvable; the pass
-     header names the rewritten commits. A last head the repository no longer
-     has → the whole target. An explicit range whose base is no longer an
-     ancestor reads the same way.
-   - No ledger, or `full` → the whole target as below. An explicit range
-     overrides both.
+2. **Find the ledger and set the target** — by script, not by reasoning:
+   `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/review_target.py" --ledger <ledger file> --tree <tree>`,
+   with `--full` and `--range <a>..<b>` when the arguments carry them
+   (`${CLAUDE_PLUGIN_ROOT}/reference/review-target.md`). `none` → there is
+   nothing new: print the recorded verdict and the open findings, and stop.
+   `whole` → the whole target as below; any other mode → the diff it
+   prints, and for `rewritten` the pass header names the `replaced`
+   commits.
 
 3. **Get the diff.** PR: `gh pr view <n> --json title,body,state,isDraft,
    headRefName,baseRefName` and `gh pr diff <n>`. Branch: `git fetch origin
