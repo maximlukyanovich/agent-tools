@@ -6,6 +6,11 @@ deployment, safe server access and business Russian copy. One author's toolkit,
 grown on real projects and open to anyone — the rules are opinionated, and each
 project tunes them through its own profile.
 
+With `mluk-repo`, a task runs from the plan to the merge as a chain of commands,
+each ending with the next one ready to paste: the developer picks and approves,
+the agent does the rest — plan, code, checks, review, commit, pull request and
+merge.
+
 One repository: it is both the marketplace (`mluk-agent-tools`) and the home of
 the plugins.
 
