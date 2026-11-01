@@ -98,7 +98,18 @@ naming. This file holds only the rules for working on the repository itself.
   saying which.
 - **Command names** are short verbs; the plugin name is the prefix, added by the
   harness with a colon. Never a colon in a filename.
-- **Plugin names are fixed once.**
+- **A plugin is replaced, not renamed.** A new name changes every command it
+  ships and every document quoting them, and a project that follows `main`
+  would see its prefixes change on the next update, mid-task. The new plugin
+  ships beside the old one; the old one is frozen at its last version, its
+  catalogue `description` starts with "Replaced by `<new>`" and its README
+  says the same; the release says under Action needed how a project moves. A
+  later release removes the old plugin and its catalogue entry and adds
+  `"renames": {"<old>": "<new>"}` to `marketplace.json`: Claude Code then
+  rewrites the old key in a lagging project's `enabledPlugins`, the project
+  still runs `claude plugin install <new>@<marketplace>` once, and
+  `claude plugin validate .` checks the chain. That release names it under
+  Action needed too.
 - **Descriptions are the loading mechanism.** A skill's `description` decides
   when the agent loads it; a command's decides what completion shows. Both are
   written narrowly and both are paid for in every session — except a

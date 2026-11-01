@@ -164,6 +164,14 @@ letter goes through `/mluk-ru:review letter.md`.
 | [`mluk-ops`](plugins/mluk-ops/README.md) | library + hook | Safe agent access to servers: `srv` with an audit log, a guard hook, the `server-ops` protocol. Enabled only where the agent works on a server. |
 | [`mluk-ru`](plugins/mluk-ru/README.md) | library | Business Russian: the principles of client-facing and legal copy, the self-check, the checklist, and `review` for a text. |
 
+A plugin is never renamed. When one is replaced, its catalogue entry in
+`/plugin` starts with **Replaced by `<new>`**: the old plugin keeps working,
+frozen at its last version, and the release that marked it says under Action
+needed how to move — turn the new one on and the old one off, and rename its
+command prefix in your files. A later release removes the old plugin; a
+project still on it then finds the new one enabled in its place and runs
+`claude plugin install <new>@mluk-agent-tools` once.
+
 ## Versions and updates
 
 Every plugin carries a `version` in its `plugin.json`, and `claude plugin list`
