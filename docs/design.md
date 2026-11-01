@@ -72,8 +72,10 @@ reads the profile, and asks when the profile is silent.
 Claude Code prefixes a plugin's commands with the plugin name and a colon —
 `/mluk-repo:commit`. The prefix lives in the **plugin name**; the command name
 stays a short verb. Never a colon in a filename, never the plugin name repeated
-inside a command name. Plugin names are fixed once: renaming one changes every
-command it ships and every document quoting them.
+inside a command name. A plugin is replaced, not renamed: renaming one changes
+every command it ships and every document quoting them, so a new plugin ships
+beside it and the old one is frozen, then retired — the procedure is in
+`AGENTS.md`.
 
 | Plugin | Commands |
 | --- | --- |
