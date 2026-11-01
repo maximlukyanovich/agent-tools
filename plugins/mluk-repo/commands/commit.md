@@ -105,10 +105,11 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    one-line reminder that nothing was pushed. If the **full** `validate` (not a
    targeted row) passed — in step 4 or the run it relied on — and the tree is
    now clean, record the tree by "The gate", so `review`, `create-pr` and
-   `promote` skip a second identical run. When the commits close a task or a
-   round of review fixes, run `/mluk-repo:handoff` for the same worktree or
-   branch yourself, through the Skill tool, without asking — it prints the
-   review to run next, in a fresh session, or here for a small change.
+   `promote` skip a second identical run. Then, after every commit, run
+   `/mluk-repo:handoff` for the same worktree or branch yourself, through the
+   Skill tool, without asking — in the middle of a plan it prints the next
+   slice; after a task's last commit or a round of review fixes, the review
+   to run next, in a fresh session, or here for a small change.
 
 ## When to stop and ask
 

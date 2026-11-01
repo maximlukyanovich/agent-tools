@@ -14,9 +14,8 @@ profile's `base branch`, through the library rubric plus the project lenses in
 file it writes is its own ledger (below). Code edits only with `fix`; posting to
 a PR only on an explicit yes at the end.
 
-**Run it in a fresh session**, not the one that wrote the code. The authoring
-session remembers its own reasons and tends to confirm them. Everything a review
-needs from the past is in the ledger, not in the conversation. The fresh
+**Run it in a fresh session**, not the one that wrote the code: everything a
+review needs from the past is in the ledger. The fresh
 session may sit in the main tree: a branch in a worktree is reached by name.
 A small change (`/mluk-repo:task`, "The change's level") is reviewed in the
 session that made it; a critical one never is.
@@ -67,11 +66,11 @@ never rewritten.
 - A diff under ~25 files and ~2000 lines is reviewed inline. Past either,
   delegate **by file group** to the `mluk-repo:review-group` agent, in
   parallel, cap 4–6 — read-only, on the session's model unless `model=`
-  names another, passed as the Agent call's `model`. Not a cheaper default:
-  on a large diff the groups are what reads the code, and the refutation of
-  step 6 drops false findings but never recovers missed ones. Each gets the
-  tree, the base, its slice of the diff and the whole rubric of step 5,
-  **not the ledger**, and returns finding lines, never diff.
+  names another, passed as the Agent call's `model` — not a cheaper
+  default. Each gets the
+  tree, the base, its slice of the diff, the path of the rubric file of
+  step 5 — which it reads itself — and the project lenses, **not the
+  ledger**, and returns finding lines, never diff.
 - Synthesis, the refutation of step 6 and the ledger stay with the main
   model: deduplicate, check the `cross-slice` lines, catch cross-slice
   problems (a field changed here, its test asserting the old shape there),
@@ -85,20 +84,14 @@ never rewritten.
    `## Review` with `ledger`, `design source` and `consumers`, `## Docs` for
    the contract log and techdebt file).
 
-2. **Find the ledger and set the target.** `HEAD` below is the head of the
-   tree under review.
-   - The ledger's last head equals `HEAD` and no `full` → there is nothing new:
-     print the recorded verdict and the open findings, and stop.
-   - The last head is an ancestor of `HEAD` → the target is the delta
-     `<last head>..HEAD`.
-   - The last head is not an ancestor because the fixes went into the commits
-     it reviewed (`git-safety`, "Amending") → the target is
-     `git diff <last head> HEAD`, which the reflog keeps resolvable; the pass
-     header names the rewritten commits. A last head the repository no longer
-     has → the whole target. An explicit range whose base is no longer an
-     ancestor reads the same way.
-   - No ledger, or `full` → the whole target as below. An explicit range
-     overrides both.
+2. **Find the ledger and set the target** — by script, not by reasoning:
+   `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/review_target.py" --ledger <ledger file> --tree <tree>`,
+   with `--full` and `--range <a>..<b>` when the arguments carry them
+   (`${CLAUDE_PLUGIN_ROOT}/reference/review-target.md`). `none` → there is
+   nothing new: print the recorded verdict and the open findings, and stop.
+   `whole` → the whole target as below; any other mode → the diff it
+   prints, and for `rewritten` the pass header names the `replaced`
+   commits.
 
 3. **Get the diff.** PR: `gh pr view <n> --json title,body,state,isDraft,
    headRefName,baseRefName` and `gh pr diff <n>`. Branch: `git fetch origin
@@ -119,43 +112,10 @@ never rewritten.
    a small change, which recommends nothing; for a critical change, stop and
    print this review command as a block for a fresh session.
 
-5. **Run the rubric, blind.** Do not open the ledger's findings yet — reading a
-   previous verdict first anchors this one. General lenses: `bug` (unhandled
-   branches, `None` assumptions, boundary cases, a missing transaction; for
-   async code and stateful hooks, walk the lifecycle transitions — A→B mid-event,
-   A→none→A — and a peer that misbehaves, such as a 200 that closes at once;
-   in UI, an element holding the focus that leaves the page outside a modal's
-   focus scope with nowhere named for the focus to go, which the plan's state
-   table names (`kickoff`): the browser drops it to `<body>` — a `nit`,
-   `minor` only when a keyboard user loses their place in a flow under way),
-   `perf` (N+1, a per-row query, a full scan on a hot path, a client-only fetch
-   on an SEO surface), `dup` (a rule written inline next to the shared
-   implementation), `test` (graded by
-   `${CLAUDE_PLUGIN_ROOT}/reference/proof.md`, "In review": a risk-class
-   break with no test, a removed or weakened guard, or a document claiming a
-   test that does not assert the decision is `major`; the same gap in code
-   the branch did not touch or claim is `minor` at most and goes to
-   techdebt; a test of the look is a `nit` to remove), `shared` (a change
-   to a shared function, hook or component that alters behaviour for an
-   existing caller — walk every call
-   site; an extension that is not backward-compatible and did not migrate its
-   callers is `major`), `convention` (placement, style drift), `docs` (behaviour or
-   contract changed, document did not; a type's doc comment contradicted by the
-   code; a compromise as a `TODO` instead of a techdebt entry), `security` (a
-   secret in the diff, a token logged, an auth shortcut widened, an object
-   lookup not scoped to the requesting user, user content interpolated without
-   bound, a surface that changes data — a button, a list action, an endpoint —
-   still usable by an account that may only read its page: each new one is
-   walked as the least-privileged account that can open it), `contract` (a
-   field renamed or retyped without a note in the contract log), `language` (a
-   user-facing string in the wrong language). Project
-   lenses from `## Review` carry the same weight. A finding names **every** place
-   with the same mechanism, not only the first one found. UI in the diff is
-   checked against the profile's `design source` (read only). A contract change
-   — a field, an endpoint, a payload's shape or timing — is followed into each
-   `consumers` repository's call sites (its clone from the local profile's
-   `## Siblings`); a consumer that now misreads it is a
-   finding here.
+5. **Run the rubric, blind.** Do not open the ledger's findings yet. The rubric is
+   `${CLAUDE_PLUGIN_ROOT}/reference/review-rubric.md` — the general lenses
+   and the checks across them — with the project lenses from `## Review` at
+   the same weight.
 
 6. **Try to refute each `blocker` / `major`** in the code before keeping it — a
    guard elsewhere, a caller that never passes the bad input. What survives is
@@ -173,10 +133,7 @@ never rewritten.
    for). A recorded false positive is not raised again without a new mechanism.
    On a delta pass, a `missed` finding in lines the delta does not change is
    written out only at `major` and above; the rest are counted, not listed —
-   a line in the report's opening block and in the ledger's pass. They
-   survived the passes that read them, and listing them is what kept a large
-   range from converging: each full repeat found a fresh batch of old nits.
-   The first pass and `full` list everything.
+   a line in the report's opening block and in the ledger's pass. The first pass and `full` list everything.
 
 8. **Assemble the report.** It always opens with the same block, on every
    pass, zeros included — the owner compares passes by it (labels in the
@@ -206,9 +163,7 @@ never rewritten.
    `security` finding goes only to techdebt, or where the owner's word puts
    it. The ledger records the place as the status, the owner's word
    overturns it, and the fix round writes the techdebt rows. These do not
-   hold the merge, and none stays `open` past it: the ledger lives outside
-   git, by branch, so an `open` is lost after the merge, and `next` sees
-   only techdebt with a priority. When a finding's class
+   hold the merge, and none stays `open` past it. When a finding's class
    has come up before — in earlier passes of this ledger, in other ledgers, or
    in several places of this diff — add one line proposing the rule in the
    project's repository that would prevent it during the work (kickoff step
@@ -219,12 +174,9 @@ never rewritten.
    A ready verdict with `fix-now` ids open, or techdebt rows still to write,
    offers one fix round on them first, a pass over that round's delta alone
    next, and the promote last; without them, the promote. The promote goes
-   first only on the owner's word to ship now: a fix in the same unmerged
-   branch is one commit, one delta and one PR, and after the merge it is a
-   new branch, a PR, CI and a review. When the verdict reads ready and the
-   growth is `missed` findings in code older than the delta, the range closes
-   that way — not with another full pass, which on a large range finds a
-   fresh batch of old nits every time.
+   first only on the owner's word to ship now. When the verdict reads ready
+   and the growth is `missed` findings in code older than the delta, the
+   range closes that way — not with another full pass.
 
 9. **Append the pass to the ledger** — without asking; it is gitignored and
    holds only the review's own memory. Update statuses the owner stated.

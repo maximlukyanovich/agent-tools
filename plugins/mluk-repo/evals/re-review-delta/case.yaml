@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: re-review-delta
+description: A repeat review reads only the commit after the ledger's last head and reconciles with the ledger.
+tags: [review]
+context:
+  scaffold_script: scaffold.sh

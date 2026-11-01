@@ -138,7 +138,9 @@ Two workflows gate every pull request and `main`. `Check` runs
 - every plugin hook points at a script that exists, in `command` or `args`;
 - every Python script compiles;
 - it warns, without failing, about a plugin text above 10 KB — any `*.md`
-  under `plugins/` but a README: splitting it is a decision, not drift;
+  under `plugins/` but a README: splitting it is a decision, not drift — and
+  about a plugin whose command, skill and agent descriptions add up to more
+  than 2 KB, since they are in every session the plugin is on;
 - every `plugin.json` has a `version` of the form `MAJOR.MINOR.PATCH`, the
   catalogue has none, and a plugin whose files changed, its README aside, has
   a version above the base's;
@@ -147,14 +149,25 @@ Two workflows gate every pull request and `main`. `Check` runs
   Code" line.
 
 `Plugin tests` runs the plugins' tests — the hooks, `srv`, the start
-template and `change_size.py`. Before opening
+template, `change_size.py` and `review_target.py`. Before opening
 a pull request, its author checks by hand:
 
 - a changed hook, script or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
   `python3 plugins/mluk-ops/hooks/test_guard.py`, `python3 plugins/mluk-ops/lib/test_srv.py`,
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`,
-  `python3 plugins/mluk-repo/scripts/test_change_size.py`; the `Plugin tests`
+  `python3 plugins/mluk-repo/scripts/test_change_size.py`,
+  `python3 plugins/mluk-repo/scripts/test_review_target.py`; the `Plugin tests`
   workflow runs the same on every push;
+- a change to a command that has cases under its plugin's `evals/` runs them
+  once and the pull request names the scores — `claude plugin eval
+  plugins/<plugin> --scaffold --runs 1 --ablation with-without
+  --max-cost-usd 5 --allow-tools Write Edit Bash`. Each run is a paid
+  session, so only then. Bash is granted whole: a pattern such as
+  `Bash(git *)` denies the chained commands the plugins start with, and the
+  run fails on its first call. A granted Bash runs in the OS sandbox, writes
+  only to the run's workspace and reaches no network: on Linux it needs
+  `bubblewrap` and `socat`, and it refuses a `~/.docker` with a symbolic link
+  anywhere inside;
 - the pull request names the growth in bytes of every plugin text it
   changes; a notable growth is explained in its body or cut;
 - the changed command or skill was run once, in a real repository, after
@@ -179,7 +192,7 @@ plugins/<name>/
 scripts/check.py                  the pull-request gate, run by CI
 scripts/release_notes.py          a release's notes: plugin versions, action needed
 .github/workflows/check.yml       runs the gate
-.github/workflows/hooks.yml       runs the plugins' tests — hooks, `srv`, the start template, `change_size.py`
+.github/workflows/hooks.yml       runs the plugins' tests — hooks, `srv`, the start template, the scripts
 ```
 
 `commands/` is the older of the two plugin formats; Claude Code now prefers
