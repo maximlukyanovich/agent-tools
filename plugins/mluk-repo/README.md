@@ -28,7 +28,8 @@ Other scopes and updating: [Quick start](../../README.md#quick-start).
 | `/mluk-repo:handoff` | a local note, only when a block runs long | The next session's prompt at a phase boundary — the review after a task's commit, the fixes, the plan's next step or the promote after a review, the next task after a merge — from git and the ledger; for a small change, measured by `scripts/change_size.py`, the next step runs here. `commit`, `review`, `create-pr` and `promote` call it at their end. |
 | `/mluk-repo:help` | no | This plugin's surface. |
 
-`/promote` to the next branch is the same as `/create-pr merge`; `promote`
+`/mluk-repo:promote` to the next branch is the same as
+`/mluk-repo:create-pr merge`; `promote`
 exists for walking more than one boundary.
 
 ## Profile
@@ -68,6 +69,7 @@ read, and `reference/review-reasons.md` why `review` works as it does.
 
 ## Local overrides
 
-A project may ship a local `/commit`, `/promote`, … when its procedure differs.
+A project may ship a local `/my-commit`, `/my-promote`, … — named with its
+prefix — when its procedure differs.
 The two coexist; the local one is what the owner types. Parameters never
 justify an override — they go to the profile.

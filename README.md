@@ -109,7 +109,7 @@ clone gets the same tools:
 ```
 
 Committed settings turn the plugins on in every clone but download nothing, so
-`setup` also writes the project's `/start`: a collaborator trusts the folder,
+`setup` also writes the project's start command, `/my-start`: a collaborator trusts the folder,
 runs it, and it installs what is missing before the overview.
 
 Which plugins to enable:

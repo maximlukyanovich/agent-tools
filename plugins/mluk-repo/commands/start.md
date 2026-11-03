@@ -9,7 +9,7 @@ One-screen onboarding for the repository, built from what the repository
 already says about itself. **Strictly read-only**: no file writes, no
 installs, no commits, no container or server lifecycle changes. The first
 command of a fresh session, before `task` or `promote`; a project set up by
-`mluk-bootstrap` reaches it through its own `/start`, which installs the
+`mluk-bootstrap` reaches it through its own start command, which installs the
 plugins first.
 
 Language: `$1`, else the profile's `## Languages` conversation language, else
@@ -23,7 +23,9 @@ documents are never translated.
    `## Checks`, `## Docs`) and this clone's `project-profile.local.md` if
    present, `docs/README.md` if present. No profile → say so and offer
    `/mluk-bootstrap:setup` as a code block; continue with what `AGENTS.md`
-   gives. No `.claude/commands/start.md` → a `⚠` row: a fresh clone has the
+   gives. No project start command — `.claude/commands/<prefix>-start.md`, the
+   prefix from `Command prefix:` in `.claude/COMMANDS.md`, `start.md` with
+   `none` or without the line — → a `⚠` row: a fresh clone has the
    plugins turned on and nothing to install them with; the fix is
    `/mluk-bootstrap:audit`, as a code block.
 
@@ -51,7 +53,7 @@ documents are never translated.
    another checkout of the same repository (`git -C <path> rev-parse
    --path-format=absolute --git-common-dir` answers as it does here). Each
    plugin `enabledPlugins` turns on with no install that counts is a `✗` row
-   with `/start` — or, when step 1 found no project `/start`, with
+   with the project's start command — or, when step 1 found none, with
    `claude plugin install <id> --scope local`; a profile row for the
    plugins, when there is one, runs the same report and replaces this one.
    `mluk-bootstrap` installed for this checkout with a `MAJOR.MINOR` above

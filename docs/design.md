@@ -26,7 +26,7 @@ commands into each project needs a log of what a project must carry over.
 Here the process commands — `task`, `commit`, `review`, `fix`, `create-pr`,
 `promote` — live in `mluk-repo` and arrive with its update; `setup` generates
 only the harness: `AGENTS.md`, the profile, `CLAUDE.md`, domain skills,
-`/start`, `docs/local/`. Its state is one line, `Harness:` in
+the start command, `docs/local/`. Its state is one line, `Harness:` in
 `.claude/COMMANDS.md`: the `mluk-bootstrap` `MAJOR.MINOR` the harness last
 matched. A minor raise is a new rule or template section — what `audit`
 checks — so it is what moves the line; `/mluk-repo:start` compares it with the
@@ -34,8 +34,8 @@ installed plugin and points to `audit` when the plugin is ahead.
 
 **Library base, local override.** `/mluk-repo:commit` is the default in every
 project. A project that genuinely needs a different procedure — not different
-parameters — writes its own `.claude/commands/commit.md`; the two coexist under
-different names. The test: if the difference fits in a profile line, it is the
+parameters — writes its own `.claude/commands/<prefix>-commit.md`; the two coexist under
+different names, `/my-commit` beside `/mluk-repo:commit`. The test: if the difference fits in a profile line, it is the
 library. If the procedure differs, it is a local command. `mluk-bootstrap:audit`
 reports local commands that merely duplicate the library.
 
