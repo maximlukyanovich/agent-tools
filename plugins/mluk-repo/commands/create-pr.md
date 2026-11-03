@@ -33,9 +33,10 @@ stops after printing the PR URL.
      repository (`github-accounts` skill); otherwise stop and say so. An
      `upstream` remote is out of scope — a PR must target `origin`.
    - The gate, by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The
-     gate": a tree a review or a commit already recorded green is skipped
-     with a line saying so; otherwise the full `validate` — red → stop and
-     show; green → record the tree.
+     gate": `gate_record.py check` says `skip` → a line saying so;
+     otherwise the full `validate` — red → stop and show; green → `record
+     full`. With `full gate: ci`, no local run — the question with a reason
+     that rule names, or nothing.
    - Behaviour, domain or scope changed and the docs did not → offer
      `/mluk-repo:update-docs` as a code block before pushing.
 

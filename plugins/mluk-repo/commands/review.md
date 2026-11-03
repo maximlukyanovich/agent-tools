@@ -100,10 +100,11 @@ never rewritten.
    untracked files are the easiest thing to miss — all in the tree under
    review. `HEAD` on the base branch, no PR and no worktree ahead of it →
    nothing to review. Start the gate by
-   `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The gate": a tree recorded
-   green is skipped with a line saying so; otherwise the full `validate` runs
-   in the background, in that tree, while steps 4–7 go on, and its result is
-   read before step 8.
+   `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The gate": `gate_record.py
+   check` (`--small` for a small change) says `skip` → a line saying so;
+   otherwise the full `validate` runs in the background, in that tree, while
+   steps 4–7 go on, and its result is read before step 8. With `full gate:
+   ci`, the targeted checks of the range and the PR's checks instead.
 
 4. **Frame the scope** in one line from the branch name, PR text and commit
    subjects: a whole task or a slice? What a slice leaves out is not a missing

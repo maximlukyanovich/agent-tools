@@ -42,8 +42,9 @@ asks and offers to write the answer into the profile.
 `commit`, `review`, `fix`, `promote` and `handoff` also act on a branch in
 a worktree, named by folder or branch: `reference/commands.md`. The same file
 holds the gate rule — targeted checks between edits, the full `validate`
-once per tree — and `reference/proof.md` what proves a change;
+once per branch or in CI — and `reference/proof.md` what proves a change;
 `reference/change-size.md` is what `change_size.py` measures,
+`reference/gate-record.md` what `gate_record.py` records and checks,
 `reference/review-target.md` what `review_target.py` sets as a pass's
 target, `reference/review-rubric.md` the lenses `review` and its agent
 read, and `reference/review-reasons.md` why `review` works as it does.

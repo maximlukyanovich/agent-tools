@@ -21,7 +21,7 @@ Once the tree is known:
   tree; the session's working directory does not move;
 - the gate — the profile's `validate`, or a `targeted checks` row — runs in
   that tree;
-- what one command leaves for another (`validated-tree`) goes to that tree's
+- what one command leaves for another (`gate-record`) goes to that tree's
   git-dir, `$(git -C <tree> rev-parse --git-dir)`; the review ledger stays at
   its path in the main tree.
 
@@ -44,23 +44,55 @@ several → ask which; none → nothing to act on.
 
 The full `validate` costs minutes. Run after every edit and again by every
 command, it makes a fix wait longer than the fix itself. So it runs once per
-tree, and the work between those runs is checked narrowly.
+branch, and the work between those runs is checked narrowly. The record
+behind it is kept by `${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py`
+(`${CLAUDE_PLUGIN_ROOT}/reference/gate-record.md`). Observed on a live
+project: a half-hour task's merge ran the full gate again after a review
+fix that had passed its targeted checks.
 
 - **Between edits, in a commit, after a sync — the targeted checks.** For
   each changed path, the profile's `targeted checks` row that covers it; the
   union of those rows runs, and a path no row covers sends the step to the
   full `validate`. A profile without the table runs the full `validate`, as
-  before. Say in one line what ran and what was not exercised.
-- **The full gate — once per tree.** `review` runs it on the head it reads,
-  `create-pr` and `promote` before the push. A tree already recorded green is
-  not run again: `git -C <tree> rev-parse HEAD^{tree}` equal to
-  `$(git -C <tree> rev-parse --git-dir)/validated-tree` and a clean tree →
-  say so and skip. Every green full run on a clean tree records it the same
-  way, whichever command ran it; a targeted run never does.
+  before. Say in one line what ran and what was not exercised. A commit
+  whose every path had its row, green, on a clean tree after the commit →
+  `gate_record.py record targeted`.
+- **A hub file takes the tests of its areas.** The tests related to a file
+  most of the code imports — the route registry, a shared config, shared
+  types — are the whole suite. A change to one of the profile's `hub files`
+  runs the tests of the areas whose behaviour the diff changes, by a path
+  filter (`vitest run <dir>` keeps the test files whose path contains it),
+  and leaves the whole suite to the branch's full gate: such a commit is not
+  recorded. Observed on a live project: `related` on a route registry ran
+  1749 tests beside a running dev server — timeouts and two reruns.
+- **The full gate — once per branch.** `review` runs it on the head it reads,
+  `create-pr` and `promote` before the push. Each first runs `gate_record.py
+  check <tree> --base <base>` and skips on `skip`, saying so: the head's tree
+  passed it, or a run earlier on the branch did and every commit since is
+  recorded. Every green full run on a clean tree → `record full`, whichever
+  command ran it. A small change (`commands/task.md`, "The change's level")
+  checks with `--small`: its commits' targeted checks stand for the gate,
+  and `review` runs the full gate once only when a commit touched a hub file
+  or a path no row covers.
+- **Where the full gate runs** — the profile's `full gate`. `local`, and no
+  key: as above. `ci`: the pipeline runs it on every pull request and
+  nothing records it locally; `review` runs the targeted checks of its range
+  and reports the checks' status on its head (`gh pr checks`); `create-pr`
+  and `promote` push without it and merge only on green checks, by
+  `create-pr`'s merge step. A red check is fixed by a new commit: the commit is
+  already on the remote. Before the push they offer the full gate locally as
+  the second option, only with a reason — the diff touches what the targeted
+  checks do not narrow (configuration, dependencies, hub files, the gate
+  itself); the commits will still change (a review or a round of fixes
+  ahead, an amend); `merge method` is not `squash` — with CI recommended,
+  the local run's price (the gate's measured time) and its gain (an amend
+  instead of a fix commit, checks that stay green). No reason, no question.
 - **Beside the work, not before it.** `review` starts the full gate in the
   background (Bash with `run_in_background`) before the rubric and reads the
   result before the report.
 - **Red under load is not red by code.** When only timeouts fail while the
   machine is busy — a dev server, a stack, parallel agents — rerun the failing
   files alone and report both runs and the load. Neither green nor red is
-  called without the rerun.
+  called without the rerun. A dev server or stack the session started is
+  stopped before a test run wider than a few files; one the owner runs is
+  named in the report.

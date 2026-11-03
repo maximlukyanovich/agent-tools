@@ -44,8 +44,10 @@ hold in every clone.
 | `chain` | asked once; the chain the project's documents already name is offered first as recommended, else `feature/* → develop → main`; the answer is written down | `promote`, `create-pr`, `next` |
 | `protected` | every branch of `chain` after `feature/*` — never pushed directly | `commit`, `create-pr`, `promote` |
 | `upstream` | none; if named, never pushed to, never targeted by a PR | `promote`, `create-pr`, `next` |
-| `validate` | asked (e.g. `pnpm validate`, `make test`) | `commit`, `create-pr`, `sync`, `review` |
-| `targeted checks` | none — table "path class → command"; a step runs the rows of the paths it changed, and a path no row covers runs `validate` | `commit`, `fix`, `sync` |
+| `validate` | asked (e.g. `pnpm validate`, `make test`) | `commit`, `create-pr`, `promote`, `sync`, `review` |
+| `targeted checks` | none — table "path class → command"; a step runs the rows of the paths it changed, and a path no row covers runs `validate` | `commit`, `fix`, `sync`, `review` |
+| `hub files` | none — files whose related tests are the whole suite (the route registry, a shared config, shared types), and the command that runs one area's tests by path; a change to one runs the tests of its areas, not `related` | `commit`, `fix`, `sync` |
+| `full gate` | `local` — `validate` runs once per branch, in `review` or before the push; `ci` — the pull request's checks run it, and the commands do not | `review`, `create-pr`, `promote` |
 | `commit preset` | `gitmoji-conventional` | `commit` |
 | `commit confirm` | `ask` — stage and show the draft, commit on go-ahead; `auto` — the invocation is the authorisation | `commit` |
 | `worktree folder` | `../<repo>-<slug>` — beside the repository, so the main tree's linters, tests and type-check never pick it up | `task` |
@@ -55,7 +57,7 @@ hold in every clone.
 | `pr language` | `en` | `create-pr`, `promote` |
 | `post-merge checks` | none — commands to run after a `sync` (e.g. `makemigrations --check`) | `sync` |
 
-How the two gate keys work together is `reference/commands.md`, "The gate".
+How the gate keys work together is `reference/commands.md`, "The gate".
 A `targeted checks` command really narrows: the linter and the formatter on
 `<files>` (the row's changed paths), the type-check, the tests related to
 `<files>` (`vitest related <files> --run`, one app's tests with `--keepdb`).

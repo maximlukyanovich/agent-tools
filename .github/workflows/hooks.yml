@@ -30,5 +30,7 @@ jobs:
         run: node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'
       - name: mluk-repo change_size
         run: python3 plugins/mluk-repo/scripts/test_change_size.py
+      - name: mluk-repo gate_record
+        run: python3 plugins/mluk-repo/scripts/test_gate_record.py
       - name: mluk-repo review_target
         run: python3 plugins/mluk-repo/scripts/test_review_target.py

@@ -40,8 +40,9 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       profile's `targeted checks` give each code path a row whose command
       really narrows — the linter on the changed files, the type-check, the
       tests related to them — tried once, so edits and commits run those and
-      the full gate runs once per tree (`mluk-repo`, `reference/commands.md`,
-      "The gate").
+      the full gate runs once per branch, or in CI by `full gate`
+      (`mluk-repo`, `reference/commands.md`, "The gate"); `hub files` lists
+      the files whose related tests are the whole suite.
 - [ ] The gate is fast: one of several parts picks them by their content
       since the last green run, not by the branch's diff — a part whose
       content is unchanged is skipped, its fingerprint taken before and after

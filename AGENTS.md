@@ -160,13 +160,14 @@ Two workflows gate every pull request and `main`. `Check` runs
   Code" line.
 
 `Plugin tests` runs the plugins' tests — the hooks, `srv`, the start
-template, `change_size.py` and `review_target.py`. Before opening
+template, `change_size.py`, `gate_record.py` and `review_target.py`. Before opening
 a pull request, its author checks by hand:
 
 - a changed hook, script or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
   `python3 plugins/mluk-ops/hooks/test_guard.py`, `python3 plugins/mluk-ops/lib/test_srv.py`,
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`,
   `python3 plugins/mluk-repo/scripts/test_change_size.py`,
+  `python3 plugins/mluk-repo/scripts/test_gate_record.py`,
   `python3 plugins/mluk-repo/scripts/test_review_target.py`; the `Plugin tests`
   workflow runs the same on every push;
 - a change to a command that has cases under its plugin's `evals/` runs them

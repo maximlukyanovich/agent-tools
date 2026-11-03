@@ -99,7 +99,8 @@ yes is the approval this skill asks for.
 
 7. **After approval**: code in slices, the targeted checks of what changed
    after each edit (`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The
-   gate"; the full gate runs once, in the review and before the push), verify
+   gate"; the full gate runs once per branch, in the review or before the
+   push, or in CI), verify
    in the real environment, and commit each slice separately — only on an
    explicit go-ahead, never pushed without its own. Inside each slice:
    - **A change carries its proof**, by

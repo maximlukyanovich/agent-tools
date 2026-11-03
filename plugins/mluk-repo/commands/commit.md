@@ -42,8 +42,8 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
 4. **Run the checks** by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`,
    "The gate": the `targeted checks` rows of the changed paths, and the full
    `validate` only for a path no row covers or a profile without the table.
-   The full gate of the range runs in the review and before the push, not
-   here. The session already ran the same checks green after its last edit
+   The full gate of the range runs once per branch, in the review or
+   before the push — or in CI, by the profile's `full gate` — not here. The session already ran the same checks green after its last edit
    and the commit takes the whole diff → name that run and do not repeat it.
    A migration-shipping repository: a model change without its migration in
    the diff is an incomplete commit — stop.
@@ -102,10 +102,10 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    More groups → repeat for the next one.
 
 8. **Wrap up**: `git log --oneline -<N>` with the new commits on top, and a
-   one-line reminder that nothing was pushed. If the **full** `validate` (not a
-   targeted row) passed — in step 4 or the run it relied on — and the tree is
-   now clean, record the tree by "The gate", so `review`, `create-pr` and
-   `promote` skip a second identical run. Then, after every commit, run
+   one-line reminder that nothing was pushed. The tree now clean, record the
+   checks of step 4 by "The gate" — `record full` after the full `validate`,
+   `record targeted` when every changed path had its row and no hub file was
+   among them — so `review`, `create-pr` and `promote` skip a second run. Then, after every commit, run
    `/mluk-repo:handoff` for the same worktree or branch yourself, through the
    Skill tool, without asking — in the middle of a plan it prints the next
    slice; after a task's last commit or a round of review fixes, the review
