@@ -38,7 +38,9 @@ A folder or a local branch — the work to hand off, by
    `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/change_size.py" <branch> --base <base>`
    (`${CLAUDE_PLUGIN_ROOT}/reference/change-size.md`). A small change whose
    measure reads `normal` becomes normal, said in one line with the
-   script's reason; the measure never lowers a level.
+   script's reason — unless the overage is the wiring of a new isolated
+   page or module (`new` and `changed` in the line, by `/mluk-repo:task`'s
+   level), which the line names instead; the measure never lowers a level.
 
 2. **Read the ledger** for the branch, named as `review` names it — only
    `Trajectory`, `Open` and the last pass's head and verdict.

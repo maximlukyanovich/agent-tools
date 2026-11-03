@@ -41,17 +41,27 @@ closes was large.
 - **small** — prose, or a change that keeps behaviour, within the thresholds
   `/mluk-repo:handoff` measures (at most 100 lines and 5 files, prose alone
   up to 300; `${CLAUDE_PLUGIN_ROOT}/reference/change-size.md`), and in no
-  risk class of the testing skill. Steps 1–4 and the testing skill as usual;
-  then a short plan in chat — what changes, which files, how it is proven —
-  and the owner's yes take the place of steps 5–7 and plan mode. The review
-  and the merge run in this session;
+  risk class of the testing skill. A new isolated page or module is small
+  too, whatever the thresholds say, when the rest of its diff is wiring —
+  the route registry, navigation links, catalogue rows, tests updated to the
+  new link, documentation lines: the level follows the surface of
+  behaviour, not the count of files. A file of a risk class touched only to
+  register the new path takes a test of that registration, not the critical
+  level. Steps 1–4 and the testing skill as usual; then a short plan in chat
+  — what changes, which files, how it is proven — and the owner's yes take
+  the place of steps 5–7 and plan mode. The targeted checks stand for the
+  full gate (`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The gate"); the
+  review and the merge run in this session;
 - **critical** — money, access, a migration, deleted data. Its review runs
   only in a fresh session;
 - **normal** — everything else, by the steps below.
 
 The owner may raise the level at any time; the agent never lowers a critical
 one. Observed on a live project: a 31-line documentation change took nine
-sessions, nearly nine tenths of its cost spent on their starts.
+sessions, nearly nine tenths of its cost spent on their starts; a new static
+page — half an hour of work, sixteen files, most of them wiring — went
+through the whole normal cycle: a plan, a review in its own session, a round
+of fixes, the full gate twice.
 
 ## Steps
 
