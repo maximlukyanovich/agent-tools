@@ -13,14 +13,17 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       `autoUpdate`, and `ref` when Q11 pinned a release),
       `claude-plugins-official` when its plugins are enabled —
       enables the Q11 set and sets empty attribution.
-- [ ] `.claude/commands/start.md` comes from `templates/start/` with the
+- [ ] `.claude/commands/<prefix>-start.md` comes from `templates/start/` with the
       current version line, one variant left and every placeholder filled; it
       only installs and hands over. With Node, `scripts/agent-plugins.mjs` and
       its `lib/` are beside it and their test passes in the project's run.
-      `## Checks` has the plugin row, `.claude/COMMANDS.md` the `/start` row,
+      `## Checks` has the plugin row, `.claude/COMMANDS.md` its row,
       README the «Agent tooling» paragraph.
 - [ ] `.claude/COMMANDS.md` carries the `Harness:` line with this plugin's
       `MAJOR.MINOR` and the date of this setup or audit.
+- [ ] `.claude/COMMANDS.md` carries `Command prefix:`, and every local command
+      is named `<prefix>-<verb>`; with `none`, no name is a built-in command
+      or a bundled skill (`reference/layout.md` → Command names).
 - [ ] `AGENTS.md` §2 says how the project runs as commands from the
       repository root — install, dev server, the stack — and not who runs them.
 - [ ] Skills: real directories under `.claude/skills/`, working symlinks in

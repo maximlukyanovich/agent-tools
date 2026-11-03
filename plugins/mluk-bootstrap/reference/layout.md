@@ -81,7 +81,7 @@ repository gets "enabled but not installed" with nowhere to install from. So
 every marketplace `enabledPlugins` names is declared, `claude-plugins-official`
 included: an interactive first start adds that one on its own, a profile used
 only from the CLI lacks it. Trusting the folder registers the declared
-marketplaces but downloads no plugin; the project's `/start` installs the
+marketplaces but downloads no plugin; the project's start command installs the
 missing ones at local scope — the settings already turn them on, and a
 project-scope install writes into the committed `settings.json`. No marketplace
 is added by hand: a declared one needs no add, and at two scopes the add does
@@ -124,3 +124,28 @@ once:
 ```bash
 ln -s ../../.claude/skills/<name> .agents/skills/<name>
 ```
+
+## Command names
+
+**A project command is named `<prefix>-<verb>`** — `/my-start`, a local
+`/my-commit`. A file in `.claude/commands/` named like a built-in command or a
+bundled skill of Claude Code takes its place in the project, without a
+warning: `review.md` answers `/review`, `code-review.md` answers
+`/code-review`, and the built-in is out of reach (probed on Claude Code
+2.1.316). The prefix keeps today's built-ins and tomorrow's reachable, keeps a
+local override apart from the library command it overrides, and typing `/my`
+lists the project's commands together. One rule for every local command, the
+start command included.
+
+The prefix is Q12's answer, kept in `.claude/COMMANDS.md` under the
+`Harness:` line as `Command prefix: my`. `Command prefix: none — <reason>`
+keeps bare names; then each name is checked against the built-in commands
+and bundled skills listed at `https://code.claude.com/docs/en/commands` —
+fetched for the check, never copied into a plugin — and a name on that list is
+renamed. No line at all reads as `none`: the start command is `start.md`.
+
+A rename moves the file and every reference to it — `AGENTS.md`,
+`.claude/COMMANDS.md`, the profile's `## Checks`, README's «Agent tooling»,
+skills and docs: `grep -rn '/<old>\b'` finds them — and the agent's memory
+of the project, which lives outside the repository.
+

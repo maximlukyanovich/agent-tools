@@ -43,7 +43,7 @@ The order is fixed. Steps are not reordered or skipped.
    recommendation. Load the `mluk-repo:kickoff` skill before the first
    question — its questionnaire rules apply; `mluk-repo` is installed with this
    plugin. The list and its split into rounds are in
-   `${CLAUDE_PLUGIN_ROOT}/reference/questions.md` — eleven questions, and the
+   `${CLAUDE_PLUGIN_ROOT}/reference/questions.md` — twelve questions, and the
    most valuable is "what has already gone wrong here", because without it the
    hook set comes out speculative. Before Q5, read the facts its branch
    deletion question carries — the setting, the default and the protected
@@ -90,25 +90,27 @@ The order is fixed. Steps are not reordered or skipped.
    `claude plugin update <plugin>@mluk-agent-tools --scope <scope>` right after
    that start — the report says so.
 
-   **The project's `/start`** installs those plugins in every other clone: a
+   **The project's start command** installs those plugins in every other clone: a
    plugin that is not installed has no commands, so the library cannot do it.
    Copy `${CLAUDE_PLUGIN_ROOT}/templates/start/` with `cp`: `start.md` to
-   `.claude/commands/`, and — when the project has Node — `agent-plugins.mjs`
+   `.claude/commands/<prefix>-start.md` — Q12's prefix, `start.md` with
+   `none` — and — when the project has Node — `agent-plugins.mjs`
    with its `lib/` to `scripts/`, its test joining the project's test run.
    The scripts are never read into context; the copied `start.md` is the one
    file read, to edit it: keep the `node` variant, or
    the `prose` one without Node; drop the other's blocks and the variant
    markers, renumber, fill the `<…>` placeholders, keep the version line.
-   With it go a `## Checks` row — `agent plugins — <the report> — /start` —
+   With it go a `## Checks` row — `agent plugins — <the report> — /<prefix>-start` —
    a `.claude/COMMANDS.md` row saying why it is local, and the README's
    «Agent tooling» (`${CLAUDE_PLUGIN_ROOT}/reference/templates.md`).
-   `.claude/COMMANDS.md` also gets its `Harness:` line, by the same file.
+   `.claude/COMMANDS.md` also gets its `Harness:` and `Command prefix:`
+   lines, by the same file.
 
-   **Local commands are the exception, not the rule.** Besides `/start`,
+   **Local commands are the exception, not the rule.** Besides the start command,
    which every project gets, `commit`, `create-pr`, `promote`, `review`,
    `fix`, `sync`, `start`, `next`, `task`, `update-docs`, `handoff` exist in
    `mluk-repo` and read the profile. Write a local
-   `.claude/commands/<name>.md` only when the answer to a question showed that
+   `.claude/commands/<prefix>-<name>.md` only when the answer to a question showed that
    the *procedure* differs — and say in the plan which library command it
    overrides and why.
 

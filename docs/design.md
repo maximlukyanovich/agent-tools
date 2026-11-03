@@ -26,7 +26,7 @@ commands into each project needs a log of what a project must carry over.
 Here the process commands — `task`, `commit`, `review`, `fix`, `create-pr`,
 `promote` — live in `mluk-repo` and arrive with its update; `setup` generates
 only the harness: `AGENTS.md`, the profile, `CLAUDE.md`, domain skills,
-`/start`, `docs/local/`. Its state is one line, `Harness:` in
+the start command, `docs/local/`. Its state is one line, `Harness:` in
 `.claude/COMMANDS.md`: the `mluk-bootstrap` `MAJOR.MINOR` the harness last
 matched. A minor raise is a new rule or template section — what `audit`
 checks — so it is what moves the line; `/mluk-repo:start` compares it with the

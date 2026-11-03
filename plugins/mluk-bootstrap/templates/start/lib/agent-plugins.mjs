@@ -2,7 +2,7 @@
 // (`claude plugin list --json`) and which marketplaces it knows (`claude plugin marketplace list
 // --json`). Tested on its own (agent-plugins.test.mjs): all of it is pure but `realpath` and
 // `gitRoot`, which read the disk and are tested on folders there; calling Claude Code stays in
-// scripts/agent-plugins.mjs. Template: mluk-bootstrap start v1.
+// scripts/agent-plugins.mjs. Template: mluk-bootstrap start v2.
 import { execFileSync } from 'node:child_process'
 import { realpathSync } from 'node:fs'
 import path from 'node:path'

@@ -30,13 +30,13 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    source for anything that survives a change of project.
 
 3. **Local commands that copy the library.** For every `.claude/commands/*.md`
-   whose name matches a `mluk-repo` command (`commit`, `create-pr`, `promote`,
+   whose name, its prefix dropped, matches a `mluk-repo` command (`commit`, `create-pr`, `promote`,
    `review`, `sync`, `start`, `next`, `task`, `update-docs`): does its procedure differ,
    or only its parameters? Parameters → propose moving them into the profile
    and deleting the local file. A genuine procedural difference → keep, and
    check it is documented as an override in `.claude/COMMANDS.md`. An index
    that lists library commands is a copy going stale — propose replacing the
-   rows with a pointer to the plugins' `help`. The project's `/start` from
+   rows with a pointer to the plugins' `help`. The project's start command from
    the template is not such a copy; §14 checks it.
 
 4. **The profile.** Does `.claude/project-profile.md` exist and carry the
@@ -114,7 +114,7 @@ The harness exists; the job is to find the gaps, not to rewrite it.
     build script missing from `allowBuilds`? Under pnpm 11 that gap fails the
     deploy's install and nothing earlier.
 
-14. **A fresh clone gets its plugins.** Is there a `.claude/commands/start.md`
+14. **A fresh clone gets its plugins.** Is there a `.claude/commands/<prefix>-start.md`
     from `${CLAUDE_PLUGIN_ROOT}/templates/start/`? Without it a collaborator's
     clone has the plugins turned on and no command to install them. Does its
     version line match the template's — and, with Node, the one in
@@ -168,6 +168,16 @@ The harness exists; the job is to find the gaps, not to rewrite it.
     - **A researcher's claim** — "these tests send paid requests" — is proven
       by a run (a spy, a counter) before it enters the plan. Observed: one
       such claim was refuted by a spy that counted zero requests.
+
+17. **Command names.** Does `.claude/COMMANDS.md` carry `Command prefix:`,
+    and is every local command named `<prefix>-<verb>` by it
+    (`${CLAUDE_PLUGIN_ROOT}/reference/layout.md` → Command names)? No line →
+    Q12 is asked (`${CLAUDE_PLUGIN_ROOT}/reference/questions.md`), its
+    options in that order, `my` the recommended one — a prefix is
+    recommended, not required: `none` with its
+    reason is a decline. With `none`, each name is checked against the page
+    that rule names; a name on it is a defect — the project's command hides
+    the built-in — and its rename is proposed.
 
 ## Report
 

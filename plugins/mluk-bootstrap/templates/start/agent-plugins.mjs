@@ -1,9 +1,9 @@
 // The Claude Code plugins `.claude/settings.json` declares that this machine has not installed for
 // this checkout. Committed settings turn a plugin on for everyone but do not download it: Claude
 // Code registers a declared marketplace once the folder is trusted, and each collaborator installs
-// the plugins once. The `/start` command runs this first.
+// the plugins once. The project's start command runs this first.
 //
-// Template: mluk-bootstrap start v1 — copied by /mluk-bootstrap:setup into a folder one level below
+// Template: mluk-bootstrap start v2 — copied by /mluk-bootstrap:setup into a folder one level below
 // the repository root, with lib/ beside it; /mluk-bootstrap:audit compares the version. Node 20.11+.
 //
 //   node scripts/agent-plugins.mjs             report; exits 1 when a declared plugin is missing

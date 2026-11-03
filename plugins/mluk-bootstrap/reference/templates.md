@@ -104,15 +104,16 @@ commands; each plugin's `help` lists them (`/mluk-repo:help` first). They read
 know: the project's own commands and its overrides.
 
 Harness: mluk-bootstrap <MAJOR.MINOR> — <setup | audit> of <YYYY-MM-DD>.
+Command prefix: <prefix> — or `none — <reason>`.
 
 ## Local
 
 | Command | Mutating | What it does |
 | --- | --- | --- |
-| [`/start`](commands/start.md) | installs plugins, on a yes | First command in a fresh clone: installs the declared plugins that are missing, then runs `/mluk-repo:start` |
+| [`/<prefix>-start`](commands/<prefix>-start.md) | installs plugins, on a yes | First command in a fresh clone: installs the declared plugins that are missing, then runs `/mluk-repo:start` |
 | [`/<local>`](commands/<local>.md) | … | … |
 
-`/start` is local because a plugin that is not installed has no commands, so
+The start command is local because a plugin that is not installed has no commands, so
 the library cannot install itself.
 
 ## Overrides
@@ -129,7 +130,7 @@ check. `setup` writes it, `audit` rewrites it as its last change, and
 `/mluk-repo:start` shows a `⚠` with `/mluk-bootstrap:audit` when the
 installed plugin is ahead of it.
 
-## The project's /start
+## The project's start command
 
 Copied, not written: `${CLAUDE_PLUGIN_ROOT}/templates/start/` — setup step 4
 says how. Its version line is what `audit` compares; a project that changes the
@@ -142,7 +143,7 @@ copy records why in `.claude/COMMANDS.md`.
 
 Optional, for Claude Code: start it at the repository root and trust the
 folder. That registers the plugin marketplaces `.claude/settings.json`
-declares but downloads no plugin — run `/start`, which installs the missing
+declares but downloads no plugin — run `/<prefix>-start`, which installs the missing
 ones and then gives the overview. A session that is already open loads new or
 updated plugins after `/reload-plugins`. Other agents read
 [AGENTS.md](AGENTS.md).

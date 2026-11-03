@@ -89,7 +89,7 @@ change there reaches every file, so it runs `validate`.
 
 A list, one per line: `label — command — fix when not ok`. `start` runs them
 read-only and prints the table. Typical rows: the agent plugins installed
-(the report the project's `/start` runs), dev server on its port, containers
+(the report the project's start command runs), dev server on its port, containers
 up, `.env` present, migrations applied, `gh auth status`, working tree clean.
 The validate command is shown as `info` and not run. A fix says how, as a
 command — not who runs it.

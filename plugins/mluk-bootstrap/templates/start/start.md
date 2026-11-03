@@ -3,9 +3,9 @@ description: First command in a fresh clone or session — install the Claude Co
 argument-hint: '[language]'
 ---
 
-<!-- mluk-bootstrap start template v1 — copied by /mluk-bootstrap:setup; /mluk-bootstrap:audit compares the version -->
+<!-- mluk-bootstrap start template v2 — copied by /mluk-bootstrap:setup; /mluk-bootstrap:audit compares the version -->
 
-# /start
+# Start
 
 The workflow commands come from plugins declared in `.claude/settings.json`, and a plugin that is not installed has no commands — `/mluk-repo:start` cannot install itself. Trusting the folder registers the declared marketplaces but downloads no plugin. This command does that one step and hands over; the overview and the environment checks stay in the library and are never copied here.
 
@@ -18,10 +18,10 @@ The workflow commands come from plugins declared in `.claude/settings.json`, and
 2. **Nothing missing** → run `/mluk-repo:start $ARGUMENTS` and stop here. A plugin turned off here is a personal switch — leave it; if it is `mluk-repo` itself, say so and stop.
 3. **Something missing** → show the list and ask whether to install. A plugin from a marketplace this machine does not know is not installed: one the settings declare is registered by starting Claude Code at the repository root and trusting the folder; one they do not declare goes under `extraKnownMarketplaces` first. Neither needs `claude plugin marketplace add`, and at two scopes it does harm: `--scope local` replaces the committed entry and drops its `autoUpdate`, `--scope project` rewrites the committed `settings.json`.
    <!-- variant: node -->
-   - Yes → run `node scripts/agent-plugins.mjs --install`, show its output, then give the developer `/reload-plugins` and `/start` to run, in that order, each as a code block.
+   - Yes → run `node scripts/agent-plugins.mjs --install`, show its output, then give the developer `/reload-plugins` and this command, under the name it was run with, to run, in that order, each as a code block.
    <!-- /variant -->
    <!-- variant: prose -->
-   - Yes → `claude plugin install <id> --scope local` for each — local, because the settings already turn the plugins on and a project-scope install rewrites the committed `settings.json`. Show the output, then give the developer `/reload-plugins` and `/start` to run, in that order, each as a code block.
+   - Yes → `claude plugin install <id> --scope local` for each — local, because the settings already turn the plugins on and a project-scope install rewrites the committed `settings.json`. Show the output, then give the developer `/reload-plugins` and this command, under the name it was run with, to run, in that order, each as a code block.
    <!-- /variant -->
    - No → point to `README.md` («<getting started section>», «Agent tooling») and `AGENTS.md`, and stop.
 <!-- variant: node -->

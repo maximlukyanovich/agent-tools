@@ -34,7 +34,7 @@ Language: the conversation's, unless `$1` gives a code.
 
 5. **Say what `/mluk-bootstrap:setup` creates**: `AGENTS.md`, `CLAUDE.md`, the
    project profile, `settings.json` with the library plugins, the project's
-   `/start` that installs them in a fresh clone, skills, hooks, docs skeleton
+   start command that installs them in a fresh clone, skills, hooks, docs skeleton
    — and what it deliberately does not create (the library commands).
 
 6. **Say what is present here** — is there an `AGENTS.md`, a `.claude/`, a

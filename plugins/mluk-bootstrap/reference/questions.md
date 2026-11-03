@@ -7,12 +7,12 @@ redundant.** The questionnaire rules themselves are in the `mluk-repo:kickoff`
 skill, loaded before the first question.
 
 **Rounds.** Four questions a round, the closing one included
-(`mluk-repo:kickoff`). Q9 and Q10 are not asked, so eleven come down to nine:
+(`mluk-repo:kickoff`). Q9 and Q10 are not asked, so twelve come down to ten:
 
 1. Q1, Q2, Q3, and Q8 as the closing question;
 2. Q4, Q5, Q6, Q7 — without UI there is no Q4, Q11 takes its place and there
    is no third round;
-3. Q11 alone — the plugin set follows from the answers to Q4 and Q7.
+3. Q11 and Q12 — the plugin set follows from the answers to Q4 and Q7.
 
 A question the inventory answered fully drops out; the rest keep their order.
 
@@ -131,6 +131,16 @@ git. Which release of the library: follow `main` — every raised version
 arrives through `autoUpdate`, the default for one developer — or pin the
 latest release tag, so a team moves between releases by a reviewed settings
 change.
+
+**Q12. Command prefix.** The project's commands are named `<prefix>-<verb>`
+(`reference/layout.md` → Command names). The options, in this order: `my` —
+first and recommended, the same in every project, so the habit carries over; a
+short code of this project, two to four letters, proposed as a concrete one;
+no prefix. The developer's own prefix is the free answer, offered last; `mluk`
+comes with a warning that it merges with the `mluk-*` plugins in the command
+menu. No prefix asks its reason next, in the developer's own words — never one
+the agent supplies: names that collide with no built-in are what `none`
+requires, not a reason.
 
 There is no question about a tracker or time tracking. A task brief comes inline, from a `docs/local/` note, or from a GitHub
 issue when one exists.
