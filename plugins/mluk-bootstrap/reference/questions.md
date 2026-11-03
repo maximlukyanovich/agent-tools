@@ -10,9 +10,9 @@ skill, loaded before the first question.
 (`mluk-repo:kickoff`). Q9 and Q10 are not asked, so twelve come down to ten:
 
 1. Q1, Q2, Q3, and Q8 as the closing question;
-2. Q4, Q5, Q6, Q7 — without UI there is no Q4, Q11 takes its place and there
-   is no third round;
-3. Q11 and Q12 — the plugin set follows from the answers to Q4 and Q7.
+2. Q4, Q5, Q6, Q7 — without UI there is no Q4 and Q11 takes its place;
+3. Q11 and Q12 — the plugin set follows from the answers to Q4 and Q7;
+   without UI, Q12 alone.
 
 A question the inventory answered fully drops out; the rest keep their order.
 

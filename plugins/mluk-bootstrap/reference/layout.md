@@ -142,10 +142,13 @@ The prefix is Q12's answer, kept in `.claude/COMMANDS.md` under the
 keeps bare names; then each name is checked against the built-in commands
 and bundled skills listed at `https://code.claude.com/docs/en/commands` —
 fetched for the check, never copied into a plugin — and a name on that list is
-renamed. No line at all reads as `none`: the start command is `start.md`.
+renamed: the project takes a prefix after all, or that command alone gets a
+verb not on the list (`code-review` → `inspect`). With `none`, `<prefix>-`
+drops out of every name the plugin texts give: `start.md`, `/start`. No line
+at all reads as `none`.
 
 A rename moves the file and every reference to it — `AGENTS.md`,
 `.claude/COMMANDS.md`, the profile's `## Checks`, README's «Agent tooling»,
-skills and docs: `grep -rn '/<old>\b'` finds them — and the agent's memory
+the other commands, skills and docs: `grep -rn '/<old>\b'` finds them — and the agent's memory
 of the project, which lives outside the repository.
 

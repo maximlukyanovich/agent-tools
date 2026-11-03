@@ -34,8 +34,8 @@ installed plugin and points to `audit` when the plugin is ahead.
 
 **Library base, local override.** `/mluk-repo:commit` is the default in every
 project. A project that genuinely needs a different procedure — not different
-parameters — writes its own `.claude/commands/commit.md`; the two coexist under
-different names. The test: if the difference fits in a profile line, it is the
+parameters — writes its own `.claude/commands/<prefix>-commit.md`; the two coexist under
+different names, `/my-commit` beside `/mluk-repo:commit`. The test: if the difference fits in a profile line, it is the
 library. If the procedure differs, it is a local command. `mluk-bootstrap:audit`
 reports local commands that merely duplicate the library.
 

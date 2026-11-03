@@ -13,7 +13,7 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       `autoUpdate`, and `ref` when Q11 pinned a release),
       `claude-plugins-official` when its plugins are enabled —
       enables the Q11 set and sets empty attribution.
-- [ ] `.claude/commands/<prefix>-start.md` comes from `templates/start/` with the
+- [ ] `.claude/commands/<prefix>-start.md` (`start.md` with `none`) comes from `templates/start/` with the
       current version line, one variant left and every placeholder filled; it
       only installs and hands over. With Node, `scripts/agent-plugins.mjs` and
       its `lib/` are beside it and their test passes in the project's run.

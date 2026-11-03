@@ -115,8 +115,11 @@ The harness exists; the job is to find the gaps, not to rewrite it.
     deploy's install and nothing earlier.
 
 14. **A fresh clone gets its plugins.** Is there a `.claude/commands/<prefix>-start.md`
-    from `${CLAUDE_PLUGIN_ROOT}/templates/start/`? Without it a collaborator's
-    clone has the plugins turned on and no command to install them. Does its
+    (`start.md` with `none` or no line) from
+    `${CLAUDE_PLUGIN_ROOT}/templates/start/`? Without it a collaborator's
+    clone has the plugins turned on and no command to install them. When §17
+    sets a prefix in the same audit, a fresh copy goes straight under the new
+    name. Does its
     version line match the template's — and, with Node, the one in
     `scripts/agent-plugins.mjs` and its `lib/`? Compare with `diff` against
     the template, not by reading both. Is it still thin — it installs and
