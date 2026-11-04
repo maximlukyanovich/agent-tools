@@ -6,7 +6,8 @@ argument-hint: '[<source-branch>]'
 # /mluk-repo:sync
 
 Bring the base branch into the current feature branch. Reads `## Repository`
-for `base branch`, `validate`, `targeted checks`, `post-merge checks`.
+for `base branch`, `validate`, `targeted checks`, `hub files`, `full gate`,
+`post-merge checks`.
 
 **Writes to git** (a merge commit). Token-efficient by design: this is not an
 inventory of the codebase.
@@ -29,7 +30,10 @@ inventory of the codebase.
    Then the targeted checks of the paths the merge brought in (step 4's
    first list), by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The
    gate" — not the full `validate`, which runs in the review and before the
-   push; failures are shown and stop the report.
+   push, or in the pull request's checks with `full gate: ci`; failures are
+   shown and stop the report. When that rule still sends the step to the full
+   `validate`, green on a clean tree →
+   `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py" record full [<tree>]`.
 
 4. **Capture the boundary.**
 

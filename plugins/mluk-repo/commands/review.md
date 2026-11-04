@@ -1,5 +1,5 @@
 ---
-description: Review the current branch — or a named branch or worktree, or a specific PR — against the base branch, and return findings sorted by severity with a file:line anchor each. Keeps a pass ledger so a repeat run reviews only what changed. Read-only apart from the ledger; edits only with the fix argument.
+description: Review the current branch — or a named branch or worktree, or a specific PR — against the base branch, and return findings sorted by severity with a file:line anchor each. Keeps a pass ledger so a repeat run reviews only what changed. Read-only apart from the ledger and the gate's record; edits only with the fix argument.
 argument-hint: '[<PR#> | <branch> | <worktree-path>] [<sha>..<sha>] [<severity>+] [full] [fix] [model=<name>]'
 ---
 
@@ -10,9 +10,9 @@ the current one, or one named, typically living in a worktree — against the
 profile's `base branch`, through the library rubric plus the project lenses in
 `## Review`.
 
-**Read-only by default**: no commits, no code edits, no `gh` mutations. The one
-file it writes is its own ledger (below). Code edits only with `fix`; posting to
-a PR only on an explicit yes at the end.
+**Read-only by default**: no commits, no code edits, no `gh` mutations. It
+writes only its own ledger (below) and the gate's record (step 3). Code edits
+only with `fix`; posting to a PR only on an explicit yes at the end.
 
 **Run it in a fresh session**, not the one that wrote the code: everything a
 review needs from the past is in the ledger. The fresh
@@ -81,8 +81,9 @@ never rewritten.
 ## Steps
 
 1. **Parse arguments; read the profile** (`base branch`, `validate`,
-   `## Review` with `ledger`, `design source` and `consumers`, `## Docs` for
-   the contract log and techdebt file).
+   `targeted checks`, `hub files`, `full gate`, `## Review` with `ledger`,
+   `design source` and `consumers`, `## Docs` for the contract log and
+   techdebt file).
 
 2. **Find the ledger and set the target** — by script, not by reasoning:
    `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/review_target.py" --ledger <ledger file> --tree <tree>`,
@@ -100,10 +101,12 @@ never rewritten.
    untracked files are the easiest thing to miss — all in the tree under
    review. `HEAD` on the base branch, no PR and no worktree ahead of it →
    nothing to review. Start the gate by
-   `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The gate": `gate_record.py
-   check` (`--small` for a small change) says `skip` → a line saying so;
+   `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The gate":
+   `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py" check <tree> --base <base>`
+   (`--small` for a small change) says `skip` → a line saying so;
    otherwise the full `validate` runs in the background, in that tree, while
-   steps 4–7 go on, and its result is read before step 8. With `full gate:
+   steps 4–7 go on, and its result is read before step 8; green on a clean
+   tree → `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py" record full <tree>`. With `full gate:
    ci`, the PR's checks instead, the commits' targeted checks not rerun.
 
 4. **Frame the scope** in one line from the branch name, PR text and commit
@@ -191,7 +194,8 @@ never rewritten.
     target; trailing whitespace in files the diff touches. Never: migrations,
     model or serializer shapes, permission logic, validators, test expectations,
     anything named in the profile's blast-radius list, structural refactoring.
-    After fixing, run `validate` and close with one line.
+    After fixing, run the targeted checks of the fixed paths ("The gate")
+    and close with one line.
 
 12. **Hand off** — last, once steps 10–11 are answered or skipped: run
     `/mluk-repo:handoff` for the same branch yourself, through the Skill
@@ -202,7 +206,7 @@ never rewritten.
 
 ## Hard rules
 
-- Nothing but the ledger is written during analysis.
+- Nothing but the ledger and the gate's record is written during analysis.
 - `blocker` / `major` need `file:line` **and** a reproducible scenario, a named
   mechanism, or a quoted rule. Vague findings are `nit`. Zero blockers is a
   legitimate result — do not inflate.

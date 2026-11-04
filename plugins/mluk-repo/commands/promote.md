@@ -23,8 +23,12 @@ source when the target moved. A single hop to the next branch is the same as
    chain printed. Print `source → target`.
 
 2. **Pre-flight** as in `create-pr`: clean tree, correct remote alias and `gh`
-   account, `upstream` out of scope, the gate green when the first source is
-   the working branch.
+   account, `upstream` out of scope, and when the first source is the working
+   branch the gate: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py" check <tree> --base <base>`
+   (`--small` for a small change) says `skip`, or the full `validate` is
+   green and recorded the same way (`record full <tree>`). With `full gate:
+   ci`, no local run — the question with a reason, or nothing, and the merge
+   waits for green checks.
 
 3. **Build the segments** — the chain prefix ending at the target:
    the working branch → the first protected branch, then each hop between

@@ -50,8 +50,9 @@ closes was large.
   level. Steps 1–4 and the testing skill as usual; then a short plan in chat
   — what changes, which files, how it is proven — and the owner's yes take
   the place of steps 5–7 and plan mode. The targeted checks stand for the
-  full gate (`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The gate"); the
-  review and the merge run in this session;
+  full gate, unless a commit touched a hub file or a path no row covers
+  (`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The gate"); the review
+  and the merge run in this session;
 - **critical** — money, access, a migration, deleted data. Its review runs
   only in a fresh session;
 - **normal** — everything else, by the steps below.

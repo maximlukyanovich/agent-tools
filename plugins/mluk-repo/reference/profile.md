@@ -44,10 +44,10 @@ hold in every clone.
 | `chain` | asked once; the chain the project's documents already name is offered first as recommended, else `feature/* → develop → main`; the answer is written down | `promote`, `create-pr`, `next` |
 | `protected` | every branch of `chain` after `feature/*` — never pushed directly | `commit`, `create-pr`, `promote` |
 | `upstream` | none; if named, never pushed to, never targeted by a PR | `promote`, `create-pr`, `next` |
-| `validate` | asked (e.g. `pnpm validate`, `make test`) | `commit`, `create-pr`, `promote`, `sync`, `review` |
-| `targeted checks` | none — table "path class → command"; a step runs the rows of the paths it changed, and a path no row covers runs `validate` | `commit`, `fix`, `sync`, `review` |
-| `hub files` | none — files whose related tests are the whole suite (the route registry, a shared config, shared types), and the command that runs one area's tests by path; a change to one runs the tests of its areas, not `related` | `commit`, `fix`, `sync` |
-| `full gate` | `local` — `validate` runs once per branch, in `review` or before the push; `ci` — the pull request's checks run it, and the commands do not | `review`, `create-pr`, `promote` |
+| `validate` | asked (e.g. `pnpm validate`, `make test`) | `commit`, `fix`, `create-pr`, `promote`, `sync`, `review` |
+| `targeted checks` | none — table "path class → command"; a step runs the rows of the paths it changed, and a path no row covers runs `validate`, or waits for the pipeline with `full gate: ci` | `commit`, `fix`, `sync`, `review` |
+| `hub files` | none — files whose related tests are the whole suite (the route registry, a shared config, shared types), and the command that runs one area's tests by path; a change to one runs the tests of its areas, not `related` | `commit`, `fix`, `sync`, `review` |
+| `full gate` | `local` — `validate` runs once per branch, in `review` or before the push; `ci` — the pull request's checks run it, and the commands do not | `commit`, `fix`, `sync`, `review`, `create-pr`, `promote` |
 | `commit preset` | `gitmoji-conventional` | `commit` |
 | `commit confirm` | `ask` — stage and show the draft, commit on go-ahead; `auto` — the invocation is the authorisation | `commit` |
 | `worktree folder` | `../<repo>-<slug>` — beside the repository, so the main tree's linters, tests and type-check never pick it up | `task` |
@@ -64,7 +64,8 @@ A `targeted checks` command really narrows: the linter and the formatter on
 A filter that silently runs the whole suite is not one — run it once before
 writing it down. Shared configuration — the lockfile, the linter's,
 type-checker's or test runner's config, the test setup — gets no row: a
-change there reaches every file, so it runs `validate`.
+change there reaches every file, so it runs `validate`, or waits for the
+pipeline with `full gate: ci`.
 
 ## Docs
 

@@ -17,7 +17,7 @@ Language: the conversation's, unless `$1` gives a code.
    that path verbatim — never search the filesystem for the plugin. Mark the
    mutating ones: `commit`, `create-pr`, `promote`, `sync`; `fix` edits code
    and leaves the commit to `commit`; `update-docs`
-   writes after confirmation; `next` writes only a roadmap status patch, after confirmation; `review` writes only its gitignored ledger, code only with `fix`; `handoff` writes only a local note.
+   writes after confirmation; `next` writes only a roadmap status patch, after confirmation; `review` writes only its gitignored ledger and the gate's record, code only with `fix`; `handoff` writes only a local note.
 
 2. **Show the usual order:** `start` → `next` → `task` → work → `commit` → `review` →
    `fix` while findings are open (it calls `commit`) → `review` of its delta →

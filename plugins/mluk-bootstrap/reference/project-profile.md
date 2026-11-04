@@ -21,8 +21,10 @@ both.
 ## Repository
 Platform and CLI (GitHub, gh). Remote account alias. Base branch. Branch chain.
 Upstream policy. Validate command, and the targeted checks — a row per path
-class with a command that narrows. Commit preset and confirm mode. Merge
-method. PR language.
+class with a command that narrows. Where the full gate runs —
+`full gate: local | ci`, `local` without the key. The hub files — those whose
+related tests are the whole suite — and the command that runs one area's
+tests by path. Commit preset and confirm mode. Merge method. PR language.
 
 ## Docs
 Where documentation lives: the technical canvas here, product docs (possibly

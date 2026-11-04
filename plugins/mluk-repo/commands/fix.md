@@ -26,9 +26,10 @@ that file does not hold yet. The rest are named in the report as left open.
 
 ## Steps
 
-1. **Read the state** — the profile (`targeted checks`, `validate`, `## Docs`
-   `techdebt`, `## Review` `ledger`), the ledger's `Open` and its last pass,
-   the plan found as `handoff` finds it. Only the chosen findings' lines.
+1. **Read the state** — the profile (`targeted checks`, `hub files`,
+   `validate`, `full gate`, `## Docs` `techdebt`, `## Review` `ledger`), the
+   ledger's `Open` and its last pass, the plan found as `handoff` finds it.
+   Only the chosen findings' lines.
 
 2. **Read by anchor** — each finding's `file:line`, its callers and the test
    beside it, not the module in full.

@@ -45,18 +45,22 @@ several → ask which; none → nothing to act on.
 The full `validate` costs minutes. Run after every edit and again by every
 command, it makes a fix wait longer than the fix itself. So it runs once per
 branch, and the work between those runs is checked narrowly. The record
-behind it is kept by `${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py`
-(`${CLAUDE_PLUGIN_ROOT}/reference/gate-record.md`). Observed on a live
-project: a half-hour task's merge ran the full gate again after a review
-fix that had passed its targeted checks.
+behind it is kept by the plugin's `gate_record.py`, which each command's
+body calls by its full path (`${CLAUDE_PLUGIN_ROOT}/reference/gate-record.md`).
+Observed on a live project: a half-hour task's merge ran the full gate again
+after a review fix that had passed its targeted checks.
 
 - **Between edits, in a commit, after a sync — the targeted checks.** For
   each changed path, the profile's `targeted checks` row that covers it; the
   union of those rows runs, and a path no row covers sends the step to the
   full `validate`. A profile without the table runs the full `validate`, as
-  before. Say in one line what ran and what was not exercised. A commit
-  whose every path had its row, green, on a clean tree after the commit →
-  `gate_record.py record targeted`.
+  before. With `full gate: ci` both go to the pipeline instead: the step runs
+  no `validate`, and such a commit is not recorded. Say in one line what ran
+  and what was not exercised. A commit whose every path had its row, green,
+  on a clean tree after the commit → `gate_record.py record targeted`. The
+  paths are the whole commit's (`git show --name-only HEAD`): an amend counts
+  what the commit already held, not only the round's. Several groups of one
+  run are recorded after the last, with `--commits <n>`.
 - **A hub file takes the tests of its areas.** The tests related to a file
   most of the code imports — the route registry, a shared config, shared
   types — are the whole suite. A change to one of the profile's `hub files`
@@ -72,18 +76,21 @@ fix that had passed its targeted checks.
   recorded. Every green full run on a clean tree → `record full`, whichever
   command ran it. A small change (`commands/task.md`, "The change's level")
   checks with `--small`: its commits' targeted checks stand for the gate,
-  and `review` runs the full gate once only when a commit touched a hub file
-  or a path no row covers.
+  and `review` runs the full gate once only when a commit is not recorded:
+  it touched a hub file, or an amend ran only its own rows over a path no
+  row covers. Such a path otherwise ran it in its commit, recorded `full`.
 - **Where the full gate runs** — the profile's `full gate`. `local`, and no
-  key: as above. `ci`: the pipeline runs it on every pull request and
-  nothing records it locally; `review` reports the checks' status on its
-  head (`gh pr checks`) and does not rerun the targeted checks — the commits
-  ran them, and over a whole range "related" nears the whole suite; a head
-  not yet pushed rests on its commits' checks; `create-pr`
-  and `promote` push without it and merge only on green checks, by
-  `create-pr`'s merge step. A red check is fixed by a new commit: the commit is
-  already on the remote. Before the push they offer the full gate locally as
-  the second option, only with a reason — the diff touches what the targeted
+  key: as above. `ci`: the pipeline runs it on every pull request, and its
+  status decides — no command runs it on its own, a commit whose paths all
+  have rows still records `targeted`, and a local run `full`; `review`
+  reports the checks' status on its head (`gh pr checks`) and does not rerun
+  the targeted checks — the commits ran them, and over a whole range
+  "related" nears the whole suite; a head not yet pushed, or pushed with no
+  pull request, rests on its commits' checks; `create-pr` and `promote` push
+  without it and merge only on green checks, by `create-pr`'s merge step. A
+  red check is fixed by a new commit: the commit is already on the remote.
+  Before the push they offer the full gate locally as the second option,
+  only with a reason — the diff touches what the targeted
   checks do not narrow (configuration, dependencies, hub files, the gate
   itself); the commits will still change (a review or a round of fixes
   ahead, an amend); `merge method` is not `squash` — with CI recommended,
