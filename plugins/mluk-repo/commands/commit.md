@@ -7,7 +7,7 @@ argument-hint: '[<worktree | branch>] [topic or short hint]'
 
 Produce a clean commit (or several) by the `commit-conventions` skill, with the
 parameters from the profile's `## Repository`: `validate`, `targeted checks`,
-`commit preset`, `commit confirm`.
+`hub files`, `full gate`, `commit preset`, `commit confirm`.
 
 **Writes to git.** Never pushes — that is `/mluk-repo:create-pr` or `:promote`.
 
@@ -41,9 +41,10 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
 
 4. **Run the checks** by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`,
    "The gate": the `targeted checks` rows of the changed paths, and the full
-   `validate` only for a path no row covers or a profile without the table.
-   The full gate of the range runs in the review and before the push, not
-   here. The session already ran the same checks green after its last edit
+   `validate` only for a path no row covers or a profile without the table —
+   with `full gate: ci` not even then: the pipeline runs it, said in one line.
+   The full gate of the range runs once per branch, in the review or
+   before the push — or in CI, by the profile's `full gate` — not here. The session already ran the same checks green after its last edit
    and the commit takes the whole diff → name that run and do not repeat it.
    A migration-shipping repository: a model change without its migration in
    the diff is an incomplete commit — stop.
@@ -102,10 +103,14 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    More groups → repeat for the next one.
 
 8. **Wrap up**: `git log --oneline -<N>` with the new commits on top, and a
-   one-line reminder that nothing was pushed. If the **full** `validate` (not a
-   targeted row) passed — in step 4 or the run it relied on — and the tree is
-   now clean, record the tree by "The gate", so `review`, `create-pr` and
-   `promote` skip a second identical run. Then, after every commit, run
+   one-line reminder that nothing was pushed. The tree now clean, record the
+   checks of step 4 by "The gate", with
+   `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py" record <kind> [<tree>]`:
+   `full` after the full `validate`; `targeted` when every path of the
+   commit had its row and no hub file was among them — after an amend the
+   whole commit's paths (`git show --name-only HEAD`), after several groups
+   once, with `--commits <n>`. So `review`, `create-pr` and `promote` skip a
+   second run. Then, after every commit, run
    `/mluk-repo:handoff` for the same worktree or branch yourself, through the
    Skill tool, without asking — in the middle of a plan it prints the next
    slice; after a task's last commit or a round of review fixes, the review

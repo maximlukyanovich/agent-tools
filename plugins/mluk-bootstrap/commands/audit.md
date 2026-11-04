@@ -56,9 +56,13 @@ The harness exists; the job is to find the gaps, not to rewrite it.
 
 7. **Where the gate runs.** Is a git hook running the whole validate command —
    minutes per push, soon bypassed? The library runs the full gate once per
-   tree, in the review and before the push, and the targeted checks between
-   edits and in a commit: does every code path have a `targeted checks` row
-   whose command narrows, and does a gate of several parts skip a part whose
+   branch, in the review or before the push — or in CI, by the profile's
+   `full gate` — and the targeted checks between edits and in a commit: with
+   `ci`, do the pull request's checks really run the full gate — if not, a
+   finding with a question, never an edit? Does every code path have a
+   `targeted checks` row whose command narrows, does `hub files` name the
+   files whose related tests are most of the suite — a missing list asked as
+   Q3 asks it — and does a gate of several parts skip a part whose
    content is unchanged — and does every path a part excludes name its probe,
    by the checklist's "The gate is fast"
    (`${CLAUDE_PLUGIN_ROOT}/reference/checklist.md`)? Does lint-staged run the formatter after the linter's

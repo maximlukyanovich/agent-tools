@@ -38,7 +38,10 @@ A folder or a local branch — the work to hand off, by
    `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/change_size.py" <branch> --base <base>`
    (`${CLAUDE_PLUGIN_ROOT}/reference/change-size.md`). A small change whose
    measure reads `normal` becomes normal, said in one line with the
-   script's reason; the measure never lowers a level.
+   script's reason — unless the overage is the wiring of a new isolated
+   page or module (`new` in the line, `changed` beside it when there is
+   wiring, by `/mluk-repo:task`'s level), which the line names instead; the
+   measure never lowers a level.
 
 2. **Read the ledger** for the branch, named as `review` names it — only
    `Trajectory`, `Open` and the last pass's head and verdict.
@@ -83,7 +86,7 @@ A folder or a local branch — the work to hand off, by
 
 5. **Print** each block as its own code block, with one line above it saying
    it goes to a fresh session — or, for the commit and for every block of a
-   small change measured small, that it runs here.
+   change step 1 left small, that it runs here.
    Alternatives are separate blocks, so each copies alone. The text and the
    first block name the same step, the nearest one: while a commit or another
    step of the task is ahead, the block is for it, and a review command
@@ -97,7 +100,7 @@ A folder or a local branch — the work to hand off, by
   commits in one pass.
 - One phase, one fresh session. A review never runs in the session that wrote
   the code, a merge never in the session that reviewed it — except for a
-  small change measured small, whose review and merge run where it was made.
+  change step 1 left small, whose review and merge run where it was made.
   A critical change's review is always fresh.
 - `/compact` only for the next slice of an unfinished plan, by the criterion
   of step 4. At a boundary the fresh session is the cheaper option.

@@ -18,7 +18,7 @@ Other scopes and updating: [Quick start](../../README.md#quick-start).
 | `/mluk-repo:start` | no | Onboarding: overview from the project's own documents, how to run it, every enabled plugin's commands, and a live check of the plugins and what the profile lists. |
 | `/mluk-repo:next` | roadmap patch after confirmation | What to take next: one recommendation from the roadmap, local notes, open issues and PRs and the branch chain; what waits and on whom; housekeeping. Ends with the `task` line. |
 | `/mluk-repo:task` | no | Kickoff: brief → branch decision (or a worktree) → flavour → exploration → questions → plan, or a short plan in chat for a small change. No code before your yes. |
-| `/mluk-repo:review` | ledger only (`fix` opt-in) | Review the branch against the base — the current one, a named branch or worktree — or a PR, findings by severity; a pass ledger makes a repeat run review only what changed. Run it in a fresh session; a small change is reviewed where it was made. |
+| `/mluk-repo:review` | ledger and gate record only (`fix` opt-in) | Review the branch against the base — the current one, a named branch or worktree — or a PR, findings by severity; a pass ledger makes a repeat run review only what changed. Run it in a fresh session; a small change is reviewed where it was made. |
 | `/mluk-repo:fix` | code, no commit | One round on a review's open findings: the narrow fix with its proof by risk, one read of the round's diff, then `commit` on its go-ahead. Asks before a structural fix or a long measure. |
 | `/mluk-repo:sync` | yes | Merge the base branch into the current one, run the profile's post-merge checks, report what landed. |
 | `/mluk-repo:update-docs` | after confirmation | Measure drift since the last docs update, classify, propose patches by the profile's doc map. |
@@ -42,8 +42,9 @@ asks and offers to write the answer into the profile.
 `commit`, `review`, `fix`, `promote` and `handoff` also act on a branch in
 a worktree, named by folder or branch: `reference/commands.md`. The same file
 holds the gate rule — targeted checks between edits, the full `validate`
-once per tree — and `reference/proof.md` what proves a change;
+once per branch or in CI — and `reference/proof.md` what proves a change;
 `reference/change-size.md` is what `change_size.py` measures,
+`reference/gate-record.md` what `gate_record.py` records and checks,
 `reference/review-target.md` what `review_target.py` sets as a pass's
 target, `reference/review-rubric.md` the lenses `review` and its agent
 read, and `reference/review-reasons.md` why `review` works as it does.

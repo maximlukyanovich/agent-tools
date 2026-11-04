@@ -7,7 +7,8 @@ argument-hint: '[<target-branch>] [merge]'
 
 One hop: the current branch into its target through a pull request. Reads
 `## Repository` for `base branch`, `chain`, `protected`, `upstream`,
-`validate`, `merge method`, `delete branch`, `pr language`, `remote account`.
+`validate`, `full gate`, `merge method`, `delete branch`, `pr language`,
+`remote account`.
 
 **Writes to git and GitHub**, each step on confirmation. Without `merge` it
 stops after printing the PR URL.
@@ -33,9 +34,11 @@ stops after printing the PR URL.
      repository (`github-accounts` skill); otherwise stop and say so. An
      `upstream` remote is out of scope — a PR must target `origin`.
    - The gate, by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "The
-     gate": a tree a review or a commit already recorded green is skipped
-     with a line saying so; otherwise the full `validate` — red → stop and
-     show; green → record the tree.
+     gate": `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py" check <tree> --base <base>`
+     (`--small` for a small change) says `skip` → a line saying so;
+     otherwise the full `validate` — red → stop and show; green →
+     `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py" record full <tree>`. With `full gate: ci`, no local run — the question with a reason
+     that rule names, or nothing.
    - Behaviour, domain or scope changed and the docs did not → offer
      `/mluk-repo:update-docs` as a code block before pushing.
 

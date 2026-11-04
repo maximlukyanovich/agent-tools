@@ -30,17 +30,22 @@ rather than asking from scratch.
 **Q3. What "verified" means.** Which command is the full gate (the profile's
 `validate`), and which narrow commands check a change between edits and in a
 commit — the linter on the changed files, the type-check, the tests related to
-them (`targeted checks`, each tried once to see that it narrows). Whether a
-manual step is required — a browser check through the Playwright tool against
-the running dev server, a real request, a migration. Separately: which changes
-need a test — the default is `mluk-repo`'s `reference/proof.md` (money, data
-written or deleted, access, merges, what lets a confirmation through,
-branching logic, a costly break where nobody looks), with a recorded live
-check for the rest. How the dev server and the stack start goes to `AGENTS.md` §2 and
-the fixes in `## Checks`, as commands. Who starts them — the developer or the
-agent — is a habit of one machine, not a project rule: the answer goes to the
-gitignored `project-profile.local.md` (`agent starts`), and without it the
-agent starts and stops nothing.
+them (`targeted checks`, each tried once to see that it narrows); which files
+make "related" most of the suite, and the command that runs one area's tests by
+path (`hub files`) — asked by the measured cost, not the mechanism: "a change
+to `<file>` makes `related` run N of the suite's M test files". Where the full
+gate runs (`full gate`) — `ci` when the pull
+request's checks already run it, recommended then; `local` otherwise, and the
+default. Whether a manual step is required — a browser check through the
+Playwright tool against the running dev server, a real request, a migration.
+Separately: which changes need a test — the default is `mluk-repo`'s
+`reference/proof.md` (money, data written or deleted, access, merges, what lets
+a confirmation through, branching logic, a costly break where nobody looks),
+with a recorded live check for the rest. How the dev server and the stack start
+goes to `AGENTS.md` §2 and the fixes in `## Checks`, as commands. Who starts
+them — the developer or the agent — is a habit of one machine, not a project
+rule: the answer goes to the gitignored `project-profile.local.md` (`agent
+starts`), and without it the agent starts and stops nothing.
 
 **Q4. Source of design** — only if the repository has UI. A Design System
 artifact and a Design canvas over it (their URLs, read with the Artifact
