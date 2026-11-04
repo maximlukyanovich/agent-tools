@@ -76,8 +76,10 @@ fix that had passed its targeted checks.
   or a path no row covers.
 - **Where the full gate runs** — the profile's `full gate`. `local`, and no
   key: as above. `ci`: the pipeline runs it on every pull request and
-  nothing records it locally; `review` runs the targeted checks of its range
-  and reports the checks' status on its head (`gh pr checks`); `create-pr`
+  nothing records it locally; `review` reports the checks' status on its
+  head (`gh pr checks`) and does not rerun the targeted checks — the commits
+  ran them, and over a whole range "related" nears the whole suite; a head
+  not yet pushed rests on its commits' checks; `create-pr`
   and `promote` push without it and merge only on green checks, by
   `create-pr`'s merge step. A red check is fixed by a new commit: the commit is
   already on the remote. Before the push they offer the full gate locally as

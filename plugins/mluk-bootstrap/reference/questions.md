@@ -32,7 +32,9 @@ rather than asking from scratch.
 commit — the linter on the changed files, the type-check, the tests related to
 them (`targeted checks`, each tried once to see that it narrows); which files
 make "related" the whole suite, and the command that runs one area's tests by
-path (`hub files`). Where the full gate runs (`full gate`) — `ci` when the pull
+path (`hub files`) — asked by the measured cost, not the mechanism: "a change
+to `<file>` makes `related` run N of the suite's M test files". Where the full
+gate runs (`full gate`) — `ci` when the pull
 request's checks already run it, recommended then; `local` otherwise, and the
 default. Whether a manual step is required — a browser check through the
 Playwright tool against the running dev server, a real request, a migration.

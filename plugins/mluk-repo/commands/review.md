@@ -104,7 +104,7 @@ never rewritten.
    check` (`--small` for a small change) says `skip` → a line saying so;
    otherwise the full `validate` runs in the background, in that tree, while
    steps 4–7 go on, and its result is read before step 8. With `full gate:
-   ci`, the targeted checks of the range and the PR's checks instead.
+   ci`, the PR's checks instead, the commits' targeted checks not rerun.
 
 4. **Frame the scope** in one line from the branch name, PR text and commit
    subjects: a whole task or a slice? What a slice leaves out is not a missing
