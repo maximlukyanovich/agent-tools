@@ -46,7 +46,7 @@ hold in every clone.
 | `upstream` | none; if named, never pushed to, never targeted by a PR | `promote`, `create-pr`, `next` |
 | `validate` | asked (e.g. `pnpm validate`, `make test`) | `commit`, `fix`, `create-pr`, `promote`, `sync`, `review` |
 | `targeted checks` | none — table "path class → command"; a step runs the rows of the paths it changed, and a path no row covers runs `validate`, or waits for the pipeline with `full gate: ci` | `commit`, `fix`, `sync`, `review` |
-| `hub files` | none — files whose related tests are the whole suite (the route registry, a shared config, shared types), and the command that runs one area's tests by path; a change to one runs the tests of its areas, not `related` | `commit`, `fix`, `sync`, `review` |
+| `hub files` | none — files whose related tests are most of the suite (the route registry, a shared config, shared types), and the command that runs one area's tests by path; a change to one runs the tests of its areas, not `related` | `commit`, `fix`, `sync`, `review` |
 | `full gate` | `local` — `validate` runs once per branch, in `review` or before the push; `ci` — the pull request's checks run it, and the commands do not | `commit`, `fix`, `sync`, `review`, `create-pr`, `promote` |
 | `commit preset` | `gitmoji-conventional` | `commit` |
 | `commit confirm` | `ask` — stage and show the draft, commit on go-ahead; `auto` — the invocation is the authorisation | `commit` |

@@ -31,7 +31,7 @@ rather than asking from scratch.
 `validate`), and which narrow commands check a change between edits and in a
 commit — the linter on the changed files, the type-check, the tests related to
 them (`targeted checks`, each tried once to see that it narrows); which files
-make "related" the whole suite, and the command that runs one area's tests by
+make "related" most of the suite, and the command that runs one area's tests by
 path (`hub files`) — asked by the measured cost, not the mechanism: "a change
 to `<file>` makes `related` run N of the suite's M test files". Where the full
 gate runs (`full gate`) — `ci` when the pull

@@ -61,7 +61,7 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    `ci`, do the pull request's checks really run the full gate — if not, a
    finding with a question, never an edit? Does every code path have a
    `targeted checks` row whose command narrows, does `hub files` name the
-   files whose related tests are the whole suite — a missing list asked as
+   files whose related tests are most of the suite — a missing list asked as
    Q3 asks it — and does a gate of several parts skip a part whose
    content is unchanged — and does every path a part excludes name its probe,
    by the checklist's "The gate is fast"

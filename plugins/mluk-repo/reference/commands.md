@@ -63,7 +63,7 @@ after a review fix that had passed its targeted checks.
   run are recorded after the last, with `--commits <n>`.
 - **A hub file takes the tests of its areas.** The tests related to a file
   most of the code imports — the route registry, a shared config, shared
-  types — are the whole suite. A change to one of the profile's `hub files`
+  types — are most of the suite. A change to one of the profile's `hub files`
   runs the tests of the areas whose behaviour the diff changes, by a path
   filter (`vitest run <dir>` keeps the test files whose path contains it),
   and leaves the whole suite to the branch's full gate: such a commit is not
@@ -102,6 +102,9 @@ after a review fix that had passed its targeted checks.
 - **Red under load is not red by code.** When only timeouts fail while the
   machine is busy — a dev server, a stack, parallel agents — rerun the failing
   files alone and report both runs and the load. Neither green nor red is
-  called without the rerun. A dev server or stack the session started is
-  stopped before a test run wider than a few files; one the owner runs is
+  called without the rerun: passing alone, they make the full run green for
+  the record once nothing is left unrun — a gate or a runner that stopped at
+  the first failure has the parts and files after it run too, and they pass.
+  Any other failure keeps it red. A dev server or stack the session started
+  is stopped before a test run wider than a few files; one the owner runs is
   named in the report.

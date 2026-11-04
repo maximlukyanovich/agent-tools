@@ -42,7 +42,7 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
       tests related to them — tried once, so edits and commits run those and
       the full gate runs once per branch, or in CI by `full gate`
       (`mluk-repo`, `reference/commands.md`, "The gate"); `hub files` lists
-      the files whose related tests are the whole suite.
+      the files whose related tests are most of the suite.
 - [ ] The gate is fast: one of several parts picks them by their content
       since the last green run, not by the branch's diff — a part whose
       content is unchanged is skipped, its fingerprint taken before and after
