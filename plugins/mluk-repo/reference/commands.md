@@ -86,7 +86,9 @@ after a review fix that had passed its targeted checks.
   key: as above. `ci`: the pipeline runs it on every pull request, and its
   status decides — no command runs it on its own or calls `gate_record.py`,
   since nothing would read the record; `review`
-  reports the checks' status on its head (`gh pr checks`) and does not rerun
+  reports the checks' status on its head, read once the way "Waiting for
+  checks" reads it — a run not finished is reported so, never as green — and
+  does not rerun
   the targeted checks — the commits ran them, and over a whole range
   "related" nears the whole suite; a head not yet pushed, or pushed with no
   pull request, rests on its commits' checks; `create-pr` and `promote` push
@@ -123,12 +125,13 @@ green.
 `create-pr` runs this block in the background, with `PR` the number, `LIMIT`
 the longest run's time with a margin, in seconds, and `POLL` the seconds
 between reads. It prints `success` and exits 0, or prints what stopped it and
-exits 1: `failed`, `canceled`, `no result` when the limit ran out, `status not
-read` after an error. Only `success` is green.
+exits 1: `failed`, `canceled`, `skipped`, `no result` when the limit ran out,
+`status not read` after an error. Only `success` is green.
 
 `gh pr checks --watch` does not decide: it exits 0 on a canceled check, and 1
 both on a failed one and while no check has been reported yet. So the block
-reads each check's `bucket`.
+reads each check's `bucket`. Skipped checks beside a passed one are green; all
+skipped is `skipped`, not green, since the gate may not have run.
 
 ```bash
 deadline=$((SECONDS + LIMIT))
@@ -138,7 +141,7 @@ while [ "$SECONDS" -lt "$deadline" ]; do
 import json, sys
 b = [check["bucket"] for check in json.load(sys.stdin)]
 print("failed" if "fail" in b else "waiting" if "pending" in b or not b
-      else "canceled" if "cancel" in b else "success")
+      else "canceled" if "cancel" in b else "success" if "pass" in b else "skipped")
 ') || { echo "status not read"; exit 1; }
   else
     case "$out" in
@@ -148,7 +151,7 @@ print("failed" if "fail" in b else "waiting" if "pending" in b or not b
   fi
   case "$status" in
     success) echo success; exit 0 ;;
-    failed|canceled) echo "$status"; exit 1 ;;
+    failed|canceled|skipped) echo "$status"; exit 1 ;;
   esac
   sleep "$POLL"
 done
