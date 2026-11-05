@@ -184,6 +184,12 @@ a pull request, its author checks by hand:
   anywhere inside;
 - the pull request names the growth in bytes of every plugin text it
   changes; a notable growth is explained in its body or cut;
+- the pull request names its review: when the branch is ready, the agent says
+  whether it needs a review before the merge and which kind — the built-in
+  `/code-review <level>`, an unanchored check by a fresh agent (for a text
+  move, paragraph by paragraph against `main`), or none — with the block to
+  paste in a fresh session; after a fix commit, the same for its delta, and
+  the body names the review that ran and what it changed;
 - the changed command or skill was run once, in a real repository, after
   `claude plugin update` (or via `--plugin-dir`), and did what its text says.
 
