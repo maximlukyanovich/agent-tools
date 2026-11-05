@@ -44,9 +44,10 @@ several → ask which; none → nothing to act on.
 
 The full `validate` costs minutes. Run after every edit and again by every
 command, it makes a fix wait longer than the fix itself. So it runs once per
-branch, and the work between those runs is checked narrowly. The record
-behind it is kept by the plugin's `gate_record.py`, which each command's
-body calls by its full path (`${CLAUDE_PLUGIN_ROOT}/reference/gate-record.md`).
+branch, and the work between those runs is checked narrowly. With `full
+gate: local`, or no key, the record behind it is kept by the plugin's
+`gate_record.py`, which each command's body calls by its full path
+(`${CLAUDE_PLUGIN_ROOT}/reference/gate-record.md`).
 Observed on a live project: a half-hour task's merge ran the full gate again
 after a review fix that had passed its targeted checks.
 
@@ -55,9 +56,9 @@ after a review fix that had passed its targeted checks.
   union of those rows runs, and a path no row covers sends the step to the
   full `validate`. A profile without the table runs the full `validate`, as
   before. With `full gate: ci` both go to the pipeline instead: the step runs
-  no `validate`, and such a commit is not recorded. Say in one line what ran
-  and what was not exercised. A commit whose every path had its row, green,
-  on a clean tree after the commit → `gate_record.py record targeted`. The
+  no `validate`. Say in one line what ran and what was not exercised. With
+  `local`, a commit whose every path had its row, green, on a clean tree
+  after the commit → `gate_record.py record targeted`. The
   paths are the whole commit's (`git show --name-only HEAD`): an amend counts
   what the commit already held, not only the round's. A merge's are what it
   brought (`git diff --name-only HEAD^1 HEAD`): `git show` lists none for a
@@ -83,8 +84,8 @@ after a review fix that had passed its targeted checks.
   row covers. Such a path otherwise ran it in its commit, recorded `full`.
 - **Where the full gate runs** — the profile's `full gate`. `local`, and no
   key: as above. `ci`: the pipeline runs it on every pull request, and its
-  status decides — no command runs it on its own, a commit whose paths all
-  have rows still records `targeted`, and a local run `full`; `review`
+  status decides — no command runs it on its own or calls `gate_record.py`,
+  since nothing would read the record; `review`
   reports the checks' status on its head (`gh pr checks`) and does not rerun
   the targeted checks — the commits ran them, and over a whole range
   "related" nears the whole suite; a head not yet pushed, or pushed with no
