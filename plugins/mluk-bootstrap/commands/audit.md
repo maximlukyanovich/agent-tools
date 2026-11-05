@@ -188,7 +188,10 @@ The harness exists; the job is to find the gaps, not to rewrite it.
 
 ## Report
 
-A table: finding → layer → severity → proposed action. Rules that are not
+A table: finding → what goes wrong if it stays → layer → severity → proposed
+action. The second column is what earns a row: someone acts wrongly or spends
+an extra cycle. A difference with no such answer — "nothing serious", a spare
+line — is cosmetic: named in one line under the table, no action proposed. Rules that are not
 project-specific as a separate short list. Before asking the owner, load the
 `mluk-repo:kickoff` skill — its questionnaire rules apply, a closing "anything
 to add?" included. Apply changes after confirmation, one group at a time,
