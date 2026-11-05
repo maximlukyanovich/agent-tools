@@ -160,7 +160,8 @@ Two workflows gate every pull request and `main`. `Check` runs
   Code" line.
 
 `Plugin tests` runs the plugins' tests — the hooks, `srv`, the start
-template, `change_size.py`, `gate_record.py` and `review_target.py`. Before opening
+template, `change_size.py`, `gate_record.py`, `review_target.py` and the wait for
+checks. Before opening
 a pull request, its author checks by hand:
 
 - a changed hook, script or template passes its tests — `node --test 'plugins/mluk-fe/hooks/*.test.mjs'`,
@@ -168,6 +169,7 @@ a pull request, its author checks by hand:
   `node --test 'plugins/mluk-bootstrap/templates/start/lib/*.test.mjs'`,
   `python3 plugins/mluk-repo/scripts/test_change_size.py`,
   `python3 plugins/mluk-repo/scripts/test_gate_record.py`,
+  `python3 plugins/mluk-repo/scripts/test_ci_wait.py`,
   `python3 plugins/mluk-repo/scripts/test_review_target.py`; the `Plugin tests`
   workflow runs the same on every push;
 - a change to a command that has cases under its plugin's `evals/` runs them
@@ -182,6 +184,12 @@ a pull request, its author checks by hand:
   anywhere inside;
 - the pull request names the growth in bytes of every plugin text it
   changes; a notable growth is explained in its body or cut;
+- the pull request names its review: when the branch is ready, the agent says
+  whether it needs a review before the merge and which kind — the built-in
+  `/code-review <level>`, an unanchored check by a fresh agent (for a text
+  move, paragraph by paragraph against `main`), or none — with the block to
+  paste in a fresh session; after a fix commit, the same for its delta, and
+  the body names the review that ran and what it changed;
 - the changed command or skill was run once, in a real repository, after
   `claude plugin update` (or via `--plugin-dir`), and did what its text says.
 

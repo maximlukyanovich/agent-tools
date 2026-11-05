@@ -44,9 +44,10 @@ several → ask which; none → nothing to act on.
 
 The full `validate` costs minutes. Run after every edit and again by every
 command, it makes a fix wait longer than the fix itself. So it runs once per
-branch, and the work between those runs is checked narrowly. The record
-behind it is kept by the plugin's `gate_record.py`, which each command's
-body calls by its full path (`${CLAUDE_PLUGIN_ROOT}/reference/gate-record.md`).
+branch, and the work between those runs is checked narrowly. With `full
+gate: local`, or no key, the record behind it is kept by the plugin's
+`gate_record.py`, which each command's body calls by its full path
+(`${CLAUDE_PLUGIN_ROOT}/reference/gate-record.md`).
 Observed on a live project: a half-hour task's merge ran the full gate again
 after a review fix that had passed its targeted checks.
 
@@ -55,9 +56,9 @@ after a review fix that had passed its targeted checks.
   union of those rows runs, and a path no row covers sends the step to the
   full `validate`. A profile without the table runs the full `validate`, as
   before. With `full gate: ci` both go to the pipeline instead: the step runs
-  no `validate`, and such a commit is not recorded. Say in one line what ran
-  and what was not exercised. A commit whose every path had its row, green,
-  on a clean tree after the commit → `gate_record.py record targeted`. The
+  no `validate`. Say in one line what ran and what was not exercised. With
+  `local`, a commit whose every path had its row, green, on a clean tree
+  after the commit → `gate_record.py record targeted`. The
   paths are the whole commit's (`git show --name-only HEAD`): an amend counts
   what the commit already held, not only the round's. A merge's are what it
   brought (`git diff --name-only HEAD^1 HEAD`): `git show` lists none for a
@@ -83,13 +84,15 @@ after a review fix that had passed its targeted checks.
   row covers. Such a path otherwise ran it in its commit, recorded `full`.
 - **Where the full gate runs** — the profile's `full gate`. `local`, and no
   key: as above. `ci`: the pipeline runs it on every pull request, and its
-  status decides — no command runs it on its own, a commit whose paths all
-  have rows still records `targeted`, and a local run `full`; `review`
-  reports the checks' status on its head (`gh pr checks`) and does not rerun
+  status decides — no command runs it on its own or calls `gate_record.py`,
+  since nothing would read the record; `review`
+  reports the checks' status on its head, read once the way "Waiting for
+  checks" reads it — a run not finished is reported so, never as green — and
+  does not rerun
   the targeted checks — the commits ran them, and over a whole range
   "related" nears the whole suite; a head not yet pushed, or pushed with no
   pull request, rests on its commits' checks; `create-pr` and `promote` push
-  without it and merge only on green checks, by `create-pr`'s merge step. A
+  without it and merge only on green checks, by "Waiting for checks" below. A
   red check is fixed by a new commit: the commit is already on the remote.
   Before the push they offer the full gate locally as the second option,
   only with a reason — the diff touches what the targeted
@@ -110,3 +113,47 @@ after a review fix that had passed its targeted checks.
   Any other failure keeps it red. A dev server or stack the session started
   is stopped before a test run wider than a few files; one the owner runs is
   named in the report.
+
+## Waiting for checks
+
+The status comes from the pull request itself. The wait is bounded, an error
+ends it where it can be seen — no `2>/dev/null` — and every outcome is
+reported. Observed on a live project: a loop on a flag that does not exist,
+its errors silenced, read nothing for ten minutes after the pipeline had gone
+green.
+
+`create-pr` runs this block in the background, with `PR` the number, `LIMIT`
+the longest run's time with a margin, in seconds, and `POLL` the seconds
+between reads. It prints `success` and exits 0, or prints what stopped it and
+exits 1: `failed`, `canceled`, `skipped`, `no result` when the limit ran out,
+`status not read` after an error. Only `success` is green.
+
+`gh pr checks --watch` does not decide: it exits 0 on a canceled check, and 1
+both on a failed one and while no check has been reported yet. So the block
+reads each check's `bucket`. Skipped checks beside a passed one are green; all
+skipped is `skipped`, not green, since the gate may not have run.
+
+```bash
+deadline=$((SECONDS + LIMIT))
+while [ "$SECONDS" -lt "$deadline" ]; do
+  if out=$(gh pr checks "$PR" --json name,bucket 2>&1); then
+    status=$(printf '%s' "$out" | python3 -c '
+import json, sys
+b = [check["bucket"] for check in json.load(sys.stdin)]
+print("failed" if "fail" in b else "waiting" if "pending" in b or not b
+      else "canceled" if "cancel" in b else "success" if "pass" in b else "skipped")
+') || { echo "status not read"; exit 1; }
+  else
+    case "$out" in
+      *"no checks reported"*) status=waiting ;;
+      *) printf '%s\n' "$out" >&2; echo "status not read"; exit 1 ;;
+    esac
+  fi
+  case "$status" in
+    success) echo success; exit 0 ;;
+    failed|canceled|skipped) echo "$status"; exit 1 ;;
+  esac
+  sleep "$POLL"
+done
+echo "no result"; exit 1
+```

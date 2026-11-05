@@ -103,8 +103,8 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    More groups → repeat for the next one.
 
 8. **Wrap up**: `git log --oneline -<N>` with the new commits on top, and a
-   one-line reminder that nothing was pushed. The tree now clean, record the
-   checks of step 4 by "The gate", with
+   one-line reminder that nothing was pushed. With `full gate: local`, or no
+   key, and the tree now clean, record the checks of step 4 by "The gate", with
    `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/gate_record.py" record <kind> [<tree>]`:
    `full` after the full `validate`; `targeted` when every path of the
    commit had its row and no hub file was among them — after an amend the

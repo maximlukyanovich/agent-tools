@@ -46,12 +46,13 @@ source when the target moved. A single hop to the next branch is the same as
      `<src>`, run the `sync` procedure into `<src>` first (merge, conflicts
      stop the run, post-merge checks). A protected source (an intermediate branch of
      the chain) is never pushed directly: its sync PR is the same hop.
+   - **Show the texts** — the `create-pr` step 3 with `<dst>` as target. For a
+     hop between protected branches the body aggregates since the last
+     promotion.
    - **Push the source** — a feature branch only when ahead, on confirmation.
      A protected source ahead of origin is an error: a protected branch was
      edited by hand.
-   - **PR + CI + merge** — the `create-pr` steps 3–6 with `<dst>` as target.
-     For a hop between protected branches the body aggregates since the last
-     promotion.
+   - **PR + CI + merge** — the `create-pr` steps 5–6 with `<dst>` as target.
      For the production branch **re-confirm separately**, even when the run
      started with it as the argument.
    - **Pull the merged target locally** with `--ff-only`; a failure stops the

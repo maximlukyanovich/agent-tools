@@ -32,5 +32,7 @@ jobs:
         run: python3 plugins/mluk-repo/scripts/test_change_size.py
       - name: mluk-repo gate_record
         run: python3 plugins/mluk-repo/scripts/test_gate_record.py
+      - name: mluk-repo ci wait
+        run: python3 plugins/mluk-repo/scripts/test_ci_wait.py
       - name: mluk-repo review_target
         run: python3 plugins/mluk-repo/scripts/test_review_target.py
