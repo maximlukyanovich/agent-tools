@@ -40,6 +40,21 @@ worktrees whose branch is ahead of the base (`git rev-list --count
 origin/<base>..<branch>`). Exactly one → that one, named in the output;
 several → ask which; none → nothing to act on.
 
+## A block for work in a worktree
+
+A block offered for a worktree runs in a session opened in the main
+repository, from an IDE or a terminal, so it is never `cd <folder> && claude`,
+which only a terminal can run. A command takes the branch as its argument. A
+prompt for a session that works in the tree opens by entering it — "Enter the
+worktree `<absolute path>` with `EnterWorktree`" — since from the main
+repository a `cd` to the tree does not outlive its Bash call, and a command
+that forgets it runs in the main tree unnoticed; a dev server there takes the
+tree's port. Entered, the session reads the main tree but cannot write to it,
+through a link either, so what lives there — local notes, the efficiency
+journal, the review ledger — is written after leaving with `ExitWorktree`,
+`keep`. Where the tool is missing, the prompt names the tree's absolute path
+as the place of work.
+
 ## The gate
 
 The full `validate` costs minutes. Run after every edit and again by every

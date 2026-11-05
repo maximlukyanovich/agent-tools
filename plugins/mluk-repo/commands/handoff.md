@@ -57,7 +57,7 @@ A folder or a local branch — the work to hand off, by
    | --- | --- |
    | Uncommitted changes | `/mluk-repo:commit <branch>` — it commits on its own go-ahead and hands off after |
    | Merged into the base | `/mluk-repo:next`. Findings are not listed: by now each has its place. Below the block, as plain text, only a gap, with the ledger path — an id still `open`, or a techdebt place whose row the file lacks |
-   | Commits after the ledger's last head that name no id of `Open` in their bodies, and the plan of step 3 still holds work the branch has not done | the continue prompt below for a fresh session, or `/compact <focus>` here — by the criterion below; the review waits for the task's last commit |
+   | Commits after the ledger's last head, or no ledger, that name no id of `Open` in their bodies, and the plan of step 3 still holds work the branch has not done | the continue prompt below for a fresh session, or `/compact <focus>` here — by the criterion below; the review waits for the task's last commit |
    | Commits after the ledger's last head, or no ledger | `/mluk-repo:review <branch> <from>..<head>` — `<from>` and `<head>` from `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/review_target.py" --ledger <ledger file> --tree <tree>`: the two shas of `delta` or `rewritten`, the merge-base with `origin/<base>` for `whole`; `none` is the next row. When `Open` holds a `blocker`, `major` or `fix-now` that no commit after the head names in its body (a fix round names the ids it closes), `/mluk-repo:fix <branch>` instead: the review waits for its commit, then reads the fixes and the new commits in one pass |
    | A pass on the head, `blocked` or `changes requested` | `/mluk-repo:fix <branch>` |
    | A pass on the head, `ready to merge`, no `fix-now` open, every techdebt row written | `/mluk-repo:promote <branch>` |
@@ -77,6 +77,10 @@ A folder or a local branch — the work to hand off, by
    Continue the plan <plan path> from <next step>. Target — <branch>.
    ```
 
+   A branch living in a worktree opens this prompt by entering the tree and
+   names `EnterWorktree`, by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "A
+   block for work in a worktree".
+
    **A fresh session or `/compact` for the next slice.** A fresh session
    when the plan and the task's notes hold all the next slice needs; heavy
    context — screenshots, long logs — counts for it too, since every tool
@@ -85,8 +89,9 @@ A folder or a local branch — the work to hand off, by
    then go fresh. The recommended block comes first.
 
 5. **Print** each block as its own code block, with one line above it saying
-   it goes to a fresh session — or, for the commit and for every block of a
-   change step 1 left small, that it runs here.
+   it goes to a fresh session — the words in bold, in any case and the chat's
+   language: **a fresh session**, в **свежей сессии** — or, for the commit and
+   for every block of a change step 1 left small, that it runs here.
    Alternatives are separate blocks, so each copies alone. The text and the
    first block name the same step, the nearest one: while a commit or another
    step of the task is ahead, the block is for it, and a review command
@@ -106,8 +111,8 @@ A folder or a local branch — the work to hand off, by
   of step 4. At a boundary the fresh session is the cheaper option.
 - Links, not retelling: paths, ids, shas. The next session reads the plan and
   the ledger itself.
-- A fresh session starts in the main tree, so a block names the branch, not a
-  worktree folder.
+- A fresh session starts in the main tree, so a command's block names the
+  branch, not a worktree folder; a prompt that works in the tree enters it.
 - A block longer than ~8 lines goes to `docs/local/handoff-<branch-slug>.md` —
   only when `git check-ignore` confirms that path is ignored, otherwise it is
   printed whole — and the block becomes one line that tells the session to
