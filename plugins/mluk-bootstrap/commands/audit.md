@@ -188,18 +188,30 @@ The harness exists; the job is to find the gaps, not to rewrite it.
 
 ## Report
 
-A table: finding → layer → severity → proposed action. Rules that are not
+A table: finding → what goes wrong if it stays → layer → severity → proposed
+action. The second column is what earns a row: someone acts wrongly or spends
+an extra cycle. A difference with no such answer — "nothing serious", a spare
+line — is cosmetic: named in one line under the table, no action proposed. Rules that are not
 project-specific as a separate short list. Before asking the owner, load the
 `mluk-repo:kickoff` skill — its questionnaire rules apply, a closing "anything
 to add?" included. Apply changes after confirmation, one group at a time,
-never all at once. The last change, on the same yes or alone when nothing
-else was found: the `Harness:` line rewritten with this plugin's
-`MAJOR.MINOR` and today's date.
+never all at once. The last change, on the same yes or on a yes of its own
+when the table has no row, whatever cosmetic lines or short list stand beside
+it: the `Harness:` line rewritten with this plugin's `MAJOR.MINOR` and today's
+date. A line already above that version stays as it is (section 14).
 
 End with the next step in a code block. Changes applied → the project's commit
 command (`/mluk-repo:commit` or its local override), to run in this session —
 it runs `/mluk-repo:handoff` after. Nothing applied → the first proposed
-change, as a prompt that applies it.
+change, as a prompt that applies it; none proposed, the line being above this
+plugin → the catalogue's update and the plugin's, then this audit in a new
+session; on a catalogue behind its remote, `plugin update` alone answers
+"already at the latest version":
+
+```bash
+claude plugin marketplace update mluk-agent-tools
+claude plugin update mluk-bootstrap@mluk-agent-tools --scope <scope>
+```
 
 ## Hard rules
 
