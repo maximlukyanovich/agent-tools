@@ -55,7 +55,9 @@ stops after printing the PR URL.
    profile's blast-radius list.
 
 3. **Draft the texts** by the `pr-conventions` skill — read the last merged PRs
-   first. Print title and body in chat.
+   first. Show title and body in the chat as a code block, before the
+   confirmation of the push: a file path or a pointer alone is not showing
+   them, and the question that follows names only the title.
 
 4. **Push** — on confirmation, only if the local branch is ahead of
    `origin/<branch>`: `git push -u origin <branch>`.
@@ -80,10 +82,12 @@ stops after printing the PR URL.
      `/mluk-repo:review`). No pass on the current head, or `major`+ findings
      still `open` → print that and merge only on an explicit yes. Merging
      without a review stays possible; it should not be accidental.
-   - `gh pr checks <n>`. Pending → offer `gh pr checks <n> --watch` or coming
-     back later; no sleep loops. Red → stop, print the failing checks, suggest
-     `gh run view <run-id> --log-failed`; no retry, no bypass. No CI configured
-     → say so and state when `validate` last ran.
+   - The checks, by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "Waiting
+     for checks", or coming back later on the owner's word. Anything but
+     `success` → stop and print it, with the failing checks and
+     `gh run view <run-id> --log-failed` after `failed`; no retry, no bypass.
+     No CI configured — no workflow under `.github/workflows` — → say so and
+     state when `validate` last ran.
    - Re-confirm, then `gh pr merge <n> --<merge method>` plus
      `--delete-branch` when `delete branch` is `merge` (or `yes`, or
      missing). With `ask`, ask after the merge whether to delete the remote

@@ -90,7 +90,7 @@ after a review fix that had passed its targeted checks.
   the targeted checks — the commits ran them, and over a whole range
   "related" nears the whole suite; a head not yet pushed, or pushed with no
   pull request, rests on its commits' checks; `create-pr` and `promote` push
-  without it and merge only on green checks, by `create-pr`'s merge step. A
+  without it and merge only on green checks, by "Waiting for checks" below. A
   red check is fixed by a new commit: the commit is already on the remote.
   Before the push they offer the full gate locally as the second option,
   only with a reason — the diff touches what the targeted
@@ -111,3 +111,46 @@ after a review fix that had passed its targeted checks.
   Any other failure keeps it red. A dev server or stack the session started
   is stopped before a test run wider than a few files; one the owner runs is
   named in the report.
+
+## Waiting for checks
+
+The status comes from the pull request itself. The wait is bounded, an error
+ends it where it can be seen — no `2>/dev/null` — and every outcome is
+reported. Observed on a live project: a loop on a flag that does not exist,
+its errors silenced, read nothing for ten minutes after the pipeline had gone
+green.
+
+`create-pr` runs this block in the background, with `PR` the number, `LIMIT`
+the longest run's time with a margin, in seconds, and `POLL` the seconds
+between reads. It prints `success` and exits 0, or prints what stopped it and
+exits 1: `failed`, `canceled`, `no result` when the limit ran out, `status not
+read` after an error. Only `success` is green.
+
+`gh pr checks --watch` does not decide: it exits 0 on a canceled check, and 1
+both on a failed one and while no check has been reported yet. So the block
+reads each check's `bucket`.
+
+```bash
+deadline=$((SECONDS + LIMIT))
+while [ "$SECONDS" -lt "$deadline" ]; do
+  if out=$(gh pr checks "$PR" --json name,bucket 2>&1); then
+    status=$(printf '%s' "$out" | python3 -c '
+import json, sys
+b = [check["bucket"] for check in json.load(sys.stdin)]
+print("failed" if "fail" in b else "waiting" if "pending" in b or not b
+      else "canceled" if "cancel" in b else "success")
+') || { echo "status not read"; exit 1; }
+  else
+    case "$out" in
+      *"no checks reported"*) status=waiting ;;
+      *) printf '%s\n' "$out" >&2; echo "status not read"; exit 1 ;;
+    esac
+  fi
+  case "$status" in
+    success) echo success; exit 0 ;;
+    failed|canceled) echo "$status"; exit 1 ;;
+  esac
+  sleep "$POLL"
+done
+echo "no result"; exit 1
+```
