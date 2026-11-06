@@ -77,9 +77,10 @@ A folder or a local branch — the work to hand off, by
    Continue the plan <plan path> from <next step>. Target — <branch>.
    ```
 
-   A branch living in a worktree opens this prompt by entering the tree and
-   names `EnterWorktree`, by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "A
-   block for work in a worktree".
+   A branch living in a worktree opens this prompt by entering the tree,
+   names `EnterWorktree` and says to leave before writing to the main tree,
+   then enter again, by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "A block
+   for work in a worktree".
 
    **A fresh session or `/compact` for the next slice.** A fresh session
    when the plan and the task's notes hold all the next slice needs; heavy
@@ -115,6 +116,7 @@ A folder or a local branch — the work to hand off, by
   branch, not a worktree folder; a prompt that works in the tree enters it.
 - A block longer than ~8 lines goes to `docs/local/handoff-<branch-slug>.md` —
   only when `git check-ignore` confirms that path is ignored, otherwise it is
-  printed whole — and the block becomes one line that tells the session to
-  read it.
+  printed whole — and the block tells the session to read it by its absolute
+  path, keeping a prompt's words on the tree. An entered session leaves to
+  write this note.
 - Prompt text in the chat's language; commands, paths and ids verbatim.
