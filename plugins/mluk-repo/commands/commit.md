@@ -83,10 +83,8 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    is deleted afterwards. `git add -p` is the interactive alternative and is not
    available to an agent.
 
-6. **Draft the message** by the preset in `commit-conventions`. Always with a
-   body. A round of review fixes names the ids it closes in one body line
-   (`Review pass 2: R3, R7`; a later round amending the fix commit adds its
-   own) — `handoff` reads it to tell a fixed range from new work.
+6. **Draft the message**: load the `commit-conventions` skill and follow the
+   preset. Always with a body.
 
 7. **Show and commit.** `commit confirm: ask` (default) → print the file
    groups, the check results, the transition rows and their proof when the
