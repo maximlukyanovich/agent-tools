@@ -62,6 +62,7 @@ hold in every clone.
 | `delete branch` | `merge` — who deletes the remote feature branch after a merge: `ask` — the command asks; `merge` — the merge does (`yes` is its older spelling); `platform` — GitHub's automatic deletion. The local branch goes on confirmation, safe form only | `create-pr` |
 | `pr language` | `en` | `create-pr`, `promote` |
 | `post-merge checks` | none — commands to run after a `sync` (e.g. `makemigrations --check`) | `sync` |
+| `environments` | none — a row per branch that deploys: `branch → address · ready · checks`. `ready` is a command that exits 0 once the merged commit is live, with the time a deploy takes; `checks` is what needs no person and only reads — the pages, the API's answers, a sign-in up to the provider's window | `promote` |
 
 How the gate keys work together is `reference/commands.md`, "The gate".
 A `targeted checks` command really narrows: the linter and the formatter on

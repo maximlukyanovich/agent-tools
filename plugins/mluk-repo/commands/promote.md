@@ -57,10 +57,17 @@ source when the target moved. A single hop to the next branch is the same as
      started with it as the argument.
    - **Pull the merged target locally** with `--ff-only`; a failure stops the
      run.
+   - **Check the environment** when `environments` has a row for `<dst>`;
+     with none, go on. Wait for `ready` the way "Waiting for checks" in
+     `${CLAUDE_PLUGIN_ROOT}/reference/commands.md` waits: bounded, errors in
+     sight. The limit ran out → `not deployed`. Then run its `checks`
+     yourself, before any checklist reaches the owner.
 
-   Red CI stops the run; the remaining segments do not execute.
+   Red CI, `not deployed` or a failed check stops the run, the failure first
+   in the report; the remaining segments do not execute.
 
-5. **Wrap up**: segments merged, segments skipped, PR URLs, `git log --oneline
+5. **Wrap up**: segments merged, segments skipped, PR URLs, each environment's
+   checks and the checklist of only what needs a person, `git log --oneline
    -5` of the target, the `git-safety` reminder line, a checkout back to the
    branch the owner started on, then run `/mluk-repo:handoff` yourself,
    without asking.
@@ -75,3 +82,5 @@ source when the target moved. A single hop to the next branch is the same as
 - `upstream` is never pushed to or targeted, even when convenient.
 - This command does not commit. A dirty tree → `/mluk-repo:commit` first.
 - Never go further than `<target>`.
+- A check on an environment only reads, on production too: no form sent, no
+  sign-in completed, nothing created.
