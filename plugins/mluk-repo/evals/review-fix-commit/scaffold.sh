@@ -9,7 +9,7 @@ git init -q -b main .
 git config commit.gpgsign false
 git config user.name T
 git config user.email t@example.com
-printf 'docs/local/\n.origin.git/\n' > .gitignore
+printf 'docs/local/\n.origin.git/\n__pycache__/\n' > .gitignore
 mkdir -p .claude src
 cat > .claude/project-profile.md <<'PROFILE'
 # Project profile

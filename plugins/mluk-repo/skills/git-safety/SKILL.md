@@ -57,7 +57,7 @@ tells a later reader nothing the corrected commit does not.
 new commit on top of the series; every later round goes into that fix commit
 while no remote holds it — amended, or folded with `--fixup` when it is not
 `HEAD`. A branch of one commit no remote holds
-(`git rev-list --count <base>..HEAD` prints 1) has no series to lay out: each
+(`git rev-list --count origin/<base>..HEAD` prints 1) has no series to lay out: each
 round is amended into that commit. Otherwise the series' own commits
 are not rewritten for a review fix:
 spreading a round across them means blame by hunk, several reworded

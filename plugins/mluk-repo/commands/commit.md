@@ -32,7 +32,9 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    git log @{u}.. --oneline 2>/dev/null || true
    ```
 
-   A clean tree → say so in one line and finish. Flag secret-looking paths
+   A clean tree → say so in one line and finish — or, called by `fix` for a
+   round that changed nothing, go to step 8 for its `## Fix round` line, with
+   `HEAD` as the head, and the handoff. Flag secret-looking paths
    immediately (`git-safety` skill). Read `git diff` by affected area for
    substance — not whole files.
 
@@ -114,11 +116,13 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    second run. After a round of review fixes (step 3), once the commit exists
    — a call of its own, so a refused commit leaves no line — append to the ledger
    `## Fix round — <date> — head <short sha> · closes <ids> · left <ids>`:
-   `left` holds the ids the round took and could not close, and goes when there
-   are none. A later round that amends the fix commit adds its own line. No
+   `left` holds the ids the round took and could not close, and `left` or
+   `closes` goes when it has no ids. Both come from `fix`'s report in this
+   session; without one, ask. A later round that amends the fix commit adds its
+   own line. No
    status changes here: that is the next review's, in its step 7. An entered
    session leaves to write the line, then enters again
-   (`reference/commands.md`). Then, after every commit, run
+   (`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`). Then, after every commit, run
    `/mluk-repo:handoff` for the same worktree or branch yourself, through the
    Skill tool, without asking — in the middle of a plan it prints the next
    slice; after a task's last commit or a round of review fixes, the review

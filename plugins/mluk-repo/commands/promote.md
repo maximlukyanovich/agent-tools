@@ -33,15 +33,21 @@ command exists for several, and for that check.
 
 3. **Build the segments** — the chain prefix ending at the target:
    the working branch → the first protected branch, then each hop between
-   protected branches. Already at or past the target →
-   say so and finish.
+   protected branches. Already at or past the target → say so, run step 4's
+   **Check the environment** on the target after `git fetch origin <target>`,
+   then step 5.
 
 4. **Walk each segment**, in order:
 
-   - **Refresh and diff** — `git fetch origin <src> <dst> --prune`, then the
-     commit list and `--stat` of `origin/<dst>..<src-ref>` (`<src-ref>` is the
-     local branch for the first segment, `origin/<src>` after). Empty → skip
-     the segment with a one-line note. Flag migrations, dependencies, runtime
+   - **Refresh and diff** — `git fetch origin <dst> --prune`, `<src>` too
+     after the first segment (a merged feature branch may be gone from
+     origin, and fetching it fails), then the commit list and `--stat` of
+     `origin/<dst>..<src-ref>` (`<src-ref>` is the local branch for the first
+     segment, `origin/<src>` after). Empty, or `<src-ref>` is the
+     `headRefOid` of a merged PR (`gh pr list --head <src> --base <dst>
+     --state merged --json headRefOid`) — a squash leaves the commits outside
+     `<dst>` — → a one-line note and straight to **Check the environment**: a
+     rerun after a stop comes this way. Flag migrations, dependencies, runtime
      keys, blast-radius paths for the PR body.
    - **Sync when the target moved** — if `origin/<dst>` has commits not in
      `<src>`, run the `sync` procedure into `<src>` first (merge, conflicts
@@ -59,19 +65,29 @@ command exists for several, and for that check.
    - **Pull the merged target locally** with `--ff-only`; a failure stops the
      run.
    - **Check the environment** when `environments` has a row for `<dst>`;
-     with none, go on. Wait for `ready` the way "Waiting for checks" in
-     `${CLAUDE_PLUGIN_ROOT}/reference/commands.md` waits: bounded, errors in
-     sight. The limit ran out → `not deployed`. Then run its `checks`
-     yourself, before any checklist reaches the owner.
+     with none, go on. Wait for `ready`, its `<sha>` being
+     `git rev-parse origin/<dst>`, the way "Waiting for checks" in
+     `${CLAUDE_PLUGIN_ROOT}/reference/commands.md` waits: bounded by the row's
+     `limit`, errors in sight. The limit ran out → `not deployed`, with
+     `ready`'s last output; exit 126 or 127, the command never ran → `not run`.
+     Then run its `checks` yourself, before any checklist reaches the owner;
+     one that cannot run — a tool or an access is missing — is `not run` too.
 
-   Red CI, `not deployed` or a failed check stops the run, the failure first
-   in the report; the remaining segments do not execute.
+   Red CI, `not deployed`, `not run` or a failed check stops the run, the
+   failure first in the report; the remaining segments do not execute.
 
-5. **Wrap up**: segments merged, segments skipped, PR URLs, each environment's
-   checks and the checklist of only what needs a person, `git log --oneline
-   -5` of the target, the `git-safety` reminder line, a checkout back to the
-   branch the owner started on, then run `/mluk-repo:handoff` yourself,
-   without asking.
+5. **Wrap up**, after a stop too: segments merged, segments skipped, PR URLs,
+   each environment's checks and, with a row, the checklist of only what needs
+   a person — what the range changed that its `checks` cannot reach —
+   `git log --oneline -5` of the target, the `git-safety` reminder line, a
+   checkout back to the branch the owner started on, then run
+   `/mluk-repo:handoff` yourself, without asking. A stop on an environment says
+   the merge is done and the environment unproved, and skips the handoff, whose
+   first rows would offer the next task. Its block is
+   `/mluk-repo:promote <the branch it stopped on>`, whose rerun checks that
+   environment again and goes no further — a rerun to `<target>` would start
+   past it — with `/mluk-repo:promote <target>` named for after; after a
+   failed check, `/mluk-repo:task <what failed>` comes first.
 
 ## Hard rules
 
@@ -83,5 +99,6 @@ command exists for several, and for that check.
 - `upstream` is never pushed to or targeted, even when convenient.
 - This command does not commit. A dirty tree → `/mluk-repo:commit` first.
 - Never go further than `<target>`.
-- A check on an environment only reads, on production too: no form sent, no
-  sign-in completed, nothing created.
+- A check on an environment, `ready` included, only reads, on production too:
+  nothing created, no sign-in completed, no form sent but the request that
+  opens the provider's window.

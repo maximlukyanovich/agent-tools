@@ -32,10 +32,13 @@ record it; with no clone at all it reads the file through
 `gh api repos/<owner>/<repo>/contents/<path>`.
 
 **A sibling's contract is read at its remote head** — an API, an event, a rule
-the code repeats. The clone lags: after `git fetch` in it,
-`git show origin/<branch>:<path>` on the branch the contract lives on, or the
-`gh api` above with `?ref=<branch>`. A plan or a review names the commit it
-read.
+the code repeats. The clone lags, and its `origin` may be a fork: take the
+remote whose URL names the slug, `git fetch --prune <remote>`, then
+`git show <remote>/<branch>:<path>`, or the `gh api` above with `?ref=<branch>`.
+`<branch>` is the one the contract lives on: the sibling's `base branch` unless
+the task names another, asked once when neither does. A failed fetch leaves the
+old ref readable, so that read is named stale, or goes through `gh api`. A plan
+or a review names the commit it read.
 
 The library hooks (`mluk-fe`) read only the committed file: what they check must
 hold in every clone.
@@ -62,7 +65,7 @@ hold in every clone.
 | `delete branch` | `merge` — who deletes the remote feature branch after a merge: `ask` — the command asks; `merge` — the merge does (`yes` is its older spelling); `platform` — GitHub's automatic deletion. The local branch goes on confirmation, safe form only | `create-pr` |
 | `pr language` | `en` | `create-pr`, `promote` |
 | `post-merge checks` | none — commands to run after a `sync` (e.g. `makemigrations --check`) | `sync` |
-| `environments` | none — a row per branch that deploys: `branch → address · ready · checks`. `ready` is a command that exits 0 once the merged commit is live, with the time a deploy takes; `checks` is what needs no person and only reads — the pages, the API's answers, a sign-in up to the provider's window | `promote` |
+| `environments` | none — a row per branch that deploys: `branch → address · ready · limit · checks`. `ready` is a command that exits 0 once the merged commit is live, `<sha>` in it standing for that commit: a plain health check passes on the old deploy too. `limit` is the time a deploy takes, with a margin. `checks` is what needs no person and only reads — the pages, the API's answers, a sign-in up to the provider's window. No `ready` → the checks run at once and the report says nothing proved the commit live; no `limit` → ten minutes; no `checks` → `ready` alone, said in the report. A row names a secret's variable, never its value | `create-pr`, `promote` |
 
 How the gate keys work together is `reference/commands.md`, "The gate".
 A `targeted checks` command really narrows: the linter and the formatter on

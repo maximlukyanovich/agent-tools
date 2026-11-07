@@ -76,7 +76,8 @@ that file does not hold yet. The rest are named in the report as not taken.
 
    Then run `/mluk-repo:commit` for the same target yourself, through the
    Skill tool: it asks for its go-ahead, places the round by `git-safety`,
-   "Amending", and hands the review over.
+   "Amending", and hands the review over. A round that changed nothing goes
+   there too: its `left` is recorded the same way.
 
 ## Hard rules
 

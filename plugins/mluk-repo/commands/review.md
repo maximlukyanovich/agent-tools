@@ -132,10 +132,12 @@ for `handoff` and step 7; it is no pass and changes no status.
 
 7. **Reconcile with the ledger.** Now read it, with any `## Fix round` after
    the last pass. An `Open` id whose defect is gone at its anchor becomes
-   `fixed`: a round's `closes` says where to look and proves nothing; the rest
-   stay `open`, listed and counted in the report's table; one a round names
-   under `left` goes to the open questions, for the owner to set its status or
-   give what it waited on. Then tag every finding:
+   `fixed`: a round's `closes` says where to look and proves nothing. An id
+   still `open` with its defect in place stays `open`, and one `disputed`
+   stays `disputed`, both listed and counted in the report's table, which
+   the verdict comes from; a techdebt place keeps its status. One a round names
+   under `left`, and one `disputed`, goes to the open questions, for the owner
+   to set its status or give what it waited on. Then tag every finding:
    `new` (code after the last reviewed head), `missed` (older code, never raised
    — keeps its honest severity, marked "missed in pass N"), `escalated` (a
    deferred finding raised higher — only with a named new cause, otherwise it
@@ -191,8 +193,8 @@ for `handoff` and step 7; it is no pass and changes no status.
 9. **Append the pass to the ledger** — without asking; it is gitignored and
    holds only the review's own memory. Write the statuses of step 7 and those
    the owner stated, as lines of the new pass; an id leaves `Open` once it is
-   neither `open` nor a techdebt place without its row, which stays there with
-   its status.
+   not `open`, not `disputed` and not a techdebt place without its row: those
+   stay there with their status.
 
 10. **Post to the PR** only for a PR target, only after printing, only on an
     explicit yes: `gh pr comment <n> --body-file <tmp outside the repo>`.
