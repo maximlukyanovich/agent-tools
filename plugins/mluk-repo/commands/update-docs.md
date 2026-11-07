@@ -1,5 +1,5 @@
 ---
-description: Measure how far the code drifted from the last documentation update, classify the changes, and propose targeted patches by the profile's doc map — including docs in a sibling repository. Writes after confirmation, commits nothing.
+description: Find where the docs drifted from the code and propose patches.
 argument-hint: '[<base-ref>]'
 ---
 

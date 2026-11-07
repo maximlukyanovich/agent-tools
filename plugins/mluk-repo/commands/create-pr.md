@@ -1,5 +1,5 @@
 ---
-description: Draft the PR title and body by pr-conventions, then on confirmation push the branch and open the PR into the base branch with gh; with merge, wait for green CI and merge. Confirms before each git/gh action.
+description: Push the branch and open its pull request; with merge, wait for green CI and merge.
 argument-hint: '[<target-branch>] [merge]'
 ---
 

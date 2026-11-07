@@ -1,5 +1,5 @@
 ---
-description: Fix the open findings of a review pass — read the ledger, the plan and each finding's anchor, make the narrow fix with its proof, read the round's diff once for side effects, then hand over to commit. Edits code; never commits by itself.
+description: Fix the open findings of a review pass, then hand over to commit.
 argument-hint: '[<worktree | branch>] [R<n> …]'
 ---
 

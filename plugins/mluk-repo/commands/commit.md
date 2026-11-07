@@ -1,5 +1,5 @@
 ---
-description: Build a commit for the current changes — stage explicitly, run the checks of the changed paths, draft the message by the commit preset, commit. Never pushes.
+description: Commit the current changes — checks of the changed paths, message by the preset. Never pushes.
 argument-hint: '[<worktree | branch>] [topic or short hint]'
 ---
 

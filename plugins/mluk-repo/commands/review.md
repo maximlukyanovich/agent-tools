@@ -1,5 +1,5 @@
 ---
-description: Review the current branch — or a named branch or worktree, or a specific PR — against the base branch, and return findings sorted by severity with a file:line anchor each. Keeps a pass ledger so a repeat run reviews only what changed. Read-only apart from the ledger and the gate's record; edits only with the fix argument.
+description: Review a branch, worktree or PR against its base and return findings by severity.
 argument-hint: '[<PR#> | <branch> | <worktree-path>] [<sha>..<sha>] [<severity>+] [full] [fix] [model=<name>]'
 ---
 

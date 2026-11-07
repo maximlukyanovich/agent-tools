@@ -1,5 +1,5 @@
 ---
-description: Advance the current work along the profile's branch chain up to the target, one pull request per boundary — sync, PR, CI, merge — confirming at every boundary. Never touches upstream.
+description: Advance the work along the branch chain, one pull request per boundary, and check what it deploys.
 argument-hint: '[<worktree | branch>] [<target-branch>]'
 ---
 

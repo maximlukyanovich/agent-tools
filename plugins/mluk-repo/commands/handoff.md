@@ -1,5 +1,5 @@
 ---
-description: The next session's prompt at a phase boundary — after a task's commit, a review or a merge — as copyable blocks built from git and the review ledger; for a small change, the next step here. Read-only.
+description: Print the next session's prompt at a phase boundary. Read-only.
 argument-hint: '[<worktree | branch>]'
 ---
 

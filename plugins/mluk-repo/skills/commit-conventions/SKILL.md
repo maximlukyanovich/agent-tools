@@ -1,6 +1,6 @@
 ---
 name: commit-conventions
-description: Commit message format — two presets selected by the project profile, gitmoji-conventional (default) and topic-prose — the body rules (detailed, one line per bullet, why not what), and what is forbidden in any message. Use before proposing or composing any commit message, and when a commit-msg hook rejected one.
+description: Commit message format by the profile's preset, the body rules, what is forbidden. Use before proposing or composing any commit message, and when a commit-msg hook rejected one.
 license: MIT
 metadata:
   author: Maxim Lukyanovich

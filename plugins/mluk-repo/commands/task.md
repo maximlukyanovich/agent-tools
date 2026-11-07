@@ -1,5 +1,5 @@
 ---
-description: Kick off a task — parse the brief, decide about a branch with confirmation, load the flavour's skills from the profile, explore, ask by the kickoff method, and return a plan — a short one in chat for a small change. No production code until the plan is approved.
+description: Kick off a task — explore, ask, plan. No production code until the plan is approved.
 argument-hint: '[worktree] [<flavour>] <task description>'
 ---
 
