@@ -56,7 +56,10 @@ tells a later reader nothing the corrected commit does not.
 **Review fixes go into one fix commit.** The first round after a review is a
 new commit on top of the series; every later round goes into that fix commit
 while no remote holds it — amended, or folded with `--fixup` when it is not
-`HEAD`. The series' own commits are not rewritten for a review fix:
+`HEAD`. A branch of one commit no remote holds
+(`git rev-list --count <base>..HEAD` prints 1) has no series to lay out: its
+first round is amended into that commit. Otherwise the series' own commits
+are not rewritten for a review fix:
 spreading a round across them means blame by hunk, several reworded
 messages and a rebase that stops on files more than one commit changed. The
 fix commit is the one the first round made after the first reviewed head

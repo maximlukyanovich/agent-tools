@@ -35,8 +35,10 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    immediately (`git-safety` skill). Read `git diff` by affected area for
    substance — not whole files.
 
-3. **Place a fix by the `git-safety` skill's "Amending" section**, which the
-   profile's `amend unpushed` switches. Say in one line which commit took it.
+3. **Place a fix**: load the `git-safety` skill and follow its "Amending"
+   section, which the profile's `amend unpushed` switches. A change that closes findings open in
+   the branch's ledger (`## Review`) is a round of review fixes, so read the
+   ledger first. Say in one line which commit took it.
    A pushed commit is never rewritten; the fix is a new commit.
 
 4. **Run the checks** by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`,

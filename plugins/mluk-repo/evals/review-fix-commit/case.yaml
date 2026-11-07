@@ -1,6 +1,6 @@
 schema_version: "1.1"
 name: review-fix-commit
-description: The first round of review fixes becomes a new commit on top that names the ids it closes, not an amend of the reviewed commit.
+description: On a branch of several commits the first round of review fixes becomes a new commit on top, not an amend of the reviewed one.
 tags: [commit, review]
 context:
   scaffold_script: scaffold.sh
