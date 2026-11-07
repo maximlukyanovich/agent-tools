@@ -24,6 +24,8 @@ Run it and show the result. Anything unchecked is reported, not quietly skipped.
 - [ ] `.claude/COMMANDS.md` carries `Command prefix:`, and every local command
       is named `<prefix>-<verb>`; with `none`, no name is a built-in command
       or a bundled skill (`reference/layout.md` → Command names).
+- [ ] `AGENTS.md` §6 has the line on a prompt offered to the developer, with a
+      worktree prompt's entering, leaving and entering again.
 - [ ] `AGENTS.md` §2 says how the project runs as commands from the
       repository root — install, dev server, the stack — and not who runs them.
 - [ ] Skills: real directories under `.claude/skills/`, working symlinks in

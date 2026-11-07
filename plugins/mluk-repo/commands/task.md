@@ -108,7 +108,9 @@ of fixes, the full gate twice.
      explicitly (`git -C <folder>`, paths inside it); a command offered for
      a fresh session names the branch — `/mluk-repo:review <branch>`, and
      `commit`, `promote`, `handoff` the same way — since that session starts
-     in the main tree.
+     in the main tree, and a prompt offered for it enters the tree, by
+     `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "A block for work in a
+     worktree".
 
    A worktree is temporary: once its branch is merged, `/mluk-repo:create-pr`
    offers to remove it; a folder deleted by hand leaves a stale entry that

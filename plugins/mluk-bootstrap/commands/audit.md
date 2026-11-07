@@ -136,8 +136,9 @@ The harness exists; the job is to find the gaps, not to rewrite it.
     plugin is behind the project, say so and audit nothing it does not know.
 
 15. **The efficiency journal.** Do `docs/local/efficiency-remarks.md` and its
-    line in `AGENTS.md` §6 exist? Then read the rows not yet marked analysed
-    and group them by cause:
+    line in `AGENTS.md` §6 exist, and §6's line on a prompt offered to the
+    developer, with a worktree prompt's entering, leaving and entering again?
+    Then read the rows not yet marked analysed and group them by cause:
     - a cause in this project — a rule, a skill, a hook, a profile key, a
       check that does not narrow — is a finding of this audit, with its edit;
     - a cause in a library plugin goes into **one** issue draft for that
