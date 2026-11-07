@@ -32,7 +32,7 @@ metadata:
 - **Every deploy installs from scratch.** Under pnpm 11 a dependency's build script — direct or
   transitive — that is missing from `allowBuilds` in `pnpm-workspace.yaml` fails that install with
   `ERR_PNPM_IGNORED_BUILDS`. `pnpm add` and local installs fail the same way, but over a dependency
-  the tree has already built a repeated install passes, so a warm tree proves nothing: without a
+  the tree has already built a repeated install passes, so a warm tree proves nothing: past `pnpm add`, without a
   clean install in CI on a pull request, the deploy is the first place the gap surfaces.
 - **Without that CI, prove a new dependency in a fresh clone** with `pnpm install --frozen-lockfile`.
   Each `allowBuilds` entry carries its reason; `false` fits a package that ships its binary as a

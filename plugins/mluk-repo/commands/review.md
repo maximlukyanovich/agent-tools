@@ -59,7 +59,8 @@ one of `open`, `fixed`, `deferred (<techdebt file, section>)`,
 Every other `minor` and `nit` gets one of the two `deferred` places in the
 pass that raises it, and none is `open` at the merge (step 8).
 Only `Trajectory` and `Open` are read by default; pass sections are appended,
-never rewritten.
+never rewritten. `commit` adds a `## Fix round` line after a round of fixes,
+for `handoff` and step 7; it is no pass and changes no status.
 
 ## Scope control
 
@@ -129,7 +130,12 @@ never rewritten.
    comment or test name that promises a behaviour needs a case that would fail
    without it.
 
-7. **Reconcile with the ledger.** Now read it, and tag every finding:
+7. **Reconcile with the ledger.** Now read it, with any `## Fix round` after
+   the last pass. An `Open` id whose defect is gone at its anchor becomes
+   `fixed`: a round's `closes` says where to look and proves nothing; the rest
+   stay `open`, listed and counted in the report's table; one a round names
+   under `left` goes to the open questions, for the owner to set its status or
+   give what it waited on. Then tag every finding:
    `new` (code after the last reviewed head), `missed` (older code, never raised
    — keeps its honest severity, marked "missed in pass N"), `escalated` (a
    deferred finding raised higher — only with a named new cause, otherwise it
@@ -183,7 +189,10 @@ never rewritten.
    range closes that way — not with another full pass.
 
 9. **Append the pass to the ledger** — without asking; it is gitignored and
-   holds only the review's own memory. Update statuses the owner stated.
+   holds only the review's own memory. Write the statuses of step 7 and those
+   the owner stated, as lines of the new pass; an id leaves `Open` once it is
+   neither `open` nor a techdebt place without its row, which stays there with
+   its status.
 
 10. **Post to the PR** only for a PR target, only after printing, only on an
     explicit yes: `gh pr comment <n> --body-file <tmp outside the repo>`.

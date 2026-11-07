@@ -122,7 +122,7 @@ contract clients rely on, a language rule for user-facing strings.
 
 | Key | Default | Read by |
 | --- | --- | --- |
-| `ledger` | `docs/local/reviews/` — must be gitignored; one file per reviewed target | `review`, `create-pr` |
+| `ledger` | `docs/local/reviews/` — must be gitignored; one file per reviewed target | `review`, `create-pr`, `fix`, `commit`, `handoff` |
 | `design source` | none — where the visual design lives (a Design System artifact URL, a kit path); read, never written | `review` |
 | `consumers` | none — sibling repositories (by slug) that consume this one's contract | `review` |
 

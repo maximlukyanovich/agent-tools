@@ -7,6 +7,8 @@ export GIT_AUTHOR_NAME=T GIT_AUTHOR_EMAIL=t@example.com GIT_COMMITTER_NAME=T GIT
 at() { export GIT_AUTHOR_DATE="2026-10-01T10:0$1:00Z" GIT_COMMITTER_DATE="2026-10-01T10:0$1:00Z"; }
 git init -q -b main .
 git config commit.gpgsign false
+git config user.name T
+git config user.email t@example.com
 printf 'docs/local/\n.origin.git/\n' > .gitignore
 mkdir -p .claude src
 cat > .claude/project-profile.md <<'PROFILE'

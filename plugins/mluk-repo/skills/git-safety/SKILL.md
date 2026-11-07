@@ -1,6 +1,6 @@
 ---
 name: git-safety
-description: What an agent never runs in git and gh, what needs an explicit go-ahead (commit, push, PR, merge), when to amend. Use before any git or gh action that changes state.
+description: What an agent never runs in git and gh, what needs an explicit go-ahead (commit, push, PR, merge), when to amend, staging and secrets. Use before any git or gh action that changes state.
 license: MIT
 metadata:
   author: Maxim Lukyanovich
@@ -57,8 +57,8 @@ tells a later reader nothing the corrected commit does not.
 new commit on top of the series; every later round goes into that fix commit
 while no remote holds it — amended, or folded with `--fixup` when it is not
 `HEAD`. A branch of one commit no remote holds
-(`git rev-list --count <base>..HEAD` prints 1) has no series to lay out: its
-first round is amended into that commit. Otherwise the series' own commits
+(`git rev-list --count <base>..HEAD` prints 1) has no series to lay out: each
+round is amended into that commit. Otherwise the series' own commits
 are not rewritten for a review fix:
 spreading a round across them means blame by hunk, several reworded
 messages and a rebase that stops on files more than one commit changed. The

@@ -28,9 +28,9 @@ Other scopes and updating: [Quick start](../../README.md#quick-start).
 | `/mluk-repo:handoff` | a local note, only when a block runs long | The next session's prompt at a phase boundary — the review after a task's commit, the fixes, the plan's next step or the promote after a review, the next task after a merge — from git and the ledger; for a small change, measured by `scripts/change_size.py`, the next step runs here. `commit`, `review`, `create-pr` and `promote` call it at their end. |
 | `/mluk-repo:help` | no | This plugin's surface. |
 
-`/mluk-repo:promote` to the next branch is the same as
-`/mluk-repo:create-pr merge`; `promote`
-exists for walking more than one boundary.
+`/mluk-repo:promote` to the next branch is `/mluk-repo:create-pr merge` with
+the environment's check after it; `promote` exists for walking more than one
+boundary, and for that check.
 
 ## Profile
 

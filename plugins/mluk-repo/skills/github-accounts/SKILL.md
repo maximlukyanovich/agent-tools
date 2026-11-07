@@ -1,6 +1,6 @@
 ---
 name: github-accounts
-description: Two GitHub accounts on one machine, selected by SSH host alias. Use before pushing, creating a repository or a PR, or diagnosing a push failure ("Repository not found").
+description: Two GitHub accounts on one machine, selected by SSH host alias. Use before a push or gh call, creating a repository or a PR, or diagnosing a push failure ("Repository not found").
 license: MIT
 metadata:
   author: Maxim Lukyanovich

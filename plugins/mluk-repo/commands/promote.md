@@ -8,8 +8,9 @@ argument-hint: '[<worktree | branch>] [<target-branch>]'
 Walk the chain from `## Repository` (`chain`; without one, asked as
 `${CLAUDE_PLUGIN_ROOT}/reference/profile.md` says) up to `<target>`. Every boundary that still has unpromoted commits is
 one `/mluk-repo:create-pr merge` hop, preceded by a sync of the target into the
-source when the target moved. A single hop to the next branch is the same as
-`/mluk-repo:create-pr merge`; this command exists for several.
+source when the target moved. A single hop to the next branch is
+`/mluk-repo:create-pr merge` with the environment's check after it; this
+command exists for several, and for that check.
 
 **Writes to git and GitHub**, each action on confirmation.
 

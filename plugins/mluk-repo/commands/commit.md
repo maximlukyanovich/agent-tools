@@ -9,7 +9,8 @@ Produce a clean commit (or several) by the `commit-conventions` skill, with the
 parameters from the profile's `## Repository`: `validate`, `targeted checks`,
 `hub files`, `full gate`, `commit preset`, `commit confirm`.
 
-**Writes to git.** Never pushes — that is `/mluk-repo:create-pr` or `:promote`.
+**Writes to git**, and after a round of review fixes one line of the
+gitignored ledger. Never pushes — that is `/mluk-repo:create-pr` or `:promote`.
 
 A leading folder or local branch commits the work in that worktree, by
 `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`; every step below runs in its
@@ -110,7 +111,14 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    commit had its row and no hub file was among them — after an amend the
    whole commit's paths (`git show --name-only HEAD`), after several groups
    once, with `--commits <n>`. So `review`, `create-pr` and `promote` skip a
-   second run. Then, after every commit, run
+   second run. After a round of review fixes (step 3), once the commit exists
+   — a call of its own, so a refused commit leaves no line — append to the ledger
+   `## Fix round — <date> — head <short sha> · closes <ids> · left <ids>`:
+   `left` holds the ids the round took and could not close, and goes when there
+   are none. A later round that amends the fix commit adds its own line. No
+   status changes here: that is the next review's, in its step 7. An entered
+   session leaves to write the line, then enters again
+   (`reference/commands.md`). Then, after every commit, run
    `/mluk-repo:handoff` for the same worktree or branch yourself, through the
    Skill tool, without asking — in the middle of a plan it prints the next
    slice; after a task's last commit or a round of review fixes, the review

@@ -22,7 +22,7 @@ A leading folder or local branch is the work to fix, by
 `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`; none → the session's tree.
 Ids (`R3 R7`) choose the findings; none → every open `blocker` and `major`,
 the `fix-now` ones, and each `deferred (<techdebt file, section>)` whose row
-that file does not hold yet. The rest are named in the report as left open.
+that file does not hold yet. The rest are named in the report as not taken.
 
 ## Steps
 
@@ -75,8 +75,8 @@ that file does not hold yet. The rest are named in the report as left open.
    | R3 | `client.ts:114` keeps a text body | `client.test.ts` "non-JSON error", red on the old code | — |
 
    Then run `/mluk-repo:commit` for the same target yourself, through the
-   Skill tool: it asks for its go-ahead, places the round in the review-fix
-   commit (`git-safety`, "Amending") and hands the review over.
+   Skill tool: it asks for its go-ahead, places the round by `git-safety`,
+   "Amending", and hands the review over.
 
 ## Hard rules
 
