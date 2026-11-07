@@ -31,6 +31,12 @@ sibling's file and finds no line for it asks once for the path and offers to
 record it; with no clone at all it reads the file through
 `gh api repos/<owner>/<repo>/contents/<path>`.
 
+**A sibling's contract is read at its remote head** — an API, an event, a rule
+the code repeats. The clone lags: after `git fetch` in it,
+`git show origin/<branch>:<path>` on the branch the contract lives on, or the
+`gh api` above with `?ref=<branch>`. A plan or a review names the commit it
+read.
+
 The library hooks (`mluk-fe`) read only the committed file: what they check must
 hold in every clone.
 

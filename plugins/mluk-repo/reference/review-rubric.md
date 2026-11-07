@@ -56,5 +56,6 @@ weight as these.
   only).
 - A contract change — a field, an endpoint, a payload's shape or timing — is
   followed into each `consumers` repository's call sites (its clone from the
-  local profile's `## Siblings`); a consumer that now misreads it is a
+  local profile's `## Siblings`, read at its remote head by
+  `reference/profile.md`); a consumer that now misreads it is a
   finding here.

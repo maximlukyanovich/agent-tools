@@ -118,7 +118,7 @@ of fixes, the full gate twice.
 
 3. **Gather context selectively** — `AGENTS.md`, the profile, the documents
    the flavour's skill names, the product docs and contract log from `## Docs`
-   for the touched area (a sibling's through the local `## Siblings`), the code the brief touches (by section, not whole
+   for the touched area (a sibling's through the local `## Siblings`, a contract at its remote head by `${CLAUDE_PLUGIN_ROOT}/reference/profile.md`), the code the brief touches (by section, not whole
    files), the design source from `## Sources of truth` when the task has UI.
    Broad sweeps go to exploration subagents; library versions and APIs are
    verified through the docs tool, not memory.
