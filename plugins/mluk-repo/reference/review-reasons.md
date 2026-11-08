@@ -33,3 +33,10 @@ file. A rule changed there changes its reason here.
   report; a marker in the pass header gives every session the same target,
   and `handoff` prints it. Two passes running, `nit` aside, so that one noisy
   pass does not throw the delta away.
+- **A fix that angles B and C fault stays `open`, as `fix-critique`, under
+  its own id.** `fixed` would close a defect the fix only moved, and a new id
+  would leave the next pass checking a defect already gone instead of the
+  critique.
+- **`next: full` only below ready.** A ready verdict's next pass reads the
+  fix round's delta alone; a marker there would throw that delta away for a
+  whole pass that finds old nits.
