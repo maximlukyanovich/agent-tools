@@ -149,7 +149,7 @@ command ends with the next step as a block ready to copy:
 /mluk-repo:commit                            stage, check what changed, message by the preset; never pushes
 /mluk-repo:review                            findings by severity, each with file:line
 /mluk-repo:fix                               one round on the open findings, then the commit on your yes
-/mluk-repo:create-pr merge                   push and open the PR on your yes, merge after green CI
+/mluk-repo:promote                           push, PR and merge after green CI, each on your yes; then the environment's check
 ```
 
 The other plugins mostly need no command: their skills load when the work
