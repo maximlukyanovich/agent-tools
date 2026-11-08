@@ -10,6 +10,7 @@ One line out, exit 0:
     target: delta · git diff e4f5a6b..9f8e7d6 — the last head is an ancestor of HEAD
     target: rewritten · git diff e4f5a6b 9f8e7d6 · replaced a1b2c3d e4f5a6b — the last head is not an ancestor of HEAD
     target: whole — no ledger
+    target: whole — the last pass asked for full
 
 Contract: reference/review-target.md. Exit 2 when the head or the range does
 not resolve, or the ledger is a directory.
@@ -22,6 +23,8 @@ import sys
 from pathlib import Path
 
 PASS = re.compile(r"^## Pass \d+\b.*?\bhead ([0-9a-f]{7,40})\b", re.M)
+PASS_HEADER = re.compile(r"^## Pass \d+\b.*$", re.M)
+NEXT_FULL = re.compile(r"\bnext: full\b")
 TRAJECTORY = re.compile(r"^Trajectory:(.*)$", re.M)
 TRAJECTORY_HEAD = re.compile(r"\bP\d+ ([0-9a-f]{7,40})\b")
 
@@ -57,6 +60,12 @@ def last_head(ledger: Path):
     trajectory = TRAJECTORY.findall(text)
     heads = TRAJECTORY_HEAD.findall(trajectory[-1]) if trajectory else []
     return heads[-1] if heads else None
+
+
+def asks_for_full(ledger: Path):
+    """Whether the ledger's last pass header ends with `next: full`."""
+    headers = PASS_HEADER.findall(ledger.read_text(encoding="utf-8"))
+    return bool(headers) and bool(NEXT_FULL.search(headers[-1]))
 
 
 def between(tree, base, head, reason_ancestor, reason_rewritten, mode="delta"):
@@ -95,6 +104,8 @@ def target(ledger: Path, tree: Path, head_rev="HEAD", full=False, explicit=None)
         return f"target: whole — the last head {last} is not in the repository"
     if reviewed == head:
         return f"target: none · head {short(tree, head)} — the ledger's last head is HEAD"
+    if asks_for_full(ledger):
+        return "target: whole — the last pass asked for full"
     return between(tree, reviewed, head, "the last head is an ancestor of HEAD",
                    "the last head is not an ancestor of HEAD")
 
