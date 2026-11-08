@@ -1,5 +1,5 @@
 ---
-description: Build a commit for the current changes — stage explicitly, run the checks of the changed paths, draft the message by the commit preset, commit. Never pushes.
+description: Commit the current changes — checks of the changed paths, message by the preset. Never pushes.
 argument-hint: '[<worktree | branch>] [topic or short hint]'
 ---
 
@@ -9,7 +9,8 @@ Produce a clean commit (or several) by the `commit-conventions` skill, with the
 parameters from the profile's `## Repository`: `validate`, `targeted checks`,
 `hub files`, `full gate`, `commit preset`, `commit confirm`.
 
-**Writes to git.** Never pushes — that is `/mluk-repo:create-pr` or `:promote`.
+**Writes to git**, and after a round of review fixes one line of the
+gitignored ledger. Never pushes — that is `/mluk-repo:create-pr` or `:promote`.
 
 A leading folder or local branch commits the work in that worktree, by
 `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`; every step below runs in its
@@ -31,12 +32,16 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    git log @{u}.. --oneline 2>/dev/null || true
    ```
 
-   A clean tree → say so in one line and finish. Flag secret-looking paths
+   A clean tree → say so in one line and finish — or, called by `fix` for a
+   round that changed nothing, go to step 8 for its `## Fix round` line, with
+   `HEAD` as the head, and the handoff. Flag secret-looking paths
    immediately (`git-safety` skill). Read `git diff` by affected area for
    substance — not whole files.
 
-3. **Place a fix by the `git-safety` skill's "Amending" section**, which the
-   profile's `amend unpushed` switches. Say in one line which commit took it.
+3. **Place a fix**: load the `git-safety` skill and follow its "Amending"
+   section, which the profile's `amend unpushed` switches. A change that closes findings open in
+   the branch's ledger (`## Review`) is a round of review fixes, so read the
+   ledger first. Say in one line which commit took it.
    A pushed commit is never rewritten; the fix is a new commit.
 
 4. **Run the checks** by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`,
@@ -81,10 +86,8 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    is deleted afterwards. `git add -p` is the interactive alternative and is not
    available to an agent.
 
-6. **Draft the message** by the preset in `commit-conventions`. Always with a
-   body. A round of review fixes names the ids it closes in one body line
-   (`Review pass 2: R3, R7`; a later round amending the fix commit adds its
-   own) — `handoff` reads it to tell a fixed range from new work.
+6. **Draft the message**: load the `commit-conventions` skill and follow the
+   preset. Always with a body.
 
 7. **Show and commit.** `commit confirm: ask` (default) → print the file
    groups, the check results, the transition rows and their proof when the
@@ -110,7 +113,17 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    commit had its row and no hub file was among them — after an amend the
    whole commit's paths (`git show --name-only HEAD`), after several groups
    once, with `--commits <n>`. So `review`, `create-pr` and `promote` skip a
-   second run. Then, after every commit, run
+   second run. After a round of review fixes (step 3), once the commit exists
+   — a call of its own, so a refused commit leaves no line — append to the ledger
+   `## Fix round — <date> — head <short sha> · closes <ids> · left <ids>`:
+   `left` holds the ids the round took and could not close, and `left` or
+   `closes` goes when it has no ids. Both come from `fix`'s report in this
+   session; without one, `closes` holds the open ids whose anchors the commit
+   answers, this command's reply names them, and nobody is asked. A later round that
+   amends the fix commit adds its own line. No
+   status changes here: that is the next review's, in its step 7. An entered
+   session leaves to write the line, then enters again
+   (`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`). Then, after every commit, run
    `/mluk-repo:handoff` for the same worktree or branch yourself, through the
    Skill tool, without asking — in the middle of a plan it prints the next
    slice; after a task's last commit or a round of review fixes, the review

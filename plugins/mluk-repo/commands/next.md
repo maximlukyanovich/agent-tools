@@ -1,5 +1,5 @@
 ---
-description: Recommend what to take next — from the roadmap, local notes, open issues and PRs, and the branch chain. Offers a roadmap status patch, written only on confirmation.
+description: Recommend what to take next from the roadmap, notes, issues and branches.
 argument-hint: '[<focus>]'
 ---
 

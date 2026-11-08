@@ -1,5 +1,5 @@
 ---
-description: Merge the base branch (or a given one) into the current branch, run the profile's post-merge checks, and report only what the base shipped that this branch re-implements or conflicts with.
+description: Merge the base branch into the current one and report what conflicts.
 argument-hint: '[<source-branch>]'
 ---
 

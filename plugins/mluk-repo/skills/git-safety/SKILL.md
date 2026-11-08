@@ -1,6 +1,6 @@
 ---
 name: git-safety
-description: What an agent never runs in git and gh, what needs an explicit go-ahead in the current turn (commit, push, PR, merge), when amending is acceptable (unpushed commits only), and how staging and secrets are handled. Use before any git or gh action that changes state.
+description: What an agent never runs in git and gh, what needs an explicit go-ahead (commit, push, PR, merge), when to amend, staging and secrets. Use before any git or gh action that changes state.
 license: MIT
 metadata:
   author: Maxim Lukyanovich
@@ -56,7 +56,10 @@ tells a later reader nothing the corrected commit does not.
 **Review fixes go into one fix commit.** The first round after a review is a
 new commit on top of the series; every later round goes into that fix commit
 while no remote holds it — amended, or folded with `--fixup` when it is not
-`HEAD`. The series' own commits are not rewritten for a review fix:
+`HEAD`. A branch of one commit no remote holds
+(`git rev-list --count origin/<base>..HEAD` prints 1) has no series to lay out: each
+round is amended into that commit. Otherwise the series' own commits
+are not rewritten for a review fix:
 spreading a round across them means blame by hunk, several reworded
 messages and a rebase that stops on files more than one commit changed. The
 fix commit is the one the first round made after the first reviewed head

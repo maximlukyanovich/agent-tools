@@ -1,5 +1,5 @@
 ---
-description: Onboard the developer — an overview from the project's own documents, how to run it, the command and skill index, and a live check of the plugins and the profile's Checks. Read-only.
+description: Onboard the developer — overview, how to run it, a live check of the setup. Read-only.
 argument-hint: '[<language>]'
 ---
 

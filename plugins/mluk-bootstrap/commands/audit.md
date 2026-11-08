@@ -114,9 +114,11 @@ The harness exists; the job is to find the gaps, not to rewrite it.
     project — list them, one line each. Where they go is the owner's decision.
 
 13. **A fresh clone installs.** Does `pnpm install --frozen-lockfile` pass in a
-    fresh clone — not in the author's tree, where a warm `node_modules` hides a
-    build script missing from `allowBuilds`? Under pnpm 11 that gap fails the
-    deploy's install and nothing earlier.
+    fresh clone — not in the author's tree, where a dependency already built
+    hides a build script missing from `allowBuilds`? Under pnpm 11 the gap
+    fails `pnpm add`, and every install of a dependency the tree has not built;
+    a built one fails once and passes when repeated, so past `pnpm add` a clean
+    install in CI or the deploy shows it.
 
 14. **A fresh clone gets its plugins.** Is there a `.claude/commands/<prefix>-start.md`
     (`start.md` with `none` or no line) from

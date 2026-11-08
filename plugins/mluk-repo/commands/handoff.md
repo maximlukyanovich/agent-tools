@@ -1,5 +1,5 @@
 ---
-description: The next session's prompt at a phase boundary — after a task's commit, a review or a merge — as copyable blocks built from git and the review ledger; for a small change, the next step here. Read-only.
+description: Print the next session's prompt at a phase boundary. Read-only.
 argument-hint: '[<worktree | branch>]'
 ---
 
@@ -44,7 +44,8 @@ A folder or a local branch — the work to hand off, by
    measure never lowers a level.
 
 2. **Read the ledger** for the branch, named as `review` names it — only
-   `Trajectory`, `Open` and the last pass's head and verdict.
+   `Trajectory`, `Open`, the last pass's head and verdict and any
+   `## Fix round` after it.
 
 3. **Find the plan** — the plan file this session worked from; else the newest
    file in the plans directory (`plansDirectory` in the settings, default
@@ -56,12 +57,12 @@ A folder or a local branch — the work to hand off, by
    | State | Blocks |
    | --- | --- |
    | Uncommitted changes | `/mluk-repo:commit <branch>` — it commits on its own go-ahead and hands off after |
-   | Merged into the base | `/mluk-repo:next`. Findings are not listed: by now each has its place. Below the block, as plain text, only a gap, with the ledger path — an id still `open`, or a techdebt place whose row the file lacks |
-   | Commits after the ledger's last head, or no ledger, that name no id of `Open` in their bodies, and the plan of step 3 still holds work the branch has not done | the continue prompt below for a fresh session, or `/compact <focus>` here — by the criterion below; the review waits for the task's last commit |
-   | Commits after the ledger's last head, or no ledger | `/mluk-repo:review <branch> <from>..<head>` — `<from>` and `<head>` from `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/review_target.py" --ledger <ledger file> --tree <tree>`: the two shas of `delta` or `rewritten`, the merge-base with `origin/<base>` for `whole`; `none` is the next row. When `Open` holds a `blocker`, `major` or `fix-now` that no commit after the head names in its body (a fix round names the ids it closes), `/mluk-repo:fix <branch>` instead: the review waits for its commit, then reads the fixes and the new commits in one pass |
-   | A pass on the head, `blocked` or `changes requested` | `/mluk-repo:fix <branch>` |
+   | Merged into the base | `/mluk-repo:next`. Findings are not listed: by now each has its place. Below the block, as plain text, only a gap, with the ledger path — an id still `open` or `disputed`, or a techdebt place whose row the file lacks |
+   | Commits after the ledger's last head, or no ledger, with no `## Fix round` after the last pass, no `blocker`, `major` or `fix-now` in `Open`, and the plan of step 3 still holds work the branch has not done | the continue prompt below for a fresh session, or `/compact <focus>` here — by the criterion below; the review waits for the task's last commit |
+   | Commits after the ledger's last head, or no ledger | `/mluk-repo:review <branch> <from>..<head>` — `<from>` and `<head>` from `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/review_target.py" --ledger <ledger file> --tree <tree>`: the two shas of `delta` or `rewritten`, the merge-base with `origin/<base>` for `whole`; `none` is the next row. When `Open` holds a `blocker`, `major` or `fix-now` that is not `disputed` and that no `## Fix round` after the last pass names, under `closes` or `left`, `/mluk-repo:fix <branch> <those ids>` instead: the review waits for its commit, then reads the fixes and the new commits in one pass |
+   | A pass on the head, `blocked` or `changes requested` | `/mluk-repo:fix <branch> <ids>` — the `Open` ids but those a `## Fix round` names under `left` and those `disputed`: they wait on the owner, and another round would not close them. Only those in `Open` → no block, the open question of what each waits on |
    | A pass on the head, `ready to merge`, no `fix-now` open, every techdebt row written | `/mluk-repo:promote <branch>` |
-   | `ready to merge` with `fix-now` ids open, or techdebt rows to write | `/mluk-repo:fix <branch> <ids>` — its commit hands over the review of the round's delta, and that review the promote. `/mluk-repo:promote <branch>` first only on the owner's word to ship now |
+   | `ready to merge` with `fix-now` ids open, or techdebt rows to write | `/mluk-repo:fix <branch> <ids>`, chosen as in the row above — its commit hands over the review of the round's delta, and that review the promote. `/mluk-repo:promote <branch>` first only on the owner's word to ship now |
 
    A review in the middle of a task closes the range it read, not the task.
    Before a `ready to merge` row offers promote, read the plan of step 3
@@ -103,7 +104,8 @@ A folder or a local branch — the work to hand off, by
 - **A review freezes its range.** New commits on a branch whose ledger holds
   an open `blocker`, `major` or `fix-now` do not get a review of their own:
   the next block is the fix, and the next review reads the fix and the new
-  commits in one pass.
+  commits in one pass. An id a `## Fix round` names under `left` goes on to
+  that review: the round could not close it, so another would not either.
 - One phase, one fresh session. A review never runs in the session that wrote
   the code, a merge never in the session that reviewed it — except for a
   change step 1 left small, whose review and merge run where it was made.

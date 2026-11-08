@@ -1,6 +1,6 @@
 ---
 name: review-group
-description: Reviews one file group of a large diff for /mluk-repo:review and returns finding lines only. Read-only. Called by that command, not directly.
+description: Reviews one file group of a large diff for /mluk-repo:review. Read-only. Called by that command, not directly.
 tools: Read, Grep, Glob, Bash
 model: inherit
 ---

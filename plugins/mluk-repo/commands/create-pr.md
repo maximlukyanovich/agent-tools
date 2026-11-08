@@ -1,5 +1,5 @@
 ---
-description: Draft the PR title and body by pr-conventions, then on confirmation push the branch and open the PR into the base branch with gh; with merge, wait for green CI and merge. Confirms before each git/gh action.
+description: Push the branch and open its pull request; with merge, wait for green CI and merge.
 argument-hint: '[<target-branch>] [merge]'
 ---
 
@@ -8,7 +8,7 @@ argument-hint: '[<target-branch>] [merge]'
 One hop: the current branch into its target through a pull request. Reads
 `## Repository` for `base branch`, `chain`, `protected`, `upstream`,
 `validate`, `full gate`, `merge method`, `delete branch`, `pr language`,
-`remote account`.
+`remote account`, `environments`.
 
 **Writes to git and GitHub**, each step on confirmation. Without `merge` it
 stops after printing the PR URL.
@@ -80,8 +80,9 @@ stops after printing the PR URL.
 6. **With `merge`.**
    - Read the review ledger for this branch (profile `ledger`, see
      `/mluk-repo:review`). No pass on the current head, or `major`+ findings
-     still `open` → print that and merge only on an explicit yes. Merging
-     without a review stays possible; it should not be accidental.
+     still `open` or `disputed` → print that and merge only on an explicit
+     yes. Merging without a review stays possible; it should not be
+     accidental.
    - The checks, by `${CLAUDE_PLUGIN_ROOT}/reference/commands.md`, "Waiting
      for checks", or coming back later on the owner's word. Anything but
      `success` → stop and print it, with the failing checks and
@@ -113,7 +114,9 @@ stops after printing the PR URL.
 7. **Wrap up**: PR URL and status (`opened` / `merged` / `pending CI`), the
    `git-safety` reminder line, then run `/mluk-repo:handoff` yourself, without
    asking — after opening it names the review or the merge to run next, after
-   a merge the next task.
+   a merge the next task. A merge into a branch with an `environments` row
+   says its environment went unchecked and ends with
+   `/mluk-repo:promote <target>` instead.
 
 ## Hard rules
 

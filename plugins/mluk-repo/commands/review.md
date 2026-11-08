@@ -1,5 +1,5 @@
 ---
-description: Review the current branch — or a named branch or worktree, or a specific PR — against the base branch, and return findings sorted by severity with a file:line anchor each. Keeps a pass ledger so a repeat run reviews only what changed. Read-only apart from the ledger and the gate's record; edits only with the fix argument.
+description: Review a branch, worktree or PR against its base and return findings by severity.
 argument-hint: '[<PR#> | <branch> | <worktree-path>] [<sha>..<sha>] [<severity>+] [full] [fix] [model=<name>]'
 ---
 
@@ -59,7 +59,8 @@ one of `open`, `fixed`, `deferred (<techdebt file, section>)`,
 Every other `minor` and `nit` gets one of the two `deferred` places in the
 pass that raises it, and none is `open` at the merge (step 8).
 Only `Trajectory` and `Open` are read by default; pass sections are appended,
-never rewritten.
+never rewritten. `commit` adds a `## Fix round` line after a round of fixes,
+for `handoff` and step 7; it is no pass and changes no status.
 
 ## Scope control
 
@@ -129,7 +130,14 @@ never rewritten.
    comment or test name that promises a behaviour needs a case that would fail
    without it.
 
-7. **Reconcile with the ledger.** Now read it, and tag every finding:
+7. **Reconcile with the ledger.** Now read it, with any `## Fix round` after
+   the last pass. An `Open` id whose defect is gone at its anchor becomes
+   `fixed`: a round's `closes` says where to look and proves nothing. An id
+   still `open` with its defect in place stays `open`, and one `disputed`
+   stays `disputed`, both listed and counted in the report's table, which
+   the verdict comes from; a techdebt place keeps its status. One a round names
+   under `left`, and one `disputed`, goes to the open questions, for the owner
+   to set its status or give what it waited on. Then tag every finding:
    `new` (code after the last reviewed head), `missed` (older code, never raised
    — keeps its honest severity, marked "missed in pass N"), `escalated` (a
    deferred finding raised higher — only with a named new cause, otherwise it
@@ -183,7 +191,10 @@ never rewritten.
    range closes that way — not with another full pass.
 
 9. **Append the pass to the ledger** — without asking; it is gitignored and
-   holds only the review's own memory. Update statuses the owner stated.
+   holds only the review's own memory. Write the statuses of step 7 and those
+   the owner stated, as lines of the new pass; an id leaves `Open` once it is
+   not `open`, not `disputed` and not a techdebt place without its row: those
+   stay there with their status.
 
 10. **Post to the PR** only for a PR target, only after printing, only on an
     explicit yes: `gh pr comment <n> --body-file <tmp outside the repo>`.
