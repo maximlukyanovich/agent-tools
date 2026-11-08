@@ -45,21 +45,22 @@ added to `Aliases:`; the file is not renamed.
 ```
 # Review ledger — <key>
 Aliases: PR #12, feat/<slug>
-Trajectory: P1 a1b2c3d 0/2/5/5 changes · P2 e4f5a6b 0/0/1/2 ready
+Trajectory: P1 a1b2c3d 0/2/5/5 changes · P2 e4f5a6b 0/1/1/1 changes · P3 7c8d9e0 0/1/1/0 changes
 ## Open
-- R3 minor bug fix-now src/api/client.ts:114 — error body lost when it is not JSON
-## Pass 2 — <date> — head e4f5a6b · base a1b2c3d · delta — ready to merge
-- R9 minor fix-critique src/api/client.ts:83 — helper duplicated in connect.ts — open
-## Pass 3 — <date> — head 7c8d9e0 · delta — changes requested · next: full
+- R3 minor bug fix-now fix-critique src/api/client.ts:114 — text body kept, its status code dropped
+- R9 major bug fix-critique src/api/client.ts:83 — retry resends a body already read
+## Pass 3 — <date> — head 7c8d9e0 · base e4f5a6b · delta — changes requested · next: full
+- R3 minor bug fix-now fix-critique src/api/client.ts:114 — text body kept, its status code dropped — open
+- R9 major bug fix-critique src/api/client.ts:83 — retry resends a body already read — open
 ```
 
 Finding ids `R<n>` never change between passes. A `minor` or `nit` worth
 fixing before the merge carries `fix-now` after its class (step 8). Status is
 one of `open`, `fixed`, `deferred (<techdebt file, section>)`,
 `deferred (accepted: <reason>)`, `false-positive (<mechanism>)`, `disputed`.
-Only `Trajectory` and `Open` are read by default; pass sections are appended,
-never rewritten. `commit` adds a `## Fix round` line after a round of fixes,
-for `handoff` and step 7; it is no pass and changes no status. A last pass
+Only `Trajectory` and `Open` are read by default, and the last pass section
+when step 8 needs its tags; pass sections are appended, never rewritten.
+`commit` adds a `## Fix round` line after a round of fixes, for `handoff` and step 7; it is no pass and changes no status. A last pass
 header's `next: full` (step 8) is read by `review_target.py`.
 
 ## Scope control
@@ -133,7 +134,9 @@ header's `next: full` (step 8) is read by `review_target.py`.
 7. **Reconcile with the ledger.** Now read it, with any `## Fix round` after
    the last pass. An `Open` id is `fixed` when its defect is gone at its
    anchor and angles B and C over the fix's lines find nothing: a round's
-   `closes` says where to look and proves nothing. An id
+   `closes` says where to look and proves nothing. When they find
+   something, the id stays `open`, tagged `fix-critique`, its line naming
+   what they found at that severity — no new id. An id
    still `open` with its defect in place stays `open`, and one `disputed`
    stays `disputed`, both listed and counted in the report's table, which
    the verdict comes from; a techdebt place keeps its status. One a round names
@@ -184,7 +187,9 @@ header's `next: full` (step 8) is read by `review_target.py`.
    AGENTS.md or a skill only when the rule cannot be checked. **Stop and ask** what a further pass should add
    when this is pass 3+ with no new commits, or when findings grew while the
    delta is small. `escalated` plus `fix-critique` over half the findings
-   but `nit`, two passes running → the pass header ends `· next: full`, and
+   but `nit`, two passes running — the last pass section's lines carry their
+   tags (step 9) — on a verdict short of ready → the pass header ends
+   `· next: full`, and
    one report line says the next pass reads the whole target.
    A ready verdict with `fix-now` ids open, or techdebt rows still to write,
    offers one fix round on them first, a pass over that round's delta alone
@@ -195,9 +200,12 @@ header's `next: full` (step 8) is read by `review_target.py`.
 
 9. **Append the pass to the ledger** — without asking; it is gitignored and
    holds only the review's own memory. Write the statuses of step 7 and those
-   the owner stated, as lines of the new pass; an id leaves `Open` once it is
-   not `open`, not `disputed` and not a techdebt place without its row: those
-   stay there with their status.
+   the owner stated, as lines of the new pass, each with its tag of step 7,
+   when it has one, after its class and any `fix-now`; an id leaves `Open`
+   once it is not `open`, not `disputed` and not a techdebt place without
+   its row: those stay there with their status, each `Open` line rewritten
+   to its line of this pass — severity, tags and text, so a `fix-critique`
+   id names what the critique found.
 
 10. **Post to the PR** only for a PR target, only after printing, only on an
     explicit yes: `gh pr comment <n> --body-file <tmp outside the repo>`.
