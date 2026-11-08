@@ -118,8 +118,9 @@ the diff says otherwise, pick the topic from the diff and say so in one line.
    `## Fix round — <date> — head <short sha> · closes <ids> · left <ids>`:
    `left` holds the ids the round took and could not close, and `left` or
    `closes` goes when it has no ids. Both come from `fix`'s report in this
-   session; without one, ask. A later round that amends the fix commit adds its
-   own line. No
+   session; without one, `closes` holds the open ids whose anchors the commit
+   answers, this command's reply names them, and nobody is asked. A later round that
+   amends the fix commit adds its own line. No
    status changes here: that is the next review's, in its step 7. An entered
    session leaves to write the line, then enters again
    (`${CLAUDE_PLUGIN_ROOT}/reference/commands.md`). Then, after every commit, run
