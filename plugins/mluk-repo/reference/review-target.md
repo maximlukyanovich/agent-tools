@@ -14,7 +14,9 @@ python3 "${CLAUDE_PLUGIN_ROOT}/scripts/review_target.py" --ledger <file> \
   `## Pass` header, else the last `P<n> <sha>` of `Trajectory:`.
 - **Tree** — the tree under review, for `git -C`; the current directory by
   default. **Head** — `HEAD` of that tree unless given.
-- **`--full`** ignores the ledger; **`--range`** outranks both.
+- **`--full`** ignores the ledger; **`--range`** outranks both. A last
+  `## Pass` header ending `· next: full` (`commands/review.md`, step 8)
+  makes the next pass whole, once there are commits after it.
 
 ## Output
 
@@ -26,6 +28,7 @@ target: delta · git diff e4f5a6b..9f8e7d6 — the last head is an ancestor of H
 target: rewritten · git diff e4f5a6b 9f8e7d6 · replaced a1b2c3d e4f5a6b — the last head is not an ancestor of HEAD
 target: range · git diff a1b2c3d..9f8e7d6 — explicit range
 target: whole — no ledger
+target: whole — the last pass asked for full
 ```
 
 - `none` — nothing new since the last pass.
@@ -36,8 +39,9 @@ target: whole — no ledger
   resolvable; `replaced` lists the old commits the new history no longer
   holds, for the pass header.
 - `whole` — the command's own whole target, the branch against its base;
-  the reason is `no ledger`, `the ledger has no pass`, `full`, or
-  `the last head <sha> is not in the repository`.
+  the reason is `no ledger`, `the ledger has no pass`, `full`,
+  `the last pass asked for full` — which outranks `rewritten` but not
+  `none` — or `the last head <sha> is not in the repository`.
 
 Exit 2, with the reason on stderr, when the head or the range does not
 resolve, a range is not `<a>..<b>`, or the ledger is a directory.
