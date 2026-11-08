@@ -24,3 +24,12 @@ file. A rule changed there changes its reason here.
 - **A ready range with old `missed` growth closes, not with another full
   pass.** On a large range a full pass finds a fresh batch of old nits every
   time.
+- **Three angles of reading, on every pass.** Lenses alone let a delta pass
+  check that a fix was done as asked and never look for what it broke.
+  Observed on a live project: two `major` consequences of fixes under a ready
+  verdict. Angles B and C over a fix's lines are what find them.
+- **`next: full` is read by the script, not left to prose.** A "stop and ask"
+  on `escalated` plus `fix-critique` left the next target to whoever read the
+  report; a marker in the pass header gives every session the same target,
+  and `handoff` prints it. Two passes running, `nit` aside, so that one noisy
+  pass does not throw the delta away.

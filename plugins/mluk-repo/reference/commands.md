@@ -132,6 +132,10 @@ after a review fix that had passed its targeted checks.
   Any other failure keeps it red. A dev server or stack the session started
   is stopped before a test run wider than a few files; one the owner runs is
   named in the report.
+- **Red output is read whole.** The exit code is read first — a pipe into
+  `tail` reports the exit code of `tail`, without `pipefail`. `head` and `tail`
+  trim only a green run; a red one is read whole, or from its end back to the
+  cause. A trimmed output proves neither green nor a finding.
 
 ## Waiting for checks
 
