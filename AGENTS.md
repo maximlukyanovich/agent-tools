@@ -135,7 +135,8 @@ naming. This file holds only the rules for working on the repository itself.
 ## 3. Checks before a pull request
 
 Two workflows gate every pull request and `main`. `Check` runs
-`scripts/check.py`; run it locally before pushing, after `git fetch` —
+`scripts/check.py`, then the test of `scripts/text_moves.py`; run the gate
+locally before pushing, after `git fetch` —
 `python3 scripts/check.py`. It compares versions against `origin/main`, or the
 `--base` you pass, and stops when that ref is missing. It checks:
 
@@ -184,12 +185,18 @@ a pull request, its author checks by hand:
   anywhere inside;
 - the pull request names the growth in bytes of every plugin text it
   changes; a notable growth is explained in its body or cut;
+- a pull request that removes text from a plugin — a move, a split, a rewrite
+  — attaches the output of `python3 scripts/text_moves.py` (`--base` as for
+  the gate): the removed sentences that no tracked `*.md` holds whole any
+  more, each with its closest rewrite when one is similar. It warns and never
+  fails, since a removal can be the point; the body says which lines are
+  rewritten and which are dropped on purpose;
 - the pull request names its review: when the branch is ready, the agent says
   whether it needs a review before the merge and which kind — the built-in
   `/code-review <level>`, an unanchored check by a fresh agent (for a text
-  move, paragraph by paragraph against `main`), or none — with the block to
-  paste in a fresh session; after a fix commit, the same for its delta, and
-  the body names the review that ran and what it changed;
+  move, the list of `scripts/text_moves.py` against the new text), or none —
+  with the block to paste in a fresh session; after a fix commit, the same for
+  its delta, and the body names the review that ran and what it changed;
 - the changed command or skill was run once, in a real repository, after
   `claude plugin update` (or via `--plugin-dir`), and did what its text says.
 
@@ -211,7 +218,8 @@ plugins/<name>/
   README.md                       for people, links to the skill
 scripts/check.py                  the pull-request gate, run by CI
 scripts/release_notes.py          a release's notes: plugin versions, action needed
-.github/workflows/check.yml       runs the gate
+scripts/text_moves.py             what a branch removed from plugin texts and lost
+.github/workflows/check.yml       runs the gate and the test of text_moves.py
 .github/workflows/hooks.yml       runs the plugins' tests — hooks, `srv`, the start template, the scripts
 ```
 
