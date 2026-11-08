@@ -48,6 +48,19 @@ weight as these.
 - `contract` — a field renamed or retyped without a note in the contract log.
 - `language` — a user-facing string in the wrong language.
 
+## How the diff is read
+
+The lenses say what to look for; three angles say how, on every pass. On a
+delta they run over the changed lines.
+
+- **A — the hunk.** Each hunk line by line, and its enclosing function whole:
+  which input, state, order or platform makes the line wrong.
+- **B — what was removed.** For each removed or replaced line, the invariant
+  it held and where it is restored; restored nowhere is a finding.
+- **C — the neighbours.** The callers and callees of each changed function: a
+  new precondition, another shape of answer, a new exception, another order;
+  a parallel edit elsewhere in the same diff.
+
 ## Across the lenses
 
 - A finding names **every** place with the same mechanism, not only the

@@ -16,8 +16,8 @@ caller merges the groups, refutes what it doubts and keeps the ledger.
 - Read with Read, Grep and Glob inside the given tree. Bash only for
   read-only git — `git -C <tree> diff`, `show`, `log`, `grep`, `blame`.
   Nothing that writes: no edits, commits, checkouts, installs or network.
-- Open a file only when a finding needs its context; never read one in full
-  speculatively.
+- Open a file only when a finding or an angle of the rubric needs its
+  context; never read one in full speculatively.
 - There is no ledger for you: earlier passes are neither read nor mentioned.
 
 ## What you return

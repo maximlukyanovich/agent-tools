@@ -50,17 +50,17 @@ Trajectory: P1 a1b2c3d 0/2/5/5 changes · P2 e4f5a6b 0/0/1/2 ready
 - R3 minor bug fix-now src/api/client.ts:114 — error body lost when it is not JSON
 ## Pass 2 — <date> — head e4f5a6b · base a1b2c3d · delta — ready to merge
 - R9 minor fix-critique src/api/client.ts:83 — helper duplicated in connect.ts — open
+## Pass 3 — <date> — head 7c8d9e0 · delta — changes requested · next: full
 ```
 
 Finding ids `R<n>` never change between passes. A `minor` or `nit` worth
 fixing before the merge carries `fix-now` after its class (step 8). Status is
 one of `open`, `fixed`, `deferred (<techdebt file, section>)`,
 `deferred (accepted: <reason>)`, `false-positive (<mechanism>)`, `disputed`.
-Every other `minor` and `nit` gets one of the two `deferred` places in the
-pass that raises it, and none is `open` at the merge (step 8).
 Only `Trajectory` and `Open` are read by default; pass sections are appended,
 never rewritten. `commit` adds a `## Fix round` line after a round of fixes,
-for `handoff` and step 7; it is no pass and changes no status.
+for `handoff` and step 7; it is no pass and changes no status. A last pass
+header's `next: full` (step 8) is read by `review_target.py`.
 
 ## Scope control
 
@@ -76,8 +76,8 @@ for `handoff` and step 7; it is no pass and changes no status.
   model: deduplicate, check the `cross-slice` lines, catch cross-slice
   problems (a field changed here, its test asserting the old shape there),
   normalise severities.
-- Never read a file in full speculatively; open one only when a finding needs
-  its context.
+- Never read a file in full speculatively; open one only when a finding or
+  an angle of the rubric needs its context.
 
 ## Steps
 
@@ -118,9 +118,9 @@ for `handoff` and step 7; it is no pass and changes no status.
    print this review command as a block for a fresh session.
 
 5. **Run the rubric, blind.** Do not open the ledger's findings yet. The rubric is
-   `${CLAUDE_PLUGIN_ROOT}/reference/review-rubric.md` — the general lenses
-   and the checks across them — with the project lenses from `## Review` at
-   the same weight.
+   `${CLAUDE_PLUGIN_ROOT}/reference/review-rubric.md` — the lenses, the
+   angles of reading and the checks across them — with the project lenses
+   from `## Review` at the same weight.
 
 6. **Try to refute each `blocker` / `major`** in the code before keeping it — a
    guard elsewhere, a caller that never passes the bad input. What survives is
@@ -131,8 +131,9 @@ for `handoff` and step 7; it is no pass and changes no status.
    without it.
 
 7. **Reconcile with the ledger.** Now read it, with any `## Fix round` after
-   the last pass. An `Open` id whose defect is gone at its anchor becomes
-   `fixed`: a round's `closes` says where to look and proves nothing. An id
+   the last pass. An `Open` id is `fixed` when its defect is gone at its
+   anchor and angles B and C over the fix's lines find nothing: a round's
+   `closes` says where to look and proves nothing. An id
    still `open` with its defect in place stays `open`, and one `disputed`
    stays `disputed`, both listed and counted in the report's table, which
    the verdict comes from; a techdebt place keeps its status. One a round names
@@ -145,7 +146,7 @@ for `handoff` and step 7; it is no pass and changes no status.
    for). A recorded false positive is not raised again without a new mechanism.
    On a delta pass, a `missed` finding in lines the delta does not change is
    written out only at `major` and above; the rest are counted, not listed —
-   a line in the report's opening block and in the ledger's pass. The first pass and `full` list everything.
+   a line in the report's opening block and in the ledger's pass. A `whole` target lists everything.
 
 8. **Assemble the report.** It always opens with the same block, on every
    pass, zeros included — the owner compares passes by it (labels in the
@@ -181,8 +182,10 @@ for `handoff` and step 7; it is no pass and changes no status.
    project's repository that would prevent it during the work (kickoff step
    8). Propose a check first — a lint rule, a test, a hook — and a line in
    AGENTS.md or a skill only when the rule cannot be checked. **Stop and ask** what a further pass should add
-   when this is pass 3+ with no new commits, when findings grew while the delta
-   is small, or when `escalated` plus `fix-critique` are over half the findings.
+   when this is pass 3+ with no new commits, or when findings grew while the
+   delta is small. `escalated` plus `fix-critique` over half the findings
+   but `nit`, two passes running → the pass header ends `· next: full`, and
+   one report line says the next pass reads the whole target.
    A ready verdict with `fix-now` ids open, or techdebt rows still to write,
    offers one fix round on them first, a pass over that round's delta alone
    next, and the promote last; without them, the promote. The promote goes
