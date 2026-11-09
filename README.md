@@ -7,13 +7,15 @@ procedure — and end every step with the next one, ready to paste.
   as a block to copy, and says whether it belongs in a fresh session.
 - **Sources, not memory.** The agent works from the code, the spec, the design
   and the docs; what they leave open becomes a question to you.
-- **Reviews that prove their findings and know when to stop.** They check the
-  UI against the design, not only the code itself; zero findings is a valid
-  result.
+- **Reviews that back their findings with evidence and know when to stop.**
+  They check the UI against the design, not only the code itself; zero
+  findings is a valid result.
 - **Decisions stay yours.** What needs your attention is brought to you, not
   settled quietly; push, PR and merge wait for your yes.
-- **Sessions sized to the change.** Each phase starts fresh from files, not
-  from a long transcript; a small change runs whole in one.
+- **Sessions sized to the change.** Each phase starts fresh from the files: a
+  long transcript is re-read on every call and leaves the agent working from
+  its own summary — a fix round in an old session spent three quarters of its
+  price on that. A small change runs whole in one.
 
 For a developer on a GitHub project without an issue tracker. A team on a
 tracker, or on GitLab, fits
@@ -60,8 +62,8 @@ flowchart TB
   L -->|no progress| A["stop and ask you"]
 ```
 
-- **A serious finding is proved.** A `blocker` or `major` names the line and the
-  scenario, and the reviewer tries to refute it in the code before reporting.
+- **A serious finding comes with evidence.** A `blocker` or `major` names the
+  line and the scenario, and the reviewer tries to refute it in the code before reporting.
 - **A finding keeps its id.** A recorded false positive is not raised
   again without a new mechanism; an incomplete fix stays the same finding, not a new one.
 - **The design is a source, too.** UI in the diff is checked against the
@@ -72,8 +74,8 @@ flowchart TB
   that makes no progress stops and asks.
 
 The built-in `/code-review` of Claude Code 2.1.319 asks for a minimum number
-of findings. A review here is a check, not a quota: zero findings is a valid
-result.
+of findings and does not verify its candidates. A review here is a check, not
+a quota: zero findings is a valid result.
 
 ## Measured
 
@@ -81,8 +83,8 @@ On live projects, against the built-in `/code-review` at `high` — 14 branches,
 about 40 passes, 2026-11-08:
 
 - **Full pass.** On one project's 8 branches the built-in review found no
-  `major` that ours missed, and ours found 7 that it missed; on the other's 6,
-  3 to 3.
+  `major` that ours missed, and ours found 7 that it missed; on the other
+  project's 6, each found 3 that the other missed.
 - **False findings.** One in about 40 passes, dropped before the report;
   the built-in raised 9 on one project and one or two per pass on half of
   the other's.
