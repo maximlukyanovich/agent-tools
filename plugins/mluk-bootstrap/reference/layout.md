@@ -96,8 +96,8 @@ private marketplace repository needs read access for every collaborator.
 A project that pins a release adds `"ref": "<tag>"` to `source`, beside
 `repo`: every clone stays on that tag, and moving to the next one is a
 settings change that the next session start applies — on a machine whose
-user settings do not declare `mluk-agent-tools` too, since a declaration
-there wins over the project's.
+user settings do not declare `mluk-agent-tools` too, since Claude Code refuses
+a project source that differs from theirs.
 
 ## Two traps that cost a rewrite
 

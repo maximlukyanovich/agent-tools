@@ -11,7 +11,7 @@ The protocol is the skill [`server-ops`](skills/server-ops/SKILL.md); this file 
 claude plugin install mluk-ops --marketplace maximlukyanovich/agent-tools --scope project
 ```
 
-Other scopes and updating: [Quick start](../../README.md#quick-start).
+Other scopes and updating: [`docs/updates.md`](../../docs/updates.md).
 
 ## What is in it
 
@@ -23,7 +23,7 @@ Other scopes and updating: [Quick start](../../README.md#quick-start).
 | `commands/help` | `/mluk-ops:help` — the parts, the classes, and the servers configured on this machine; never connects |
 
 The checks: `python3 hooks/test_guard.py` for the hook and `python3 lib/test_srv.py` for `srv`, against
-a fake `ssh` (run after every edit). CI runs both on every push — `.github/workflows/hooks.yml`.
+a fake `ssh` (run after every edit). CI runs both on every push, on Python 3.12 — `.github/workflows/hooks.yml`.
 
 ## Setup on a machine
 

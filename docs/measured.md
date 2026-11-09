@@ -18,10 +18,14 @@ added as its own section, or a dated line, rather than by rewriting an old one.
 - **False findings.** `review` raised one in about 40 passes, dropped before
   the report; the built-in, 9 on one project and one or two per pass in half
   of the other's.
-- **Delta pass — the weak side.** Over 6 repeat passes on fix deltas,
+- **Delta pass — the weak side.** `review` reads the fix round's delta and
+  checks that each fix closed its finding; the built-in re-reads the whole
+  branch each time, older code included. Over 6 repeat passes on fix deltas,
   `review` found nothing of its own and the built-in found 37, two of them
   `major` consequences of fixes that `review` had called ready. The rubric now
   reads every diff by three angles, one of them what a removed line held.
+  2026-11-09: the passes changed on 2026-11-08, after these six; the delta
+  pass has not been measured again.
 - **Cost.** A full pass of `review` costs about three built-in runs — its
   price includes the gate, the refutation and the ledger; per confirmed
   finding the two are about even.

@@ -8,7 +8,7 @@ For projects that are built against a design kit. Enable it only there.
 claude plugin install mluk-design --marketplace maximlukyanovich/agent-tools --scope project
 ```
 
-Other scopes and updating: [Quick start](../../README.md#quick-start).
+Other scopes and updating: [`docs/updates.md`](../../docs/updates.md).
 
 ## Skill
 

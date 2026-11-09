@@ -9,7 +9,7 @@ project that deploys; working on a live server additionally needs `mluk-ops`.
 claude plugin install mluk-deploy --marketplace maximlukyanovich/agent-tools --scope project
 ```
 
-Other scopes and updating: [Quick start](../../README.md#quick-start).
+Other scopes and updating: [`docs/updates.md`](../../docs/updates.md).
 
 ## Skills
 
