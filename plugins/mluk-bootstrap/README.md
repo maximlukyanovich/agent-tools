@@ -10,7 +10,10 @@ follows a recipe per stack and asks when there is none.
 claude plugin install mluk-bootstrap --marketplace maximlukyanovich/agent-tools --scope project
 ```
 
-Other scopes and updating: [Quick start](../../README.md#quick-start).
+`--marketplace` (Claude Code 2.1.292 or later) adds the marketplace when it
+is not there yet.
+
+Other scopes and updating: [`docs/updates.md`](../../docs/updates.md).
 
 ## Commands
 

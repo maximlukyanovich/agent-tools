@@ -1,63 +1,121 @@
 # agent-tools
 
-Claude Code plugins for working on a software project with an agent: setting up
-a repository's agent harness, the everyday git workflow, frontend conventions,
-deployment, safe server access and business Russian copy. One author's toolkit,
-grown on real projects and open to anyone — the rules are opinionated, and each
-project tunes them through its own profile.
+Claude Code plugins that keep the agent on your project's sources and a fixed
+procedure — and end every step with the next one, ready to paste.
 
-With `mluk-repo`, a task runs from the plan to the merge as a chain of commands,
-each ending with the next one ready to paste: the developer picks and approves,
-the agent does the rest — plan, code, checks, review, commit, pull request and
-merge.
+- **The next prompt, ready.** Every workflow command ends with the next step
+  as a block to copy, and says whether it belongs in a fresh session.
+- **Sources, not memory.** The agent works from the code, the spec, the design
+  and the docs; what they leave open becomes a question to you.
+- **Reviews that prove their findings and know when to stop.** They check the
+  UI against the design, not only the code itself; zero findings is a valid
+  result.
+- **Decisions stay yours.** What needs your attention is brought to you, not
+  settled quietly; push, PR and merge wait for your yes.
+- **Sessions sized to the change.** Each phase starts fresh from files, not
+  from a long transcript; a small change runs whole in one.
 
-One repository: it is both the marketplace (`mluk-agent-tools`) and the home of
-the plugins.
+For a developer on a GitHub project without an issue tracker. A team on a
+tracker, or on GitLab, fits
+[work-agent-tools](https://github.com/maximlukyanovich/work-agent-tools).
 
-Why it exists: the method must not live as copies in every repository. How a
-task is started, how a commit and a pull request are written, how a review is
-run, how Russian client copy is phrased — these are the same in every project;
-only the branch chain, the validate command and the domain differ, and those
-stay in the project.
+## How a task runs
+
+```mermaid
+flowchart LR
+  T["/mluk-repo:task<br/>plan and questions"] -->|your yes| W["the work, slice by slice<br/>/mluk-repo:commit"]
+  W --> R["/mluk-repo:review<br/>fresh session"]
+  R -->|findings| F["/mluk-repo:fix"]
+  F --> R
+  R -->|ready| P["/mluk-repo:promote<br/>PR, CI, merge"]
+```
+
+Each arrow is a block the agent prints at the end of a command — for example,
+after the last commit of a task:
+
+```
+/mluk-repo:review feat/password-reset
+```
+
+The block points at the plan, the branch and the review ledger instead of
+retelling them, so the next session reads the sources again rather than a
+summary of the last one. Your part comes down to choosing and approving the
+next prompt; `/mluk-repo:next` says what to take when nothing is in progress.
+
+A task starts by reading before it plans: the code, the project profile, the
+spec and the design, the library's documentation instead of the model's memory
+of it, and what the project already has that the task can reuse. What these do
+not answer is asked, not assumed, and no code is written before you approve
+the plan. A small change — by its size and risk — skips the extra sessions.
+
+## Why the review is different
+
+```mermaid
+flowchart TB
+  B["blind read of the diff"] --> E["each finding: file:line, evidence,<br/>then an attempt to refute it"]
+  E --> L["ledger: one id per finding<br/>across passes"]
+  L -->|open findings| X["fix round"]
+  X -->|"the next pass reads<br/>the fixes' delta"| B
+  L -->|ready| M["merge"]
+  L -->|no progress| A["stop and ask you"]
+```
+
+- **A serious finding is proved.** A `blocker` or `major` names the line and the
+  scenario, and the reviewer tries to refute it in the code before reporting.
+- **A finding keeps its id.** A recorded false positive is not raised
+  again without a new mechanism; an incomplete fix stays the same finding, not a new one.
+- **The design is a source, too.** UI in the diff is checked against the
+  project's design source, not only against the code around it.
+- **Repeat passes read what changed** — the fixes and what they removed —
+  instead of the whole branch again.
+- **It converges.** `minor` and `nit` get a decision, not another pass; a pass
+  that makes no progress stops and asks.
+
+The built-in `/code-review` of Claude Code 2.1.319 asks for a minimum number
+of findings. A review here is a check, not a quota: zero findings is a valid
+result.
+
+## Measured
+
+On live projects, against the built-in `/code-review` at `high` — 14 branches,
+about 40 passes, 2026-11-08:
+
+- **Full pass.** On one project's 8 branches the built-in review found no
+  `major` that ours missed, and ours found 7 that it missed; on the other's 6,
+  3 to 3.
+- **False findings.** One in about 40 passes, dropped before the report;
+  the built-in raised 9 on one project and one or two per pass on half of
+  the other's.
+- **Price.** A full pass costs about three built-in runs and finds about
+  three times as many confirmed findings: per confirmed finding the two are
+  about even.
+- **Sessions.** On a solo project since 2026-10-01, 86 % of 149 sessions over
+  36 merged tasks started with a command or a block the agent had printed.
+
+Conditions, the repeat passes on fixes and the cost of a fix round in an old
+session: [`docs/measured.md`](docs/measured.md).
 
 ## Does it fit your project
 
-Each plugin is enabled on its own, so a project takes only what fits. Some work
-anywhere; the rest follow the stack they were grown on.
+Each plugin is enabled on its own, so a project takes only what fits.
 
-**Any project:**
+| Plugin | For | What it does |
+| --- | --- | --- |
+| [`mluk-bootstrap`](plugins/mluk-bootstrap/README.md) | any repository | Creates a project or sets up and audits its agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. |
+| [`mluk-repo`](plugins/mluk-repo/README.md) | GitHub, no tracker | The workflow above: `task`, `commit`, `review`, `fix`, `promote`, `handoff`, `next` and more. |
+| [`mluk-ru`](plugins/mluk-ru/README.md) | Russian texts for people | Client-facing, legal and documentation copy, and `review` for a text. |
+| [`mluk-ops`](plugins/mluk-ops/README.md) | an agent on a live server | `srv` over `ssh` with an audit log and a guard hook. |
+| [`mluk-fe`](plugins/mluk-fe/README.md) | React / Next.js, Tailwind, next-intl | UI and component conventions; hooks check locales, translation keys and titles. |
+| [`mluk-design`](plugins/mluk-design/README.md) | a site built against a design kit | How a kit is ported. |
+| [`mluk-deploy`](plugins/mluk-deploy/README.md) | Vercel, or Docker Compose on a VPS | Deployment, and a domain moving to Cloudflare. |
 
-- `mluk-bootstrap` — sets up and audits the agent harness of any repository:
-  frontend, backend, monorepo, library, CLI.
-- `mluk-ru` — client-facing, legal and documentation copy in Russian.
-- `mluk-ops` — safe agent access to any server reached over `ssh`.
-
-**GitHub without an issue tracker:** `mluk-repo`, the everyday workflow, opens
-pull requests with `gh` and starts a task from a description in chat, not from
-a ticket. A different forge (GitLab, Bitbucket) or a tracker-driven process is
-not covered; the plugins above still apply. For GitLab or Jira there is
-[work-agent-tools](https://github.com/maximlukyanovich/work-agent-tools), which
-writes the workflow commands into the project, shaped to its forge and tracker.
-
-**A particular stack:**
-
-- `mluk-fe` — a React / Next.js front with Tailwind and next-intl; a hook whose
-  files are missing stays silent.
-- `mluk-design` — a site built against a design kit.
-- `mluk-deploy` — a Next.js front on Vercel, a backend in Docker Compose on a
-  VPS behind Caddy and GitHub Actions, whatever the backend is written in. Its
-  `domain-dns` skill fits any domain moving to Cloudflare.
-
-## Requirements
-
-- Claude Code.
-- `git`, and `gh` signed in — for `mluk-repo`.
-- Node — for the `mluk-fe` hooks; CI tests them on Node 24.
-- `python3` in `PATH` — Linux, macOS or WSL — for the `mluk-repo` scripts and
-  `mluk-ops`, with `ssh` for the latter; CI tests on Python 3.12. Without it
-  the `mluk-ops` guard does not run: [`mluk-ops`](plugins/mluk-ops/README.md).
+The stack plugins mostly need no command: their skills load when the work
+reaches them, and their hooks check what the agent writes.
 
 ## Quick start
+
+You need Claude Code, `git`, and `gh` signed in; `python3` for the `mluk-repo`
+scripts and `mluk-ops`, Node for the `mluk-fe` hooks.
 
 Once per machine — it adds the source and loads nothing into sessions:
 
@@ -65,228 +123,38 @@ Once per machine — it adds the source and loads nothing into sessions:
 claude plugin marketplace add maximlukyanovich/agent-tools
 ```
 
-The add declares the marketplace in your user settings — skip it on a machine
-that works in a project pinned to a release, see
-[Pinning a release](#pinning-a-release).
-
-In an existing repository — install, then run `setup`:
+In an existing repository:
 
 ```bash
 claude plugin install mluk-bootstrap@mluk-agent-tools --scope project
 claude "/mluk-bootstrap:setup"
 ```
 
-`mluk-repo` comes with it as a dependency. `--scope local` keeps the record in
-the gitignored `.claude/settings.local.json`, for a project whose rules keep AI
-settings out of git. `--scope user` works too, at a price: the plugins'
-descriptions join every session on the machine, in unrelated projects as well.
-
-From scratch, in an empty folder — `--marketplace` adds the marketplace when it
-is not there yet:
+`setup` looks at the code, asks only what it cannot answer, shows a plan and,
+on your yes, writes the harness and enables the plugins the project needs;
+`mluk-repo` comes with it. In an empty folder, `/mluk-bootstrap:new` creates
+the project first:
 
 ```bash
 mkdir my-app && cd my-app
 claude plugin install mluk-bootstrap --marketplace maximlukyanovich/agent-tools --scope project && claude "/mluk-bootstrap:new"
 ```
 
-`new` asks the stack, runs its generator, pins the environment, and makes the
-first commit and the remote on your yes; `setup` follows in a fresh session.
+Every plugin introduces itself, read-only: `/mluk-repo:help`,
+`/mluk-bootstrap:help`, `/mluk-ru:help en`.
 
-`setup` looks at the code,
-asks only what the code cannot answer, shows a plan and, once you approve it,
-writes the harness — `AGENTS.md`, the project profile, and a
-`.claude/settings.json` that enables the plugins the project needs, so every
-clone gets the same tools:
-
-```json
-"extraKnownMarketplaces": {
-  "mluk-agent-tools": {
-    "source": { "source": "github", "repo": "maximlukyanovich/agent-tools" },
-    "autoUpdate": true
-  }
-},
-"enabledPlugins": { "mluk-repo@mluk-agent-tools": true }
-```
-
-Committed settings turn the plugins on in every clone but download nothing, so
-`setup` also writes the project's start command, `/my-start`: a collaborator trusts the folder,
-runs it, and it installs what is missing before the overview.
-
-Which plugins to enable:
-
-| Project | Plugins |
-| --- | --- |
-| any repository | `mluk-bootstrap`, `mluk-repo` |
-| a React / Next.js front | + `mluk-fe` |
-| built against a design kit | + `mluk-design` |
-| deployed on Vercel or a VPS | + `mluk-deploy` |
-| the agent works on a live server | + `mluk-ops` |
-| Russian texts for people | + `mluk-ru` |
-
-How a new version arrives is in [Versions and updates](#versions-and-updates).
-
-## Where to start
-
-Every plugin can introduce itself — read-only, safe to run at any time:
-
-```bash
-/mluk-bootstrap:help     what it does to a repository's harness
-/mluk-repo:help          the workflow commands and the profile they read
-/mluk-ru:help  en        what it checks in a Russian text, in English
-```
-
-Language follows the conversation; pass a language code to override.
-
-## Everyday use
-
-With `mluk-repo`, a task runs in phases, each in a fresh session — a small
-change runs whole in one — and every
-command ends with the next step as a block ready to copy:
-
-```bash
-/mluk-repo:next                              what to take next: roadmap, notes, issues, open PRs
-/mluk-repo:task Add a password reset form    the plan: branch, questions, slices; no code before your yes
-/mluk-repo:commit                            stage, check what changed, message by the preset; never pushes
-/mluk-repo:review                            findings by severity, each with file:line
-/mluk-repo:fix                               one round on the open findings, then the commit on your yes
-/mluk-repo:promote                           push, PR and merge after green CI, each on your yes; then the environment's check
-```
-
-The other plugins mostly need no command: their skills load when the work
-reaches them — "build the settings screen" brings `web-ui-conventions` in a
-front with `mluk-fe` — and their hooks check what the agent writes. A client
-letter goes through `/mluk-ru:review letter.md`.
-
-## Plugins
-
-| Plugin | Kind | What it does |
-| --- | --- | --- |
-| [`mluk-bootstrap`](plugins/mluk-bootstrap/README.md) | generator + audit | Create a project in an empty folder; initialise or audit a repository's agent harness: `AGENTS.md`, the project profile, skills, hooks, docs. Carries the `layers` model. |
-| [`mluk-repo`](plugins/mluk-repo/README.md) | library | The repository workflow: `commit`, `create-pr`, `promote`, `review`, `fix`, `sync`, `start`, `next`, `task`, `update-docs`, `handoff`, and the `kickoff` method — how a task is started. Reads `.claude/project-profile.md`. |
-| [`mluk-design`](plugins/mluk-design/README.md) | library | `design-port` — how a design kit is ported. Enabled where a kit exists. |
-| [`mluk-fe`](plugins/mluk-fe/README.md) | library + hooks | Frontend conventions for React / Next.js: `web-ui-conventions`, `component-discipline`, `yandex-browser`, and PostToolUse hooks for locale parity, translation keys and metadata titles. Reads the profile's `## Frontend`. Enabled in a web front. |
-| [`mluk-deploy`](plugins/mluk-deploy/README.md) | library | How projects are deployed: `deploy-vps`, `deploy-vercel`, `domain-dns`. Skills and a `help` command. |
-| [`mluk-ops`](plugins/mluk-ops/README.md) | library + hook | Safe agent access to servers: `srv` with an audit log, a guard hook, the `server-ops` protocol. Enabled only where the agent works on a server. |
-| [`mluk-ru`](plugins/mluk-ru/README.md) | library | Business Russian: the principles of client-facing and legal copy, the self-check, the checklist, and `review` for a text. |
-
-A plugin is never renamed. When one is replaced, its catalogue entry in
-`/plugin` starts with **Replaced by `<new>`**: the old plugin keeps working,
-frozen at its last version, and the release that marked it says under Action
-needed how to move — turn the new one on and the old one off, and rename its
-command prefix in your files. A later release removes the old plugin; a
-project still on it then finds the new one enabled in its place and runs
-`claude plugin install <new>@mluk-agent-tools` once.
-
-## Versions and updates
-
-Every plugin carries a `version` in its `plugin.json`, and `claude plugin list`
-shows the one you have. A major means your project must act, a minor brings a
-new rule, command or template section, a patch rewords or fixes; the rule is
-in [`AGENTS.md`](AGENTS.md) §1.
-
-An installed plugin is a copy in `~/.claude/plugins/cache/`, replaced only when
-the plugin's version changes. A project set up by `setup` declares the
-marketplace with `autoUpdate` and follows `main`: every raised version arrives
-up to ten minutes after an interactive session's first message, and
-`/reload-plugins` applies it to an open session. By hand:
-
-```bash
-claude plugin marketplace update mluk-agent-tools
-claude plugin update mluk-repo@mluk-agent-tools --scope project   # each installed plugin at its scope, then /reload-plugins
-```
-
-Updating delivers the method; it never edits a project — what `setup` wrote
-stays the project's, and `/mluk-bootstrap:audit` proposes the edits.
-`/mluk-repo:start` says when: the `Harness:` line of `.claude/COMMANDS.md`
-names the `mluk-bootstrap` version the harness last matched, and an
-installed version ahead of it is a `⚠`.
-
-### Releases
-
-Each merged batch is released: an annotated tag `vYYYY.MM.DD` on `main` — the
-merge's date, `.2` for a second batch that day — and a GitHub
-[release](https://github.com/maximlukyanovich/agent-tools/releases) whose notes
-list every plugin's version against the previous release, then what a project
-must do — a major, a removed plugin — then the merged pull requests. The date
-says which release you run; a plugin's version says whether you must act. A
-released tag is never moved.
-
-### Pinning a release
-
-A project that follows `main` gets every raised version as it lands. A team
-that moves between releases deliberately pins a tag instead — `ref` inside
-`source`, `autoUpdate` kept:
-
-```json
-"extraKnownMarketplaces": {
-  "mluk-agent-tools": {
-    "source": { "source": "github", "repo": "maximlukyanovich/agent-tools", "ref": "vYYYY.MM.DD" },
-    "autoUpdate": true
-  }
-}
-```
-
-The latest tag is the first line of
-`git ls-remote --tags --refs --sort=-v:refname https://github.com/maximlukyanovich/agent-tools 'v*'`.
-`setup` asks whether a project follows `main` or pins a release, and writes
-the latest tag itself.
-
-A pin holds on a machine under two conditions:
-
-- **The user settings do not declare the marketplace.** The once-per-machine
-  `claude plugin marketplace add` writes it into `~/.claude/settings.json`
-  without `ref`, and that declaration wins: a session in the pinned project
-  either registers no marketplace at all or installs the plugins from `main`.
-  Skip the add on a machine that works in a pinned project — trusting the
-  folder registers the marketplace from the project's settings — or delete the
-  `mluk-agent-tools` entry under `extraKnownMarketplaces` in
-  `~/.claude/settings.json`; a project set up by `setup` declares it in its own
-  settings.
-- **The plugins update in the project's own session.** The catalogue is one
-  clone per machine, and a session in another project fetches it from that
-  project's source. A session start in the pinned project fetches its tag
-  back, and `autoUpdate` then works from it; `claude plugin update` takes the
-  clone as the machine's last session left it, so after a session elsewhere it
-  moves the pinned project to that source.
-
-Moving to the next tag:
-
-1. A pull request in the project changes `ref`; its reviewer reads the
-   releases between the two tags.
-2. After the merge, each developer starts an interactive session at the
-   repository root: the session fetches the catalogue from the new tag.
-3. The plugins follow through `autoUpdate`, up to ten minutes after that
-   session's first message, and `/reload-plugins` applies them. To move at
-   once, run `claude plugin update <plugin>@mluk-agent-tools --scope <scope>`
-   for each installed plugin right after that start, before a session in
-   another project.
-4. When a release asks a project to act, `/mluk-bootstrap:audit` finds
-   what to change.
-
-Rolling back is the same move to an older tag; going back to `main` is
-removing `ref`. Two commands look right and do not do it:
-`claude plugin marketplace update` does not see a changed `ref` — only a
-session start does — and `claude plugin marketplace add` replaces the declared
-source, its `ref` included.
-
-## Measured
-
-How `review` compares with the built-in `/code-review`, and how the workflow
-plays out across sessions, measured on live projects:
-[`docs/measured.md`](docs/measured.md).
+A project that `setup` wrote to follow `main` receives new versions by
+itself; one pinned to a release moves when its `ref` does. Elsewhere, turn
+that on once: `/plugin` → **Marketplaces** → `mluk-agent-tools` → **Enable
+auto-update**. Scopes, updates, releases and pinning a project to one:
+[`docs/updates.md`](docs/updates.md).
 
 ## How it's built
 
 `mluk-bootstrap` generates: what `setup` writes becomes the project's own code.
 The rest are libraries: the procedure stays here, and the project contributes a
-profile, `.claude/project-profile.md`, that every command reads first. The
-model — generator versus library, what lives here and what in the project,
-precedence, command naming — is in [`docs/design.md`](docs/design.md).
+profile, `.claude/project-profile.md`, that every command reads first —
+[`docs/design.md`](docs/design.md).
 
-## Contributing
-
-Issues and pull requests are welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
-
-## License
-
+Issues and pull requests are welcome — [`CONTRIBUTING.md`](CONTRIBUTING.md).
 [MIT](LICENSE).

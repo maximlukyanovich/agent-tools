@@ -8,7 +8,9 @@ Frontend conventions for React / Next.js projects. Enable it in a web front; the
 claude plugin install mluk-fe --marketplace maximlukyanovich/agent-tools --scope project
 ```
 
-Other scopes and updating: [Quick start](../../README.md#quick-start).
+The hooks need Node; CI tests them on Node 24.
+
+Other scopes and updating: [`docs/updates.md`](../../docs/updates.md).
 
 ## What is in it
 

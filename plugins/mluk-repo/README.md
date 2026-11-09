@@ -9,7 +9,10 @@ procedure lives here, the project supplies `.claude/project-profile.md`.
 claude plugin install mluk-repo --marketplace maximlukyanovich/agent-tools --scope project
 ```
 
-Other scopes and updating: [Quick start](../../README.md#quick-start).
+The scripts need `python3` in `PATH` — Linux, macOS or WSL; CI tests them on
+Python 3.12.
+
+Other scopes and updating: [`docs/updates.md`](../../docs/updates.md).
 
 ## Commands
 
