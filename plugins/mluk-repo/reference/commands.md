@@ -131,7 +131,11 @@ after a review fix that had passed its targeted checks.
   the first failure has the parts and files after it run too, and they pass.
   Any other failure keeps it red. A dev server or stack the session started
   is stopped before a test run wider than a few files; one the owner runs is
-  named in the report.
+  named in the report. A run held by the machine's lock is waited for, in the
+  background or with a timeout that covers the wait. A run that stopped on a
+  busy machine, with an exit code of its own, is no result, green or red: it
+  is reported with the processes it named, and running it anyway is the
+  owner's call.
 - **Red output is read whole.** The exit code is read first — a pipe into
   `tail` reports the exit code of `tail`, without `pipefail`. `head` and `tail`
   trim only a green run; a red one is read whole, or from its end back to the
