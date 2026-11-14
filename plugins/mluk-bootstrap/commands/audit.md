@@ -65,9 +65,11 @@ The harness exists; the job is to find the gaps, not to rewrite it.
    Q3 asks it — and does a gate of several parts skip a part whose
    content is unchanged — and does every path a part excludes name its probe,
    by the checklist's "The gate is fast"
-   (`${CLAUDE_PLUGIN_ROOT}/reference/checklist.md`)? Does lint-staged run the formatter after the linter's
-   fixes? The wrong order leaves linter edits unformatted while the hook
-   passes, and the gate fails a commit later. Does GitHub's
+   (`${CLAUDE_PLUGIN_ROOT}/reference/checklist.md`)? Does a heavy local run
+   leave the machine usable, by its item there? Does lint-staged run the
+   formatter after the linter's fixes? The wrong order leaves linter edits
+   unformatted while the hook passes, and the gate fails a commit later.
+   Does GitHub's
    `delete_branch_on_merge` agree with the profile's `delete branch` — on
    with `platform`, off otherwise (`yes` reads as `merge`) — and is no branch
    of the chain but the last exposed to it, neither protected nor the
