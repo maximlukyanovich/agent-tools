@@ -1,6 +1,6 @@
 ---
 name: design-port
-description: How a design kit (a component library with markup + CSS, e.g. a Design System artifact) is ported into a codebase — reading the source at write time, wearing kit classes on a third-party primitive whose DOM already matches, the stretched-link recipe for cards that hold buttons, real data versus demo data, and what to do when the kit itself is wrong. Use when building or changing UI against a kit. Not for projects without a design source.
+description: How a design kit (a component library with markup + CSS, e.g. a Design System artifact) is ported into a codebase — reading the source at write time, wearing kit classes on a third-party primitive whose DOM already matches, the stretched-link recipe for cards that hold buttons, real data versus demo data, what to do when the kit itself is wrong, and writing a new element to the kit before the code. Use when building or changing UI against a kit. Not for projects without a design source.
 license: MIT
 metadata:
   author: Maxim Lukyanovich
@@ -78,13 +78,7 @@ and never copies the second from a demo.
    port with a comment naming the kit's flaw, tell the owner, and propose the fix
    for the kit in the same session. A visible deviation from the design still
    needs the owner's explicit agreement — one place, one decision, no precedent.
-   When the session can write to the design source, offer to apply the agreed
-   fix or deviation there yourself instead of only describing it — the owner
-   approves the exact list of files first. Before writing to an artifact,
-   read `${CLAUDE_PLUGIN_ROOT}/reference/artifact-sandbox.md`. Mechanical
-   changes (a fix, a decided deviation, folding an accepted proposal into the
-   canon, a decisions note) go this way; new visual design stays with the
-   designer.
+   The kit's side of it is "Writing to the kit" below.
 
 7. **Verify against the design, not against the code compiling.** Open the
    page, measure what the kit specifies (sizes, offsets, colours, states, both
@@ -108,6 +102,40 @@ and never copies the second from a demo.
    (`on ? 'base base--mod' : 'base'`) or join through the project's `cn()` /
    `clsx`.
 
+## Writing to the kit
+
+When the session can write to the design source, apply an agreed change
+there yourself instead of only describing it — the owner approves the exact
+list of files and values first. Before writing to an artifact, read
+`${CLAUDE_PLUGIN_ROOT}/reference/artifact-sandbox.md`.
+
+- **What goes this way:** a fix, a decided deviation, an accepted proposal
+  folded into the canon, a decisions note — and a new element.
+- **An element neither the kit nor a canvas has goes into the kit first** —
+  its styles, its component's README, its preview — in one write, then into
+  the code verbatim; never assembled from utilities in the code with the
+  kit "later". The owner decides its look: for each new element ask whether
+  to draw variants (`design-decisions`) or write it to the kit at once, the
+  recommendation marked — at once for one whose look follows from the kit's
+  tokens and neighbours. "At once" skips the round, not the kit. The
+  exception is a one-off web addition with no component (a page
+  transition): the web stylesheet, marked web-only, with a proposal for the
+  kit.
+- **A new class name only after a search of the kit's stylesheet** for the
+  exact name and its prefix, modifiers included: a taken name gets another
+  (`.status-row` when `.status` exists). After the write, check live both
+  the new page and the components where the name already appeared. Observed
+  on a live project: a new rule reused a badge's class name and overrode it
+  across the published kit.
+- **Code ahead of the kit, or behind it.** A project may keep a list of
+  components its code does better than the kit — one entry per owner's
+  word. Those come from the code; the rest are ported from the kit as is,
+  and the agent proposes moving the improvement into the kit. A kit updated
+  on purpose while the code shows the old look is not a deviation: the code
+  follows the kit. When it is unclear which is intended, compare the dates
+  (the kit's decisions log, the commit) and look for the owner's decision;
+  still unclear — show both with their dates, never pick silently.
+
 ## How not to do it
 
 - Approximating "by eye" or from a summary of the kit.
@@ -121,6 +149,10 @@ and never copies the second from a demo.
   "mobile".
 - Building a class list in a template literal that relies on a space inside
   the literal.
+- Building an element the kit lacks from utilities in the code, to move it
+  into the kit later.
+- Writing a class into the kit without searching the stylesheet for its
+  name.
 
 ## How it is verified
 
