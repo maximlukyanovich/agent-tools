@@ -16,9 +16,11 @@ Other scopes and updating: [`docs/updates.md`](../../docs/updates.md).
 
 | Part | For |
 | --- | --- |
-| [`web-ui-conventions`](skills/web-ui-conventions/SKILL.md) | the rules every screen and control follows: screen and interactive states, `cursor-pointer`, mobile-first overflow, `svh`, tokens, the import-only root stylesheet, reduced motion, non-blocking navigation, a11y |
-| [`component-discipline`](skills/component-discipline/SKILL.md) | how a component stays small and exact: extraction thresholds, text metrics, semantic tokens and tailwind-merge, CVA variants, the view / hook split, skeletons, no invented assets, fake timers in component tests |
+| [`web-ui-conventions`](skills/web-ui-conventions/SKILL.md) | the rules every screen and control follows: screen and interactive states, `cursor-pointer`, mobile-first overflow, `svh`, tokens, the import-only root stylesheet, reduced motion and nothing jumping, non-blocking navigation, transient UI reset when a page leaves, external links, a11y with focus returned by dialogs |
+| [`component-discipline`](skills/component-discipline/SKILL.md) | how a component stays small and exact: extraction thresholds, text metrics, semantic tokens and tailwind-merge, CVA variants carrying the look, the view / hook split, skeletons, no invented assets, fake timers in component tests, icons from a dictionary by meaning |
 | [`yandex-browser`](skills/yandex-browser/SKILL.md) | reproducing Yandex-Browser-only bugs under Playwright without installing the browser, and its known quirk: a swipe that starts on an overlay's shadow goes to the wrong scroller |
+| [`reference/motion.md`](reference/motion.md) | the collapse primitive's recipe and traps, and how motion is checked paused — read on instruction from `web-ui-conventions` |
+| [`reference/next-16.md`](reference/next-16.md) | Next.js 16: scroll behaviour on route changes, a hidden page under Cache Components and what resets, content pages readable without JavaScript, the 200 for an unknown slug |
 | `hooks/locale-parity.mjs` | PostToolUse: a written `<locale>.json` has the same key set as its siblings |
 | `hooks/i18n-keys.mjs` | PostToolUse (next-intl): every static `t('key')` a source file reads exists in the catalog |
 | `hooks/metadata-title.mjs` | PostToolUse (App Router): no hardcoded string `title` in a page's metadata |
