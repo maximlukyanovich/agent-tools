@@ -18,7 +18,9 @@ and never copies the second from a demo.
 
 - **The design system is the only source** — tokens, components with live
   cards, the prototype built into its bundle. A Design canvas over it holds a
-  copy, refreshed after the system changes; a port reads the system.
+  copy, refreshed after the system changes; a port reads the system. The
+  one exception is the project's list of components its code does better
+  ("Code ahead of the kit" below).
 - **Canvas pages go by status, not by date.** A module's page holds only the
   canon, and only it is ported; a page on review holds open questions with
   variants side by side and a recommendation; an archive keeps what was

@@ -39,7 +39,7 @@
     },
     {
       "name": "mluk-design",
-      "description": "Working against a design kit: porting it into the codebase and handling a kit that is itself wrong. Enable where a kit exists.",
+      "description": "Working against a design kit: drawing new design as variants for the owner's decision, porting it into the codebase, and handling a kit that is itself wrong. Enable where a kit exists.",
       "source": "./plugins/mluk-design",
       "category": "workflow"
     },

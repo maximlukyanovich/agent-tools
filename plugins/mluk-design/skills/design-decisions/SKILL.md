@@ -73,9 +73,10 @@ step below was missed on a live project and cost the owner a round.
 9. **Check the set.** Each new or touched element of each concept page has
    its row of variants (step 4); each question frame's title starts with its
    number and a letter (step 6); each new class is checked against the
-   kit's list (step 1); each question group has its sticky in the canvas's
-   index — a note id outside the canvas's format is dropped without an
-   error, by `${CLAUDE_PLUGIN_ROOT}/reference/artifact-sandbox.md`.
+   kit's list (step 1) and its name by the stylesheet search in "Writing
+   to the kit" (`design-port`); each question group has its sticky in the
+   canvas's index — a note id outside the canvas's format is dropped
+   without an error, by `${CLAUDE_PLUGIN_ROOT}/reference/artifact-sandbox.md`.
 
 ## Answering the owner
 
@@ -88,9 +89,9 @@ step below was missed on a live project and cost the owner a round.
     component variants — published in the same turn, and stays an open
     question. Never report that nothing is open while a redraw remains.
 12. **A decided question leaves the page on review**: the chosen variant
-    goes into the kit and its module's page, a row into the archive, by
-    "The source" in `design-port`; a page whose questions are all decided
-    is deleted.
+    goes into the kit by "Writing to the kit" in `design-port`, into its
+    module's page and a row into the archive by "The source" there; a
+    page whose questions are all decided is deleted.
 
 ## How not to do it
 

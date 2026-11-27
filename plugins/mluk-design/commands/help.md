@@ -1,5 +1,5 @@
 ---
-description: What mluk-design can do — the design-port skill, when it applies, and where this project's profile names its design source.
+description: What mluk-design can do — its skills, when each applies, and where this project's profile names its design source.
 argument-hint: '[<language code>]'
 disable-model-invocation: true
 ---
