@@ -104,6 +104,13 @@ and never copies the second from a demo.
    (`on ? 'base base--mod' : 'base'`) or join through the project's `cn()` /
    `clsx`.
 
+9. **The kit's look lands in the project's primitives, not at call sites.**
+   A kit element that looks unlike its primitive is fixed in the primitive's
+   variant, by `mluk-fe:component-discipline`, rule 5. Icons follow the
+   project's dictionary by meaning (rule 11 there) on the canvas too — the
+   kit or the frame generator uses the same names, so design and code do not
+   drift.
+
 ## Writing to the kit
 
 When the session can write to the design source, apply an agreed change

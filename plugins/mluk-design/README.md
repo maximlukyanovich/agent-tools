@@ -15,7 +15,7 @@ Other scopes and updating: [`docs/updates.md`](../../docs/updates.md).
 | Skill | For |
 | --- | --- |
 | [`design-decisions`](skills/design-decisions/SKILL.md) | how new design is drawn for the owner's decision: an inventory of the kit and the app first, component variants beside whole concepts, one element per question, every frame looked at before publishing |
-| [`design-port`](skills/design-port/SKILL.md) | how a kit is ported: the source read at write time, kit classes worn by a matching third-party primitive, the stretched-link card, real data over demo data, what to do when the kit itself is wrong, and writing a new element to the kit first |
+| [`design-port`](skills/design-port/SKILL.md) | how a kit is ported: the source read at write time, kit classes worn by a matching third-party primitive, the stretched-link card, real data over demo data, what to do when the kit itself is wrong, writing a new element to the kit first, and the kit's look landing in the project's primitives and icon dictionary |
 
 `/mluk-design:help` introduces the plugin and checks whether the project names a design source.
 
