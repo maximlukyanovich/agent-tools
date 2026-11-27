@@ -16,3 +16,8 @@ below was met on a live project and checked on the canvas.
   refer to files by their published path.
 - **A file page inside an iframe runs no scripts.** A canvas made as a page
   with a grid of iframes stays blank; one frame is one artboard.
+- **A note id outside `[A-Za-z0-9_-]` is dropped.** A canvas index whose
+  note id holds a letter of another alphabet (a question number written in
+  it) publishes without an error, and the canvas does not show that note.
+  Ids take Latin letters, digits, `-` and `_`; the note's text may hold
+  anything.

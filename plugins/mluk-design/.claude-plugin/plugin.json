@@ -1,7 +1,7 @@
 {
   "name": "mluk-design",
-  "version": "1.2.0",
-  "description": "Working against a design kit (a component library with markup and CSS, e.g. a Design System artifact): porting it into the codebase and what to do when the kit itself is wrong. Enable in projects that have a kit.",
+  "version": "1.3.0",
+  "description": "Working against a design kit (a component library with markup and CSS, e.g. a Design System artifact): drawing new design as variants for the owner's decision, porting it into the codebase, and what to do when the kit itself is wrong. Enable in projects that have a kit.",
   "author": {
     "name": "Maxim Lukyanovich",
     "email": "maximlukyanovich94@gmail.com"

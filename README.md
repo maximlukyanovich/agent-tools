@@ -108,7 +108,7 @@ Each plugin is enabled on its own, so a project takes only what fits.
 | [`mluk-ru`](plugins/mluk-ru/README.md) | Russian texts for people | Client-facing, legal and documentation copy, and `review` for a text. |
 | [`mluk-ops`](plugins/mluk-ops/README.md) | an agent on a live server | `srv` over `ssh` with an audit log and a guard hook. |
 | [`mluk-fe`](plugins/mluk-fe/README.md) | React / Next.js, Tailwind, next-intl | UI and component conventions; hooks check locales, translation keys and titles. |
-| [`mluk-design`](plugins/mluk-design/README.md) | a site built against a design kit | How a kit is ported. |
+| [`mluk-design`](plugins/mluk-design/README.md) | a site built against a design kit | How new design is drawn as variants and a kit is ported. |
 | [`mluk-deploy`](plugins/mluk-deploy/README.md) | Vercel, or Docker Compose on a VPS | Deployment, and a domain moving to Cloudflare. |
 
 The stack plugins mostly need no command: their skills load when the work

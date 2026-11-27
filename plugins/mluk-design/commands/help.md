@@ -1,5 +1,5 @@
 ---
-description: What mluk-design can do — the design-port skill, when it applies, and where this project's profile names its design source.
+description: What mluk-design can do — its skills, when each applies, and where this project's profile names its design source.
 argument-hint: '[<language code>]'
 disable-model-invocation: true
 ---
@@ -16,8 +16,9 @@ Language: the conversation's, unless `$1` gives a code.
    `${CLAUDE_PLUGIN_ROOT}/skills/*/SKILL.md`, one line each. Use that path verbatim — never search
    the filesystem for the plugin.
 
-2. **State the method in a few lines:** the kit's source is read at write time, never recalled;
-   its look is ported exactly while its demo code is not copied; a deviation is agreed for one spot
+2. **State the method in a few lines:** new design is drawn on a canvas as variants, components
+   beside whole concepts, every frame looked at before publishing; the kit's source is read at
+   write time, never recalled; its look is ported exactly while its demo code is not copied; a deviation is agreed for one spot
    and offered back to the kit; when the kit itself is wrong, the owner decides.
 
 3. **Say what is present here** — the design source the profile names (`## Sources of truth`, and
