@@ -105,11 +105,11 @@ and never copies the second from a demo.
    `clsx`.
 
 9. **The kit's look lands in the project's primitives, not at call sites.**
-   A kit element that looks unlike its primitive is fixed in the primitive's
-   variant, by `mluk-fe:component-discipline`, rule 5. Icons follow the
+   A kit element defined once that looks unlike its primitive is fixed in
+   the primitive's variant; several definitions go to the owner
+   (`mluk-fe:component-discipline` rule 5, when on). Icons follow the
    project's dictionary by meaning (rule 11 there) on the canvas too — the
-   kit or the frame generator uses the same names, so design and code do not
-   drift.
+   kit and the `design-decisions` frames use the same names.
 
 ## Writing to the kit
 

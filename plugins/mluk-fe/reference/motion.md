@@ -1,6 +1,6 @@
 # Collapse and appearance: the recipe
 
-Read by `web-ui-conventions` rule 7 before building or changing the project's collapse primitive, or a block that shows and hides its content. Figures below were measured in Chromium 146.
+Read by `web-ui-conventions` rule 7 before building or changing the project's collapse primitive, or a block that shows and hides its content, and before checking any motion in a browser. Figures below were measured in Chromium 146.
 
 ## The collapse primitive
 
@@ -8,7 +8,7 @@ One component in the project's shared UI, used for every expand / collapse — f
 
 - The box is a one-row grid whose row moves `0fr ↔ 1fr`; the content inside has `min-height: 0` and clips (`overflow: hidden`) only while closed or moving, so focus rings and shadows are not cut when open.
 - Content that is closed and not peeking is `inert` — out of the tab order and the accessibility tree.
-- The end of the movement is set by `transitionend` **and** by a timer of the transition's length: under reduced motion the duration is 0 ms and `transitionend` never fires.
+- The end of the movement is set by `transitionend` **and** by a timer of the transition's length: a project that zeroes durations under reduced motion starts no transition, so `transitionend` never fires, and the timer ends a plain fade in its place as well.
 
 ## Traps
 
@@ -22,4 +22,4 @@ An element that appears or disappears with a state — a button, a hint, a badge
 
 ## Checking the motion
 
-Headless browsers do not paint between frames taken on a timer, so a motion is checked paused, not timed: take the element's `getAnimations()`, pause each, set `currentTime` to fractions of the duration (¼, ½, ¾) and read `getBoundingClientRect().height` — it grows steadily, with no jump at the middle and no flat start. A jump is checked the same way: the container's height before and after the state change.
+A sample taken on a timer shows where the element stands at that moment, not how it got there: two samples on either side of a jump look like a smooth step. So a motion is checked paused, not timed: take the element's `getAnimations()`, pause each, set `currentTime` to fractions of the duration (¼, ½, ¾) and read `getBoundingClientRect().height` — it grows steadily, with no jump at the middle and no flat start. A jump is checked the same way: the container's height before and after the state change.
