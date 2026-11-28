@@ -1,6 +1,6 @@
 ---
 name: component-discipline
-description: How a React component is written so that it stays small and exact — when to extract and when not to, text metrics (size + line-height + tracking), promoting repeated literals to semantic tokens and registering them with tailwind-merge, the shadcn CVA variant convention, the view / hook split, section-shaped skeletons with aria-busy, not inventing assets the design left out, and fake timers in component tests. Use when writing, refactoring or reviewing a component. Porting a kit's look is mluk-design:design-port; screen-level rules are web-ui-conventions.
+description: How a React component is written so that it stays small and exact — when to extract and when not to, text metrics (size + line-height + tracking), promoting repeated literals to semantic tokens and registering them with tailwind-merge, the shadcn CVA variant convention and the look coming from variants, icons from a dictionary keyed by meaning, the view / hook split, section-shaped skeletons with aria-busy, not inventing assets the design left out, and fake timers in component tests. Use when writing, refactoring or reviewing a component. Porting a kit's look is mluk-design:design-port; screen-level rules are web-ui-conventions.
 license: MIT
 metadata:
   author: Maxim Lukyanovich
@@ -24,9 +24,9 @@ What keeps a component small and exact. The kit's look is ported by `mluk-design
 
 4. **A custom utility group is registered with tailwind-merge.** `cn()` built on plain `twMerge` does not know a new group: a custom font size such as `text-display` is read as a colour, and `cn('text-display', 'text-muted')` silently drops one of them. When the first custom group lands, switch `cn()` to `extendTailwindMerge` with that group in the same commit. A project that only redefines the framework's own scale names (`--text-sm`) does not need it.
 
-5. **Primitive variants follow the shadcn CVA convention.** Variants are declared with `cva`, the prop typed as `VariantProps<typeof xVariants>`, and call sites pass plain string literals (`variant="outline" size="sm"`). A local `as const` map is fine for a discriminator reused across many call sites; named-const indirection is not retrofitted onto every primitive.
+5. **Primitive variants follow the shadcn CVA convention.** Variants are declared with `cva`, the prop typed as `VariantProps<typeof xVariants>`, and call sites pass plain string literals (`variant="outline" size="sm"`). A local `as const` map is fine for a discriminator reused across many call sites; named-const indirection is not retrofitted onto every primitive. **The look comes from a variant:** classes at a call site that override a primitive's look are a rare exception with its reason in a comment. When the primitive looks unlike the element in the design, count that element's definitions in the design source first: one — fix the primitive's variant, walking its call sites, with a live check; several — ask the owner whether to merge them or keep both. A wider mismatch found on the way goes to the project's deferred bugs, not into this change.
 
-6. **A component with state splits into view and hook.** When a component owns a query, a mutation, form state or 2+ derived values, they move into a sibling `use-x.ts` that returns one object; the component stays a declarative tree. A single render without state stays one file.
+6. **A component with state splits into view and hook.** When a component owns a query, a mutation, form state or 2+ derived values, they move into a sibling `use-x.ts` that returns one object; the component stays a declarative tree. A single render without state stays one file. State that must reset when the page leaves follows `web-ui-conventions`, rule 10.
 
 7. **Pending UI is a section-shaped skeleton.** One wrapper next to the composite mirrors the loaded layout 1:1 and carries `aria-busy="true"` on its outer element — a stable target for assistive tech and tests. Not for a one-line inline loader, a button's spinner, an error / empty / not-found branch, a modal or a toast.
 
@@ -36,12 +36,16 @@ What keeps a component small and exact. The kit's look is ported by `mluk-design
 
 10. **A component test drives its timers.** A component that waits on a timer before it is usable — a reveal, a stagger, a debounce, a delayed hint — is tested on fake timers (`vi.useFakeTimers()` in `beforeEach`, real ones back in `afterEach`), and the test moves time itself with `act(() => vi.runOnlyPendingTimers())` before it acts. `waitFor` on a real timer races its own timeout: the test passes alone and fails one run in a few under a loaded suite. Check that the test still fails when the timer never fires.
 
+11. **Icons come from one dictionary keyed by meaning.** One module of the project maps meanings (`close`, `share`, `refine`) to icons, and screens import the meaning — changing an icon is one edit. One meaning, one icon; one icon, one meaning: before picking an icon for something new, look where it already stands on the site, and say so beside the variants shown to the owner.
+
 ## How not to do it
 
 - A `components/Helpers.tsx` with six single-use wrappers.
 - A row of text that aligns in the design and not on the page because two line-heights differ.
 - `text-[15px]` in four components, or a custom `text-*` group added without touching `cn()`.
 - A primitive whose variants are a `const VARIANTS = { OUTLINE: 'outline' }` map imported everywhere.
+- `<Button variant="secondary" className="border-… bg-…">` to match the design, while the variant itself is what differs.
+- The same icon imported by its library name in ten screens, or standing for two meanings.
 - A 300-line component with two queries, a form and the markup in one function.
 - A "Loading…" paragraph where the loaded page is a grid of cards.
 - A `lucide` icon "close enough" to the custom SVG in the design.
@@ -49,4 +53,4 @@ What keeps a component small and exact. The kit's look is ported by `mluk-design
 
 ## How it is verified
 
-Before committing: the diff has no repeated literal outside the tokens; every new custom utility group is in `cn()`; each component with a query or a mutation has its hook; pending states render a skeleton with `aria-busy="true"`; and the component is checked in a real browser against the design — text boxes measured, not eyeballed.
+Before committing: the diff has no repeated literal outside the tokens; every new custom utility group is in `cn()`; each component with a query or a mutation has its hook; no call site overrides a primitive's look without a stated reason; icons come from the dictionary; pending states render a skeleton with `aria-busy="true"`; and the component is checked in a real browser against the design — text boxes measured, not eyeballed.
